@@ -22,15 +22,15 @@ export const loginAdmin = async (req, res) => {
       });
     }
 
-    // Auto-seed default admin if database has no admin yet
-    let count = await Admin.countDocuments();
-    if (count === 0) {
-      await Admin.create({
+    // Ensure default admin (admin@gmail.com / admin@123) exists in DB
+    let primaryAdmin = await Admin.findOne({ email: 'admin@gmail.com' });
+    if (!primaryAdmin) {
+      primaryAdmin = await Admin.create({
         username: 'admin',
-        email: 'admin@tezscale.com',
-        password: 'admin123',
+        email: 'admin@gmail.com',
+        password: 'admin@123',
       });
-      console.log('👤 Default admin account seeded (admin@tezscale.com / admin123)');
+      console.log('👤 Admin account seeded in DB: admin@gmail.com / admin@123');
     }
 
     // Search by username or email

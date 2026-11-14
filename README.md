@@ -19,8 +19,8 @@ A modern full-stack agency platform with **Dynamic Content Management**, **Inter
 2. **Admin Backoffice Authentication (`/backoffice`)**:
    - Secure login route with bcrypt password hashing and JWT token authorization.
    - **Default Admin Credentials**:
-     - **Email / Username**: `admin@tezscale.com` or `admin`
-     - **Password**: `admin123`
+     - **Email / Username**: `admin@gmail.com` or `admin`
+     - **Password**: `admin@123`
    - Fast, instant authentication with zero lag and responsive loading spinner.
 
 3. **Admin Dashboard (`/admin`)**:

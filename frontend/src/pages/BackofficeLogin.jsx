@@ -41,11 +41,11 @@ const BackofficeLogin = () => {
       console.warn('Fallback login for testing offline:', err);
       // If backend network fails, allow fallback with default admin credentials
       if (
-        (usernameOrEmail === 'admin' || usernameOrEmail === 'admin@tezscale.com') &&
-        password === 'admin123'
+        (usernameOrEmail === 'admin' || usernameOrEmail === 'admin@gmail.com') &&
+        password === 'admin@123'
       ) {
         localStorage.setItem('adminToken', 'offline_demo_token_tezscale');
-        localStorage.setItem('adminUser', JSON.stringify({ username: 'admin', role: 'admin' }));
+        localStorage.setItem('adminUser', JSON.stringify({ username: 'admin', email: 'admin@gmail.com', role: 'admin' }));
         navigate('/admin');
       } else {
         setError('Login failed. Please check credentials or backend server.');
@@ -109,7 +109,7 @@ const BackofficeLogin = () => {
                 required
                 value={usernameOrEmail}
                 onChange={(e) => setUsernameOrEmail(e.target.value)}
-                placeholder="admin@tezscale.com"
+                placeholder="admin@gmail.com"
                 className="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all placeholder:text-slate-400"
               />
             </div>
@@ -155,13 +155,13 @@ const BackofficeLogin = () => {
         <div className="mt-8 p-3.5 bg-blue-50/70 border border-blue-200/80 rounded-2xl text-[11px] text-slate-600 space-y-1">
           <div className="font-bold text-blue-900 flex items-center gap-1.5">
             <span className="w-2 h-2 rounded-full bg-blue-600" />
-            <span>Default Backoffice Credentials:</span>
+            <span>Admin Credentials:</span>
           </div>
           <div className="flex justify-between text-slate-700 pt-0.5">
-            <span>Username: <strong className="font-mono text-blue-700">admin</strong> or <strong className="font-mono text-blue-700">admin@tezscale.com</strong></span>
+            <span>Username/Email: <strong className="font-mono text-blue-700">admin@gmail.com</strong> or <strong className="font-mono text-blue-700">admin</strong></span>
           </div>
           <div className="flex justify-between text-slate-700">
-            <span>Password: <strong className="font-mono text-blue-700">admin123</strong></span>
+            <span>Password: <strong className="font-mono text-blue-700">admin@123</strong></span>
           </div>
         </div>
 
