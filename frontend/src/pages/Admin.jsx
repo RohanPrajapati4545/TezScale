@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import {
   Users,
   Settings,
@@ -21,12 +21,29 @@ import {
   AlertCircle,
   Home,
   Check,
+  LogOut,
+  Loader2,
 } from 'lucide-react';
 import { useContent } from '../context/ContentContext';
 import apiFetch from '../api/apiClient';
 
 const Admin = () => {
   const { content, updateContent, resetContent } = useContent();
+  const navigate = useNavigate();
+
+  // Authentication check
+  useEffect(() => {
+    const token = localStorage.getItem('adminToken');
+    if (!token) {
+      navigate('/backoffice');
+    }
+  }, [navigate]);
+
+  const handleLogout = () => {
+    localStorage.removeItem('adminToken');
+    localStorage.removeItem('adminUser');
+    navigate('/backoffice');
+  };
 
   const [activeTab, setActiveTab] = useState('leads');
   const [leads, setLeads] = useState([]);
@@ -171,9 +188,18 @@ const Admin = () => {
               className="inline-flex items-center gap-1.5 px-4 py-2 text-xs sm:text-sm font-bold text-white bg-blue-600 hover:bg-blue-500 rounded-xl shadow-md shadow-blue-600/30 transition-all hover:scale-105"
             >
               <Home className="w-4 h-4" />
-              <span>View Live Website</span>
+              <span>View Website</span>
               <ExternalLink className="w-3.5 h-3.5 ml-1" />
             </Link>
+
+            <button
+              onClick={handleLogout}
+              className="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs sm:text-sm font-semibold text-rose-300 bg-rose-500/15 hover:bg-rose-500/25 border border-rose-500/30 rounded-xl transition-colors cursor-pointer"
+              title="Logout"
+            >
+              <LogOut className="w-4 h-4" />
+              <span className="hidden sm:inline">Logout</span>
+            </button>
           </div>
         </div>
       </header>
@@ -385,10 +411,19 @@ const Admin = () => {
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-slate-100 text-sm">
-                    {filteredLeads.length === 0 ? (
+                    {leadsLoading ? (
+                      <tr>
+                        <td colSpan="6" className="py-12 text-center text-slate-500">
+                          <div className="flex items-center justify-center gap-2">
+                            <Loader2 className="w-5 h-5 animate-spin text-blue-600" />
+                            <span className="font-semibold text-sm">Fetching leads from database...</span>
+                          </div>
+                        </td>
+                      </tr>
+                    ) : filteredLeads.length === 0 ? (
                       <tr>
                         <td colSpan="6" className="py-12 text-center text-slate-400">
-                          {leadsLoading ? 'Loading leads from database...' : 'No leads found. Users who fill the landing page form will appear here in real-time!'}
+                          No leads found. Users who fill the consultation form will appear here in real-time!
                         </td>
                       </tr>
                     ) : (

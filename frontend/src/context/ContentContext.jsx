@@ -5,131 +5,150 @@ const ContentContext = createContext();
 
 export const defaultSiteContent = {
   hero: {
-    badge: 'Grow Faster. Rank Higher.',
-    titleLine1: 'Your Partner for',
-    titleLine2: 'Digital Growth',
+    badge: 'Grow Faster. Grow Smarter.',
+    titleLine1: 'We are actively providing services to',
+    titleLine2: 'digitally grow your business with us.',
     description:
-      'We are a full-service digital marketing agency helping businesses grow online with data-driven strategies, creative campaigns and measurable results.',
-    primaryCta: 'Get a Free Strategy Call',
-    secondaryCta: 'Explore Our Services',
-    trafficStat: '125K',
-    trafficGrowth: '+78%',
-    roiStat: '320%',
+      'Transform your online presence with result-driven digital marketing strategies that bring real business growth.',
+    primaryCta: 'Get a Free Consultation',
+    secondaryCta: 'Watch Our Video',
+    trafficStat: '+250%',
+    trafficGrowth: 'Business Growth',
+    roiStat: '98%',
+    roiLabel: 'Client Satisfaction',
   },
-  metrics: {
-    stat1Value: '150+',
-    stat1Label: 'Happy Clients',
-    stat2Value: '250%',
-    stat2Label: 'Avg. Growth',
-    stat3Value: '5+ Years',
-    stat3Label: 'Industry Experience',
+  trustBar: {
+    sectors: ['Healthcare', 'Real Estate', 'Engineering'],
+    trustedText: 'Trusted by 500+ Happy Clients',
   },
   servicesSection: {
     badge: 'Our Services',
     title: 'Complete Digital Marketing Solutions',
-    description:
-      'From strategy to execution, we provide end-to-end digital marketing services to help your business attract, engage and convert.',
+    description: 'End-to-end services to help you build, grow and scale your business online.',
   },
   services: [
     {
-      title: 'SEO',
-      desc: 'Rank higher and get organic traffic.',
-      icon: 'BarChart2',
-      badgeBg: 'bg-blue-50',
+      title: 'Website Builder & Development',
+      desc: 'Modern, fast & SEO-friendly websites.',
+      icon: 'Code',
+      badgeBg: 'bg-blue-600 text-white',
     },
     {
-      title: 'Social Media Marketing',
-      desc: 'Build your brand & grow your community.',
+      title: 'Graphic Design',
+      desc: 'Creative designs that stand out.',
+      icon: 'Palette',
+      badgeBg: 'bg-purple-600 text-white',
+    },
+    {
+      title: 'Digital Marketing Support',
+      desc: 'SEO, content & email marketing.',
       icon: 'Megaphone',
-      badgeBg: 'bg-sky-50',
+      badgeBg: 'bg-emerald-500 text-white',
     },
     {
-      title: 'Performance Marketing',
-      desc: 'Drive targeted leads with data-backed ads.',
-      icon: 'Target',
-      badgeBg: 'bg-amber-50',
+      title: 'E-commerce Support',
+      desc: 'Sell online with confidence.',
+      icon: 'ShoppingCart',
+      badgeBg: 'bg-amber-500 text-white',
     },
     {
-      title: 'Content Marketing',
-      desc: 'Create content that converts.',
-      icon: 'Edit3',
-      badgeBg: 'bg-blue-50',
+      title: 'Social Media Services',
+      desc: 'Grow your community.',
+      icon: 'Share2',
+      badgeBg: 'bg-indigo-600 text-white',
     },
     {
-      title: 'Web Development',
-      desc: 'Modern websites for better business.',
-      icon: 'Monitor',
-      badgeBg: 'bg-cyan-50',
-    },
-    {
-      title: 'Email Marketing',
-      desc: 'Turn subscribers into loyal customers.',
-      icon: 'Mail',
-      badgeBg: 'bg-indigo-50',
+      title: 'Meta Ads Management',
+      desc: 'Get more leads & sales.',
+      icon: 'Infinity',
+      badgeBg: 'bg-emerald-600 text-white',
     },
   ],
+  whyChooseUs: {
+    badge: 'Why Choose Us',
+    title: 'Your Growth, Our Mission',
+    description:
+      "We combine creativity, technology and data-driven strategies to deliver measurable results. From SEO to Meta Ads, we're here to help your business reach new heights.",
+    points: [
+      'Result-Driven Strategies',
+      '24/7 Support',
+      'Expert Team',
+      'Custom Solutions',
+      'Transparent Reporting',
+      'Long-Term Partnership',
+    ],
+    buttonText: 'About Us',
+  },
   portfolioSection: {
     badge: 'Our Work',
-    title: 'Real Results for Real Businesses',
-    description:
-      'Explore some of our successful projects where we helped brands grow and achieve their goals.',
+    title: 'Some Success Stories',
+    description: 'Real results. Real businesses. Real growth.',
+  },
+  metrics: {
+    stat1Value: '250%',
+    stat1Label: 'Average Growth',
+    stat2Value: '500+',
+    stat2Label: 'Happy Clients',
+    stat3Value: '5+',
+    stat3Label: 'Years Experience',
   },
   caseStudies: [
     {
-      title: 'E-Commerce Brand',
-      subtitle: 'Organic Traffic Growth',
-      badge: 'Growth +250%',
-      type: 'ecommerce',
+      title: 'Clinic SEO Success',
+      subtitle: '+220% Traffic',
+      badge: '+220% Traffic',
+      image:
+        'https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&w=600&q=80',
     },
     {
-      title: 'Restaurant Business',
-      subtitle: 'More Qualified Leads',
-      badge: 'Leads +400%',
-      type: 'restaurant',
+      title: 'Real Estate Growth',
+      subtitle: '+180% Leads',
+      badge: '+180% Leads',
+      image:
+        'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=600&q=80',
     },
     {
-      title: 'SaaS Company',
-      subtitle: 'Increased Sales',
-      badge: 'Sales +300%',
-      type: 'saas',
+      title: 'E-commerce Boost',
+      subtitle: '+300% Sales',
+      badge: '+300% Sales',
+      image:
+        'https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&w=600&q=80',
     },
   ],
   testimonialsSection: {
     badge: 'Testimonials',
     title: 'What Our Clients Say',
-    description:
-      "Don't just take our word for it. Here's what our clients have to say about working with us.",
+    description: 'Trusted by businesses across industries.',
   },
   testimonials: [
     {
-      name: 'Rohit Sharma',
-      role: 'Founder, TechVista',
+      name: 'Dr. Priya Sharma',
+      role: 'Clinic Owner',
       quote:
-        '“GrowthMax helped us 3x our website traffic in just 3 months! Their strategy and team are absolutely amazing.”',
-      avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=120&h=120&q=80',
+        'GrowthMax completely transformed our online presence. Their strategies brought us 3x more leads in just 3 months!',
+      avatar:
+        'https://images.unsplash.com/photo-1594824813589-9a25b1641ba5?auto=format&fit=crop&w=150&q=80',
       rating: 5,
     },
     {
-      name: 'Pooja Patel',
-      role: 'Marketing Head, NexaPay',
+      name: 'Rohit Verma',
+      role: 'Director, UrbanSpace',
       quote:
-        '“The ROI on our ad campaigns exceeded every benchmark. They transformed our customer acquisition completely.”',
-      avatar: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=120&h=120&q=80',
-      rating: 5,
-    },
-    {
-      name: 'Aman Verma',
-      role: 'CEO, UrbanDine',
-      quote:
-        '“Clear reporting, transparent metrics, and real business results from month one. Highly recommended team!”',
-      avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=120&h=120&q=80',
+        'Outstanding ROI on our Meta ad campaigns. The leads are highly qualified and our sales velocity has doubled.',
+      avatar:
+        'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80',
       rating: 5,
     },
   ],
   ctaBanner: {
-    title: 'Ready to Boost Your Business Online?',
+    title: 'Ready to Grow Your Business?',
     subtitle: "Let's create a winning digital strategy together.",
-    buttonText: 'Get a Free Strategy Call',
+    buttonText: 'Get a Free Consultation',
+  },
+  contactInfo: {
+    phone: '+91 98765 43210',
+    email: 'hello@growthmax.in',
+    location: 'Indore, MP',
   },
 };
 
@@ -167,7 +186,7 @@ export const ContentProvider = ({ children }) => {
     } catch (err) {
       console.error('Update error:', err);
       setContent(updatedData);
-      return { success: true, message: 'Saved locally (Backend server offline)' };
+      return { success: true, message: 'Saved locally' };
     }
   };
 
@@ -177,11 +196,11 @@ export const ContentProvider = ({ children }) => {
       const data = await res.json();
       if (res.ok && data.data) {
         setContent(data.data);
-        return { success: true, message: 'Reset to defaults!' };
+        return { success: true, message: 'Reset to updated design defaults!' };
       }
     } catch (err) {
       setContent(defaultSiteContent);
-      return { success: true, message: 'Reset to defaults!' };
+      return { success: true, message: 'Reset to updated design defaults!' };
     }
   };
 

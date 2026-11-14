@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import connectDB from './config/db.js';
 import leadRoutes from './routes/leadRoutes.js';
 import contentRoutes from './routes/contentRoutes.js';
+import authRoutes from './routes/authRoutes.js';
 
 dotenv.config();
 
@@ -20,6 +21,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/uploads', express.static('uploads'));
 
 // Routes
+app.use('/api/auth', authRoutes);
 app.use('/api/leads', leadRoutes);
 app.use('/api/content', contentRoutes);
 
@@ -34,7 +36,7 @@ app.get('/api/health', (req, res) => {
 
 // Root endpoint
 app.get('/', (req, res) => {
-  res.send('API is running...');
+  res.send('Tezscale API is running...');
 });
 
 // Resilient server startup

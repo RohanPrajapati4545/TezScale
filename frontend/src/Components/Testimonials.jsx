@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
-import { ChevronLeft, ChevronRight, Star } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Quote, Send, ArrowRight } from 'lucide-react';
 import { useContent } from '../context/ContentContext';
 
-const Testimonials = () => {
+const Testimonials = ({ onOpenConsultation }) => {
   const { content } = useContent();
   const testimonialsSection = content?.testimonialsSection || {};
   const testimonials = content?.testimonials || [];
+  const cta = content?.ctaBanner || {};
+
   const [currentIndex, setCurrentIndex] = useState(0);
 
   if (!testimonials || testimonials.length === 0) return null;
@@ -21,36 +23,34 @@ const Testimonials = () => {
   const current = testimonials[currentIndex] || testimonials[0];
 
   return (
-    <section id="about" className="py-20 bg-slate-50/50">
+    <section id="testimonials" className="py-20 bg-slate-50/50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        {/* Header with Navigation Arrows */}
+        {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
-          <div className="max-w-xl text-left space-y-3">
-            <div className="inline-flex items-center px-3 py-1 rounded-full bg-blue-100 text-blue-700 text-xs font-bold tracking-wide">
+          <div className="max-w-xl text-left space-y-2">
+            <div className="inline-flex items-center px-3.5 py-1.5 rounded-full bg-blue-100 text-blue-700 text-xs font-bold tracking-wide">
               {testimonialsSection.badge || 'Testimonials'}
             </div>
             <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
               {testimonialsSection.title || 'What Our Clients Say'}
             </h2>
             <p className="text-slate-600 text-base leading-relaxed">
-              {testimonialsSection.description ||
-                "Don't just take our word for it. Here's what our clients have to say about working with us."}
+              {testimonialsSection.description || 'Trusted by businesses across industries.'}
             </p>
           </div>
 
-          {/* Carousel Arrows */}
           <div className="flex items-center gap-3 self-start md:self-end">
             <button
               onClick={prev}
-              className="w-10 h-10 rounded-full border border-slate-300 bg-white hover:bg-slate-100 flex items-center justify-center text-slate-600 transition-colors shadow-sm cursor-pointer"
+              className="w-10 h-10 rounded-full border border-slate-300 bg-white hover:bg-slate-100 flex items-center justify-center text-slate-600 transition-colors shadow-xs cursor-pointer"
               aria-label="Previous Testimonial"
             >
               <ChevronLeft className="w-5 h-5" />
             </button>
             <button
               onClick={next}
-              className="w-10 h-10 rounded-full border border-slate-300 bg-white hover:bg-slate-100 flex items-center justify-center text-slate-600 transition-colors shadow-sm cursor-pointer"
+              className="w-10 h-10 rounded-full border border-slate-300 bg-white hover:bg-slate-100 flex items-center justify-center text-slate-600 transition-colors shadow-xs cursor-pointer"
               aria-label="Next Testimonial"
             >
               <ChevronRight className="w-5 h-5" />
@@ -58,60 +58,81 @@ const Testimonials = () => {
           </div>
         </div>
 
-        {/* Testimonial Card */}
-        <div className="bg-white rounded-3xl p-6 sm:p-10 border border-slate-200/80 shadow-md max-w-4xl mx-auto text-left transition-all">
-          <div className="flex flex-col sm:flex-row sm:items-center gap-6">
-            
-            {/* Avatar */}
-            <div className="relative flex-shrink-0">
-              <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full overflow-hidden border-2 border-blue-500 shadow-md bg-blue-100 flex items-center justify-center text-blue-700 font-bold text-xl">
-                {current.avatar ? (
+        {/* Side-by-Side: Testimonial Quote Card on Left + CTA Card on Right */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+          
+          {/* Left: Testimonial Card */}
+          <div className="lg:col-span-7 bg-white rounded-3xl p-8 sm:p-10 border border-slate-200/80 shadow-md text-left flex flex-col justify-between">
+            <div>
+              <Quote className="w-10 h-10 text-blue-600 fill-blue-50 mb-4" />
+              <blockquote className="text-lg sm:text-xl text-slate-800 font-semibold leading-relaxed">
+                {current.quote}
+              </blockquote>
+            </div>
+
+            <div className="pt-8 flex items-center justify-between border-t border-slate-100 mt-6">
+              <div className="flex items-center gap-3.5">
+                <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-blue-500 shadow-xs bg-blue-100">
                   <img
-                    src={current.avatar}
+                    src={current.avatar || 'https://images.unsplash.com/photo-1594824813589-9a25b1641ba5?auto=format&fit=crop&w=150&q=80'}
                     alt={current.name}
                     className="w-full h-full object-cover"
                     onError={(e) => {
                       e.currentTarget.style.display = 'none';
                     }}
                   />
-                ) : (
-                  <span>{current.name?.charAt(0) || 'U'}</span>
-                )}
+                </div>
+                <div>
+                  <div className="font-extrabold text-slate-900 text-base">{current.name}</div>
+                  <div className="text-xs text-slate-500 font-medium">{current.role}</div>
+                </div>
               </div>
-            </div>
 
-            {/* Testimonial Quote & Info */}
-            <div className="space-y-4 flex-1">
-              {/* Star Rating */}
-              <div className="flex items-center gap-1 text-amber-400">
-                {[...Array(current.rating || 5)].map((_, i) => (
-                  <Star key={i} className="w-4 h-4 fill-current" />
+              {/* Dots */}
+              <div className="flex items-center gap-2">
+                {testimonials.map((_, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => setCurrentIndex(idx)}
+                    className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${
+                      currentIndex === idx ? 'w-6 bg-blue-600' : 'w-2 bg-slate-300'
+                    }`}
+                  />
                 ))}
               </div>
-
-              <blockquote className="text-lg sm:text-xl text-slate-800 font-semibold leading-relaxed italic">
-                {current.quote}
-              </blockquote>
-
-              <div>
-                <div className="font-bold text-slate-900 text-base">{current.name}</div>
-                <div className="text-xs text-slate-500">{current.role}</div>
-              </div>
             </div>
-
           </div>
 
-          {/* Dots pagination */}
-          <div className="flex justify-center items-center gap-2 mt-8 pt-4 border-t border-slate-100">
-            {testimonials.map((_, idx) => (
-              <button
-                key={idx}
-                onClick={() => setCurrentIndex(idx)}
-                className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${
-                  currentIndex === idx ? 'w-6 bg-blue-600' : 'w-2 bg-slate-300'
-                }`}
-              />
-            ))}
+          {/* Right: "Ready to Grow Your Business?" Card matching screenshot */}
+          <div className="lg:col-span-5 relative bg-white rounded-3xl p-8 sm:p-10 border border-slate-200/80 shadow-md flex flex-col items-center justify-center text-center space-y-5">
+            {/* Curved arrow doodle */}
+            <div className="absolute top-4 right-4 hidden sm:block pointer-events-none select-none">
+              <svg className="w-10 h-10 text-blue-400 stroke-current opacity-70" viewBox="0 0 50 50" fill="none">
+                <path d="M10 10 Q 35 15, 30 35 M 30 35 L 24 30 M 30 35 L 36 28" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </div>
+
+            {/* Blue Paper plane icon */}
+            <div className="w-16 h-16 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center shadow-xs">
+              <Send className="w-7 h-7 -rotate-12 translate-x-0.5" />
+            </div>
+
+            <div className="space-y-2">
+              <h3 className="text-2xl font-extrabold text-slate-900 tracking-tight">
+                {cta.title || 'Ready to Grow Your Business?'}
+              </h3>
+              <p className="text-sm text-slate-500 max-w-xs mx-auto">
+                {cta.subtitle || "Let's create a winning digital strategy together."}
+              </p>
+            </div>
+
+            <button
+              onClick={onOpenConsultation}
+              className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-7 py-3.5 rounded-full text-sm font-bold shadow-lg shadow-blue-600/30 transition-all hover:scale-102 cursor-pointer"
+            >
+              <span>{cta.buttonText || 'Get a Free Consultation'}</span>
+              <ArrowRight className="w-4 h-4" />
+            </button>
           </div>
 
         </div>
