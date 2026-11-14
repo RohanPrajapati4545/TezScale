@@ -1,32 +1,32 @@
-# Tezscale - GrowthMax Digital Marketing Agency Platform
+# TezScale - Digital Marketing & Growth Acceleration Platform
 
-A modern full-stack agency platform with **Dynamic Content Management**, **Interactive Consultation Leads CRM**, and a secure **Admin Backoffice** with JWT authentication.
+A high-performance full-stack MERN agency platform with **OliveFlex-inspired UI structure & smooth cubic-bezier animations**, **System UI typography**, **Dynamic Content Management**, **Lead Generation Funnel**, and a secure **Admin Backoffice (`/backoffice`)** with JWT authentication.
 
 ---
 
-## 🌟 Key Features
+## 🌟 Key Features & OliveFlex UI Architecture
 
-1. **High-Converting Landing Page (`/`)**:
-   - Modern GrowthMax layout matching latest design specifications.
-   - **Hero**: Active services tag, dynamic headlines, dual CTAs, rising 3D bar chart with floating metrics (`+250% Growth`, `98% Satisfaction`), and trust sector badges (Healthcare, Real Estate, Engineering).
-   - **Complete Services**: 6 service cards (Website Builder, Graphic Design, Digital Marketing Support, E-commerce Support, Social Media Services, Meta Ads Management).
-   - **Why Choose Us ("Your Growth, Our Mission")**: Interactive benefits checklist, marketing director visual with floating priority badges, and modern agency office boardroom preview.
-   - **Some Success Stories**: 3 Milestone counters (`250% Growth`, `500+ Clients`, `5+ Years`) and real case studies (Clinic SEO, Real Estate, E-commerce).
-   - **Testimonials & Consultation CTA**: Real client quote (Dr. Priya Sharma) alongside instant consultation CTA card.
-   - **Full Footer**: Contact info (`+91 98765 43210`, `hello@growthmax.in`, `Indore, MP`), newsletter subscription, social links, and floating WhatsApp support button.
-   - **Free Consultation Modal**: Click any consultation button across the site to book a strategy call, saving directly to MongoDB Atlas.
+1. **OliveFlex-Inspired Landing Page Architecture (`/`)**:
+   - **System UI Font Stack**: Clean native typographic hierarchy (`system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto...`) with zero layout shift.
+   - **Smooth Spring Micro-Animations**: Ultra-smooth entrance sequences (`cubic-bezier(0.16, 1, 0.3, 1)`), staggered hero animations, floating KPI badges, and spring card lift (`.card-lift`).
+   - **Interactive Subnav Pills with Pulsing Live Dot**: Olive-style filter pills (`All Growth Pillars`, `Medical & Clinics`, `Real Estate`, `Engineering`, `E-commerce & Retail`) with real-time pulsing live indicator (`pulseLiveDot`).
+   - **Rotating Value Proposition Headline**: Dynamic keyword animation rotating between *digitally grow*, *scale B2B revenue*, *dominate search*, and *capture qualified leads*.
+   - **Industry Portals / Growth Pillars Section**: Interactive vertical selector displaying tailored workflows and verified benchmark metrics for Healthcare, Real Estate, Industrial B2B, and E-commerce.
+   - **4-Step Progressive Client Journey**: Clear phase-by-phase roadmap (`01. Discovery & Audit` → `02. Custom Architecture` → `03. Agile Launch` → `04. Scale & Multiply ROI`).
+   - **Expandable FAQ Accordion**: Smooth accordion transitions answering key engagement questions from the requirement specification.
+   - **Conversion CTAs & WhatsApp Routing**: Free Strategy Consultation triggers and instant WhatsApp integration.
 
 2. **Admin Backoffice Authentication (`/backoffice`)**:
    - Secure login route with bcrypt password hashing and JWT token authorization.
    - **Default Admin Credentials**:
-     - **Email / Username**: `admin@gmail.com` or `admin`
+     - **Email / Username**: `admin@gmail.com`
      - **Password**: `admin@123`
-   - Fast, instant authentication with zero lag and responsive loading spinner.
+   - Instant authentication with zero lag and conditional loader.
 
 3. **Admin Dashboard (`/admin`)**:
-   - Protected route — redirects unauthenticated users to `/backoffice`.
-   - **Leads CRM**: View incoming leads with status tags (`New`, `Contacted`, `In Progress`, `Converted`, `Closed`), live status switcher, search filtering, and deletion.
-   - **Live Content Editor**: Edit Hero texts, metrics, services, case studies, and testimonials directly in MongoDB Atlas.
+   - Protected route — automatically redirects unauthenticated users to `/backoffice`.
+   - **Leads CRM**: Manage incoming inquiries with status indicators (`New`, `Contacted`, `In Progress`, `Converted`, `Closed`), live search, and deletion.
+   - **Dynamic UI Content Management**: Edit Hero texts, metrics, services, case studies, and testimonials directly in MongoDB Atlas.
    - **Logout**: Secure one-click sign out.
 
 ---
@@ -55,24 +55,26 @@ Tezscale/
 │   │   ├── leadRoutes.js      # Express API routes (/api/leads)
 │   │   └── contentRoutes.js   # Express API routes (/api/content)
 │   ├── uploads/               # Upload directory
-│   ├── .env                   # DB & JWT credentials (ignored by git)
+│   ├── .env                   # DB & Cloudinary credentials (git ignored)
 │   ├── .env.example
 │   ├── package.json
-│   └── server.js              # Express app with resilient port binding
+│   └── server.js              # Express app with resilient port fallback (5000 / 5005)
 │
 └── frontend/
     ├── src/
     │   ├── api/
     │   │   └── apiClient.js   # Auto-detecting API connector (port 5000 / 5005)
     │   ├── Components/
-    │   │   ├── Navbar.jsx     # Navigation bar with GrowthMax branding
-    │   │   ├── Hero.jsx       # Hero with laptop mockup & live stats
-    │   │   ├── Services.jsx   # 6 Modern digital marketing cards
-    │   │   ├── WhyChooseUs.jsx # "Your Growth, Our Mission" section
-    │   │   ├── OurWork.jsx    # "Some Success Stories" with metrics & case studies
-    │   │   ├── Testimonials.jsx # Testimonial quote + consultation CTA
-    │   │   ├── Footer.jsx     # Footer with newsletter, contact, WhatsApp button
-    │   │   └── ConsultationModal.jsx # Animated popup consultation form
+    │   │   ├── Navbar.jsx     # Frosted glass navbar with pill navigation
+    │   │   ├── Hero.jsx       # Olive-style hero with pill filters & laptop showcase
+    │   │   ├── Services.jsx   # 6 Modern digital marketing cards with .card-lift
+    │   │   ├── IndustrySolutions.jsx # Olive-style vertical portal switcher
+    │   │   ├── WhyChooseUs.jsx # 4-step progressive roadmap + executive preview
+    │   │   ├── OurWork.jsx    # Success stories with metrics & case studies
+    │   │   ├── Testimonials.jsx # Testimonials + CTA conversion card
+    │   │   ├── FaqSection.jsx # Smooth collapsible FAQ accordion
+    │   │   ├── Footer.jsx     # Comprehensive footer with WhatsApp button
+    │   │   └── ConsultationModal.jsx # Animated popup consultation modal
     │   ├── context/
     │   │   └── ContentContext.jsx # React Context for live content state
     │   ├── pages/
@@ -81,7 +83,7 @@ Tezscale/
     │   │   └── Admin.jsx          # Protected Admin Dashboard (/admin)
     │   ├── App.jsx
     │   ├── App.css
-    │   ├── index.css
+    │   ├── index.css          # Olive-style animations & system-ui typography
     │   └── main.jsx
     ├── .env
     ├── .env.example
@@ -100,7 +102,7 @@ cd backend
 npm run dev
 ```
 - Server URL: `http://localhost:5000` (auto-fallbacks to `5005` if 5000 is occupied)
-- Automatically connects to MongoDB Atlas, seeds default admin (`admin@tezscale.com` / `admin123`), and seeds UI content.
+- Connects to MongoDB Atlas, verifies admin (`admin@gmail.com` / `admin@123`), and serves REST APIs.
 
 ### 2. Run Frontend App
 ```powershell
