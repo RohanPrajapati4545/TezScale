@@ -62,7 +62,7 @@ const Testimonials = ({ onOpenConsultation }) => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
           
           {/* Left: Testimonial Card */}
-          <div className="lg:col-span-7 bg-white rounded-3xl p-8 sm:p-10 border border-slate-200/80 shadow-md text-left flex flex-col justify-between">
+          <div className="lg:col-span-7 bg-white rounded-3xl p-8 sm:p-10 border border-slate-200/80 shadow-md card-lift text-left flex flex-col justify-between">
             <div>
               <Quote className="w-10 h-10 text-blue-600 fill-blue-50 mb-4" />
               <blockquote className="text-lg sm:text-xl text-slate-800 font-semibold leading-relaxed">
@@ -104,7 +104,7 @@ const Testimonials = ({ onOpenConsultation }) => {
           </div>
 
           {/* Right: "Ready to Grow Your Business?" Card matching screenshot */}
-          <div className="lg:col-span-5 relative bg-white rounded-3xl p-8 sm:p-10 border border-slate-200/80 shadow-md flex flex-col items-center justify-center text-center space-y-5">
+          <div className="lg:col-span-5 relative bg-white rounded-3xl p-8 sm:p-10 border border-slate-200/80 shadow-md card-lift flex flex-col items-center justify-center text-center space-y-5">
             {/* Curved arrow doodle */}
             <div className="absolute top-4 right-4 hidden sm:block pointer-events-none select-none">
               <svg className="w-10 h-10 text-blue-400 stroke-current opacity-70" viewBox="0 0 50 50" fill="none">

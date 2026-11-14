@@ -105,7 +105,7 @@ const OurWork = ({ onOpenConsultation }) => {
           {caseStudies.map((study, idx) => (
             <div
               key={study._id || idx}
-              className="group bg-white rounded-3xl border border-slate-200/80 overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col text-left"
+              className="group bg-white rounded-3xl border border-slate-200/80 overflow-hidden shadow-sm card-lift flex flex-col text-left"
             >
               {/* Photo preview */}
               <div className="h-52 w-full overflow-hidden relative bg-slate-100">
