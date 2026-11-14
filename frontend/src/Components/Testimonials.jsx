@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { ChevronLeft, ChevronRight, Quote, Send, ArrowRight } from 'lucide-react';
 import { useContent } from '../context/ContentContext';
 
@@ -135,6 +136,17 @@ const Testimonials = ({ onOpenConsultation }) => {
             </button>
           </div>
 
+        </div>
+
+        {/* View All Testimonials Link */}
+        <div className="mt-12 text-center">
+          <Link
+            to="/testimonials"
+            className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-white hover:bg-blue-50 text-slate-800 hover:text-blue-600 border border-slate-200 font-bold text-sm transition-all hover:scale-102 shadow-xs"
+          >
+            <span>Read All 240+ Verified Client Reviews</span>
+            <ArrowRight className="w-4 h-4" />
+          </Link>
         </div>
 
       </div>

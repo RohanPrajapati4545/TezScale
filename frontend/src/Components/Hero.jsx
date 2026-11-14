@@ -9,19 +9,10 @@ const rotatingPhrases = [
   'dominate local search',
 ];
 
-const personas = [
-  { id: 'all', label: 'All Growth Pillars' },
-  { id: 'medical', label: 'Medical & Clinics', icon: <Stethoscope className="w-3.5 h-3.5" /> },
-  { id: 'realestate', label: 'Real Estate Brokers', icon: <Building2 className="w-3.5 h-3.5" /> },
-  { id: 'engineering', label: 'Engineering Firms', icon: <Wrench className="w-3.5 h-3.5" /> },
-  { id: 'retail', label: 'E-commerce & Retail', icon: <TrendingUp className="w-3.5 h-3.5" /> },
-];
-
 const Hero = ({ onOpenConsultation }) => {
   const { content } = useContent();
   const hero = content?.hero || {};
 
-  const [activePersona, setActivePersona] = useState('all');
   const [phraseIndex, setPhraseIndex] = useState(0);
 
   // Smooth rotator effect
@@ -33,33 +24,12 @@ const Hero = ({ onOpenConsultation }) => {
   }, []);
 
   return (
-    <section id="home" className="relative pt-8 pb-16 overflow-hidden bg-gradient-to-b from-blue-50/40 via-white to-white">
+    <section id="home" className="relative pt-12 pb-20 overflow-hidden bg-gradient-to-b from-blue-50/40 via-white to-white">
       {/* Background ambient lighting */}
       <div className="absolute top-1/4 right-10 w-96 h-96 bg-blue-200/30 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute top-20 left-10 w-80 h-80 bg-indigo-100/30 rounded-full blur-3xl pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        
-        {/* Olive-style Interactive Persona Subnav Pills */}
-        <div className="flex items-center justify-center mb-8 overflow-x-auto pb-2 scrollbar-none">
-          <div className="inline-flex items-center gap-2 p-1.5 rounded-full bg-slate-100/90 border border-slate-200/70 shadow-xs">
-            {personas.map((p) => {
-              const isActive = activePersona === p.id;
-              return (
-                <button
-                  key={p.id}
-                  onClick={() => setActivePersona(p.id)}
-                  className={`subnav-pill ${isActive ? 'active' : ''}`}
-                >
-                  {isActive && <span className="w-2 h-2 rounded-full bg-emerald-400 live-pulse-dot" />}
-                  {p.icon}
-                  <span>{p.label}</span>
-                </button>
-              );
-            })}
-          </div>
-        </div>
-
         {/* Main Hero Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           
@@ -85,16 +55,8 @@ const Hero = ({ onOpenConsultation }) => {
 
             {/* Subtitle */}
             <p className="anim-hero-3 text-slate-600 text-base sm:text-lg leading-relaxed max-w-xl">
-              {activePersona === 'medical'
-                ? 'Specialized local SEO, reputation management, and automated patient appointment booking for clinics and healthcare providers.'
-                : activePersona === 'realestate'
-                ? 'High-intent lead generation via precision Meta Ads, property visual funnels, and CRM pipeline tracking.'
-                : activePersona === 'engineering'
-                ? 'Engineering & manufacturing B2B branding, structured product catalogs, and international contract acquisition.'
-                : activePersona === 'retail'
-                ? 'E-commerce enablement, shopping cart conversion optimization, and high-ROI multi-channel ads.'
-                : hero.description ||
-                  'Transform your online presence with result-driven digital marketing strategies that bring real business growth. Engineered for high-converting B2B lead generation.'}
+              {hero.description ||
+                'Transform your online presence with result-driven digital marketing strategies that bring real business growth. Engineered for high-converting B2B lead generation.'}
             </p>
 
             {/* Dual CTA Buttons */}

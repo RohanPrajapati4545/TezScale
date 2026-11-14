@@ -1,12 +1,29 @@
 import React, { useState } from 'react';
-import { ChevronDown, ArrowRight, Menu, X, Shield, Sparkles } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { ChevronDown, ArrowRight, Menu, X, Shield } from 'lucide-react';
+import { Link, useLocation } from 'react-router-dom';
+
+const navItems = [
+  { name: 'Home', path: '/' },
+  { name: 'About Us', path: '/about' },
+  { name: 'Services', path: '/services', hasDropdown: true },
+  { name: 'Portfolio', path: '/portfolio' },
+  { name: 'Testimonials', path: '/testimonials' },
+  { name: 'Contact', path: '/contact' },
+];
 
 const Navbar = ({ onOpenConsultation }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const location = useLocation();
+
+  const isActive = (path) => {
+    if (path === '/') {
+      return location.pathname === '/';
+    }
+    return location.pathname.startsWith(path);
+  };
 
   return (
-    <header className="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-slate-200/70 transition-all duration-300 anim-navbar">
+    <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200/80 transition-all duration-300 anim-navbar shadow-xs">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           
@@ -28,44 +45,31 @@ const Navbar = ({ onOpenConsultation }) => {
             </div>
           </Link>
 
-          {/* Navigation Links with Olive-style smoothness */}
-          <nav className="hidden md:flex items-center gap-1.5 p-1.5 rounded-full bg-slate-100/70 border border-slate-200/60 text-[14px] font-semibold text-slate-600">
-            <a
-              href="#home"
-              className="px-4 py-2 rounded-full text-blue-700 bg-white shadow-xs font-bold transition-all"
-            >
-              Home
-            </a>
-            <a
-              href="#services"
-              className="px-4 py-2 rounded-full hover:text-slate-900 hover:bg-white/80 transition-all"
-            >
-              Core Services
-            </a>
-            <a
-              href="#industry-solutions"
-              className="px-4 py-2 rounded-full hover:text-slate-900 hover:bg-white/80 transition-all"
-            >
-              Industry Solutions
-            </a>
-            <a
-              href="#why-choose-us"
-              className="px-4 py-2 rounded-full hover:text-slate-900 hover:bg-white/80 transition-all"
-            >
-              Why TezScale
-            </a>
-            <a
-              href="#work"
-              className="px-4 py-2 rounded-full hover:text-slate-900 hover:bg-white/80 transition-all"
-            >
-              Portfolio
-            </a>
-            <a
-              href="#faq"
-              className="px-4 py-2 rounded-full hover:text-slate-900 hover:bg-white/80 transition-all"
-            >
-              FAQ
-            </a>
+          {/* Navigation Links with Active Blue State and Indicator Line */}
+          <nav className="hidden md:flex items-center gap-7 text-[15px]">
+            {navItems.map((item) => {
+              const active = isActive(item.path);
+              return (
+                <Link
+                  key={item.path}
+                  to={item.path}
+                  className={`relative py-1.5 flex items-center gap-1 transition-colors ${
+                    active
+                      ? 'text-blue-600 font-bold'
+                      : 'text-slate-600 hover:text-blue-600 font-medium'
+                  }`}
+                >
+                  <span>{item.name}</span>
+                  {item.hasDropdown && (
+                    <ChevronDown className={`w-3.5 h-3.5 transition-transform ${active ? 'text-blue-600' : 'text-slate-400'}`} />
+                  )}
+                  {/* Clean blue underline indicator matching image */}
+                  {active && (
+                    <span className="absolute -bottom-1 left-0 right-0 h-[2.5px] bg-blue-600 rounded-full transition-all duration-300" />
+                  )}
+                </Link>
+              );
+            })}
           </nav>
 
           {/* Right Action Buttons */}
@@ -90,12 +94,13 @@ const Navbar = ({ onOpenConsultation }) => {
 
           {/* Mobile Menu Button */}
           <div className="flex md:hidden items-center gap-2">
-            <Link to="/backoffice" className="p-2 text-slate-500">
+            <Link to="/backoffice" className="p-2 text-slate-500" title="Backoffice">
               <Shield className="w-5 h-5" />
             </Link>
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100"
+              className="p-2 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100 focus:outline-none"
+              aria-label="Toggle menu"
             >
               {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
@@ -106,25 +111,43 @@ const Navbar = ({ onOpenConsultation }) => {
 
       {/* Mobile Menu Dropdown */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-b border-slate-200 bg-white px-4 pt-3 pb-6 space-y-2 text-left">
-          <a href="#home" onClick={() => setMobileMenuOpen(false)} className="block px-3 py-2 text-base font-bold text-blue-600">Home</a>
-          <a href="#services" onClick={() => setMobileMenuOpen(false)} className="block px-3 py-2 text-base font-semibold text-slate-700">Core Services</a>
-          <a href="#industry-solutions" onClick={() => setMobileMenuOpen(false)} className="block px-3 py-2 text-base font-semibold text-slate-700">Industry Solutions</a>
-          <a href="#why-choose-us" onClick={() => setMobileMenuOpen(false)} className="block px-3 py-2 text-base font-semibold text-slate-700">Why TezScale</a>
-          <a href="#work" onClick={() => setMobileMenuOpen(false)} className="block px-3 py-2 text-base font-semibold text-slate-700">Portfolio</a>
-          <a href="#faq" onClick={() => setMobileMenuOpen(false)} className="block px-3 py-2 text-base font-semibold text-slate-700">FAQ</a>
-          <Link to="/backoffice" onClick={() => setMobileMenuOpen(false)} className="block px-3 py-2 text-sm font-bold text-amber-700 bg-amber-50 rounded-xl">
-            ⚡ Admin Backoffice Login
-          </Link>
-          <button
-            onClick={() => {
-              setMobileMenuOpen(false);
-              onOpenConsultation();
-            }}
-            className="w-full text-center bg-blue-600 text-white py-3 rounded-full font-bold mt-2 shadow-md shadow-blue-600/30"
-          >
-            Get a Free Consultation &rarr;
-          </button>
+        <div className="md:hidden border-b border-slate-200 bg-white px-4 pt-3 pb-6 space-y-1.5 text-left shadow-lg">
+          {navItems.map((item) => {
+            const active = isActive(item.path);
+            return (
+              <Link
+                key={item.path}
+                to={item.path}
+                onClick={() => setMobileMenuOpen(false)}
+                className={`block px-3.5 py-2.5 rounded-xl text-base transition-colors ${
+                  active
+                    ? 'text-blue-600 font-bold bg-blue-50'
+                    : 'text-slate-700 font-medium hover:bg-slate-50'
+                }`}
+              >
+                {item.name}
+              </Link>
+            );
+          })}
+          
+          <div className="pt-2 border-t border-slate-100 space-y-2">
+            <Link
+              to="/backoffice"
+              onClick={() => setMobileMenuOpen(false)}
+              className="block px-3.5 py-2.5 text-xs font-bold text-amber-800 bg-amber-50 rounded-xl"
+            >
+              ⚡ Admin Backoffice Login
+            </Link>
+            <button
+              onClick={() => {
+                setMobileMenuOpen(false);
+                onOpenConsultation();
+              }}
+              className="w-full text-center bg-blue-600 text-white py-3 rounded-full font-bold shadow-md shadow-blue-600/30"
+            >
+              Get a Free Consultation &rarr;
+            </button>
+          </div>
         </div>
       )}
     </header>

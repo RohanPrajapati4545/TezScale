@@ -103,6 +103,17 @@ const Services = ({ onOpenConsultation }) => {
           })}
         </div>
 
+        {/* View All Services Page Link */}
+        <div className="mt-12 text-center">
+          <a
+            href="/services"
+            className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-slate-100 hover:bg-blue-50 text-slate-800 hover:text-blue-600 border border-slate-200 font-bold text-sm transition-all hover:scale-102 shadow-xs"
+          >
+            <span>Explore All Services & Tech Deliverables</span>
+            <ArrowRight className="w-4 h-4" />
+          </a>
+        </div>
+
       </div>
     </section>
   );

@@ -83,11 +83,12 @@ const Footer = () => {
           <div className="lg:col-span-2 space-y-4">
             <h4 className="text-sm font-bold text-white uppercase tracking-wider">Quick Links</h4>
             <ul className="space-y-2.5 text-xs text-slate-400 font-medium">
-              <li><a href="#home" className="hover:text-blue-400 transition-colors">Home</a></li>
-              <li><a href="#why-choose-us" className="hover:text-blue-400 transition-colors">About Us</a></li>
-              <li><a href="#services" className="hover:text-blue-400 transition-colors">Core Services</a></li>
-              <li><a href="#work" className="hover:text-blue-400 transition-colors">Portfolio</a></li>
-              <li><a href="#contact" className="hover:text-blue-400 transition-colors">Contact</a></li>
+              <li><Link to="/" className="hover:text-blue-400 transition-colors">Home</Link></li>
+              <li><Link to="/about" className="hover:text-blue-400 transition-colors">About Us</Link></li>
+              <li><Link to="/services" className="hover:text-blue-400 transition-colors">Services</Link></li>
+              <li><Link to="/portfolio" className="hover:text-blue-400 transition-colors">Portfolio</Link></li>
+              <li><Link to="/testimonials" className="hover:text-blue-400 transition-colors">Testimonials</Link></li>
+              <li><Link to="/contact" className="hover:text-blue-400 transition-colors">Contact</Link></li>
             </ul>
           </div>
 
@@ -95,12 +96,12 @@ const Footer = () => {
           <div className="lg:col-span-3 space-y-4">
             <h4 className="text-sm font-bold text-white uppercase tracking-wider">Our Core Pillars</h4>
             <ul className="space-y-2.5 text-xs text-slate-400 font-medium">
-              <li><a href="#services" className="hover:text-blue-400 transition-colors">Website Builder & Dev</a></li>
-              <li><a href="#services" className="hover:text-blue-400 transition-colors">Graphic Design & Brand Kits</a></li>
-              <li><a href="#services" className="hover:text-blue-400 transition-colors">Digital Marketing Support (SEO)</a></li>
-              <li><a href="#services" className="hover:text-blue-400 transition-colors">E-commerce Enablement</a></li>
-              <li><a href="#services" className="hover:text-blue-400 transition-colors">Social Media Strategy</a></li>
-              <li><a href="#services" className="hover:text-blue-400 transition-colors">Meta Ads Management</a></li>
+              <li><Link to="/services" className="hover:text-blue-400 transition-colors">Website Builder & Dev</Link></li>
+              <li><Link to="/services" className="hover:text-blue-400 transition-colors">Graphic Design & Brand Kits</Link></li>
+              <li><Link to="/services" className="hover:text-blue-400 transition-colors">Digital Marketing Support (SEO)</Link></li>
+              <li><Link to="/services" className="hover:text-blue-400 transition-colors">E-commerce Enablement</Link></li>
+              <li><Link to="/services" className="hover:text-blue-400 transition-colors">Social Media Strategy</Link></li>
+              <li><Link to="/services" className="hover:text-blue-400 transition-colors">Meta Ads Management</Link></li>
             </ul>
           </div>
 

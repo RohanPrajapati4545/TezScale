@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { CheckCircle2, Play, ArrowRight, TrendingUp, Sparkles, Compass, Lightbulb, Zap, BarChart } from 'lucide-react';
 import { useContent } from '../context/ContentContext';
 
@@ -115,6 +116,14 @@ const WhyChooseUs = ({ onOpenConsultation }) => {
                 <span>{why.buttonText || 'Schedule Strategy Call'}</span>
                 <ArrowRight className="w-4 h-4" />
               </button>
+
+              <Link
+                to="/about"
+                className="inline-flex items-center gap-2 bg-slate-100 hover:bg-slate-200 text-slate-800 px-6 py-3.5 rounded-full text-sm font-bold border border-slate-200 transition-all hover:scale-102"
+              >
+                <span>Read Full Agency Story</span>
+                <ArrowRight className="w-4 h-4" />
+              </Link>
             </div>
 
             {/* Boardroom Preview Photo */}

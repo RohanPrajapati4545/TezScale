@@ -65,23 +65,29 @@ Tezscale/
     │   ├── api/
     │   │   └── apiClient.js   # Auto-detecting API connector (port 5000 / 5005)
     │   ├── Components/
-    │   │   ├── Navbar.jsx     # Frosted glass navbar with pill navigation
-    │   │   ├── Hero.jsx       # Olive-style hero with pill filters & laptop showcase
+    │   │   ├── Navbar.jsx     # Navigation bar with active blue link & indicator underline
+    │   │   ├── Hero.jsx       # Clean high-converting hero with animated rotating title
     │   │   ├── Services.jsx   # 6 Modern digital marketing cards with .card-lift
-    │   │   ├── IndustrySolutions.jsx # Olive-style vertical portal switcher
+    │   │   ├── IndustrySolutions.jsx # Vertical portal switcher
     │   │   ├── WhyChooseUs.jsx # 4-step progressive roadmap + executive preview
     │   │   ├── OurWork.jsx    # Success stories with metrics & case studies
     │   │   ├── Testimonials.jsx # Testimonials + CTA conversion card
     │   │   ├── FaqSection.jsx # Smooth collapsible FAQ accordion
     │   │   ├── Footer.jsx     # Comprehensive footer with WhatsApp button
+    │   │   ├── ScrollToTop.jsx # Smooth scroll to top on route change
     │   │   └── ConsultationModal.jsx # Animated popup consultation modal
     │   ├── context/
     │   │   └── ContentContext.jsx # React Context for live content state
     │   ├── pages/
-    │   │   ├── Home.jsx           # Main Landing Page
-    │   │   ├── BackofficeLogin.jsx # Admin Login Portal (/backoffice)
+    │   │   ├── Home.jsx           # Main Landing Page with summary previews
+    │   │   ├── About.jsx          # Dedicated About Us Page (/about)
+    │   │   ├── ServicesPage.jsx   # Dedicated Core Services Page (/services)
+    │   │   ├── PortfolioPage.jsx  # Dedicated Portfolio & Case Studies Page (/portfolio)
+    │   │   ├── TestimonialsPage.jsx # Dedicated Testimonials & Social Proof (/testimonials)
+    │   │   ├── ContactPage.jsx    # Dedicated Contact & Inquiries Page (/contact)
+    │   │   ├── BackofficeLogin.jsx # Admin Login with Show/Hide Password (/backoffice)
     │   │   └── Admin.jsx          # Protected Admin Dashboard (/admin)
-    │   ├── App.jsx
+    │   ├── App.jsx            # Full Multi-Page Routing Architecture
     │   ├── App.css
     │   ├── index.css          # Olive-style animations & system-ui typography
     │   └── main.jsx

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { ChevronLeft, ChevronRight, ArrowUpRight, BarChart3, Users, Clock } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { ChevronLeft, ChevronRight, ArrowUpRight, BarChart3, Users, Clock, ArrowRight } from 'lucide-react';
 import { useContent } from '../context/ContentContext';
 
 const OurWork = ({ onOpenConsultation }) => {
@@ -140,6 +141,17 @@ const OurWork = ({ onOpenConsultation }) => {
               </div>
             </div>
           ))}
+        </div>
+
+        {/* View All Case Studies Link */}
+        <div className="mt-12 text-center">
+          <Link
+            to="/portfolio"
+            className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-slate-100 hover:bg-blue-50 text-slate-800 hover:text-blue-600 border border-slate-200 font-bold text-sm transition-all hover:scale-102 shadow-xs"
+          >
+            <span>Explore All Client Case Studies & Metrics</span>
+            <ArrowRight className="w-4 h-4" />
+          </Link>
         </div>
 
       </div>
