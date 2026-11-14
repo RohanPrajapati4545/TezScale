@@ -196,3 +196,4 @@ const IndustrySolutions = ({ onOpenConsultation }) => {
 };
 
 export default IndustrySolutions;
+

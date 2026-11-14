@@ -189,3 +189,48 @@
   transform: translateY(-6px);
   box-shadow: 0 20px 30px -10px rgba(15, 23, 42, 0.08), 0 10px 10px -5px rgba(15, 23, 42, 0.04);
 }
+
+/* Slow Smooth Animations */
+@keyframes slowFadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slowFadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes dropdownSmoothIn {
+  0% {
+    opacity: 0;
+    transform: translateY(8px) scale(0.98);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.anim-slow-slide {
+  animation: slowFadeInUp 0.75s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.anim-slow-fade {
+  animation: slowFadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.anim-dropdown {
+  animation: dropdownSmoothIn 0.28s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+

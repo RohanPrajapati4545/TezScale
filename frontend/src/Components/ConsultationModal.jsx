@@ -80,29 +80,29 @@ const ConsultationModal = ({ isOpen, onClose }) => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/75 backdrop-blur-md animate-fade-in">
-      <div className="relative w-full max-w-lg bg-white rounded-3xl shadow-2xl overflow-hidden border border-slate-100 transition-all">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-sm transition-opacity duration-700 ease-out anim-slow-fade">
+      <div className="relative w-full max-w-lg bg-white rounded-xl shadow-2xl overflow-hidden border border-slate-200/90 transition-all duration-700 ease-out anim-slow-slide">
         
         {/* Header */}
-        <div className="bg-gradient-to-r from-blue-700 via-blue-600 to-indigo-700 px-6 py-5 text-white flex items-center justify-between">
+        <div className="bg-gradient-to-r from-blue-700 via-blue-600 to-indigo-700 px-6 py-4 text-white flex items-center justify-between">
           <div className="text-left">
-            <div className="text-[11px] font-bold uppercase tracking-wider text-blue-200">TezScale Lead Capture</div>
-            <h3 className="text-xl font-extrabold tracking-tight">Request Free Growth Consultation</h3>
+            <div className="text-[10px] font-bold uppercase tracking-wider text-blue-200">TezScale Lead Capture</div>
+            <h3 className="text-lg font-extrabold tracking-tight">Request Free Growth Consultation</h3>
           </div>
           <button
             onClick={onClose}
-            className="w-8 h-8 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center text-white transition-colors cursor-pointer"
+            className="w-8 h-8 rounded-lg bg-white/20 hover:bg-white/30 flex items-center justify-center text-white transition-colors cursor-pointer"
           >
-            <X className="w-5 h-5" />
+            <X className="w-4 h-4" />
           </button>
         </div>
 
         {/* Content */}
         <div className="p-6">
           {success ? (
-            <div className="py-8 text-center space-y-3">
-              <div className="w-16 h-16 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto shadow-sm">
-                <CheckCircle2 className="w-9 h-9" />
+            <div className="py-8 text-center space-y-3 anim-slow-fade">
+              <div className="w-14 h-14 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto shadow-sm">
+                <CheckCircle2 className="w-8 h-8" />
               </div>
               <h4 className="text-xl font-bold text-slate-900">Inquiry Received!</h4>
               <p className="text-sm text-slate-500 max-w-sm mx-auto">
@@ -110,9 +110,9 @@ const ConsultationModal = ({ isOpen, onClose }) => {
               </p>
             </div>
           ) : (
-            <form onSubmit={handleSubmit} className="space-y-3.5 text-left">
+            <form onSubmit={handleSubmit} className="space-y-3 text-left">
               {error && (
-                <div className="p-3 text-xs bg-rose-50 text-rose-600 border border-rose-200 rounded-xl font-semibold">
+                <div className="p-2.5 text-xs bg-rose-50 text-rose-600 border border-rose-200 rounded-lg font-semibold">
                   {error}
                 </div>
               )}
@@ -123,7 +123,7 @@ const ConsultationModal = ({ isOpen, onClose }) => {
                   Full Name * <span className="text-[10px] text-slate-400 font-normal">(Min 2 chars)</span>
                 </label>
                 <div className="relative">
-                  <User className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+                  <User className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
                   <input
                     type="text"
                     name="name"
@@ -131,7 +131,7 @@ const ConsultationModal = ({ isOpen, onClose }) => {
                     value={formData.name}
                     onChange={handleChange}
                     placeholder="e.g. Dr. Aryan Mehta"
-                    className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                    className="w-full pl-9 pr-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-xs font-medium focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none transition-all"
                   />
                 </div>
               </div>
@@ -143,7 +143,7 @@ const ConsultationModal = ({ isOpen, onClose }) => {
                     WhatsApp Number *
                   </label>
                   <div className="relative">
-                    <Phone className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+                    <Phone className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
                     <input
                       type="tel"
                       name="whatsapp"
@@ -151,7 +151,7 @@ const ConsultationModal = ({ isOpen, onClose }) => {
                       value={formData.whatsapp}
                       onChange={handleChange}
                       placeholder="+91 98765 43210"
-                      className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                      className="w-full pl-9 pr-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-xs font-medium focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none transition-all"
                     />
                   </div>
                 </div>
@@ -161,7 +161,7 @@ const ConsultationModal = ({ isOpen, onClose }) => {
                     Email Address *
                   </label>
                   <div className="relative">
-                    <Mail className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+                    <Mail className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
                     <input
                       type="email"
                       name="email"
@@ -169,7 +169,7 @@ const ConsultationModal = ({ isOpen, onClose }) => {
                       value={formData.email}
                       onChange={handleChange}
                       placeholder="name@business.com"
-                      className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                      className="w-full pl-9 pr-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-xs font-medium focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none transition-all"
                     />
                   </div>
                 </div>
@@ -182,12 +182,12 @@ const ConsultationModal = ({ isOpen, onClose }) => {
                     Business Type *
                   </label>
                   <div className="relative">
-                    <Briefcase className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+                    <Briefcase className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
                     <select
                       name="businessType"
                       value={formData.businessType}
                       onChange={handleChange}
-                      className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                      className="w-full pl-9 pr-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-xs font-semibold focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none transition-all"
                     >
                       <option value="Doctor / Clinic">Doctor / Clinic</option>
                       <option value="Real Estate">Real Estate</option>
@@ -203,12 +203,12 @@ const ConsultationModal = ({ isOpen, onClose }) => {
                     Service Required *
                   </label>
                   <div className="relative">
-                    <Layers className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+                    <Layers className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
                     <select
                       name="serviceRequired"
                       value={formData.serviceRequired}
                       onChange={handleChange}
-                      className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                      className="w-full pl-9 pr-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-xs font-semibold focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none transition-all"
                     >
                       <option value="Website Builder & Development">Website Builder & Development</option>
                       <option value="Graphic Design">Graphic Design</option>
@@ -232,7 +232,7 @@ const ConsultationModal = ({ isOpen, onClose }) => {
                   </span>
                 </div>
                 <div className="relative">
-                  <MessageSquare className="w-4 h-4 text-slate-400 absolute left-3.5 top-3" />
+                  <MessageSquare className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
                   <textarea
                     rows="2"
                     name="message"
@@ -240,7 +240,7 @@ const ConsultationModal = ({ isOpen, onClose }) => {
                     value={formData.message}
                     onChange={handleChange}
                     placeholder="Briefly describe your digital growth objectives..."
-                    className="w-full pl-10 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                    className="w-full pl-9 pr-3.5 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none transition-all"
                   />
                 </div>
               </div>
@@ -249,7 +249,7 @@ const ConsultationModal = ({ isOpen, onClose }) => {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full py-3.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl text-sm shadow-lg shadow-blue-600/30 transition-all flex items-center justify-center gap-2 cursor-pointer mt-1"
+                className="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg text-xs sm:text-sm shadow-md shadow-blue-600/25 transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer mt-1"
               >
                 {loading ? (
                   <>

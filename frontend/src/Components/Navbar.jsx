@@ -1,19 +1,74 @@
-import React, { useState } from 'react';
-import { ChevronDown, ArrowRight, Menu, X, Shield } from 'lucide-react';
+import React, { useState, useRef } from 'react';
+import { 
+  ChevronDown, 
+  ArrowRight, 
+  Menu, 
+  X, 
+  Code2, 
+  Palette, 
+  Megaphone, 
+  ShoppingCart, 
+  Share2, 
+  Infinity as InfinityIcon,
+  Sparkles
+} from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 
-const navItems = [
-  { name: 'Home', path: '/' },
-  { name: 'About Us', path: '/about' },
-  { name: 'Services', path: '/services', hasDropdown: true },
-  { name: 'Portfolio', path: '/portfolio' },
-  { name: 'Testimonials', path: '/testimonials' },
-  { name: 'Contact', path: '/contact' },
+const servicesDropdownList = [
+  {
+    title: 'Website Builder & Development',
+    desc: 'High-speed, responsive & SEO-optimized architectures',
+    icon: <Code2 className="w-4 h-4 text-blue-600" />,
+    path: '/services',
+  },
+  {
+    title: 'Graphic Design & Brand Kits',
+    desc: 'High-converting ad creatives & visual identities',
+    icon: <Palette className="w-4 h-4 text-purple-600" />,
+    path: '/services',
+  },
+  {
+    title: 'Digital Marketing Support (SEO)',
+    desc: 'Google Maps Top 3 & local search dominance',
+    icon: <Megaphone className="w-4 h-4 text-emerald-600" />,
+    path: '/services',
+  },
+  {
+    title: 'E-Commerce Enablement & Scaling',
+    desc: 'Frictionless checkout & cart recovery funnels',
+    icon: <ShoppingCart className="w-4 h-4 text-amber-500" />,
+    path: '/services',
+  },
+  {
+    title: 'Social Media Strategy & Reels',
+    desc: 'Viral short-form content & engaged community',
+    icon: <Share2 className="w-4 h-4 text-indigo-600" />,
+    path: '/services',
+  },
+  {
+    title: 'Meta Ads Management (FB & IG)',
+    desc: 'Precision targeted campaigns with measurable ROAS',
+    icon: <InfinityIcon className="w-4 h-4 text-rose-500" />,
+    path: '/services',
+  },
 ];
 
 const Navbar = ({ onOpenConsultation }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [servicesDropdownOpen, setServicesDropdownOpen] = useState(false);
   const location = useLocation();
+  const dropdownTimeoutRef = useRef(null);
+
+  const handleMouseEnter = () => {
+    if (dropdownTimeoutRef.current) clearTimeout(dropdownTimeoutRef.current);
+    setServicesDropdownOpen(true);
+  };
+
+  const handleMouseLeave = () => {
+    dropdownTimeoutRef.current = setTimeout(() => {
+      setServicesDropdownOpen(false);
+    }, 150);
+  };
 
   const isActive = (path) => {
     if (path === '/') {
@@ -47,42 +102,150 @@ const Navbar = ({ onOpenConsultation }) => {
 
           {/* Navigation Links with Active Blue State and Indicator Line */}
           <nav className="hidden md:flex items-center gap-7 text-[15px]">
-            {navItems.map((item) => {
-              const active = isActive(item.path);
-              return (
-                <Link
-                  key={item.path}
-                  to={item.path}
-                  className={`relative py-1.5 flex items-center gap-1 transition-colors ${
-                    active
-                      ? 'text-blue-600 font-bold'
-                      : 'text-slate-600 hover:text-blue-600 font-medium'
-                  }`}
-                >
-                  <span>{item.name}</span>
-                  {item.hasDropdown && (
-                    <ChevronDown className={`w-3.5 h-3.5 transition-transform ${active ? 'text-blue-600' : 'text-slate-400'}`} />
-                  )}
-                  {/* Clean blue underline indicator matching image */}
-                  {active && (
-                    <span className="absolute -bottom-1 left-0 right-0 h-[2.5px] bg-blue-600 rounded-full transition-all duration-300" />
-                  )}
-                </Link>
-              );
-            })}
-          </nav>
-
-          {/* Right Action Buttons */}
-          <div className="hidden md:flex items-center gap-3">
+            {/* Home */}
             <Link
-              to="/backoffice"
-              className="px-3.5 py-2 text-xs font-bold text-slate-500 hover:text-blue-600 bg-slate-100 hover:bg-blue-50 border border-slate-200 rounded-full transition-all flex items-center gap-1.5"
-              title="Admin Backoffice Portal"
+              to="/"
+              className={`relative py-1.5 flex items-center gap-1 transition-colors ${
+                isActive('/') ? 'text-blue-600 font-bold' : 'text-slate-600 hover:text-blue-600 font-medium'
+              }`}
             >
-              <Shield className="w-3.5 h-3.5" />
-              <span>Backoffice</span>
+              <span>Home</span>
+              {isActive('/') && (
+                <span className="absolute -bottom-1 left-0 right-0 h-[2.5px] bg-blue-600 rounded-full transition-all duration-300" />
+              )}
             </Link>
 
+            {/* About Us */}
+            <Link
+              to="/about"
+              className={`relative py-1.5 flex items-center gap-1 transition-colors ${
+                isActive('/about') ? 'text-blue-600 font-bold' : 'text-slate-600 hover:text-blue-600 font-medium'
+              }`}
+            >
+              <span>About Us</span>
+              {isActive('/about') && (
+                <span className="absolute -bottom-1 left-0 right-0 h-[2.5px] bg-blue-600 rounded-full transition-all duration-300" />
+              )}
+            </Link>
+
+            {/* Services with Smooth Animated Hover Dropdown */}
+            <div
+              className="relative"
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
+            >
+              <Link
+                to="/services"
+                className={`relative py-1.5 flex items-center gap-1 transition-colors cursor-pointer ${
+                  isActive('/services') ? 'text-blue-600 font-bold' : 'text-slate-600 hover:text-blue-600 font-medium'
+                }`}
+              >
+                <span>Services</span>
+                <ChevronDown
+                  className={`w-3.5 h-3.5 transition-transform duration-300 ${
+                    servicesDropdownOpen ? 'rotate-180 text-blue-600' : 'text-slate-400'
+                  }`}
+                />
+                {isActive('/services') && (
+                  <span className="absolute -bottom-1 left-0 right-0 h-[2.5px] bg-blue-600 rounded-full transition-all duration-300" />
+                )}
+              </Link>
+
+              {/* Animated Services Dropdown Menu */}
+              {servicesDropdownOpen && (
+                <div className="absolute top-full -left-20 pt-2 w-[480px] z-50 anim-dropdown">
+                  <div className="bg-white rounded-2xl shadow-2xl border border-slate-200/90 p-4 text-left overflow-hidden">
+                    <div className="px-3 py-2 border-b border-slate-100 flex items-center justify-between mb-2">
+                      <span className="text-[11px] font-extrabold uppercase tracking-wider text-slate-400">
+                        Our Core Service Offerings
+                      </span>
+                      <span className="text-[10px] font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded-full">
+                        6 Pillars
+                      </span>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                      {servicesDropdownList.map((item, idx) => (
+                        <Link
+                          key={idx}
+                          to={item.path}
+                          onClick={() => setServicesDropdownOpen(false)}
+                          className="p-2.5 rounded-xl hover:bg-blue-50/80 transition-all flex items-start gap-2.5 group"
+                        >
+                          <div className="w-8 h-8 rounded-lg bg-slate-50 border border-slate-200/80 group-hover:bg-white group-hover:border-blue-300 flex items-center justify-center flex-shrink-0 transition-all shadow-2xs">
+                            {item.icon}
+                          </div>
+                          <div>
+                            <div className="text-xs font-bold text-slate-800 group-hover:text-blue-600 transition-colors leading-snug">
+                              {item.title}
+                            </div>
+                            <div className="text-[10px] text-slate-500 line-clamp-1 mt-0.5">
+                              {item.desc}
+                            </div>
+                          </div>
+                        </Link>
+                      ))}
+                    </div>
+
+                    {/* Dropdown Footer */}
+                    <div className="mt-3 pt-3 border-t border-slate-100 flex items-center justify-between px-2">
+                      <span className="text-[11px] text-slate-500 font-medium">Looking for a custom plan?</span>
+                      <Link
+                        to="/services"
+                        onClick={() => setServicesDropdownOpen(false)}
+                        className="text-xs font-bold text-blue-600 hover:text-blue-700 flex items-center gap-1 group"
+                      >
+                        <span>View All Services</span>
+                        <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Portfolio */}
+            <Link
+              to="/portfolio"
+              className={`relative py-1.5 flex items-center gap-1 transition-colors ${
+                isActive('/portfolio') ? 'text-blue-600 font-bold' : 'text-slate-600 hover:text-blue-600 font-medium'
+              }`}
+            >
+              <span>Portfolio</span>
+              {isActive('/portfolio') && (
+                <span className="absolute -bottom-1 left-0 right-0 h-[2.5px] bg-blue-600 rounded-full transition-all duration-300" />
+              )}
+            </Link>
+
+            {/* Testimonials */}
+            <Link
+              to="/testimonials"
+              className={`relative py-1.5 flex items-center gap-1 transition-colors ${
+                isActive('/testimonials') ? 'text-blue-600 font-bold' : 'text-slate-600 hover:text-blue-600 font-medium'
+              }`}
+            >
+              <span>Testimonials</span>
+              {isActive('/testimonials') && (
+                <span className="absolute -bottom-1 left-0 right-0 h-[2.5px] bg-blue-600 rounded-full transition-all duration-300" />
+              )}
+            </Link>
+
+            {/* Contact */}
+            <Link
+              to="/contact"
+              className={`relative py-1.5 flex items-center gap-1 transition-colors ${
+                isActive('/contact') ? 'text-blue-600 font-bold' : 'text-slate-600 hover:text-blue-600 font-medium'
+              }`}
+            >
+              <span>Contact</span>
+              {isActive('/contact') && (
+                <span className="absolute -bottom-1 left-0 right-0 h-[2.5px] bg-blue-600 rounded-full transition-all duration-300" />
+              )}
+            </Link>
+          </nav>
+
+          {/* Right Action Button (Clean Consultation CTA - Backoffice removed as requested) */}
+          <div className="hidden md:flex items-center gap-3">
             <button
               onClick={onOpenConsultation}
               className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white px-5 py-2.5 rounded-full text-sm font-bold shadow-md shadow-blue-600/25 transition-all hover:scale-102 hover:shadow-lg cursor-pointer"
@@ -94,9 +257,6 @@ const Navbar = ({ onOpenConsultation }) => {
 
           {/* Mobile Menu Button */}
           <div className="flex md:hidden items-center gap-2">
-            <Link to="/backoffice" className="p-2 text-slate-500" title="Backoffice">
-              <Shield className="w-5 h-5" />
-            </Link>
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="p-2 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100 focus:outline-none"
@@ -111,8 +271,15 @@ const Navbar = ({ onOpenConsultation }) => {
 
       {/* Mobile Menu Dropdown */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-b border-slate-200 bg-white px-4 pt-3 pb-6 space-y-1.5 text-left shadow-lg">
-          {navItems.map((item) => {
+        <div className="md:hidden border-b border-slate-200 bg-white px-4 pt-3 pb-6 space-y-1.5 text-left shadow-lg anim-slow-slide">
+          {[
+            { name: 'Home', path: '/' },
+            { name: 'About Us', path: '/about' },
+            { name: 'Services', path: '/services' },
+            { name: 'Portfolio', path: '/portfolio' },
+            { name: 'Testimonials', path: '/testimonials' },
+            { name: 'Contact', path: '/contact' },
+          ].map((item) => {
             const active = isActive(item.path);
             return (
               <Link
@@ -130,20 +297,13 @@ const Navbar = ({ onOpenConsultation }) => {
             );
           })}
           
-          <div className="pt-2 border-t border-slate-100 space-y-2">
-            <Link
-              to="/backoffice"
-              onClick={() => setMobileMenuOpen(false)}
-              className="block px-3.5 py-2.5 text-xs font-bold text-amber-800 bg-amber-50 rounded-xl"
-            >
-              ⚡ Admin Backoffice Login
-            </Link>
+          <div className="pt-2 border-t border-slate-100">
             <button
               onClick={() => {
                 setMobileMenuOpen(false);
                 onOpenConsultation();
               }}
-              className="w-full text-center bg-blue-600 text-white py-3 rounded-full font-bold shadow-md shadow-blue-600/30"
+              className="w-full text-center bg-blue-600 text-white py-3 rounded-full font-bold shadow-md shadow-blue-600/30 cursor-pointer"
             >
               Get a Free Consultation &rarr;
             </button>

@@ -159,12 +159,12 @@ const Admin = () => {
   });
 
   return (
-    <div className="min-h-screen bg-slate-100/70 text-slate-800 flex flex-col">
+    <div className="min-h-screen bg-slate-100/70 text-slate-800 flex flex-col anim-slow-fade">
       {/* Admin Top Header */}
-      <header className="bg-slate-900 text-white sticky top-0 z-40 shadow-lg border-b border-slate-800">
+      <header className="bg-slate-900 text-white sticky top-0 z-40 shadow-lg border-b border-slate-800 transition-all duration-500">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-blue-600 flex items-center justify-center font-bold text-white shadow-md">
+            <div className="w-9 h-9 rounded-lg bg-blue-600 flex items-center justify-center font-bold text-white shadow-md">
               A
             </div>
             <div>
@@ -188,7 +188,7 @@ const Admin = () => {
 
             <Link
               to="/"
-              className="inline-flex items-center gap-1.5 px-4 py-2 text-xs sm:text-sm font-bold text-white bg-blue-600 hover:bg-blue-500 rounded-xl shadow-md shadow-blue-600/30 transition-all hover:scale-105"
+              className="inline-flex items-center gap-1.5 px-4 py-2 text-xs sm:text-sm font-bold text-white bg-blue-600 hover:bg-blue-500 rounded-lg shadow-md shadow-blue-600/30 transition-all duration-300 hover:scale-102"
             >
               <Home className="w-4 h-4" />
               <span>View Website</span>
@@ -197,7 +197,7 @@ const Admin = () => {
 
             <button
               onClick={handleLogout}
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs sm:text-sm font-semibold text-rose-300 bg-rose-500/15 hover:bg-rose-500/25 border border-rose-500/30 rounded-xl transition-colors cursor-pointer"
+              className="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs sm:text-sm font-semibold text-rose-300 bg-rose-500/15 hover:bg-rose-500/25 border border-rose-500/30 rounded-lg transition-colors cursor-pointer"
               title="Logout"
             >
               <LogOut className="w-4 h-4" />
@@ -208,12 +208,12 @@ const Admin = () => {
       </header>
 
       {/* Main Container */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1 w-full">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1 w-full anim-slow-slide">
         
         {/* Toast Alert */}
         {saveStatus.show && (
           <div
-            className={`fixed bottom-6 right-6 z-50 px-5 py-3.5 rounded-2xl shadow-2xl flex items-center gap-3 text-sm font-semibold transition-all animate-bounce ${
+            className={`fixed bottom-6 right-6 z-50 px-5 py-3.5 rounded-xl shadow-2xl flex items-center gap-3 text-sm font-semibold transition-all duration-500 anim-slow-slide ${
               saveStatus.type === 'success'
                 ? 'bg-emerald-600 text-white shadow-emerald-600/30'
                 : 'bg-rose-600 text-white shadow-rose-600/30'
@@ -229,12 +229,12 @@ const Admin = () => {
         )}
 
         {/* Dashboard Tabs Bar */}
-        <div className="bg-white rounded-2xl p-2 shadow-sm border border-slate-200/80 mb-8 flex flex-wrap gap-2">
+        <div className="bg-white rounded-xl p-1.5 shadow-xs border border-slate-200/90 mb-8 flex flex-wrap gap-1.5 transition-all duration-500">
           <button
             onClick={() => setActiveTab('leads')}
-            className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-bold transition-all cursor-pointer ${
+            className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs sm:text-sm font-bold transition-all duration-300 cursor-pointer ${
               activeTab === 'leads'
-                ? 'bg-blue-600 text-white shadow-md shadow-blue-500/25'
+                ? 'bg-blue-600 text-white shadow-xs'
                 : 'text-slate-600 hover:bg-slate-100'
             }`}
           >
@@ -242,7 +242,7 @@ const Admin = () => {
             <span>Manage Leads</span>
             {leads.length > 0 && (
               <span
-                className={`ml-1 text-xs px-2 py-0.5 rounded-full font-bold ${
+                className={`ml-1 text-[11px] px-2 py-0.5 rounded-full font-bold ${
                   activeTab === 'leads' ? 'bg-blue-800 text-white' : 'bg-blue-100 text-blue-700'
                 }`}
               >
@@ -253,9 +253,9 @@ const Admin = () => {
 
           <button
             onClick={() => setActiveTab('hero')}
-            className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-bold transition-all cursor-pointer ${
+            className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs sm:text-sm font-bold transition-all duration-300 cursor-pointer ${
               activeTab === 'hero'
-                ? 'bg-blue-600 text-white shadow-md shadow-blue-500/25'
+                ? 'bg-blue-600 text-white shadow-xs'
                 : 'text-slate-600 hover:bg-slate-100'
             }`}
           >
@@ -314,60 +314,60 @@ const Admin = () => {
 
         {/* TAB 1: LEADS MANAGEMENT */}
         {activeTab === 'leads' && (
-          <div className="space-y-6">
+          <div className="space-y-6 anim-slow-slide">
             {/* Stat Counters */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-              <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between">
+              <div className="bg-white p-5 rounded-xl border border-slate-200/90 shadow-xs flex items-center justify-between transition-all duration-500 hover:shadow-md">
                 <div>
                   <div className="text-xs font-semibold text-slate-400 uppercase">Total Leads</div>
-                  <div className="text-2xl font-extrabold text-slate-900 mt-1">{leadStats.total || leads.length}</div>
+                  <div className="text-2xl font-black text-slate-900 mt-1">{leadStats.total || leads.length}</div>
                 </div>
-                <div className="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center font-bold">
-                  <Users className="w-6 h-6" />
+                <div className="w-11 h-11 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center font-bold">
+                  <Users className="w-5 h-5" />
                 </div>
               </div>
 
-              <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between">
+              <div className="bg-white p-5 rounded-xl border border-slate-200/90 shadow-xs flex items-center justify-between transition-all duration-500 hover:shadow-md">
                 <div>
                   <div className="text-xs font-semibold text-slate-400 uppercase">New Leads</div>
-                  <div className="text-2xl font-extrabold text-blue-600 mt-1">{leadStats.new || 0}</div>
+                  <div className="text-2xl font-black text-blue-600 mt-1">{leadStats.new || 0}</div>
                 </div>
-                <div className="w-12 h-12 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center font-bold">
-                  <Sparkles className="w-6 h-6" />
+                <div className="w-11 h-11 rounded-lg bg-blue-100 text-blue-600 flex items-center justify-center font-bold">
+                  <Sparkles className="w-5 h-5" />
                 </div>
               </div>
 
-              <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between">
+              <div className="bg-white p-5 rounded-xl border border-slate-200/90 shadow-xs flex items-center justify-between transition-all duration-500 hover:shadow-md">
                 <div>
                   <div className="text-xs font-semibold text-slate-400 uppercase">In Progress</div>
-                  <div className="text-2xl font-extrabold text-amber-600 mt-1">{leadStats.inProgress || 0}</div>
+                  <div className="text-2xl font-black text-amber-600 mt-1">{leadStats.inProgress || 0}</div>
                 </div>
-                <div className="w-12 h-12 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center font-bold">
-                  <Clock className="w-6 h-6" />
+                <div className="w-11 h-11 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center font-bold">
+                  <Clock className="w-5 h-5" />
                 </div>
               </div>
 
-              <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between">
+              <div className="bg-white p-5 rounded-xl border border-slate-200/90 shadow-xs flex items-center justify-between transition-all duration-500 hover:shadow-md">
                 <div>
                   <div className="text-xs font-semibold text-slate-400 uppercase">Converted</div>
-                  <div className="text-2xl font-extrabold text-emerald-600 mt-1">{leadStats.converted || 0}</div>
+                  <div className="text-2xl font-black text-emerald-600 mt-1">{leadStats.converted || 0}</div>
                 </div>
-                <div className="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold">
-                  <CheckCircle className="w-6 h-6" />
+                <div className="w-11 h-11 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold">
+                  <CheckCircle className="w-5 h-5" />
                 </div>
               </div>
             </div>
 
             {/* Filter & Search Bar */}
-            <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div className="bg-white p-4 rounded-xl border border-slate-200/90 shadow-xs flex flex-col sm:flex-row items-center justify-between gap-4 transition-all duration-500">
               <div className="relative w-full sm:w-80">
-                <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+                <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
                 <input
                   type="text"
                   placeholder="Search lead by name, email, or website..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full pl-9 pr-3.5 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs font-medium focus:outline-none focus:ring-1 focus:ring-blue-500 transition-all duration-300"
                 />
               </div>
 
@@ -377,7 +377,7 @@ const Admin = () => {
                   <select
                     value={statusFilter}
                     onChange={(e) => setStatusFilter(e.target.value)}
-                    className="bg-slate-50 border border-slate-200 rounded-xl text-sm px-3 py-2 font-medium focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="bg-slate-50 border border-slate-200 rounded-lg text-xs px-3 py-2 font-medium focus:outline-none focus:ring-1 focus:ring-blue-500 transition-all duration-300"
                   >
                     <option value="All">All Statuses</option>
                     <option value="New">New</option>
@@ -391,7 +391,7 @@ const Admin = () => {
                 <button
                   onClick={fetchLeads}
                   disabled={leadsLoading}
-                  className="p-2 text-slate-600 hover:text-blue-600 hover:bg-slate-100 rounded-xl border border-slate-200 transition-colors"
+                  className="p-2 text-slate-600 hover:text-blue-600 hover:bg-slate-100 rounded-lg border border-slate-200 transition-colors"
                   title="Refresh Leads"
                 >
                   <RefreshCw className={`w-4 h-4 ${leadsLoading ? 'animate-spin text-blue-600' : ''}`} />
@@ -400,7 +400,7 @@ const Admin = () => {
             </div>
 
             {/* Leads Table */}
-            <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+            <div className="bg-white rounded-xl border border-slate-200/90 shadow-xs overflow-hidden transition-all duration-500">
               <div className="overflow-x-auto">
                 <table className="w-full text-left border-collapse">
                   <thead>

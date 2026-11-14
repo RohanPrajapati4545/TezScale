@@ -109,3 +109,4 @@ const FaqSection = ({ onOpenConsultation }) => {
 };
 
 export default FaqSection;
+

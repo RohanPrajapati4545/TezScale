@@ -196,21 +196,21 @@ const ContactPage = () => {
 
               {/* Right Column: Lead Form */}
               <div className="lg:col-span-7">
-                <div className="bg-white rounded-3xl p-8 sm:p-10 border border-slate-200/90 shadow-xl relative overflow-hidden">
-                  <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-blue-600 via-blue-500 to-cyan-500" />
+                <div className="bg-white rounded-xl p-8 sm:p-9 border border-slate-200/90 shadow-xl relative overflow-hidden anim-slow-slide">
+                  <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-600 via-blue-500 to-cyan-500" />
 
                   {success ? (
-                    <div className="py-12 text-center space-y-4">
-                      <div className="w-16 h-16 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto shadow-md">
+                    <div className="py-12 text-center space-y-4 anim-slow-fade">
+                      <div className="w-14 h-14 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto shadow-xs">
                         <CheckCircle2 className="w-8 h-8" />
                       </div>
                       <h3 className="text-2xl font-black text-slate-900">Thank You!</h3>
-                      <p className="text-sm text-slate-600 max-w-md mx-auto leading-relaxed">
+                      <p className="text-xs sm:text-sm text-slate-600 max-w-md mx-auto leading-relaxed">
                         Your inquiry has been submitted successfully to the TezScale growth team. We are also redirecting you to WhatsApp for immediate connectivity!
                       </p>
                       <button
                         onClick={() => setSuccess(false)}
-                        className="px-6 py-2.5 bg-blue-600 text-white rounded-full text-xs font-bold cursor-pointer"
+                        className="px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs font-bold cursor-pointer transition-all duration-300"
                       >
                         Submit Another Inquiry
                       </button>
@@ -227,7 +227,7 @@ const ContactPage = () => {
                       </div>
 
                       {error && (
-                        <div className="p-3 bg-rose-50 border border-rose-200 text-rose-600 rounded-xl text-xs font-semibold flex items-center gap-2">
+                        <div className="p-3 bg-rose-50 border border-rose-200 text-rose-600 rounded-lg text-xs font-semibold flex items-center gap-2">
                           <AlertCircle className="w-4 h-4 flex-shrink-0" />
                           <span>{error}</span>
                         </div>
@@ -245,7 +245,7 @@ const ContactPage = () => {
                             value={formData.name}
                             onChange={handleChange}
                             placeholder="e.g. Dr. Priya Sharma"
-                            className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                            className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-xs font-medium focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none transition-all duration-300"
                           />
                         </div>
 
@@ -260,7 +260,7 @@ const ContactPage = () => {
                             value={formData.email}
                             onChange={handleChange}
                             placeholder="priya@clinic.com"
-                            className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                            className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-xs font-medium focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none transition-all duration-300"
                           />
                         </div>
                       </div>
@@ -277,7 +277,7 @@ const ContactPage = () => {
                             value={formData.phone}
                             onChange={handleChange}
                             placeholder="+91 98765 43210"
-                            className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                            className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-xs font-medium focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none transition-all duration-300"
                           />
                         </div>
 
@@ -291,7 +291,7 @@ const ContactPage = () => {
                             value={formData.company}
                             onChange={handleChange}
                             placeholder="www.mybusiness.com"
-                            className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                            className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-xs font-medium focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none transition-all duration-300"
                           />
                         </div>
                       </div>
@@ -305,7 +305,7 @@ const ContactPage = () => {
                             name="service"
                             value={formData.service}
                             onChange={handleChange}
-                            className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                            className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-xs font-medium focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none transition-all duration-300"
                           >
                             <option>Website Builder & Development</option>
                             <option>Graphic Design & Brand Kits</option>
@@ -324,7 +324,7 @@ const ContactPage = () => {
                             name="budget"
                             value={formData.budget}
                             onChange={handleChange}
-                            className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                            className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-xs font-medium focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none transition-all duration-300"
                           >
                             <option>₹25,000 - ₹50,000</option>
                             <option>₹50,000 - ₹1,00,000</option>
@@ -339,19 +339,19 @@ const ContactPage = () => {
                           Project Brief / Goal
                         </label>
                         <textarea
-                          rows="4"
+                          rows="3"
                           name="message"
                           value={formData.message}
                           onChange={handleChange}
                           placeholder="Tell us about your business, current traffic, and target leads..."
-                          className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                          className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-xs font-medium focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none transition-all duration-300"
                         ></textarea>
                       </div>
 
                       <button
                         type="submit"
                         disabled={loading}
-                        className="w-full py-3.5 bg-blue-600 hover:bg-blue-700 active:bg-blue-800 disabled:opacity-75 text-white font-bold rounded-xl text-sm shadow-lg shadow-blue-600/30 transition-all flex items-center justify-center gap-2 cursor-pointer"
+                        className="w-full py-3 bg-blue-600 hover:bg-blue-700 active:bg-blue-800 disabled:opacity-75 text-white font-bold rounded-lg text-xs sm:text-sm shadow-md shadow-blue-600/25 transition-all duration-500 flex items-center justify-center gap-2 cursor-pointer"
                       >
                         {loading ? (
                           <>
@@ -382,3 +382,4 @@ const ContactPage = () => {
 };
 
 export default ContactPage;
+
