@@ -83,7 +83,8 @@ const BackofficeLogin = () => {
 
         {/* Title */}
         <div className="text-center space-y-1 mb-8">
-          <h2 className="text-2xl font-extrabold text-slate-900 tracking-tight">Admin Backoffice</h2>
+          <div className="text-xs font-black uppercase tracking-wider text-blue-600">TezScale Platform</div>
+          <h2 className="text-2xl font-black text-slate-900 tracking-tight">Admin Backoffice</h2>
           <p className="text-xs text-slate-500">Sign in to manage client leads and customize landing page UI.</p>
         </div>
 

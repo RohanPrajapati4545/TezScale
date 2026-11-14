@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Phone, Mail, MapPin, Send, MessageCircle, Check } from 'lucide-react';
+import { Phone, Mail, MapPin, Send, MessageCircle, Clock, Check } from 'lucide-react';
 import { useContent } from '../context/ContentContext';
 
 const Footer = () => {
   const { content } = useContent();
   const contact = content?.contactInfo || {
     phone: '+91 98765 43210',
-    email: 'hello@growthmax.in',
-    location: 'Indore, MP',
+    whatsapp: '+91 98765 43210',
+    email: 'hello@tezscale.com',
+    location: 'Indore, MP, India',
+    businessHours: 'Monday - Saturday: 9:00 AM - 7:00 PM',
   };
 
   const [newsletterEmail, setNewsletterEmail] = useState('');
@@ -25,6 +27,11 @@ const Footer = () => {
     }
   };
 
+  // Exact pre-filled WhatsApp message from PDF Section 3.3
+  const whatsappUrl = `https://wa.me/919876543210?text=${encodeURIComponent(
+    'Hello, I am interested in growing my business digitally. Can we discuss your services?'
+  )}`;
+
   return (
     <footer id="contact" className="bg-[#0b132b] text-slate-300 pt-16 pb-12 relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -35,37 +42,38 @@ const Footer = () => {
           {/* Col 1: Branding & Social (4 cols) */}
           <div className="lg:col-span-4 space-y-5">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-700 to-blue-500 flex items-center justify-center text-white shadow-md">
-                <svg className="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M4 18L10 6L14 13L17 8L20 18H16L14 13L11 18H4Z" />
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-700 via-blue-600 to-cyan-500 flex items-center justify-center text-white shadow-md">
+                <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M4 6h16M12 6v14" />
+                  <path d="M16 10l4-4-4-4" />
                 </svg>
               </div>
               <div>
-                <div className="text-xl font-extrabold text-white tracking-tight">
-                  Growth<span className="text-blue-500">Max</span>
+                <div className="text-2xl font-black text-white tracking-tight">
+                  Tez<span className="text-blue-500">Scale</span>
                 </div>
-                <div className="text-[10px] uppercase tracking-wider text-slate-400 font-semibold">
-                  Digital Marketing Agency
+                <div className="text-[10px] uppercase tracking-wider text-slate-400 font-bold">
+                  Digital Growth Agency
                 </div>
               </div>
             </div>
 
             <p className="text-slate-400 text-sm leading-relaxed max-w-sm">
-              We help businesses grow online with smart digital solutions.
+              We are actively providing services to digitally grow your business with us. Engineered for high-converting B2B lead generation.
             </p>
 
-            {/* Social Icons matching screenshot */}
+            {/* Social Icons matching specification */}
             <div className="flex items-center gap-3 pt-1">
-              <a href="#home" className="w-9 h-9 rounded-full bg-slate-800 hover:bg-blue-600 text-slate-300 hover:text-white flex items-center justify-center transition-colors text-xs font-bold">
+              <a href="https://linkedin.com" target="_blank" rel="noreferrer" className="w-9 h-9 rounded-full bg-slate-800 hover:bg-blue-600 text-slate-300 hover:text-white flex items-center justify-center transition-colors text-xs font-bold" aria-label="LinkedIn">
                 in
               </a>
-              <a href="#home" className="w-9 h-9 rounded-full bg-slate-800 hover:bg-rose-600 text-slate-300 hover:text-white flex items-center justify-center transition-colors text-xs font-bold">
+              <a href="https://youtube.com" target="_blank" rel="noreferrer" className="w-9 h-9 rounded-full bg-slate-800 hover:bg-rose-600 text-slate-300 hover:text-white flex items-center justify-center transition-colors text-xs font-bold" aria-label="YouTube">
                 ▶
               </a>
-              <a href="#home" className="w-9 h-9 rounded-full bg-slate-800 hover:bg-pink-600 text-slate-300 hover:text-white flex items-center justify-center transition-colors text-xs font-bold">
+              <a href="https://instagram.com" target="_blank" rel="noreferrer" className="w-9 h-9 rounded-full bg-slate-800 hover:bg-pink-600 text-slate-300 hover:text-white flex items-center justify-center transition-colors text-xs font-bold" aria-label="Instagram">
                 📸
               </a>
-              <a href="#home" className="w-9 h-9 rounded-full bg-slate-800 hover:bg-blue-400 text-slate-300 hover:text-white flex items-center justify-center transition-colors text-xs font-bold">
+              <a href="https://x.com" target="_blank" rel="noreferrer" className="w-9 h-9 rounded-full bg-slate-800 hover:bg-blue-400 text-slate-300 hover:text-white flex items-center justify-center transition-colors text-xs font-bold" aria-label="X">
                 𝕏
               </a>
             </div>
@@ -77,27 +85,28 @@ const Footer = () => {
             <ul className="space-y-2.5 text-xs text-slate-400 font-medium">
               <li><a href="#home" className="hover:text-blue-400 transition-colors">Home</a></li>
               <li><a href="#why-choose-us" className="hover:text-blue-400 transition-colors">About Us</a></li>
-              <li><a href="#services" className="hover:text-blue-400 transition-colors">Services</a></li>
+              <li><a href="#services" className="hover:text-blue-400 transition-colors">Core Services</a></li>
               <li><a href="#work" className="hover:text-blue-400 transition-colors">Portfolio</a></li>
               <li><a href="#contact" className="hover:text-blue-400 transition-colors">Contact</a></li>
             </ul>
           </div>
 
-          {/* Col 3: Our Services (2 cols) */}
-          <div className="lg:col-span-2 space-y-4">
-            <h4 className="text-sm font-bold text-white uppercase tracking-wider">Our Services</h4>
+          {/* Col 3: Core 6 Services (3 cols) */}
+          <div className="lg:col-span-3 space-y-4">
+            <h4 className="text-sm font-bold text-white uppercase tracking-wider">Our Core Pillars</h4>
             <ul className="space-y-2.5 text-xs text-slate-400 font-medium">
-              <li><a href="#services" className="hover:text-blue-400 transition-colors">SEO</a></li>
-              <li><a href="#services" className="hover:text-blue-400 transition-colors">Social Media Marketing</a></li>
-              <li><a href="#services" className="hover:text-blue-400 transition-colors">Website Development</a></li>
-              <li><a href="#services" className="hover:text-blue-400 transition-colors">Meta Ads</a></li>
-              <li><a href="#services" className="hover:text-blue-400 transition-colors">Graphic Design</a></li>
+              <li><a href="#services" className="hover:text-blue-400 transition-colors">Website Builder & Dev</a></li>
+              <li><a href="#services" className="hover:text-blue-400 transition-colors">Graphic Design & Brand Kits</a></li>
+              <li><a href="#services" className="hover:text-blue-400 transition-colors">Digital Marketing Support (SEO)</a></li>
+              <li><a href="#services" className="hover:text-blue-400 transition-colors">E-commerce Enablement</a></li>
+              <li><a href="#services" className="hover:text-blue-400 transition-colors">Social Media Strategy</a></li>
+              <li><a href="#services" className="hover:text-blue-400 transition-colors">Meta Ads Management</a></li>
             </ul>
           </div>
 
-          {/* Col 4: Contact Us & Newsletter (4 cols) */}
-          <div className="lg:col-span-4 space-y-4">
-            <h4 className="text-sm font-bold text-white uppercase tracking-wider">Contact Us</h4>
+          {/* Col 4: Contact & Operating Hours (3 cols) */}
+          <div className="lg:col-span-3 space-y-4">
+            <h4 className="text-sm font-bold text-white uppercase tracking-wider">Contact & Hours</h4>
             <ul className="space-y-2.5 text-xs text-slate-400 font-medium">
               <li className="flex items-center gap-2.5">
                 <Phone className="w-4 h-4 text-blue-500 flex-shrink-0" />
@@ -107,27 +116,30 @@ const Footer = () => {
               </li>
               <li className="flex items-center gap-2.5">
                 <Mail className="w-4 h-4 text-blue-500 flex-shrink-0" />
-                <a href={`mailto:${contact.email || 'hello@growthmax.in'}`} className="hover:text-white">
-                  {contact.email || 'hello@growthmax.in'}
+                <a href={`mailto:${contact.email || 'hello@tezscale.com'}`} className="hover:text-white">
+                  {contact.email || 'hello@tezscale.com'}
                 </a>
               </li>
               <li className="flex items-center gap-2.5">
                 <MapPin className="w-4 h-4 text-blue-500 flex-shrink-0" />
-                <span>{contact.location || 'Indore, MP'}</span>
+                <span>{contact.location || 'Indore, MP, India'}</span>
+              </li>
+              <li className="flex items-center gap-2.5 pt-1 text-slate-300">
+                <Clock className="w-4 h-4 text-amber-400 flex-shrink-0" />
+                <span className="text-[11px]">{contact.businessHours || 'Mon - Sat: 9:00 AM - 7:00 PM'}</span>
               </li>
             </ul>
 
             {/* Newsletter input */}
             <div className="pt-2">
-              <div className="text-xs font-bold text-white mb-2">Subscribe to Our Newsletter</div>
-              <p className="text-[11px] text-slate-400 mb-2">Get the latest marketing tips & updates.</p>
+              <div className="text-xs font-bold text-white mb-1.5">Weekly Growth Insights</div>
               <form onSubmit={handleSubscribe} className="relative">
                 <input
                   type="email"
                   required
                   value={newsletterEmail}
                   onChange={(e) => setNewsletterEmail(e.target.value)}
-                  placeholder="Your Email Address"
+                  placeholder="name@business.com"
                   className="w-full pl-3.5 pr-10 py-2.5 bg-slate-900 border border-slate-700 rounded-xl text-xs text-white placeholder:text-slate-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
                 />
                 <button
@@ -143,35 +155,35 @@ const Footer = () => {
 
         </div>
 
-        {/* Bottom Bar matching screenshot */}
+        {/* Bottom Legal Bar */}
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500 font-medium">
           <div>
-            © 2025 GrowthMax. All rights reserved.
+            © {new Date().getFullYear()} TezScale. All rights reserved.
           </div>
 
           <div className="flex items-center gap-6">
             <a href="#home" className="hover:text-slate-400 transition-colors">Privacy Policy</a>
             <span>|</span>
-            <a href="#home" className="hover:text-slate-400 transition-colors">Terms & Conditions</a>
+            <a href="#home" className="hover:text-slate-400 transition-colors">Terms of Service</a>
             <span>|</span>
             <Link to="/backoffice" className="text-blue-400 hover:text-blue-300 font-semibold">
-              Admin Login
+              TezScale Backoffice
             </Link>
           </div>
         </div>
 
       </div>
 
-      {/* Floating WhatsApp Button bottom right matching screenshot */}
+      {/* Persistent Floating WhatsApp Button with PDF Section 3.3 Pre-filled Message */}
       <a
-        href="https://wa.me/919876543210"
+        href={whatsappUrl}
         target="_blank"
         rel="noreferrer"
-        className="fixed bottom-6 right-6 z-40 w-13 h-13 rounded-full bg-[#25D366] text-white flex items-center justify-center shadow-xl hover:scale-110 active:scale-95 transition-all animate-bounce"
-        title="Chat on WhatsApp"
-        aria-label="WhatsApp"
+        className="fixed bottom-6 right-6 z-40 w-14 h-14 rounded-full bg-[#25D366] text-white flex items-center justify-center shadow-2xl hover:scale-110 active:scale-95 transition-all animate-bounce"
+        title="Chat with TezScale on WhatsApp"
+        aria-label="Chat on WhatsApp"
       >
-        <MessageCircle className="w-7 h-7 fill-current" />
+        <MessageCircle className="w-8 h-8 fill-current" />
       </a>
     </footer>
   );

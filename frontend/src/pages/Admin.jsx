@@ -147,10 +147,13 @@ const Admin = () => {
 
   // Filtered leads
   const filteredLeads = leads.filter((lead) => {
+    const query = searchQuery.toLowerCase();
     const matchesSearch =
-      lead.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      lead.email?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      lead.website?.toLowerCase().includes(searchQuery.toLowerCase());
+      lead.name?.toLowerCase().includes(query) ||
+      lead.email?.toLowerCase().includes(query) ||
+      lead.whatsapp?.toLowerCase().includes(query) ||
+      lead.businessType?.toLowerCase().includes(query) ||
+      lead.serviceRequired?.toLowerCase().includes(query);
     const matchesStatus = statusFilter === 'All' || lead.status === statusFilter;
     return matchesSearch && matchesStatus;
   });
@@ -402,9 +405,10 @@ const Admin = () => {
                 <table className="w-full text-left border-collapse">
                   <thead>
                     <tr className="bg-slate-50/80 border-b border-slate-200 text-xs uppercase font-bold text-slate-500 tracking-wider">
-                      <th className="py-4 px-6">Name</th>
-                      <th className="py-4 px-6">Email</th>
-                      <th className="py-4 px-6">Website</th>
+                      <th className="py-4 px-6">Client Info</th>
+                      <th className="py-4 px-6">WhatsApp</th>
+                      <th className="py-4 px-6">Business Vertical</th>
+                      <th className="py-4 px-6">Service Requested</th>
                       <th className="py-4 px-6">Date</th>
                       <th className="py-4 px-6">Status</th>
                       <th className="py-4 px-6 text-right">Actions</th>
@@ -413,7 +417,7 @@ const Admin = () => {
                   <tbody className="divide-y divide-slate-100 text-sm">
                     {leadsLoading ? (
                       <tr>
-                        <td colSpan="6" className="py-12 text-center text-slate-500">
+                        <td colSpan="7" className="py-12 text-center text-slate-500">
                           <div className="flex items-center justify-center gap-2">
                             <Loader2 className="w-5 h-5 animate-spin text-blue-600" />
                             <span className="font-semibold text-sm">Fetching leads from database...</span>
@@ -422,42 +426,56 @@ const Admin = () => {
                       </tr>
                     ) : filteredLeads.length === 0 ? (
                       <tr>
-                        <td colSpan="6" className="py-12 text-center text-slate-400">
+                        <td colSpan="7" className="py-12 text-center text-slate-400">
                           No leads found. Users who fill the consultation form will appear here in real-time!
                         </td>
                       </tr>
                     ) : (
                       filteredLeads.map((lead) => (
                         <tr key={lead._id} className="hover:bg-slate-50/80 transition-colors">
-                          <td className="py-4 px-6 font-bold text-slate-900">{lead.name}</td>
-                          <td className="py-4 px-6 text-slate-600 font-medium">
-                            <a href={`mailto:${lead.email}`} className="hover:text-blue-600">
+                          <td className="py-4 px-6">
+                            <div className="font-bold text-slate-900">{lead.name}</div>
+                            <a href={`mailto:${lead.email}`} className="text-xs text-blue-600 hover:underline">
                               {lead.email}
                             </a>
+                            {lead.message && (
+                              <div className="text-[11px] text-slate-500 mt-1 italic max-w-xs truncate" title={lead.message}>
+                                "{lead.message}"
+                              </div>
+                            )}
                           </td>
-                          <td className="py-4 px-6 text-slate-500">
-                            {lead.website ? (
+                          <td className="py-4 px-6">
+                            {lead.whatsapp ? (
                               <a
-                                href={lead.website.startsWith('http') ? lead.website : `https://${lead.website}`}
+                                href={`https://wa.me/${lead.whatsapp.replace(/[^0-9]/g, '')}`}
                                 target="_blank"
                                 rel="noreferrer"
-                                className="text-blue-600 hover:underline flex items-center gap-1"
+                                className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-emerald-50 text-emerald-700 border border-emerald-200 text-xs font-bold hover:bg-emerald-100 transition-colors"
                               >
-                                <span>{lead.website}</span>
+                                <span>{lead.whatsapp}</span>
                                 <ExternalLink className="w-3 h-3" />
                               </a>
                             ) : (
-                              <span className="text-slate-300">-</span>
+                              <span className="text-slate-400 text-xs">N/A</span>
                             )}
                           </td>
+                          <td className="py-4 px-6">
+                            <span className="inline-block px-2.5 py-1 rounded-full text-xs font-semibold bg-slate-100 text-slate-700 border border-slate-200">
+                              {lead.businessType || 'Other'}
+                            </span>
+                          </td>
+                          <td className="py-4 px-6 font-medium text-slate-700 text-xs">
+                            {lead.serviceRequired || 'Website Builder & Development'}
+                          </td>
                           <td className="py-4 px-6 text-slate-500 text-xs">
-                            {lead.createdAt ? new Date(lead.createdAt).toLocaleDateString('en-US', {
-                              month: 'short',
-                              day: 'numeric',
-                              year: 'numeric',
-                              hour: '2-digit',
-                              minute: '2-digit',
-                            }) : 'Just now'}
+                            {lead.createdAt
+                              ? new Date(lead.createdAt).toLocaleDateString('en-US', {
+                                  month: 'short',
+                                  day: 'numeric',
+                                  hour: '2-digit',
+                                  minute: '2-digit',
+                                })
+                              : 'Just now'}
                           </td>
                           <td className="py-4 px-6">
                             <select

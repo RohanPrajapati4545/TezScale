@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
-import { X, Send, CheckCircle2, User, Mail, Phone, Globe, MessageSquare, Loader2, Lock } from 'lucide-react';
+import { X, Send, CheckCircle2, User, Mail, Phone, Briefcase, Layers, MessageSquare, Loader2, Lock } from 'lucide-react';
 import apiFetch from '../api/apiClient';
 
 const ConsultationModal = ({ isOpen, onClose }) => {
   const [formData, setFormData] = useState({
     name: '',
+    whatsapp: '',
     email: '',
-    phone: '',
-    website: '',
-    notes: '',
+    businessType: 'Doctor / Clinic',
+    serviceRequired: 'Website Builder & Development',
+    message: '',
   });
+
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState('');
@@ -22,8 +24,16 @@ const ConsultationModal = ({ isOpen, onClose }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!formData.name || !formData.email) {
-      setError('Please provide your name and email');
+    if (!formData.name || formData.name.trim().length < 2) {
+      setError('Full Name is required (minimum 2 characters)');
+      return;
+    }
+    if (!formData.whatsapp || formData.whatsapp.trim().length < 8) {
+      setError('Please provide a valid WhatsApp number with country code');
+      return;
+    }
+    if (!formData.email || !formData.email.includes('@')) {
+      setError('Please provide a valid email address');
       return;
     }
 
@@ -41,36 +51,43 @@ const ConsultationModal = ({ isOpen, onClose }) => {
         setSuccess(true);
         setTimeout(() => {
           setSuccess(false);
-          setFormData({ name: '', email: '', phone: '', website: '', notes: '' });
+          setFormData({
+            name: '',
+            whatsapp: '',
+            email: '',
+            businessType: 'Doctor / Clinic',
+            serviceRequired: 'Website Builder & Development',
+            message: '',
+          });
           onClose();
-        }, 2200);
+        }, 2500);
       } else {
         setSuccess(true);
         setTimeout(() => {
           setSuccess(false);
           onClose();
-        }, 2000);
+        }, 2200);
       }
     } catch (err) {
       setSuccess(true);
       setTimeout(() => {
         setSuccess(false);
         onClose();
-      }, 2000);
+      }, 2200);
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/70 backdrop-blur-sm animate-fade-in">
-      <div className="relative w-full max-w-lg bg-white rounded-3xl shadow-2xl overflow-hidden border border-slate-100 transition-all scale-100">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/75 backdrop-blur-md animate-fade-in">
+      <div className="relative w-full max-w-lg bg-white rounded-3xl shadow-2xl overflow-hidden border border-slate-100 transition-all">
         
         {/* Header */}
-        <div className="bg-gradient-to-r from-blue-700 to-blue-600 px-6 py-5 text-white flex items-center justify-between">
-          <div>
-            <h3 className="text-xl font-extrabold tracking-tight">Get a Free Consultation</h3>
-            <p className="text-xs text-blue-100 mt-0.5">Let's craft your tailored digital growth roadmap.</p>
+        <div className="bg-gradient-to-r from-blue-700 via-blue-600 to-indigo-700 px-6 py-5 text-white flex items-center justify-between">
+          <div className="text-left">
+            <div className="text-[11px] font-bold uppercase tracking-wider text-blue-200">TezScale Lead Capture</div>
+            <h3 className="text-xl font-extrabold tracking-tight">Request Free Growth Consultation</h3>
           </div>
           <button
             onClick={onClose}
@@ -87,21 +104,24 @@ const ConsultationModal = ({ isOpen, onClose }) => {
               <div className="w-16 h-16 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto shadow-sm">
                 <CheckCircle2 className="w-9 h-9" />
               </div>
-              <h4 className="text-xl font-bold text-slate-900">Request Submitted!</h4>
-              <p className="text-sm text-slate-500 max-w-xs mx-auto">
-                Thank you! Our growth consultant will reach out within 24 hours.
+              <h4 className="text-xl font-bold text-slate-900">Inquiry Received!</h4>
+              <p className="text-sm text-slate-500 max-w-sm mx-auto">
+                Thank you! Our growth specialist will contact you on WhatsApp within 24 hours.
               </p>
             </div>
           ) : (
-            <form onSubmit={handleSubmit} className="space-y-4 text-left">
+            <form onSubmit={handleSubmit} className="space-y-3.5 text-left">
               {error && (
-                <div className="p-3 text-xs bg-rose-50 text-rose-600 border border-rose-200 rounded-xl font-medium">
+                <div className="p-3 text-xs bg-rose-50 text-rose-600 border border-rose-200 rounded-xl font-semibold">
                   {error}
                 </div>
               )}
 
+              {/* 1. Full Name */}
               <div>
-                <label className="block text-xs font-bold text-slate-700 uppercase mb-1">Your Full Name *</label>
+                <label className="block text-xs font-bold text-slate-700 uppercase mb-1">
+                  Full Name * <span className="text-[10px] text-slate-400 font-normal">(Min 2 chars)</span>
+                </label>
                 <div className="relative">
                   <User className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
                   <input
@@ -110,15 +130,36 @@ const ConsultationModal = ({ isOpen, onClose }) => {
                     required
                     value={formData.name}
                     onChange={handleChange}
-                    placeholder="e.g. Rahul Sharma"
+                    placeholder="e.g. Dr. Aryan Mehta"
                     className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
                   />
                 </div>
               </div>
 
+              {/* 2. WhatsApp Number & 3. Email Address Grid */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-xs font-bold text-slate-700 uppercase mb-1">Business Email *</label>
+                  <label className="block text-xs font-bold text-slate-700 uppercase mb-1">
+                    WhatsApp Number *
+                  </label>
+                  <div className="relative">
+                    <Phone className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+                    <input
+                      type="tel"
+                      name="whatsapp"
+                      required
+                      value={formData.whatsapp}
+                      onChange={handleChange}
+                      placeholder="+91 98765 43210"
+                      className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold text-slate-700 uppercase mb-1">
+                    Email Address *
+                  </label>
                   <div className="relative">
                     <Mail className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
                     <input
@@ -127,79 +168,105 @@ const ConsultationModal = ({ isOpen, onClose }) => {
                       required
                       value={formData.email}
                       onChange={handleChange}
-                      placeholder="name@company.com"
+                      placeholder="name@business.com"
                       className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
                     />
+                  </div>
+                </div>
+              </div>
+
+              {/* 4. Business Type Dropdown & 5. Service Required Dropdown */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-xs font-bold text-slate-700 uppercase mb-1">
+                    Business Type *
+                  </label>
+                  <div className="relative">
+                    <Briefcase className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+                    <select
+                      name="businessType"
+                      value={formData.businessType}
+                      onChange={handleChange}
+                      className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                    >
+                      <option value="Doctor / Clinic">Doctor / Clinic</option>
+                      <option value="Real Estate">Real Estate</option>
+                      <option value="Engineering">Engineering & Manufacturing</option>
+                      <option value="Retail / E-commerce">Retail / E-commerce</option>
+                      <option value="Other">Other Entrepreneur</option>
+                    </select>
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-slate-700 uppercase mb-1">Phone Number</label>
+                  <label className="block text-xs font-bold text-slate-700 uppercase mb-1">
+                    Service Required *
+                  </label>
                   <div className="relative">
-                    <Phone className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
-                    <input
-                      type="tel"
-                      name="phone"
-                      value={formData.phone}
+                    <Layers className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+                    <select
+                      name="serviceRequired"
+                      value={formData.serviceRequired}
                       onChange={handleChange}
-                      placeholder="+91 98765 43210"
-                      className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
-                    />
+                      className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                    >
+                      <option value="Website Builder & Development">Website Builder & Development</option>
+                      <option value="Graphic Design">Graphic Design</option>
+                      <option value="Digital Marketing Support">Digital Marketing Support (SEO)</option>
+                      <option value="E-commerce Support">E-commerce Support</option>
+                      <option value="Social Media Services">Social Media Services</option>
+                      <option value="Meta Ads Management">Meta Ads Management</option>
+                    </select>
                   </div>
                 </div>
               </div>
 
+              {/* 6. Message (Optional, Max 500 characters) */}
               <div>
-                <label className="block text-xs font-bold text-slate-700 uppercase mb-1">Website or Brand URL</label>
-                <div className="relative">
-                  <Globe className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
-                  <input
-                    type="text"
-                    name="website"
-                    value={formData.website}
-                    onChange={handleChange}
-                    placeholder="https://yourwebsite.com"
-                    className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
-                  />
+                <div className="flex justify-between items-center mb-1">
+                  <label className="block text-xs font-bold text-slate-700 uppercase">
+                    Message <span className="text-[10px] text-slate-400 font-normal">(Optional)</span>
+                  </label>
+                  <span className="text-[10px] text-slate-400 font-mono">
+                    {formData.message.length}/500
+                  </span>
                 </div>
-              </div>
-
-              <div>
-                <label className="block text-xs font-bold text-slate-700 uppercase mb-1">Tell us about your project</label>
                 <div className="relative">
                   <MessageSquare className="w-4 h-4 text-slate-400 absolute left-3.5 top-3" />
                   <textarea
                     rows="2"
-                    name="notes"
-                    value={formData.notes}
+                    name="message"
+                    maxLength={500}
+                    value={formData.message}
                     onChange={handleChange}
-                    placeholder="Looking for SEO, Meta Ads, Web Development..."
-                    className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                    placeholder="Briefly describe your digital growth objectives..."
+                    className="w-full pl-10 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:ring-2 focus:ring-blue-500 focus:outline-none"
                   />
                 </div>
               </div>
 
+              {/* Submit Button */}
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full py-3.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl text-sm shadow-lg shadow-blue-600/30 transition-all flex items-center justify-center gap-2 cursor-pointer"
+                className="w-full py-3.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl text-sm shadow-lg shadow-blue-600/30 transition-all flex items-center justify-center gap-2 cursor-pointer mt-1"
               >
                 {loading ? (
                   <>
                     <Loader2 className="w-4 h-4 animate-spin" />
-                    <span>Submitting...</span>
+                    <span>Transmitting inquiry...</span>
                   </>
                 ) : (
                   <>
-                    <span>Book Strategy Call</span>
+                    <span>Submit & Request WhatsApp Call</span>
                     <Send className="w-4 h-4" />
                   </>
                 )}
               </button>
 
-              <div className="flex items-center justify-center gap-1.5 text-[11px] text-slate-400 pt-1">
-                <Lock className="w-3 h-3" />
-                <span>100% Confidential • No spam promise</span>
+              <div className="flex items-center justify-center gap-1.5 text-[11px] text-slate-400 pt-0.5">
+                <Lock className="w-3 h-3 text-emerald-500" />
+                <span>Encrypted • PDF Specification Compliant • 100% Confidential</span>
               </div>
             </form>
           )}

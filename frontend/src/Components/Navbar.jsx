@@ -10,24 +10,25 @@ const Navbar = ({ onOpenConsultation }) => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           
-          {/* Logo matching screenshot */}
+          {/* TezScale Logo */}
           <Link to="/" className="flex items-center gap-3 cursor-pointer group">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-700 to-blue-500 flex items-center justify-center text-white shadow-md shadow-blue-500/20 group-hover:scale-105 transition-transform">
-              <svg className="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M4 18L10 6L14 13L17 8L20 18H16L14 13L11 18H4Z" />
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-700 via-blue-600 to-cyan-500 flex items-center justify-center text-white shadow-md shadow-blue-500/25 group-hover:scale-105 transition-transform">
+              <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M4 6h16M12 6v14" />
+                <path d="M16 10l4-4-4-4" />
               </svg>
             </div>
             <div className="text-left">
-              <div className="text-xl font-extrabold text-slate-900 tracking-tight leading-tight">
-                Growth<span className="text-blue-600">Max</span>
+              <div className="text-2xl font-black text-slate-900 tracking-tight leading-none">
+                Tez<span className="text-blue-600">Scale</span>
               </div>
-              <div className="text-[10px] uppercase tracking-wider text-slate-400 font-semibold">
-                Digital Marketing Agency
+              <div className="text-[10px] uppercase tracking-wider text-slate-400 font-bold mt-1">
+                Digital Growth Agency
               </div>
             </div>
           </Link>
 
-          {/* Navigation Links matching screenshot */}
+          {/* Navigation Links matching PDF Information Architecture */}
           <nav className="hidden md:flex items-center gap-7 text-[15px] font-semibold text-slate-600">
             <a href="#home" className="text-blue-600 font-bold relative py-1 after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-blue-600 after:rounded-full">
               Home

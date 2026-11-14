@@ -97,8 +97,8 @@ const WhyChooseUs = ({ onOpenConsultation }) => {
                 />
                 
                 {/* Branding Overlay badge */}
-                <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-md px-3 py-1 rounded-xl text-xs font-extrabold text-slate-800 shadow-sm">
-                  Growth<span className="text-blue-600">Max</span> HQ
+                <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-md px-3 py-1 rounded-xl text-xs font-black text-slate-800 shadow-sm">
+                  Tez<span className="text-blue-600">Scale</span> HQ
                 </div>
 
                 {/* Center Video Play Button */}

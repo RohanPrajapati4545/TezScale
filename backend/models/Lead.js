@@ -4,19 +4,49 @@ const leadSchema = new mongoose.Schema(
   {
     name: {
       type: String,
-      required: [true, 'Name is required'],
+      required: [true, 'Full Name is required'],
+      trim: true,
+      minlength: [2, 'Full Name must be at least 2 characters'],
+    },
+    whatsapp: {
+      type: String,
+      required: [true, 'WhatsApp Number is required'],
       trim: true,
     },
     email: {
       type: String,
-      required: [true, 'Email is required'],
+      required: [true, 'Email Address is required'],
       trim: true,
       lowercase: true,
     },
+    businessType: {
+      type: String,
+      enum: ['Doctor / Clinic', 'Real Estate', 'Engineering', 'Retail / E-commerce', 'Other'],
+      default: 'Other',
+    },
+    serviceRequired: {
+      type: String,
+      enum: [
+        'Website Builder & Development',
+        'Graphic Design',
+        'Digital Marketing Support',
+        'E-commerce Support',
+        'Social Media Services',
+        'Meta Ads Management',
+        'General Consultation',
+      ],
+      default: 'Website Builder & Development',
+    },
+    message: {
+      type: String,
+      maxlength: [500, 'Message cannot exceed 500 characters'],
+      default: '',
+      trim: true,
+    },
     website: {
       type: String,
-      trim: true,
       default: '',
+      trim: true,
     },
     status: {
       type: String,

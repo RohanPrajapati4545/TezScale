@@ -1,25 +1,42 @@
 import Lead from '../models/Lead.js';
 
-// @desc    Submit a new lead from landing page
+// @desc    Submit a new lead from landing page / consultation modal
 // @route   POST /api/leads
 export const createLead = async (req, res) => {
   try {
-    const { name, email, website } = req.body;
+    const { name, whatsapp, email, businessType, serviceRequired, message, website } = req.body;
 
-    if (!name || !email) {
-      return res.status(400).json({ success: false, message: 'Name and email are required' });
+    if (!name || name.trim().length < 2) {
+      return res.status(400).json({ success: false, message: 'Full Name must be at least 2 characters' });
+    }
+
+    if (!whatsapp) {
+      return res.status(400).json({ success: false, message: 'WhatsApp number is required' });
+    }
+
+    if (!email) {
+      return res.status(400).json({ success: false, message: 'Email address is required' });
     }
 
     const newLead = await Lead.create({
-      name,
-      email,
-      website: website || '',
+      name: name.trim(),
+      whatsapp: whatsapp.trim(),
+      email: email.trim().toLowerCase(),
+      businessType: businessType || 'Other',
+      serviceRequired: serviceRequired || 'Website Builder & Development',
+      message: message ? message.trim().slice(0, 500) : '',
+      website: website ? website.trim() : '',
       status: 'New',
     });
 
+    // Automated Email Notification Simulation (per PDF Section 3.2)
+    const emailSubject = `New Lead Alert: [${newLead.serviceRequired}] - [${newLead.name}]`;
+    console.log(`📧 [Admin Notification Email Triggered] Subject: "${emailSubject}"`);
+    console.log(`📩 [Client Welcome Notification Scheduled] Sent to: ${newLead.email} & WhatsApp: ${newLead.whatsapp}`);
+
     res.status(201).json({
       success: true,
-      message: 'Strategy call request received successfully!',
+      message: 'Thank you! Your request has been recorded. Our specialist will contact you within 24 hours on WhatsApp.',
       data: newLead,
     });
   } catch (error) {

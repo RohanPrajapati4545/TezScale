@@ -1,12 +1,14 @@
 import SiteContent from '../models/SiteContent.js';
 
 export const defaultContent = {
+  agencyName: 'TezScale',
+  agencyTagline: 'Digital Growth & Marketing Agency',
   hero: {
     badge: 'Grow Faster. Grow Smarter.',
     titleLine1: 'We are actively providing services to',
     titleLine2: 'digitally grow your business with us.',
     description:
-      'Transform your online presence with result-driven digital marketing strategies that bring real business growth.',
+      'Transform your online presence with result-driven digital marketing strategies that bring real business growth. Engineered for high-converting B2B lead generation.',
     primaryCta: 'Get a Free Consultation',
     secondaryCta: 'Watch Our Video',
     trafficStat: '+250%',
@@ -15,71 +17,71 @@ export const defaultContent = {
     roiLabel: 'Client Satisfaction',
   },
   trustBar: {
-    sectors: ['Healthcare', 'Real Estate', 'Engineering'],
-    trustedText: 'Trusted by 500+ Happy Clients',
+    sectors: ['Healthcare (Clinics)', 'Real Estate', 'Engineering & Manufacturing'],
+    trustedText: 'Trusted by 500+ High-Growth Clients',
   },
   servicesSection: {
-    badge: 'Our Services',
+    badge: 'Our Core Offerings',
     title: 'Complete Digital Marketing Solutions',
-    description: 'End-to-end services to help you build, grow and scale your business online.',
+    description: 'End-to-end services to help you build, grow and scale your business online with measurable ROI.',
   },
   services: [
     {
       title: 'Website Builder & Development',
-      desc: 'Modern, fast & SEO-friendly websites.',
+      desc: 'Creation of responsive, ultra-fast & SEO-optimized websites built on modern frameworks with mobile-first indexing.',
       icon: 'Code',
       badgeBg: 'bg-blue-600 text-white',
     },
     {
       title: 'Graphic Design',
-      desc: 'Creative designs that stand out.',
+      desc: 'Visual identity creation, high-impact logos, brochures, social media assets, and comprehensive brand kits.',
       icon: 'Palette',
       badgeBg: 'bg-purple-600 text-white',
     },
     {
       title: 'Digital Marketing Support',
-      desc: 'SEO, content & email marketing.',
+      desc: 'Holistic growth strategies encompassing technical SEO, high-converting content marketing, and automated email funnels.',
       icon: 'Megaphone',
       badgeBg: 'bg-emerald-500 text-white',
     },
     {
       title: 'E-commerce Support',
-      desc: 'Sell online with confidence.',
+      desc: 'Empowering retail clients to sell online with seamless payment gateways, inventory control & shopping cart optimization.',
       icon: 'ShoppingCart',
       badgeBg: 'bg-amber-500 text-white',
     },
     {
       title: 'Social Media Services',
-      desc: 'Grow your community.',
+      desc: 'Organic growth strategies across LinkedIn, Instagram & X with active community management and content scheduling.',
       icon: 'Share2',
       badgeBg: 'bg-indigo-600 text-white',
     },
     {
       title: 'Meta Ads Management',
-      desc: 'Get more leads & sales.',
+      desc: 'High-ROI paid advertising campaigns on Facebook & Instagram with pixel tracking, audience retargeting & lead generation.',
       icon: 'Infinity',
       badgeBg: 'bg-emerald-600 text-white',
     },
   ],
   whyChooseUs: {
-    badge: 'Why Choose Us',
+    badge: 'Why Choose TezScale',
     title: 'Your Growth, Our Mission',
     description:
-      "We combine creativity, technology and data-driven strategies to deliver measurable results. From SEO to Meta Ads, we're here to help your business reach new heights.",
+      "We combine creativity, technology and data-driven strategies to deliver measurable results. Tailored specifically for Medical Clinics, Real Estate Brokers, Engineering Firms, and Ambitious Entrepreneurs.",
     points: [
-      'Result-Driven Strategies',
-      '24/7 Support',
-      'Expert Team',
-      'Custom Solutions',
-      'Transparent Reporting',
-      'Long-Term Partnership',
+      'Result-Driven B2B Lead Generation',
+      '24/7 Dedicated Support & Monitoring',
+      'Industry-Specific Expert Teams',
+      'Custom Tailored Solutions & Tech Stack',
+      'Transparent Reporting & ROI Dashboards',
+      'Long-Term Growth Partnerships',
     ],
-    buttonText: 'About Us',
+    buttonText: 'About TezScale',
   },
   portfolioSection: {
     badge: 'Our Work',
     title: 'Some Success Stories',
-    description: 'Real results. Real businesses. Real growth.',
+    description: 'Real results. Real businesses. Real growth across our targeted verticals.',
   },
   metrics: {
     stat1Value: '250%',
@@ -92,60 +94,71 @@ export const defaultContent = {
   caseStudies: [
     {
       title: 'Clinic SEO Success',
-      subtitle: '+220% Traffic',
+      subtitle: '+220% Patient Inquiries',
       badge: '+220% Traffic',
       image:
         'https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&w=600&q=80',
     },
     {
       title: 'Real Estate Growth',
-      subtitle: '+180% Leads',
+      subtitle: '+180% High-Intent Leads',
       badge: '+180% Leads',
       image:
         'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=600&q=80',
     },
     {
-      title: 'E-commerce Boost',
-      subtitle: '+300% Sales',
+      title: 'E-commerce & Manufacturing',
+      subtitle: '+300% Direct Sales',
       badge: '+300% Sales',
       image:
         'https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&w=600&q=80',
     },
   ],
   testimonialsSection: {
-    badge: 'Testimonials',
+    badge: 'Client Endorsements',
     title: 'What Our Clients Say',
-    description: 'Trusted by businesses across industries.',
+    description: 'Trusted by doctors, brokers, and industry leaders.',
   },
   testimonials: [
     {
       name: 'Dr. Priya Sharma',
-      role: 'Clinic Owner',
+      role: 'Clinic Director, Apex Healthcare',
       quote:
-        'GrowthMax completely transformed our online presence. Their strategies brought us 3x more leads in just 3 months!',
+        'TezScale completely transformed our online presence and local SEO. Their automated booking workflows brought us 3x more patient consultations in just 90 days!',
       avatar:
         'https://images.unsplash.com/photo-1594824813589-9a25b1641ba5?auto=format&fit=crop&w=150&q=80',
       rating: 5,
     },
     {
       name: 'Rohit Verma',
-      role: 'Director, UrbanSpace',
+      role: 'Managing Broker, UrbanSpace Realty',
       quote:
-        'Outstanding ROI on our Meta ad campaigns. The leads are highly qualified and our sales velocity has doubled.',
+        'The lead quality from TezScale Meta Ads and CRM tracking has exceeded all our expectations. Our property closing velocity has more than doubled.',
       avatar:
         'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80',
       rating: 5,
     },
+    {
+      name: 'Vikram Patel',
+      role: 'VP Operations, Apex Engineering',
+      quote:
+        'TezScale engineered a comprehensive B2B product catalog and digital branding that allowed us to acquire high-value manufacturing contracts overseas.',
+      avatar:
+        'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=150&q=80',
+      rating: 5,
+    },
   ],
   ctaBanner: {
-    title: 'Ready to Grow Your Business?',
-    subtitle: "Let's create a winning digital strategy together.",
+    title: 'Ready to Scale Your Business Digitally?',
+    subtitle: "Let's build a customized, high-converting digital growth roadmap together.",
     buttonText: 'Get a Free Consultation',
   },
   contactInfo: {
     phone: '+91 98765 43210',
-    email: 'hello@growthmax.in',
-    location: 'Indore, MP',
+    whatsapp: '+91 98765 43210',
+    email: 'hello@tezscale.com',
+    location: 'Indore, MP, India',
+    businessHours: 'Monday - Saturday: 9:00 AM - 7:00 PM',
   },
 };
 
@@ -155,7 +168,7 @@ export const getContent = async (req, res) => {
     let content = await SiteContent.findOne();
     if (!content) {
       content = await SiteContent.create(defaultContent);
-      console.log('🌱 Seeded updated site content into MongoDB');
+      console.log('🌱 Seeded TezScale specification content into MongoDB');
     }
 
     res.status(200).json({
@@ -210,7 +223,7 @@ export const resetContent = async (req, res) => {
 
     res.status(200).json({
       success: true,
-      message: 'Site content reset to updated design defaults!',
+      message: 'Site content reset to TezScale specification defaults!',
       data: content,
     });
   } catch (error) {
