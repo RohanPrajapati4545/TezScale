@@ -50,8 +50,8 @@ const Home = () => {
         <FaqSection onOpenConsultation={() => setModalOpen(true)} />
       </main>
 
-      {/* Footer */}
-      <Footer />
+      {/* Footer with Floating Speed Dial */}
+      <Footer onOpenConsultation={() => setModalOpen(true)} />
 
       {/* Interactive Consultation Modal */}
       <ConsultationModal isOpen={modalOpen} onClose={() => setModalOpen(false)} />

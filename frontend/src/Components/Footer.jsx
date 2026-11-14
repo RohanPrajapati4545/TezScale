@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Phone, Mail, MapPin, Send, MessageCircle, Clock, Check } from 'lucide-react';
 import { useContent } from '../context/ContentContext';
+import FloatingSpeedDial from './FloatingSpeedDial';
 
-const Footer = () => {
+const Footer = ({ onOpenConsultation }) => {
   const { content } = useContent();
   const contact = content?.contactInfo || {
     phone: '+91 98765 43210',
@@ -175,17 +176,8 @@ const Footer = () => {
 
       </div>
 
-      {/* Persistent Floating WhatsApp Button with PDF Section 3.3 Pre-filled Message */}
-      <a
-        href={whatsappUrl}
-        target="_blank"
-        rel="noreferrer"
-        className="fixed bottom-6 right-6 z-40 w-14 h-14 rounded-full bg-[#25D366] text-white flex items-center justify-center shadow-2xl hover:scale-110 active:scale-95 transition-all animate-bounce"
-        title="Chat with TezScale on WhatsApp"
-        aria-label="Chat on WhatsApp"
-      >
-        <MessageCircle className="w-8 h-8 fill-current" />
-      </a>
+      {/* Floating Speed Dial Contact Widget (WhatsApp, Call, Send Query) matching design */}
+      <FloatingSpeedDial onOpenConsultation={onOpenConsultation} />
     </footer>
   );
 };

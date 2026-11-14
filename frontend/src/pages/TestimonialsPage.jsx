@@ -217,7 +217,7 @@ const TestimonialsPage = () => {
         </section>
       </main>
 
-      <Footer />
+      <Footer onOpenConsultation={() => setModalOpen(true)} />
       <ConsultationModal isOpen={modalOpen} onClose={() => setModalOpen(false)} />
     </div>
   );
