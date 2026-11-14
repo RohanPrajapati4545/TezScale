@@ -1,0 +1,14 @@
+{
+  "name": "tezscale-app",
+  "version": "1.0.0",
+  "description": "TezScale Full-Stack Digital Marketing & Growth Platform",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "cd backend && npm install && cd ../frontend && npm install && npm run build",
+    "start": "node backend/server.js"
+  },
+  "keywords": ["tezscale", "mern", "marketing-agency"],
+  "author": "TezScale",
+  "license": "ISC"
+}

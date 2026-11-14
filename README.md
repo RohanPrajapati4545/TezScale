@@ -118,3 +118,27 @@ npm run dev
 - Landing Page: **`http://localhost:5173`**
 - Admin Backoffice Login: **`http://localhost:5173/backoffice`**
 - Protected Admin Dashboard: **`http://localhost:5173/admin`**
+
+---
+
+## 🌐 Deploying to Render (Free Cloud Hosting)
+
+When creating a new **Web Service** on [Render.com](https://render.com):
+
+1. **Connect Repository**: `https://github.com/RohanPrajapati4545/TezScale`
+2. **Settings**:
+   - **Language**: `Node`
+   - **Branch**: `main`
+   - **Region**: Any (e.g. `Ohio (US East)` or `Singapore`)
+   - **Root Directory**: Leave **BLANK** (empty)
+   - **Build Command**: `npm run build`
+   - **Start Command**: `npm start`
+3. **Environment Variables**:
+   Add the following under **Environment Variables**:
+   - `MONGO_URL` = `mongodb+srv://RK-prajapati:jVVTAYIC2EyaGIJW@cluster0.bitnsbv.mongodb.net/Project4?appName=Cluster0`
+   - `JWT_SECRET` = `tezscale_jwt_secret_2026_growthmax`
+   - `CLOUDINARY_CLOUD_NAME` = `nnjncy8i`
+   - `CLOUDINARY_API_KEY` = `818237368646962`
+   - `CLOUDINARY_API_SECRET` = `VhqWB0Z22_MurLUraFefory8Nsk`
+   - `NODE_ENV` = `production`
+4. Click **Deploy Web Service** — Render will build and deploy the complete application (both Frontend + Backend APIs) under a single live URL!
