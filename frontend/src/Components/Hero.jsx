@@ -8,6 +8,7 @@ import {
   Play 
 } from 'lucide-react';
 import AnimatedCounter from './AnimatedCounter';
+import heroFounderVisual from '../assets/hero-founder-visual.png';
 
 const Hero = ({ onOpenConsultation }) => {
   return (
@@ -135,9 +136,9 @@ const Hero = ({ onOpenConsultation }) => {
               
               {/* Founder Visual Asset with Layered Sky-Blue Aura & Bottom Corner Wave */}
               <img
-                src="/hero-founder-visual.png"
+                src={heroFounderVisual}
                 alt="TezScale Digital Marketing Specialist"
-                className="w-full h-auto max-h-[480px] sm:max-h-[540px] lg:max-h-[600px] object-contain object-bottom relative z-10"
+                className="w-full h-auto max-h-[500px] sm:max-h-[560px] lg:max-h-[620px] object-contain object-bottom relative z-10"
                 loading="eager"
                 fetchpriority="high"
               />
