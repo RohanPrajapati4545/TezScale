@@ -1,35 +1,18 @@
-import React, { useState, useEffect } from 'react';
-import { ArrowRight, Play, TrendingUp, Heart, Star, Sparkles, Building2, Stethoscope, Wrench, CheckCircle2, Cpu, Zap, Activity } from 'lucide-react';
+import React from 'react';
+import { ArrowRight, TrendingUp, Heart, Star, Building2, Stethoscope, Wrench, CheckCircle2, BarChart2, ShieldCheck, Zap } from 'lucide-react';
 import { useContent } from '../context/ContentContext';
-
-const rotatingPhrases = [
-  'digitally grow',
-  'automate lead gen',
-  'scale B2B revenue',
-  'dominate local search',
-];
 
 const Hero = ({ onOpenConsultation }) => {
   const { content } = useContent();
   const hero = content?.hero || {};
 
-  const [phraseIndex, setPhraseIndex] = useState(0);
-
-  // Smooth rotator effect
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setPhraseIndex((prev) => (prev + 1) % rotatingPhrases.length);
-    }, 2800);
-    return () => clearInterval(interval);
-  }, []);
-
   return (
     <section id="home" className="relative pt-10 sm:pt-14 pb-20 overflow-hidden bg-gradient-to-b from-[#e0f4ff]/50 via-[#f8fbfe] to-white">
       {/* Background ambient lighting in Drone Cyan */}
-      <div className="absolute top-1/4 right-10 w-96 h-96 bg-[#00A3E0]/12 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute top-20 left-10 w-80 h-80 bg-sky-200/25 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-1/4 right-10 w-96 h-96 bg-[#00A3E0]/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-20 left-10 w-80 h-80 bg-sky-200/20 rounded-full blur-3xl pointer-events-none" />
 
-      {/* Subtle curved contour lines */}
+      {/* Subtle clean grid background */}
       <div className="absolute inset-0 opacity-[0.03] pointer-events-none">
         <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
           <defs>
@@ -45,35 +28,31 @@ const Hero = ({ onOpenConsultation }) => {
         {/* Main Hero Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           
-          {/* Left Column: Headlines & CTA in Drone.io Typography */}
+          {/* Left Column: Headlines & CTA (Clean & Static - No jumping words) */}
           <div className="lg:col-span-6 space-y-6 text-left">
             
-            {/* Eyebrow Tag with Cyan Pulse Dot */}
-            <div className="anim-hero-1 inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#e0f4ff] border border-[#00A3E0]/30 text-[#007ba8] text-xs font-bold tracking-wide shadow-2xs">
-              <span className="w-2 h-2 rounded-full bg-[#00A3E0] live-pulse-dot" />
+            {/* Eyebrow Tag (Clean, static, no blinking dot) */}
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-md bg-[#e0f4ff] border border-[#00A3E0]/30 text-[#007ba8] text-xs font-bold tracking-wide">
               <span>{hero.badge || 'Automate & Scale Your Business'}</span>
             </div>
 
-            {/* Main Headline (Drone.io Impactful Style) */}
-            <h1 className="anim-hero-2 text-4xl sm:text-5xl lg:text-[54px] font-black text-slate-900 tracking-tight leading-[1.12]">
+            {/* Main Headline (Clean, rock-solid, impactful) */}
+            <h1 className="text-4xl sm:text-5xl lg:text-[54px] font-black text-slate-900 tracking-tight leading-[1.12]">
               {hero.titleLine1 || 'We are actively providing services to'} <br />
-              <span className="text-[#00A3E0] inline-block transition-all duration-300">
-                {rotatingPhrases[phraseIndex]}
-              </span>{' '}
-              your business with us.
+              <span className="text-[#00A3E0]">digitally grow</span> your business with us.
             </h1>
 
             {/* Subtitle */}
-            <p className="anim-hero-3 text-slate-600 text-base sm:text-lg leading-relaxed max-w-xl font-normal">
+            <p className="text-slate-600 text-base sm:text-lg leading-relaxed max-w-xl font-normal">
               {hero.description ||
                 'Transform your online presence with result-driven digital marketing and automated tech strategies that bring real business growth. Engineered for high-converting B2B lead generation.'}
             </p>
 
-            {/* Dual CTA Buttons (Exact Drone.io Button Styles) */}
-            <div className="anim-hero-4 flex flex-wrap items-center gap-4 pt-2">
+            {/* Dual CTA Buttons (Exact Drone.io Clean SaaS Style) */}
+            <div className="flex flex-wrap items-center gap-4 pt-2">
               <button
                 onClick={onOpenConsultation}
-                className="btn-drone-primary text-xs sm:text-sm px-7 py-3.5 shadow-lg shadow-[#00A3E0]/25"
+                className="btn-drone-primary text-xs sm:text-sm px-7 py-3.5 shadow-md shadow-[#00A3E0]/20"
               >
                 <span>GET STARTED</span>
                 <ArrowRight className="w-4 h-4" />
@@ -87,7 +66,7 @@ const Hero = ({ onOpenConsultation }) => {
               </button>
             </div>
 
-            {/* Micro value props with cyan check icons */}
+            {/* Micro value props with solid cyan check icons */}
             <div className="pt-2 flex flex-wrap items-center gap-6 text-xs text-slate-500 font-semibold">
               <span className="flex items-center gap-1.5">
                 <CheckCircle2 className="w-4 h-4 text-[#00A3E0]" /> Continuous Growth Pipelines
@@ -98,118 +77,100 @@ const Hero = ({ onOpenConsultation }) => {
             </div>
           </div>
 
-          {/* Right Column: High-Tech Growth Engine & Robot Visual in Drone Style */}
-          <div className="lg:col-span-6 relative flex justify-center items-center anim-hero-visual">
+          {/* Right Column: Clean, Stationary High-End SaaS Dashboard (No floating, no blinking) */}
+          <div className="lg:col-span-6 relative flex justify-center items-center">
             
-            {/* Tech Circular Accent Backdrop */}
-            <div className="absolute -top-12 -right-8 w-64 sm:w-80 h-64 sm:h-80 bg-gradient-to-tr from-[#00A3E0]/15 to-transparent rounded-full blur-2xl pointer-events-none select-none" />
-
-            {/* Drone Style Tech Machine & Dashboard Showcase */}
-            <div className="relative w-full max-w-lg">
+            <div className="relative w-full max-w-lg bg-white rounded-2xl shadow-xl border border-slate-200/90 overflow-hidden text-left">
               
-              {/* Main Machine Pod Container */}
-              <div className="bg-white/95 backdrop-blur-md rounded-3xl p-4 sm:p-6 shadow-2xl border border-sky-100 relative overflow-hidden">
-                
-                {/* Tech Pod Top Bar */}
-                <div className="flex items-center justify-between pb-4 border-b border-slate-100 mb-4">
-                  <div className="flex items-center gap-2">
-                    <span className="w-2.5 h-2.5 rounded-full bg-rose-400" />
-                    <span className="w-2.5 h-2.5 rounded-full bg-amber-400" />
-                    <span className="w-2.5 h-2.5 rounded-full bg-emerald-400" />
-                    <span className="ml-2 text-xs font-bold text-slate-800 uppercase tracking-wider">
-                      TezScale Autonomous Hub
-                    </span>
-                  </div>
-                  <span className="text-[10px] font-bold text-[#00A3E0] bg-[#e0f4ff] px-2.5 py-0.5 rounded-full flex items-center gap-1.5 uppercase tracking-wider">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#00A3E0] live-pulse-dot" />
-                    Live Engine
+              {/* Clean Window Header */}
+              <div className="flex items-center justify-between px-5 py-3.5 bg-slate-50 border-b border-slate-100">
+                <div className="flex items-center gap-2">
+                  <span className="w-3 h-3 rounded-full bg-rose-400" />
+                  <span className="w-3 h-3 rounded-full bg-amber-400" />
+                  <span className="w-3 h-3 rounded-full bg-emerald-400" />
+                  <span className="ml-2 text-xs font-bold text-slate-700 tracking-wide">
+                    TezScale Growth Platform
                   </span>
                 </div>
-
-                {/* Automation Machine & Rising Pipeline Bars */}
-                <div className="relative py-6 px-4 bg-gradient-to-b from-[#f0f9ff]/70 to-white rounded-2xl border border-sky-100/80">
-                  
-                  {/* Central Drone Automation Visual Illustration */}
-                  <div className="flex items-center justify-center py-4">
-                    <div className="relative">
-                      {/* Central Drone Core Body */}
-                      <div className="w-24 h-24 rounded-2xl bg-gradient-to-tr from-[#00A3E0] via-[#38bdf8] to-cyan-200 flex items-center justify-center text-white shadow-xl shadow-[#00A3E0]/30 animate-float-gentle">
-                        <Cpu className="w-12 h-12 text-white" />
-                      </div>
-
-                      {/* Robotic Thrusters with Orange / Red Flames (Drone.io Match!) */}
-                      <div className="absolute -bottom-4 left-3 w-4 h-6 bg-gradient-to-b from-amber-400 to-rose-500 rounded-b-full blur-[1px] animate-pulse" />
-                      <div className="absolute -bottom-4 right-3 w-4 h-6 bg-gradient-to-b from-amber-400 to-rose-500 rounded-b-full blur-[1px] animate-pulse" />
-
-                      {/* Orbiting Tech Signals */}
-                      <div className="absolute -top-3 -right-3 w-8 h-8 rounded-full bg-white shadow-md border border-sky-200 flex items-center justify-center text-[#00A3E0]">
-                        <Zap className="w-4 h-4 fill-current" />
-                      </div>
-                      <div className="absolute -bottom-2 -left-3 w-8 h-8 rounded-full bg-white shadow-md border border-sky-200 flex items-center justify-center text-emerald-500">
-                        <Activity className="w-4 h-4" />
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Rising Pipeline Bar Graph */}
-                  <div className="h-28 flex items-end justify-around gap-2 px-2 pt-4 border-t border-slate-100">
-                    <div className="text-center">
-                      <div className="w-7 sm:w-10 bg-sky-100 rounded-t-md h-8 transition-all hover:h-12" />
-                      <span className="text-[9px] font-bold text-slate-400 mt-1 block">SEO</span>
-                    </div>
-                    <div className="text-center">
-                      <div className="w-7 sm:w-10 bg-sky-200 rounded-t-md h-14 transition-all hover:h-18" />
-                      <span className="text-[9px] font-bold text-slate-400 mt-1 block">ADS</span>
-                    </div>
-                    <div className="text-center">
-                      <div className="w-7 sm:w-10 bg-sky-300 rounded-t-md h-20 transition-all hover:h-24" />
-                      <span className="text-[9px] font-bold text-slate-400 mt-1 block">LEADS</span>
-                    </div>
-                    <div className="text-center">
-                      <div className="w-7 sm:w-10 bg-[#00A3E0] rounded-t-md h-26 relative shadow-md shadow-[#00A3E0]/30 transition-all">
-                        <span className="absolute -top-5 left-1/2 -translate-x-1/2 text-[9px] font-black text-[#00A3E0] bg-[#e0f4ff] px-1 py-0.2 rounded shadow-2xs">
-                          ▲
-                        </span>
-                      </div>
-                      <span className="text-[9px] font-black text-[#00A3E0] mt-1 block">SCALE</span>
-                    </div>
-                  </div>
-
-                </div>
-
+                <span className="text-[11px] font-bold text-[#00A3E0] bg-[#e0f4ff] px-2.5 py-1 rounded-md">
+                  Production Ready
+                </span>
               </div>
 
-              {/* Floating Badge 1 (Top Left): +250% Business Growth */}
-              <div className="absolute -top-5 -left-4 sm:-left-8 bg-white/95 backdrop-blur-md px-4 py-3 rounded-xl shadow-xl border border-sky-100 flex items-center gap-3 animate-float-gentle">
-                <div className="w-10 h-10 rounded-lg bg-[#e0f4ff] text-[#00A3E0] flex items-center justify-center font-bold">
-                  <TrendingUp className="w-5 h-5" />
-                </div>
-                <div className="text-left">
-                  <div className="text-base font-black text-slate-900 leading-tight">
-                    {hero.trafficStat || '+250%'}
+              {/* Main Dashboard Body */}
+              <div className="p-6 space-y-6">
+                
+                {/* 3 Core Metric Stat Cards (Stationary, Clean, Crisp) */}
+                <div className="grid grid-cols-3 gap-3">
+                  <div className="p-3.5 bg-slate-50 rounded-xl border border-slate-100 text-left">
+                    <div className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">Growth</div>
+                    <div className="text-xl font-black text-slate-900 mt-0.5">{hero.trafficStat || '+250%'}</div>
+                    <div className="text-[10px] text-emerald-600 font-semibold mt-1">Verified ROI</div>
                   </div>
-                  <div className="text-xs text-slate-500 font-bold uppercase tracking-wider">
-                    {hero.trafficGrowth || 'Business Growth'}
-                  </div>
-                </div>
-              </div>
 
-              {/* Floating Badge 2 (Bottom Right): 98% Client Satisfaction */}
-              <div className="absolute -bottom-5 -right-3 sm:-right-6 bg-white/95 backdrop-blur-md px-4 py-3 rounded-xl shadow-xl border border-sky-100 flex items-center gap-3 animate-float-delayed">
-                <div className="w-10 h-10 rounded-lg bg-rose-50 text-rose-500 flex items-center justify-center font-bold">
-                  <Heart className="w-5 h-5 fill-current" />
-                </div>
-                <div className="text-left">
-                  <div className="text-base font-black text-slate-900 leading-tight">
-                    {hero.roiStat || '98%'}
+                  <div className="p-3.5 bg-slate-50 rounded-xl border border-slate-100 text-left">
+                    <div className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">Satisfaction</div>
+                    <div className="text-xl font-black text-slate-900 mt-0.5">{hero.roiStat || '98%'}</div>
+                    <div className="text-[10px] text-[#00A3E0] font-semibold mt-1">500+ Clients</div>
                   </div>
-                  <div className="text-xs text-slate-500 font-bold uppercase tracking-wider">
-                    {hero.roiLabel || 'Client Satisfaction'}
+
+                  <div className="p-3.5 bg-slate-50 rounded-xl border border-slate-100 text-left">
+                    <div className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">ROAS</div>
+                    <div className="text-xl font-black text-[#00A3E0] mt-0.5">4.8x</div>
+                    <div className="text-[10px] text-slate-500 font-semibold mt-1">Avg. Return</div>
                   </div>
                 </div>
+
+                {/* Performance Curve Visualization */}
+                <div className="p-4 bg-gradient-to-b from-[#f0f9ff]/50 to-white rounded-xl border border-sky-100">
+                  <div className="flex items-center justify-between mb-3 text-xs">
+                    <span className="font-bold text-slate-800">Conversion & Traffic Velocity</span>
+                    <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Past 90 Days</span>
+                  </div>
+
+                  {/* Clean SVG Area Chart */}
+                  <div className="h-28 w-full">
+                    <svg viewBox="0 0 400 120" className="w-full h-full overflow-visible">
+                      <defs>
+                        <linearGradient id="cyanGradient" x1="0" y1="0" x2="0" y2="1">
+                          <stop offset="0%" stopColor="#00A3E0" stopOpacity="0.25" />
+                          <stop offset="100%" stopColor="#00A3E0" stopOpacity="0" />
+                        </linearGradient>
+                      </defs>
+                      <path
+                        d="M0,90 Q60,85 120,60 T240,40 T360,15 L400,10 L400,120 L0,120 Z"
+                        fill="url(#cyanGradient)"
+                      />
+                      <path
+                        d="M0,90 Q60,85 120,60 T240,40 T360,15 L400,10"
+                        fill="none"
+                        stroke="#00A3E0"
+                        strokeWidth="3"
+                        strokeLinecap="round"
+                      />
+                      <circle cx="360" cy="15" r="4" fill="#00A3E0" />
+                      <circle cx="400" cy="10" r="4" fill="#00A3E0" />
+                    </svg>
+                  </div>
+                </div>
+
+                {/* Systematic Pipeline Steps */}
+                <div className="grid grid-cols-3 gap-2 text-center text-xs">
+                  <div className="py-2 px-3 rounded-lg bg-slate-50 border border-slate-100 font-bold text-slate-700">
+                    Audit & SEO
+                  </div>
+                  <div className="py-2 px-3 rounded-lg bg-slate-50 border border-slate-100 font-bold text-slate-700">
+                    High-ROAS Ads
+                  </div>
+                  <div className="py-2 px-3 rounded-lg bg-[#e0f4ff] border border-[#00A3E0]/30 font-bold text-[#007ba8]">
+                    WhatsApp Leads
+                  </div>
+                </div>
+
               </div>
 
             </div>
+
           </div>
 
         </div>

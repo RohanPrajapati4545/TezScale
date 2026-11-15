@@ -58,9 +58,9 @@ const WhyChooseUs = ({ onOpenConsultation }) => {
                 className="w-full h-80 sm:h-96 object-cover object-top hover:scale-105 transition-transform duration-500"
               />
 
-              {/* Floating Badge 1: Your Growth Our Priority */}
-              <div className="absolute top-6 -right-3 bg-white/95 backdrop-blur-md px-4 py-2.5 rounded-2xl shadow-xl border border-slate-100 flex items-center gap-2.5 animate-float-gentle">
-                <div className="w-8 h-8 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center font-bold">
+              {/* Stationary Badge 1: Your Growth Our Priority */}
+              <div className="absolute top-6 -right-3 bg-white/95 backdrop-blur-md px-4 py-2.5 rounded-xl shadow-lg border border-slate-100 flex items-center gap-2.5">
+                <div className="w-8 h-8 rounded-lg bg-[#e0f4ff] text-[#00A3E0] flex items-center justify-center font-bold">
                   <TrendingUp className="w-4 h-4" />
                 </div>
                 <div className="text-left">
@@ -69,9 +69,9 @@ const WhyChooseUs = ({ onOpenConsultation }) => {
                 </div>
               </div>
 
-              {/* Floating Badge 2: +300% Traffic Growth */}
-              <div className="absolute bottom-6 -right-3 bg-white/95 backdrop-blur-md px-4 py-2.5 rounded-2xl shadow-xl border border-slate-100 flex items-center gap-2.5 animate-float-delayed">
-                <div className="w-8 h-8 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold">
+              {/* Stationary Badge 2: +300% Traffic Growth */}
+              <div className="absolute bottom-6 -right-3 bg-white/95 backdrop-blur-md px-4 py-2.5 rounded-xl shadow-lg border border-slate-100 flex items-center gap-2.5">
+                <div className="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold">
                   <Sparkles className="w-4 h-4" />
                 </div>
                 <div className="text-left">
@@ -84,8 +84,7 @@ const WhyChooseUs = ({ onOpenConsultation }) => {
 
           {/* Right Column: Mission & Points */}
           <div className="lg:col-span-7 space-y-6 text-left">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#e0f4ff] border border-[#00A3E0]/30 text-[#007ba8] text-xs font-bold tracking-wide shadow-2xs">
-              <span className="w-2 h-2 rounded-full bg-[#00A3E0] live-pulse-dot" />
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-md bg-[#e0f4ff] border border-[#00A3E0]/30 text-[#007ba8] text-xs font-bold tracking-wide">
               <span>{why.badge || 'Why Choose TezScale'}</span>
             </div>
 

@@ -1,16 +1,6 @@
-/* Custom App-level styles */
-@keyframes float {
-  0% { transform: translateY(0px); }
-  50% { transform: translateY(-8px); }
-  100% { transform: translateY(0px); }
+/* Custom App-level styles - Simple & Clean */
+.App {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
-
-.animate-float {
-  animation: float 4s ease-in-out infinite;
-}
-
-.animate-float-delayed {
-  animation: float 4s ease-in-out infinite;
-  animation-delay: 2s;
-}
-

@@ -95,8 +95,7 @@ const IndustrySolutions = ({ onOpenConsultation }) => {
         
         {/* Header */}
         <div className="max-w-3xl mx-auto text-center space-y-3 mb-14">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#e0f4ff] border border-[#00A3E0]/30 text-[#007ba8] text-xs font-bold tracking-wide shadow-2xs">
-            <span className="w-2 h-2 rounded-full bg-[#00A3E0] live-pulse-dot" />
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-md bg-[#e0f4ff] border border-[#00A3E0]/30 text-[#007ba8] text-xs font-bold tracking-wide">
             <span>Target Audience Specialization</span>
           </div>
           <h2 className="text-3xl sm:text-4xl lg:text-[42px] font-black text-slate-900 tracking-tight leading-tight">
@@ -118,7 +117,6 @@ const IndustrySolutions = ({ onOpenConsultation }) => {
                   onClick={() => setActiveTab(v.id)}
                   className={`subnav-pill ${isActive ? 'active' : ''}`}
                 >
-                  {isActive && <span className="w-2 h-2 rounded-full bg-white live-pulse-dot" />}
                   {v.icon}
                   <span>{v.badge}</span>
                 </button>

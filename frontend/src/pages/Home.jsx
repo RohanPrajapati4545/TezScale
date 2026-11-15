@@ -35,7 +35,7 @@ const Home = () => {
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-white text-slate-800 font-sans antialiased selection:bg-blue-600 selection:text-white">
+    <div className="min-h-screen flex flex-col bg-white text-slate-800 font-sans antialiased selection:bg-[#00A3E0] selection:text-white">
       {/* Navigation */}
       <Navbar onOpenConsultation={() => setModalOpen(true)} />
 
