@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Navbar from '../Components/Navbar';
 import Footer from '../Components/Footer';
 import ConsultationModal from '../Components/ConsultationModal';
+import AnimatedCounter from '../Components/AnimatedCounter';
 import { 
   ShieldCheck, 
   Target, 
@@ -80,7 +81,7 @@ const About = () => {
 
       <main className="flex-1">
         {/* Hero Section */}
-        <section className="pt-16 pb-20 bg-gradient-to-b from-blue-50/50 via-white to-white border-b border-slate-100">
+        <section className="pt-24 sm:pt-28 pb-20 bg-gradient-to-b from-blue-50/50 via-white to-white border-b border-slate-100">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-100 text-blue-700 text-xs font-bold tracking-wide">
               <Sparkles className="w-3.5 h-3.5" />
@@ -95,22 +96,30 @@ const About = () => {
               We are a full-service digital marketing and tech acceleration partner helping clinics, real estate brokers, B2B exporters, and retailers dominate their markets.
             </p>
 
-            {/* Quick Metrics Banner */}
+            {/* Quick Metrics Banner (Oliveflex Style Animated Count-Up) */}
             <div className="pt-6 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
               <div className="p-5 rounded-2xl bg-white border border-slate-200/80 shadow-xs text-center card-lift">
-                <div className="text-3xl font-black text-blue-600">250%</div>
+                <div className="text-3xl font-black text-blue-600">
+                  <AnimatedCounter value="250%" duration={1400} />
+                </div>
                 <div className="text-xs font-semibold text-slate-500 mt-1">Average ROI Growth</div>
               </div>
               <div className="p-5 rounded-2xl bg-white border border-slate-200/80 shadow-xs text-center card-lift">
-                <div className="text-3xl font-black text-emerald-600">500+</div>
+                <div className="text-3xl font-black text-emerald-600">
+                  <AnimatedCounter value="500+" duration={1500} />
+                </div>
                 <div className="text-xs font-semibold text-slate-500 mt-1">Happy Clients</div>
               </div>
               <div className="p-5 rounded-2xl bg-white border border-slate-200/80 shadow-xs text-center card-lift">
-                <div className="text-3xl font-black text-indigo-600">5+</div>
+                <div className="text-3xl font-black text-indigo-600">
+                  <AnimatedCounter value="5+" duration={1200} />
+                </div>
                 <div className="text-xs font-semibold text-slate-500 mt-1">Years Experience</div>
               </div>
               <div className="p-5 rounded-2xl bg-white border border-slate-200/80 shadow-xs text-center card-lift">
-                <div className="text-3xl font-black text-amber-500">98%</div>
+                <div className="text-3xl font-black text-amber-500">
+                  <AnimatedCounter value="98%" duration={1300} />
+                </div>
                 <div className="text-xs font-semibold text-slate-500 mt-1">Client Retention Rate</div>
               </div>
             </div>

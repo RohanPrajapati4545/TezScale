@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import Navbar from '../Components/Navbar';
 import Footer from '../Components/Footer';
 import ConsultationModal from '../Components/ConsultationModal';
@@ -23,6 +24,7 @@ import { useContent } from '../context/ContentContext';
 const detailedServices = [
   {
     id: 'web-dev',
+    slug: 'web-development',
     title: 'Website Builder & Development',
     category: 'Engineering & Conversion UI',
     icon: <Code2 className="w-6 h-6 text-blue-600" />,
@@ -40,6 +42,7 @@ const detailedServices = [
   },
   {
     id: 'graphic-design',
+    slug: 'graphic-design',
     title: 'Graphic Design & Creative Brand Kits',
     category: 'Visual Identity & Ad Creatives',
     icon: <Palette className="w-6 h-6 text-purple-600" />,
@@ -57,6 +60,7 @@ const detailedServices = [
   },
   {
     id: 'digital-marketing',
+    slug: 'digital-marketing',
     title: 'Digital Marketing Support (Local SEO)',
     category: 'Search Engine Dominance',
     icon: <Megaphone className="w-6 h-6 text-emerald-600" />,
@@ -74,6 +78,7 @@ const detailedServices = [
   },
   {
     id: 'ecommerce',
+    slug: 'ecommerce',
     title: 'E-Commerce Enablement & Scaling',
     category: 'Direct-to-Consumer Growth',
     icon: <ShoppingCart className="w-6 h-6 text-amber-500" />,
@@ -91,6 +96,7 @@ const detailedServices = [
   },
   {
     id: 'social-media',
+    slug: 'social-media',
     title: 'Social Media Management & Viral Reach',
     category: 'Organic Audience Building',
     icon: <Share2 className="w-6 h-6 text-indigo-600" />,
@@ -108,6 +114,7 @@ const detailedServices = [
   },
   {
     id: 'meta-ads',
+    slug: 'meta-ads',
     title: 'Meta Ads Management (FB & Instagram)',
     category: 'Paid Acquisition & ROAS',
     icon: <InfinityIcon className="w-6 h-6 text-rose-500" />,
@@ -135,7 +142,7 @@ const ServicesPage = () => {
 
       <main className="flex-1">
         {/* Services Page Hero */}
-        <section className="pt-16 pb-20 bg-gradient-to-b from-blue-50/50 via-white to-white border-b border-slate-100">
+        <section className="pt-24 sm:pt-28 pb-20 bg-gradient-to-b from-blue-50/50 via-white to-white border-b border-slate-100">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-5">
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-100 text-blue-700 text-xs font-bold tracking-wide">
               <Sparkles className="w-3.5 h-3.5" />
@@ -189,9 +196,11 @@ const ServicesPage = () => {
                       <div className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
                         {service.category}
                       </div>
-                      <h3 className="text-xl font-extrabold text-slate-900 mt-1 leading-snug">
-                        {service.title}
-                      </h3>
+                      <Link to={`/services/${service.slug}`} className="block group/link">
+                        <h3 className="text-xl font-extrabold text-slate-900 mt-1 leading-snug group-hover/link:text-blue-600 transition-colors">
+                          {service.title}
+                        </h3>
+                      </Link>
                       <p className="text-xs text-slate-600 mt-2.5 leading-relaxed">
                         {service.desc}
                       </p>
@@ -224,16 +233,16 @@ const ServicesPage = () => {
                     </div>
                   </div>
 
-                  {/* Card Bottom CTA */}
+                  {/* Card Bottom CTA (Jumps to Individual Service Details Page) */}
                   <div className="pt-6 mt-6 border-t border-slate-100 flex items-center justify-between">
                     <span className="text-xs font-black text-blue-600">{service.stats}</span>
-                    <button
-                      onClick={() => setModalOpen(true)}
+                    <Link
+                      to={`/services/${service.slug}`}
                       className="inline-flex items-center gap-1.5 text-xs font-bold text-blue-600 hover:text-blue-700 cursor-pointer group"
                     >
-                      <span>Inquire Now</span>
+                      <span>View Brief Details</span>
                       <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
-                    </button>
+                    </Link>
                   </div>
                 </div>
               ))}

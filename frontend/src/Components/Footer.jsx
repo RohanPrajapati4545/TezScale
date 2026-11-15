@@ -98,12 +98,12 @@ const Footer = ({ onOpenConsultation }) => {
           <div className="lg:col-span-3 space-y-4">
             <h4 className="text-xs font-bold text-white uppercase tracking-wider">Our Core Pillars</h4>
             <ul className="space-y-2.5 text-xs text-slate-400 font-medium">
-              <li><Link to="/services" className="hover:text-[#00A3E0] transition-colors">Website Builder & Dev</Link></li>
-              <li><Link to="/services" className="hover:text-[#00A3E0] transition-colors">Graphic Design & Brand Kits</Link></li>
-              <li><Link to="/services" className="hover:text-[#00A3E0] transition-colors">Digital Marketing Support (SEO)</Link></li>
-              <li><Link to="/services" className="hover:text-[#00A3E0] transition-colors">E-commerce Enablement</Link></li>
-              <li><Link to="/services" className="hover:text-[#00A3E0] transition-colors">Social Media Strategy</Link></li>
-              <li><Link to="/services" className="hover:text-[#00A3E0] transition-colors">Meta Ads Management</Link></li>
+              <li><Link to="/services/web-development" className="hover:text-[#00A3E0] transition-colors">Website Builder & Dev</Link></li>
+              <li><Link to="/services/graphic-design" className="hover:text-[#00A3E0] transition-colors">Graphic Design & Brand Kits</Link></li>
+              <li><Link to="/services/digital-marketing" className="hover:text-[#00A3E0] transition-colors">Digital Marketing Support (SEO)</Link></li>
+              <li><Link to="/services/ecommerce" className="hover:text-[#00A3E0] transition-colors">E-commerce Enablement</Link></li>
+              <li><Link to="/services/social-media" className="hover:text-[#00A3E0] transition-colors">Social Media Strategy</Link></li>
+              <li><Link to="/services/meta-ads" className="hover:text-[#00A3E0] transition-colors">Meta Ads Management</Link></li>
             </ul>
           </div>
 

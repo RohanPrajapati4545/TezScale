@@ -96,7 +96,7 @@ const TestimonialsPage = () => {
 
       <main className="flex-1">
         {/* Hero Section */}
-        <section className="pt-16 pb-20 bg-gradient-to-b from-blue-50/50 via-white to-white border-b border-slate-100">
+        <section className="pt-24 sm:pt-28 pb-20 bg-gradient-to-b from-blue-50/50 via-white to-white border-b border-slate-100">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-5">
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-100 text-blue-700 text-xs font-bold tracking-wide">
               <Sparkles className="w-3.5 h-3.5" />

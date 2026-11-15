@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import {
   Code,
   Palette,
@@ -11,6 +12,24 @@ import {
   Sparkles,
 } from 'lucide-react';
 import { useContent } from '../context/ContentContext';
+
+const serviceSlugMap = {
+  'Website Builder & Development': 'web-development',
+  'Graphic Design': 'graphic-design',
+  'Digital Marketing Support': 'digital-marketing',
+  'E-commerce Support': 'ecommerce',
+  'Social Media Services': 'social-media',
+  'Meta Ads Management': 'meta-ads',
+};
+
+const defaultSlugs = [
+  'web-development',
+  'graphic-design',
+  'digital-marketing',
+  'ecommerce',
+  'social-media',
+  'meta-ads',
+];
 
 const getServiceIcon = (iconName) => {
   switch (iconName) {
@@ -64,14 +83,17 @@ const Services = ({ onOpenConsultation }) => {
           </p>
         </div>
 
-        {/* 6 Services Grid (3 Columns x 2 Rows) in Drone Card Style */}
+        {/* 6 Services Grid (Clickable cards jumping to individual service detail pages) */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 text-left">
           {servicesList.map((service, idx) => {
             const iconBg = service.badgeBg || defaultCardColors[idx % defaultCardColors.length];
+            const slug = serviceSlugMap[service.title] || defaultSlugs[idx % defaultSlugs.length];
+
             return (
-              <div
+              <Link
                 key={service._id || idx}
-                className="bg-white p-8 rounded-2xl border border-slate-200/90 shadow-2xs hover:border-[#00A3E0]/50 card-lift flex flex-col justify-between group relative overflow-hidden"
+                to={`/services/${slug}`}
+                className="bg-white p-8 rounded-2xl border border-slate-200/90 shadow-2xs hover:border-[#00A3E0]/60 hover:shadow-md card-lift flex flex-col justify-between group relative overflow-hidden transition-all duration-300 cursor-pointer block"
               >
                 {/* Subtle top accent gradient line */}
                 <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#00A3E0] to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
@@ -88,16 +110,16 @@ const Services = ({ onOpenConsultation }) => {
                   </p>
                 </div>
 
-                <div className="pt-3 border-t border-slate-100">
-                  <button
-                    onClick={onOpenConsultation}
-                    className="inline-flex items-center gap-1.5 text-xs font-bold text-[#00A3E0] group-hover:text-[#008bc0] uppercase tracking-wider transition-all group-hover:gap-2.5 cursor-pointer"
-                  >
-                    <span>Request Strategy Brief</span>
+                <div className="pt-3 border-t border-slate-100 flex items-center justify-between">
+                  <span className="inline-flex items-center gap-1.5 text-xs font-bold text-[#00A3E0] group-hover:text-[#008bc0] uppercase tracking-wider transition-all group-hover:gap-2.5">
+                    <span>View In-Depth Brief</span>
                     <ArrowRight className="w-3.5 h-3.5 transition-transform" />
-                  </button>
+                  </span>
+                  <span className="text-[10px] font-bold text-slate-400 group-hover:text-[#00A3E0] transition-colors">
+                    Read More &rarr;
+                  </span>
                 </div>
-              </div>
+              </Link>
             );
           })}
         </div>

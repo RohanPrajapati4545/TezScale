@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Navbar from '../Components/Navbar';
 import Footer from '../Components/Footer';
 import ConsultationModal from '../Components/ConsultationModal';
+import AnimatedCounter from '../Components/AnimatedCounter';
 import { 
   BarChart3, 
   Users, 
@@ -172,7 +173,7 @@ const PortfolioPage = () => {
 
       <main className="flex-1">
         {/* Hero Section */}
-        <section className="pt-16 pb-20 bg-gradient-to-b from-blue-50/50 via-white to-white border-b border-slate-100">
+        <section className="pt-24 sm:pt-28 pb-20 bg-gradient-to-b from-blue-50/50 via-white to-white border-b border-slate-100">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-5">
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-100 text-blue-700 text-xs font-bold tracking-wide">
               <Sparkles className="w-3.5 h-3.5" />
@@ -187,46 +188,46 @@ const PortfolioPage = () => {
               Explore how we helped healthcare clinics, property developers, manufacturers, and direct-to-consumer brands unlock predictable growth.
             </p>
 
-            {/* 3 Metric Counters */}
+            {/* 3 Metric Counters (Oliveflex Style Animated Count-Up) */}
             <div className="pt-6 grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-3xl mx-auto">
-              <div className="bg-white p-6 rounded-3xl border border-slate-200/90 text-left flex items-center gap-4 shadow-xs card-lift">
-                <div className="w-12 h-12 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center font-bold">
+              <div className="bg-white p-6 rounded-2xl border border-slate-200/90 text-left flex items-center gap-4.5 shadow-2xs hover:shadow-md transition-all duration-300">
+                <div className="w-12 h-12 rounded-xl bg-[#e0f4ff] text-[#00A3E0] flex items-center justify-center font-bold shrink-0">
                   <BarChart3 className="w-6 h-6" />
                 </div>
                 <div>
-                  <div className="text-3xl font-black text-slate-900 leading-tight">
-                    {metrics.stat1Value || '250%'}
+                  <div className="text-3xl sm:text-[34px] font-black text-slate-900 leading-tight">
+                    <AnimatedCounter value={metrics.stat1Value || '250%'} duration={1400} />
                   </div>
-                  <div className="text-xs font-semibold text-slate-500">
-                    {metrics.stat1Label || 'Average Growth'}
+                  <div className="text-[11px] font-bold text-slate-500 uppercase tracking-wider mt-0.5">
+                    {metrics.stat1Label || 'AVERAGE GROWTH'}
                   </div>
                 </div>
               </div>
 
-              <div className="bg-white p-6 rounded-3xl border border-slate-200/90 text-left flex items-center gap-4 shadow-xs card-lift">
-                <div className="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold">
+              <div className="bg-white p-6 rounded-2xl border border-slate-200/90 text-left flex items-center gap-4.5 shadow-2xs hover:shadow-md transition-all duration-300">
+                <div className="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold shrink-0">
                   <Users className="w-6 h-6" />
                 </div>
                 <div>
-                  <div className="text-3xl font-black text-slate-900 leading-tight">
-                    {metrics.stat2Value || '500+'}
+                  <div className="text-3xl sm:text-[34px] font-black text-slate-900 leading-tight">
+                    <AnimatedCounter value={metrics.stat2Value || '500+'} duration={1500} />
                   </div>
-                  <div className="text-xs font-semibold text-slate-500">
-                    {metrics.stat2Label || 'Happy Clients'}
+                  <div className="text-[11px] font-bold text-slate-500 uppercase tracking-wider mt-0.5">
+                    {metrics.stat2Label || 'HAPPY CLIENTS'}
                   </div>
                 </div>
               </div>
 
-              <div className="bg-white p-6 rounded-3xl border border-slate-200/90 text-left flex items-center gap-4 shadow-xs card-lift">
-                <div className="w-12 h-12 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center font-bold">
+              <div className="bg-white p-6 rounded-2xl border border-slate-200/90 text-left flex items-center gap-4.5 shadow-2xs hover:shadow-md transition-all duration-300">
+                <div className="w-12 h-12 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center font-bold shrink-0">
                   <Clock className="w-6 h-6" />
                 </div>
                 <div>
-                  <div className="text-3xl font-black text-slate-900 leading-tight">
-                    {metrics.stat3Value || '5+'}
+                  <div className="text-3xl sm:text-[34px] font-black text-slate-900 leading-tight">
+                    <AnimatedCounter value={metrics.stat3Value || '5+'} duration={1200} />
                   </div>
-                  <div className="text-xs font-semibold text-slate-500">
-                    {metrics.stat3Label || 'Years Experience'}
+                  <div className="text-[11px] font-bold text-slate-500 uppercase tracking-wider mt-0.5">
+                    {metrics.stat3Label || 'YEARS EXPERIENCE'}
                   </div>
                 </div>
               </div>

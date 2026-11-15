@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ChevronLeft, ChevronRight, ArrowUpRight, BarChart3, Users, Clock, ArrowRight } from 'lucide-react';
 import { useContent } from '../context/ContentContext';
+import AnimatedCounter from './AnimatedCounter';
 
 const OurWork = ({ onOpenConsultation }) => {
   const { content } = useContent();
@@ -56,46 +57,46 @@ const OurWork = ({ onOpenConsultation }) => {
           </div>
         </div>
 
-        {/* 3 Metric counters row */}
+        {/* 3 Metric counters row (Section 2.0 / Oliveflex Style Animated Count-Up) */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-12">
-          <div className="bg-slate-50/70 p-6 rounded-2xl border border-slate-200/80 text-left flex items-center gap-4 shadow-2xs">
-            <div className="w-12 h-12 rounded-xl bg-[#e0f4ff] text-[#00A3E0] flex items-center justify-center font-bold">
+          <div className="bg-white p-6 rounded-2xl border border-slate-200/90 text-left flex items-center gap-4.5 shadow-2xs hover:shadow-md hover:border-[#00A3E0]/40 transition-all duration-300">
+            <div className="w-12 h-12 rounded-xl bg-[#e0f4ff] text-[#00A3E0] flex items-center justify-center font-bold shrink-0">
               <BarChart3 className="w-6 h-6" />
             </div>
             <div>
-              <div className="text-3xl font-extrabold text-slate-900 leading-tight">
-                {metrics.stat1Value || '250%'}
+              <div className="text-3xl sm:text-[34px] font-black text-slate-900 leading-tight">
+                <AnimatedCounter value={metrics.stat1Value || '250%'} duration={1400} />
               </div>
-              <div className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
-                {metrics.stat1Label || 'Average Growth'}
+              <div className="text-[11px] font-bold text-slate-500 uppercase tracking-wider mt-0.5">
+                {metrics.stat1Label || 'AVERAGE GROWTH'}
               </div>
             </div>
           </div>
 
-          <div className="bg-slate-50/70 p-6 rounded-2xl border border-slate-200/80 text-left flex items-center gap-4 shadow-2xs">
-            <div className="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold">
+          <div className="bg-white p-6 rounded-2xl border border-slate-200/90 text-left flex items-center gap-4.5 shadow-2xs hover:shadow-md hover:border-emerald-300 transition-all duration-300">
+            <div className="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold shrink-0">
               <Users className="w-6 h-6" />
             </div>
             <div>
-              <div className="text-3xl font-extrabold text-slate-900 leading-tight">
-                {metrics.stat2Value || '500+'}
+              <div className="text-3xl sm:text-[34px] font-black text-slate-900 leading-tight">
+                <AnimatedCounter value={metrics.stat2Value || '500+'} duration={1500} />
               </div>
-              <div className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
-                {metrics.stat2Label || 'Happy Clients'}
+              <div className="text-[11px] font-bold text-slate-500 uppercase tracking-wider mt-0.5">
+                {metrics.stat2Label || 'HAPPY CLIENTS'}
               </div>
             </div>
           </div>
 
-          <div className="bg-slate-50/70 p-6 rounded-2xl border border-slate-200/80 text-left flex items-center gap-4 shadow-2xs">
-            <div className="w-12 h-12 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center font-bold">
+          <div className="bg-white p-6 rounded-2xl border border-slate-200/90 text-left flex items-center gap-4.5 shadow-2xs hover:shadow-md hover:border-amber-300 transition-all duration-300">
+            <div className="w-12 h-12 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center font-bold shrink-0">
               <Clock className="w-6 h-6" />
             </div>
             <div>
-              <div className="text-3xl font-extrabold text-slate-900 leading-tight">
-                {metrics.stat3Value || '5+'}
+              <div className="text-3xl sm:text-[34px] font-black text-slate-900 leading-tight">
+                <AnimatedCounter value={metrics.stat3Value || '5+'} duration={1200} />
               </div>
-              <div className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
-                {metrics.stat3Label || 'Years Experience'}
+              <div className="text-[11px] font-bold text-slate-500 uppercase tracking-wider mt-0.5">
+                {metrics.stat3Label || 'YEARS EXPERIENCE'}
               </div>
             </div>
           </div>

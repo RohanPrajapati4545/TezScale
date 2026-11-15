@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Stethoscope, Building2, Wrench, ShoppingBag, ArrowRight, CheckCircle2, TrendingUp, ShieldCheck } from 'lucide-react';
+import AnimatedCounter from './AnimatedCounter';
 
 const verticals = [
   {
@@ -107,7 +108,7 @@ const IndustrySolutions = ({ onOpenConsultation }) => {
         </div>
 
         {/* Drone-style Interactive Segmented Tabs */}
-        <div className="flex justify-center mb-10 overflow-x-auto pb-2 scrollbar-none">
+        <div className="flex justify-start sm:justify-center mb-10 overflow-x-auto pb-2 scrollbar-none px-1 max-w-full">
           <div className="inline-flex items-center gap-2 p-1.5 rounded-full bg-white border border-slate-200/90 shadow-xs">
             {verticals.map((v) => {
               const isActive = activeTab === v.id;
@@ -175,7 +176,9 @@ const IndustrySolutions = ({ onOpenConsultation }) => {
                 {activeData.kpis.map((kpi, idx) => (
                   <div key={idx} className="p-3.5 rounded-lg bg-white/5 border border-white/10 flex items-center justify-between">
                     <span className="text-xs text-slate-300 font-medium">{kpi.label}</span>
-                    <span className="text-xl font-black text-[#00A3E0]">{kpi.value}</span>
+                    <span className="text-xl font-black text-[#00A3E0]">
+                      <AnimatedCounter value={kpi.value} duration={1200} />
+                    </span>
                   </div>
                 ))}
               </div>
