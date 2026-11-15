@@ -1,0 +1,111 @@
+<svg width="1440" height="720" viewBox="0 0 1440 720" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Linear Gradients for marketing graphs and lines -->
+    <linearGradient id="gridGrad" x1="0" y1="0" x2="1440" y2="720" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#00A3E0" stop-opacity="0.35" />
+      <stop offset="50%" stop-color="#38bdf8" stop-opacity="0.15" />
+      <stop offset="100%" stop-color="#0284c7" stop-opacity="0.25" />
+    </linearGradient>
+
+    <linearGradient id="growthCurve" x1="0" y1="500" x2="1400" y2="100" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#00A3E0" stop-opacity="0.2" />
+      <stop offset="70%" stop-color="#00A3E0" stop-opacity="0.8" />
+      <stop offset="100%" stop-color="#38bdf8" stop-opacity="0.9" />
+    </linearGradient>
+
+    <radialGradient id="meshAura" cx="70%" cy="35%" r="60%">
+      <stop offset="0%" stop-color="#00A3E0" stop-opacity="0.25" />
+      <stop offset="45%" stop-color="#38bdf8" stop-opacity="0.1" />
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0" />
+    </radialGradient>
+
+    <pattern id="marketingDotGrid" x="0" y="0" width="36" height="36" patternUnits="userSpaceOnUse">
+      <circle cx="18" cy="18" r="1.2" fill="#00A3E0" fill-opacity="0.22" />
+    </pattern>
+  </defs>
+
+  <!-- Ambient background aura -->
+  <rect width="1440" height="720" fill="url(#meshAura)" />
+
+  <!-- Subtle Blueprint Marketing Grid -->
+  <rect width="1440" height="720" fill="url(#marketingDotGrid)" />
+
+  <!-- Structural Isometric / Coordinate Guide Lines -->
+  <g stroke="url(#gridGrad)" stroke-width="1" stroke-dasharray="4 6" opacity="0.6">
+    <line x1="120" y1="0" x2="120" y2="720" />
+    <line x1="360" y1="0" x2="360" y2="720" />
+    <line x1="600" y1="0" x2="600" y2="720" />
+    <line x1="840" y1="0" x2="840" y2="720" />
+    <line x1="1080" y1="0" x2="1080" y2="720" />
+    <line x1="1320" y1="0" x2="1320" y2="720" />
+
+    <line x1="0" y1="120" x2="1440" y2="120" />
+    <line x1="0" y1="260" x2="1440" y2="260" />
+    <line x1="0" y1="420" x2="1440" y2="420" />
+    <line x1="0" y1="580" x2="1440" y2="580" />
+  </g>
+
+  <!-- Exponential Growth Curve (representing conversion scaling) -->
+  <path d="M 80 580 C 350 560, 550 490, 820 340 C 1040 220, 1220 120, 1380 70" 
+        stroke="url(#growthCurve)" stroke-width="3.5" fill="none" stroke-linecap="round" />
+
+  <!-- Secondary Growth / Retention Curve -->
+  <path d="M 120 620 C 400 610, 680 520, 960 380 C 1180 270, 1320 200, 1420 160" 
+        stroke="#00A3E0" stroke-opacity="0.25" stroke-width="2" stroke-dasharray="6 6" fill="none" />
+
+  <!-- Key Conversion Milestones / Data Nodes -->
+  <g fill="#00A3E0">
+    <!-- Node 1 -->
+    <circle cx="480" cy="510" r="4.5" fill-opacity="0.7" />
+    <circle cx="480" cy="510" r="10" stroke="#00A3E0" stroke-opacity="0.3" stroke-width="1.5" fill="none" />
+
+    <!-- Node 2 -->
+    <circle cx="820" cy="340" r="6" fill-opacity="0.85" />
+    <circle cx="820" cy="340" r="14" stroke="#00A3E0" stroke-opacity="0.35" stroke-width="1.5" fill="none" />
+
+    <!-- Node 3 -->
+    <circle cx="1140" cy="180" r="7" fill-opacity="0.9" />
+    <circle cx="1140" cy="180" r="18" stroke="#00A3E0" stroke-opacity="0.4" stroke-width="1.5" fill="none" />
+  </g>
+
+  <!-- Digital Marketing Symbols (Target, Analytics, Funnel, Click, CTR) -->
+  <!-- Target / Bullseye (Marketing Precision) -->
+  <g transform="translate(180, 160)" stroke="#00A3E0" stroke-opacity="0.4" fill="none" stroke-width="1.5">
+    <circle cx="28" cy="28" r="24" />
+    <circle cx="28" cy="28" r="16" />
+    <circle cx="28" cy="28" r="8" fill="#00A3E0" fill-opacity="0.25" />
+    <line x1="28" y1="0" x2="28" y2="56" />
+    <line x1="0" y1="28" x2="56" y2="28" />
+  </g>
+
+  <!-- Bar Chart / ROI (Analytics) -->
+  <g transform="translate(1220, 360)" fill="#00A3E0" fill-opacity="0.35">
+    <rect x="0" y="40" width="8" height="30" rx="3" />
+    <rect x="14" y="24" width="8" height="46" rx="3" />
+    <rect x="28" y="10" width="8" height="60" rx="3" fill-opacity="0.6" />
+    <rect x="42" y="0" width="8" height="70" rx="3" fill-opacity="0.8" />
+  </g>
+
+  <!-- Conversion Funnel Symbol -->
+  <g transform="translate(90, 420)" stroke="#00A3E0" stroke-opacity="0.3" fill="none" stroke-width="1.5">
+    <path d="M 0 0 L 48 0 L 30 26 L 30 46 L 18 46 L 18 26 Z" />
+  </g>
+
+  <!-- Click Pointer / High-CTR Cursor -->
+  <g transform="translate(680, 160)" fill="#00A3E0" fill-opacity="0.4">
+    <path d="M 0 0 L 18 14 L 11 15 L 16 26 L 12 28 L 7 17 L 0 22 Z" />
+  </g>
+
+  <!-- Search / Local SEO Magnifier -->
+  <g transform="translate(1020, 500)" stroke="#00A3E0" stroke-opacity="0.35" fill="none" stroke-width="1.5">
+    <circle cx="16" cy="16" r="12" />
+    <line x1="25" y1="25" x2="38" y2="38" stroke-width="2.5" stroke-linecap="round" />
+  </g>
+
+  <!-- Ad Campaign Megaphone outline -->
+  <g transform="translate(420, 220)" stroke="#00A3E0" stroke-opacity="0.3" fill="none" stroke-width="1.5">
+    <path d="M 4 16 L 24 10 L 24 30 L 4 24 Z" />
+    <path d="M 24 10 L 32 8 L 32 32 L 24 30" />
+    <path d="M 36 14 C 40 17 40 23 36 26" stroke-linecap="round" />
+  </g>
+</svg>

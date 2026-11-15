@@ -1,31 +1,27 @@
 import React from 'react';
-import { 
-  ArrowRight, 
-  TrendingUp, 
-  Star, 
-  Users, 
-  BarChart2, 
-  Play 
+import {
+  ArrowRight,
+  TrendingUp,
+  Star,
+  Users,
+  BarChart2,
+  Play
 } from 'lucide-react';
 import AnimatedCounter from './AnimatedCounter';
 import founderNobg from '../assets/founder-nobg.png';
 
 const Hero = ({ onOpenConsultation }) => {
   return (
-    <section 
-      id="home" 
-      className="relative pt-28 sm:pt-36 lg:pt-32 pb-12 sm:pb-20 lg:pb-0 overflow-hidden bg-white"
+    <section
+      id="home"
+      className="relative pt-20 sm:pt-24 lg:pt-20 pb-12 sm:pb-16 lg:pb-0 overflow-hidden bg-white"
     >
-      {/* Soft Ambient Sky-Blue Aura on the Right Behind the Visual */}
-      <div className="absolute top-1/4 right-0 w-[550px] h-[550px] bg-sky-100/60 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute -bottom-10 right-0 w-[400px] h-[400px] bg-[#00A3E0]/10 rounded-full blur-2xl pointer-events-none" />
-
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-4 items-center">
-          
+
           {/* Left Column: Headlines, Copy, Dual CTAs & Bottom Stats */}
-          <div className="lg:col-span-6 space-y-6 text-left py-4 sm:py-8 lg:py-16">
-            
+          <div className="lg:col-span-6 space-y-5 text-left pt-2 sm:pt-4 pb-6 lg:py-6">
+
             {/* Eyebrow Tag: 📊 Grow Faster. Get More Leads. */}
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-sky-50/90 border border-sky-200/80 text-[#00A3E0] text-xs sm:text-[13px] font-bold tracking-wide shadow-2xs">
               <BarChart2 className="w-3.5 h-3.5 text-[#00A3E0]" />
@@ -129,25 +125,17 @@ const Hero = ({ onOpenConsultation }) => {
 
           </div>
 
-          {/* Right Column: Founder with Transparent BG & Layered Circular Backdrop matching Reference */}
-          <div className="lg:col-span-6 relative flex justify-center lg:justify-end items-end select-none self-end min-h-[460px] sm:min-h-[520px] lg:min-h-[580px]">
-            
-            {/* Soft Layered Circular Aura & Graphic Waves Behind the Founder matching Reference */}
-            <div className="absolute right-0 lg:-right-4 top-1/2 -translate-y-1/2 w-[380px] h-[380px] sm:w-[480px] sm:h-[480px] lg:w-[540px] lg:h-[540px] rounded-full bg-gradient-to-tr from-[#bae6fd]/50 via-[#e0f2fe]/65 to-[#f0f9ff]/80 pointer-events-none -z-0" />
-            <div className="absolute right-4 lg:right-2 top-1/2 -translate-y-1/2 w-[280px] h-[280px] sm:w-[360px] sm:h-[360px] lg:w-[420px] lg:h-[420px] rounded-full border-2 border-sky-200/50 pointer-events-none -z-0" />
-            <div className="absolute -right-8 bottom-0 w-[240px] h-[160px] sm:w-[320px] sm:h-[220px] bg-gradient-to-tl from-[#bae6fd]/45 to-transparent rounded-tl-[120px] pointer-events-none -z-0" />
-
-            {/* Transparent Founder Cutout (No-BG) */}
-            <div className="relative w-full max-w-sm sm:max-w-md lg:max-w-lg flex items-end justify-center lg:justify-end z-10">
+          {/* Right Column: Founder Cutout (100% No-BG, Clean on Page Background) */}
+          <div className="lg:col-span-6 relative flex justify-center lg:justify-end items-end select-none self-end">
+            <div className="relative w-full max-w-sm sm:max-w-md lg:max-w-lg flex items-end justify-center lg:justify-end">
               <img
                 src={founderNobg}
                 alt="TezScale Digital Marketing Specialist"
-                className="w-auto h-[440px] sm:h-[500px] lg:h-[560px] object-contain object-bottom drop-shadow-sm select-none"
+                className="w-auto h-[440px] sm:h-[500px] lg:h-[560px] object-contain object-bottom select-none"
                 loading="eager"
                 fetchpriority="high"
               />
             </div>
-
           </div>
 
         </div>

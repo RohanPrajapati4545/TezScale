@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import { 
-  ArrowLeft, 
-  ArrowRight, 
-  CheckCircle2, 
-  Sparkles, 
-  Send, 
-  ShieldCheck, 
-  Zap, 
-  Clock, 
-  Layers, 
-  BarChart3, 
+import {
+  ArrowLeft,
+  ArrowRight,
+  CheckCircle2,
+  Sparkles,
+  Send,
+  ShieldCheck,
+  Zap,
+  Clock,
+  Layers,
+  BarChart3,
   MessageSquare,
   Stethoscope,
   Building2,
@@ -179,10 +179,10 @@ const ServiceDetailPage = () => {
 
       <main className="flex-1">
         {/* Breadcrumbs & Header Banner */}
-        <section className="pt-24 sm:pt-32 pb-16 bg-gradient-to-br from-[#ebf5ff] via-[#f7fbff] to-white border-b border-slate-100 relative overflow-hidden">
+        <section className="pt-20 sm:pt-24 pb-14 bg-gradient-to-br from-[#ebf5ff] via-[#f7fbff] to-white border-b border-slate-100 relative overflow-hidden">
           <div className="absolute top-10 right-10 w-96 h-96 bg-[#00A3E0]/10 rounded-full blur-3xl pointer-events-none" />
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-left">
-            
+
             {/* Breadcrumb row */}
             <div className="flex items-center gap-2 text-xs font-semibold text-slate-500 mb-6 flex-wrap">
               <Link to="/" className="hover:text-[#00A3E0] transition-colors">Home</Link>
@@ -194,7 +194,7 @@ const ServiceDetailPage = () => {
 
             {/* Hero Main Content */}
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
-              
+
               <div className="lg:col-span-8 space-y-5">
                 <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#e0f4ff] border border-[#00A3E0]/30 text-[#007ba8] text-xs font-bold tracking-wide">
                   <Sparkles className="w-3.5 h-3.5 text-[#00A3E0]" />
@@ -282,10 +282,10 @@ const ServiceDetailPage = () => {
         <section className="py-20 bg-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 text-left">
-              
+
               {/* Left Column (7 cols): What is Included & Target Personas */}
               <div className="lg:col-span-7 space-y-10">
-                
+
                 {/* Deliverables List */}
                 <div className="space-y-4">
                   <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-[#e0f4ff] text-[#007ba8] text-xs font-bold uppercase tracking-wider">

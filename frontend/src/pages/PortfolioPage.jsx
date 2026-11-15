@@ -3,17 +3,17 @@ import Navbar from '../Components/Navbar';
 import Footer from '../Components/Footer';
 import ConsultationModal from '../Components/ConsultationModal';
 import AnimatedCounter from '../Components/AnimatedCounter';
-import { 
-  BarChart3, 
-  Users, 
-  Clock, 
-  ArrowUpRight, 
-  Sparkles, 
-  TrendingUp, 
-  CheckCircle2, 
-  Building2, 
-  Stethoscope, 
-  ShoppingCart, 
+import {
+  BarChart3,
+  Users,
+  Clock,
+  ArrowUpRight,
+  Sparkles,
+  TrendingUp,
+  CheckCircle2,
+  Building2,
+  Stethoscope,
+  ShoppingCart,
   Layers,
   ArrowRight
 } from 'lucide-react';
@@ -173,7 +173,7 @@ const PortfolioPage = () => {
 
       <main className="flex-1">
         {/* Hero Section */}
-        <section className="pt-24 sm:pt-32 pb-20 bg-gradient-to-br from-[#ebf5ff] via-[#f7fbff] to-white border-b border-slate-100 relative overflow-hidden">
+        <section className="pt-20 sm:pt-24 pb-16 bg-gradient-to-br from-[#ebf5ff] via-[#f7fbff] to-white border-b border-slate-100 relative overflow-hidden">
           <div className="absolute top-10 right-10 w-96 h-96 bg-[#00A3E0]/10 rounded-full blur-3xl pointer-events-none" />
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-5 relative z-10">
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/95 border border-sky-200 text-[#00A3E0] text-xs font-bold tracking-wide shadow-2xs">
@@ -239,7 +239,7 @@ const PortfolioPage = () => {
         {/* Filter Bar & Case Studies */}
         <section className="py-16 bg-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            
+
             {/* Filter Pills */}
             <div className="flex items-center justify-center gap-2 mb-12 flex-wrap">
               {[
@@ -254,11 +254,10 @@ const PortfolioPage = () => {
                 <button
                   key={tab.id}
                   onClick={() => setFilter(tab.id)}
-                  className={`px-5 py-2.5 rounded-full text-xs font-bold transition-all cursor-pointer ${
-                    filter === tab.id
-                      ? 'bg-blue-600 text-white shadow-md shadow-blue-600/30'
-                      : 'bg-slate-100 text-slate-600 hover:bg-slate-200/80 hover:text-slate-900'
-                  }`}
+                  className={`px-5 py-2.5 rounded-full text-xs font-bold transition-all cursor-pointer ${filter === tab.id
+                    ? 'bg-blue-600 text-white shadow-md shadow-blue-600/30'
+                    : 'bg-slate-100 text-slate-600 hover:bg-slate-200/80 hover:text-slate-900'
+                    }`}
                 >
                   {tab.label}
                 </button>

@@ -2,16 +2,16 @@ import React, { useState } from 'react';
 import Navbar from '../Components/Navbar';
 import Footer from '../Components/Footer';
 import ConsultationModal from '../Components/ConsultationModal';
-import { 
-  Star, 
-  Quote, 
-  Sparkles, 
-  CheckCircle2, 
-  ArrowRight, 
-  ShieldCheck, 
-  Building2, 
-  Stethoscope, 
-  Send 
+import {
+  Star,
+  Quote,
+  Sparkles,
+  CheckCircle2,
+  ArrowRight,
+  ShieldCheck,
+  Building2,
+  Stethoscope,
+  Send
 } from 'lucide-react';
 import { useContent } from '../context/ContentContext';
 
@@ -96,7 +96,7 @@ const TestimonialsPage = () => {
 
       <main className="flex-1">
         {/* Hero Section */}
-        <section className="pt-24 sm:pt-32 pb-20 bg-gradient-to-br from-[#ebf5ff] via-[#f7fbff] to-white border-b border-slate-100 relative overflow-hidden">
+        <section className="pt-20 sm:pt-24 pb-16 bg-gradient-to-br from-[#ebf5ff] via-[#f7fbff] to-white border-b border-slate-100 relative overflow-hidden">
           <div className="absolute top-10 right-10 w-96 h-96 bg-[#00A3E0]/10 rounded-full blur-3xl pointer-events-none" />
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-5 relative z-10">
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/95 border border-sky-200 text-[#00A3E0] text-xs font-bold tracking-wide shadow-2xs">
