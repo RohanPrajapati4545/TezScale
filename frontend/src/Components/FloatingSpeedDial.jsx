@@ -126,3 +126,4 @@ const FloatingSpeedDial = ({ onOpenConsultation }) => {
 };
 
 export default FloatingSpeedDial;
+

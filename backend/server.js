@@ -8,6 +8,9 @@ import connectDB from './config/db.js';
 import leadRoutes from './routes/leadRoutes.js';
 import contentRoutes from './routes/contentRoutes.js';
 import authRoutes from './routes/authRoutes.js';
+import SiteContent from './models/SiteContent.js';
+import Admin from './models/Admin.js';
+import { defaultContent } from './controllers/contentController.js';
 
 dotenv.config();
 
@@ -17,11 +20,42 @@ const __dirname = path.dirname(__filename);
 const app = express();
 const defaultPort = process.env.PORT || 5000;
 
+// Auto-seed database with default content and admin on startup
+const seedInitialData = async () => {
+  try {
+    const contentCount = await SiteContent.countDocuments();
+    if (contentCount === 0) {
+      await SiteContent.create(defaultContent);
+      console.log('🌱 Default TezScale site content seeded successfully into MongoDB');
+    }
+
+    const admin = await Admin.findOne({ email: 'admin@gmail.com' });
+    if (!admin) {
+      await Admin.create({
+        username: 'admin',
+        email: 'admin@gmail.com',
+        password: 'admin@123',
+      });
+      console.log('👤 Default Admin seeded: admin@gmail.com / admin@123');
+    }
+  } catch (err) {
+    console.warn('Initial data seeding note:', err.message);
+  }
+};
+
 // Connect to Database
-connectDB();
+connectDB().then(() => {
+  seedInitialData();
+});
 
 // Middlewares
-app.use(cors());
+app.use(
+  cors({
+    origin: '*',
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+  })
+);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
@@ -36,6 +70,7 @@ app.get('/api/health', (req, res) => {
   res.status(200).json({
     status: 'online',
     message: 'Tezscale Backend Server is running smoothly!',
+    renderUrl: 'https://tezscale.onrender.com',
     timestamp: new Date().toISOString(),
   });
 });
@@ -77,4 +112,5 @@ const startServer = (port) => {
 };
 
 startServer(defaultPort);
+
 
