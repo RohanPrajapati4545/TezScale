@@ -8,7 +8,7 @@ import {
   Play 
 } from 'lucide-react';
 import AnimatedCounter from './AnimatedCounter';
-import heroFounderVisual from '../assets/hero-founder-visual.png';
+import founderNobg from '../assets/founder-nobg.png';
 
 const Hero = ({ onOpenConsultation }) => {
   return (
@@ -129,20 +129,23 @@ const Hero = ({ onOpenConsultation }) => {
 
           </div>
 
-          {/* Right Column: Founder / Specialist Visual Matching Reference Image AS IT IS */}
-          <div className="lg:col-span-6 relative flex justify-center lg:justify-end items-end select-none self-end">
+          {/* Right Column: Founder with Transparent BG & Layered Circular Backdrop matching Reference */}
+          <div className="lg:col-span-6 relative flex justify-center lg:justify-end items-end select-none self-end min-h-[460px] sm:min-h-[520px] lg:min-h-[580px]">
             
-            <div className="relative w-full max-w-md sm:max-w-lg lg:max-w-xl flex items-end justify-center lg:justify-end">
-              
-              {/* Founder Visual Asset with Layered Sky-Blue Aura & Bottom Corner Wave */}
+            {/* Soft Layered Circular Aura & Graphic Waves Behind the Founder matching Reference */}
+            <div className="absolute right-0 lg:-right-4 top-1/2 -translate-y-1/2 w-[380px] h-[380px] sm:w-[480px] sm:h-[480px] lg:w-[540px] lg:h-[540px] rounded-full bg-gradient-to-tr from-[#bae6fd]/50 via-[#e0f2fe]/65 to-[#f0f9ff]/80 pointer-events-none -z-0" />
+            <div className="absolute right-4 lg:right-2 top-1/2 -translate-y-1/2 w-[280px] h-[280px] sm:w-[360px] sm:h-[360px] lg:w-[420px] lg:h-[420px] rounded-full border-2 border-sky-200/50 pointer-events-none -z-0" />
+            <div className="absolute -right-8 bottom-0 w-[240px] h-[160px] sm:w-[320px] sm:h-[220px] bg-gradient-to-tl from-[#bae6fd]/45 to-transparent rounded-tl-[120px] pointer-events-none -z-0" />
+
+            {/* Transparent Founder Cutout (No-BG) */}
+            <div className="relative w-full max-w-sm sm:max-w-md lg:max-w-lg flex items-end justify-center lg:justify-end z-10">
               <img
-                src={heroFounderVisual}
+                src={founderNobg}
                 alt="TezScale Digital Marketing Specialist"
-                className="w-full h-auto max-h-[500px] sm:max-h-[560px] lg:max-h-[620px] object-contain object-bottom relative z-10"
+                className="w-auto h-[440px] sm:h-[500px] lg:h-[560px] object-contain object-bottom drop-shadow-sm select-none"
                 loading="eager"
                 fetchpriority="high"
               />
-
             </div>
 
           </div>
