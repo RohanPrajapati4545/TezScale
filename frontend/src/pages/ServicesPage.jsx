@@ -142,15 +142,16 @@ const ServicesPage = () => {
 
       <main className="flex-1">
         {/* Services Page Hero */}
-        <section className="pt-24 sm:pt-28 pb-20 bg-gradient-to-b from-blue-50/50 via-white to-white border-b border-slate-100">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-5">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-100 text-blue-700 text-xs font-bold tracking-wide">
-              <Sparkles className="w-3.5 h-3.5" />
+        <section className="pt-24 sm:pt-32 pb-20 bg-gradient-to-br from-[#ebf5ff] via-[#f7fbff] to-white border-b border-slate-100 relative overflow-hidden">
+          <div className="absolute top-10 right-10 w-96 h-96 bg-[#00A3E0]/10 rounded-full blur-3xl pointer-events-none" />
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-5 relative z-10">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/95 border border-sky-200 text-[#00A3E0] text-xs font-bold tracking-wide shadow-2xs">
+              <Sparkles className="w-3.5 h-3.5 text-[#00A3E0]" />
               <span>Full-Stack Growth Services</span>
             </div>
 
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-slate-900 tracking-tight leading-tight max-w-4xl mx-auto">
-              Complete <span className="text-blue-600">Digital Solutions</span> Built to Convert & Scale
+              Complete <span className="text-[#00A3E0]">Digital Solutions</span> Built to Convert & Scale
             </h1>
 
             <p className="text-slate-600 text-lg sm:text-xl max-w-3xl mx-auto leading-relaxed">
@@ -160,7 +161,7 @@ const ServicesPage = () => {
             <div className="pt-4 flex flex-wrap items-center justify-center gap-4">
               <button
                 onClick={() => setModalOpen(true)}
-                className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-7 py-3 rounded-full text-sm font-bold shadow-lg shadow-blue-600/30 transition-all hover:scale-102 cursor-pointer"
+                className="inline-flex items-center gap-2 bg-[#00A3E0] hover:bg-[#008bc0] text-white px-7 py-3 rounded-full text-sm font-bold shadow-lg shadow-[#00A3E0]/30 transition-all hover:scale-[1.02] cursor-pointer"
               >
                 <span>Book a Strategy Call</span>
                 <ArrowRight className="w-4 h-4" />

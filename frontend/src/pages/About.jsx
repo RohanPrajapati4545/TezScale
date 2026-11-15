@@ -81,15 +81,16 @@ const About = () => {
 
       <main className="flex-1">
         {/* Hero Section */}
-        <section className="pt-24 sm:pt-28 pb-20 bg-gradient-to-b from-blue-50/50 via-white to-white border-b border-slate-100">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-100 text-blue-700 text-xs font-bold tracking-wide">
-              <Sparkles className="w-3.5 h-3.5" />
+        <section className="pt-24 sm:pt-32 pb-20 bg-gradient-to-br from-[#ebf5ff] via-[#f7fbff] to-white border-b border-slate-100 relative overflow-hidden">
+          <div className="absolute top-10 right-10 w-96 h-96 bg-[#00A3E0]/10 rounded-full blur-3xl pointer-events-none" />
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6 relative z-10">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/95 border border-sky-200 text-[#00A3E0] text-xs font-bold tracking-wide shadow-2xs">
+              <Sparkles className="w-3.5 h-3.5 text-[#00A3E0]" />
               <span>About TezScale</span>
             </div>
 
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-slate-900 tracking-tight leading-tight max-w-4xl mx-auto">
-              Engineering Predictable <span className="text-blue-600">Digital Growth</span> for Modern Enterprises
+              Engineering Predictable <span className="text-[#00A3E0]">Digital Growth</span> for Modern Enterprises
             </h1>
 
             <p className="text-slate-600 text-lg sm:text-xl max-w-2xl mx-auto leading-relaxed">
@@ -98,19 +99,19 @@ const About = () => {
 
             {/* Quick Metrics Banner (Oliveflex Style Animated Count-Up) */}
             <div className="pt-6 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
-              <div className="p-5 rounded-2xl bg-white border border-slate-200/80 shadow-xs text-center card-lift">
-                <div className="text-3xl font-black text-blue-600">
+              <div className="p-5 rounded-2xl bg-white border border-slate-200/80 shadow-2xs text-center card-lift">
+                <div className="text-3xl font-black text-[#00A3E0]">
                   <AnimatedCounter value="250%" duration={1400} />
                 </div>
                 <div className="text-xs font-semibold text-slate-500 mt-1">Average ROI Growth</div>
               </div>
-              <div className="p-5 rounded-2xl bg-white border border-slate-200/80 shadow-xs text-center card-lift">
+              <div className="p-5 rounded-2xl bg-white border border-slate-200/80 shadow-2xs text-center card-lift">
                 <div className="text-3xl font-black text-emerald-600">
                   <AnimatedCounter value="500+" duration={1500} />
                 </div>
                 <div className="text-xs font-semibold text-slate-500 mt-1">Happy Clients</div>
               </div>
-              <div className="p-5 rounded-2xl bg-white border border-slate-200/80 shadow-xs text-center card-lift">
+              <div className="p-5 rounded-2xl bg-white border border-slate-200/80 shadow-2xs text-center card-lift">
                 <div className="text-3xl font-black text-indigo-600">
                   <AnimatedCounter value="5+" duration={1200} />
                 </div>

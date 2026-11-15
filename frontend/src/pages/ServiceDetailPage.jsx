@@ -179,7 +179,8 @@ const ServiceDetailPage = () => {
 
       <main className="flex-1">
         {/* Breadcrumbs & Header Banner */}
-        <section className="pt-24 sm:pt-28 pb-16 bg-gradient-to-b from-[#e0f4ff]/50 via-[#f8fbfe] to-white border-b border-slate-100">
+        <section className="pt-24 sm:pt-32 pb-16 bg-gradient-to-br from-[#ebf5ff] via-[#f7fbff] to-white border-b border-slate-100 relative overflow-hidden">
+          <div className="absolute top-10 right-10 w-96 h-96 bg-[#00A3E0]/10 rounded-full blur-3xl pointer-events-none" />
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-left">
             
             {/* Breadcrumb row */}
