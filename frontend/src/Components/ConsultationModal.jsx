@@ -83,10 +83,10 @@ const ConsultationModal = ({ isOpen, onClose }) => {
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-sm transition-opacity duration-700 ease-out anim-slow-fade">
       <div className="relative w-full max-w-lg bg-white rounded-xl shadow-2xl overflow-hidden border border-slate-200/90 transition-all duration-700 ease-out anim-slow-slide">
         
-        {/* Header */}
-        <div className="bg-gradient-to-r from-blue-700 via-blue-600 to-indigo-700 px-6 py-4 text-white flex items-center justify-between">
+        {/* Header in Drone Cyan */}
+        <div className="bg-gradient-to-r from-[#00A3E0] to-[#0284c7] px-6 py-4 text-white flex items-center justify-between">
           <div className="text-left">
-            <div className="text-[10px] font-bold uppercase tracking-wider text-blue-200">TezScale Lead Capture</div>
+            <div className="text-[10px] font-bold uppercase tracking-wider text-sky-100">TezScale Lead Capture</div>
             <h3 className="text-lg font-extrabold tracking-tight">Request Free Growth Consultation</h3>
           </div>
           <button
@@ -249,7 +249,7 @@ const ConsultationModal = ({ isOpen, onClose }) => {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg text-xs sm:text-sm shadow-md shadow-blue-600/25 transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer mt-1"
+                className="w-full py-3 bg-[#00A3E0] hover:bg-[#008bc0] text-white font-bold rounded-lg text-xs sm:text-sm shadow-md shadow-[#00A3E0]/25 transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer mt-1"
               >
                 {loading ? (
                   <>

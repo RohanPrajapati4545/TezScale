@@ -33,7 +33,7 @@ const getServiceIcon = (iconName) => {
 };
 
 const defaultCardColors = [
-  'bg-blue-600 text-white shadow-blue-500/25',
+  'bg-[#00A3E0] text-white shadow-[#00A3E0]/25',
   'bg-purple-600 text-white shadow-purple-500/25',
   'bg-emerald-500 text-white shadow-emerald-500/25',
   'bg-amber-500 text-white shadow-amber-500/25',
@@ -52,12 +52,12 @@ const Services = ({ onOpenConsultation }) => {
         
         {/* Section Header with Eyebrow Tag */}
         <div className="max-w-3xl mx-auto text-center space-y-3 mb-16">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 border border-blue-200/80 text-blue-700 text-xs font-bold tracking-wide shadow-xs">
-            <span className="w-1.5 h-1.5 rounded-full bg-blue-600 live-pulse-dot" />
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#e0f4ff] border border-[#00A3E0]/30 text-[#007ba8] text-xs font-bold tracking-wide shadow-2xs">
+            <span className="w-2 h-2 rounded-full bg-[#00A3E0] live-pulse-dot" />
             <span>{servicesSection.badge || 'Our Core Offerings'}</span>
           </div>
           <h2 className="text-3xl sm:text-4xl lg:text-[42px] font-black text-slate-900 tracking-tight leading-tight">
-            Complete <span className="text-blue-600">Digital Marketing</span> Solutions
+            Complete <span className="text-[#00A3E0]">Digital Marketing</span> Solutions
           </h2>
           <p className="text-slate-600 text-base leading-relaxed">
             {servicesSection.description ||
@@ -65,34 +65,34 @@ const Services = ({ onOpenConsultation }) => {
           </p>
         </div>
 
-        {/* 6 Services Grid (3 Columns x 2 Rows) with Olive-style card elevation */}
+        {/* 6 Services Grid (3 Columns x 2 Rows) in Drone Card Style */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 text-left">
           {servicesList.map((service, idx) => {
             const iconBg = service.badgeBg || defaultCardColors[idx % defaultCardColors.length];
             return (
               <div
                 key={service._id || idx}
-                className="bg-white p-8 rounded-3xl border border-slate-200/90 shadow-sm hover:border-blue-400/50 card-lift flex flex-col justify-between group relative overflow-hidden"
+                className="bg-white p-8 rounded-2xl border border-slate-200/90 shadow-2xs hover:border-[#00A3E0]/50 card-lift flex flex-col justify-between group relative overflow-hidden"
               >
                 {/* Subtle top accent gradient line */}
-                <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-500/0 via-blue-500/40 to-blue-500/0 opacity-0 group-hover:opacity-100 transition-opacity" />
+                <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#00A3E0] to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
 
                 <div>
-                  <div className={`w-12 h-12 rounded-2xl ${iconBg} flex items-center justify-center mb-6 shadow-md group-hover:scale-108 transition-transform duration-300`}>
+                  <div className={`w-12 h-12 rounded-xl ${iconBg} flex items-center justify-center mb-6 shadow-md group-hover:scale-105 transition-transform duration-300`}>
                     {getServiceIcon(service.icon)}
                   </div>
-                  <h4 className="text-lg font-bold text-slate-900 mb-2 group-hover:text-blue-600 transition-colors">
+                  <h4 className="text-lg font-bold text-slate-900 mb-2 group-hover:text-[#00A3E0] transition-colors">
                     {service.title}
                   </h4>
-                  <p className="text-sm text-slate-500 leading-relaxed mb-6">
+                  <p className="text-sm text-slate-500 leading-relaxed mb-6 font-normal">
                     {service.desc}
                   </p>
                 </div>
 
-                <div className="pt-2 border-t border-slate-100">
+                <div className="pt-3 border-t border-slate-100">
                   <button
                     onClick={onOpenConsultation}
-                    className="inline-flex items-center gap-1.5 text-xs font-bold text-blue-600 group-hover:text-blue-700 transition-all group-hover:gap-2.5 cursor-pointer"
+                    className="inline-flex items-center gap-1.5 text-xs font-bold text-[#00A3E0] group-hover:text-[#008bc0] uppercase tracking-wider transition-all group-hover:gap-2.5 cursor-pointer"
                   >
                     <span>Request Strategy Brief</span>
                     <ArrowRight className="w-3.5 h-3.5 transition-transform" />
@@ -107,10 +107,10 @@ const Services = ({ onOpenConsultation }) => {
         <div className="mt-12 text-center">
           <a
             href="/services"
-            className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-slate-100 hover:bg-blue-50 text-slate-800 hover:text-blue-600 border border-slate-200 font-bold text-sm transition-all hover:scale-102 shadow-xs"
+            className="btn-drone-secondary border border-slate-200 hover:border-[#00A3E0]"
           >
             <span>Explore All Services & Tech Deliverables</span>
-            <ArrowRight className="w-4 h-4" />
+            <ArrowRight className="w-4 h-4 ml-2" />
           </a>
         </div>
 

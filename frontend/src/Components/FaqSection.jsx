@@ -37,29 +37,29 @@ const FaqSection = ({ onOpenConsultation }) => {
         
         {/* Header */}
         <div className="text-center space-y-3 mb-14">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 border border-blue-200/80 text-blue-700 text-xs font-bold tracking-wide">
-            <HelpCircle className="w-3.5 h-3.5" />
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#e0f4ff] border border-[#00A3E0]/30 text-[#007ba8] text-xs font-bold tracking-wide shadow-2xs">
+            <HelpCircle className="w-3.5 h-3.5 text-[#00A3E0]" />
             <span>Got Questions?</span>
           </div>
           <h2 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">
-            Frequently Asked <span className="text-blue-600">Questions</span>
+            Frequently Asked <span className="text-[#00A3E0]">Questions</span>
           </h2>
           <p className="text-slate-500 text-sm max-w-xl mx-auto">
             Everything you need to know about partnering with TezScale for your digital growth.
           </p>
         </div>
 
-        {/* Accordion list with Olive-style smoothness */}
+        {/* Accordion list with Drone-style smoothness */}
         <div className="space-y-3.5">
           {faqs.map((faq, idx) => {
             const isOpen = openIndex === idx;
             return (
               <div
                 key={idx}
-                className={`rounded-2xl border transition-all duration-300 overflow-hidden ${
+                className={`rounded-xl border transition-all duration-300 overflow-hidden ${
                   isOpen
-                    ? 'border-blue-300 bg-blue-50/30 shadow-sm'
-                    : 'border-slate-200/90 bg-white hover:border-slate-300'
+                    ? 'border-[#00A3E0]/50 bg-[#f0f9ff]/50 shadow-2xs'
+                    : 'border-slate-200/90 bg-white hover:border-[#00A3E0]/30'
                 }`}
               >
                 <button
@@ -71,7 +71,7 @@ const FaqSection = ({ onOpenConsultation }) => {
                   </span>
                   <div
                     className={`w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0 transition-transform duration-300 ${
-                      isOpen ? 'bg-blue-600 text-white rotate-180' : 'bg-slate-100 text-slate-500'
+                      isOpen ? 'bg-[#00A3E0] text-white rotate-180' : 'bg-slate-100 text-slate-500'
                     }`}
                   >
                     <ChevronDown className="w-4 h-4" />
@@ -79,7 +79,7 @@ const FaqSection = ({ onOpenConsultation }) => {
                 </button>
 
                 {isOpen && (
-                  <div className="px-5 sm:px-6 pb-6 text-xs sm:text-sm text-slate-600 leading-relaxed animate-fade-in">
+                  <div className="px-5 sm:px-6 pb-6 text-xs sm:text-sm text-slate-600 leading-relaxed animate-fade-in font-normal">
                     {faq.a}
                   </div>
                 )}
@@ -89,17 +89,17 @@ const FaqSection = ({ onOpenConsultation }) => {
         </div>
 
         {/* Bottom prompt */}
-        <div className="mt-10 p-6 rounded-3xl bg-slate-50 border border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
+        <div className="mt-10 p-6 rounded-2xl bg-slate-50 border border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
           <div>
             <div className="font-bold text-slate-900 text-sm">Have a unique business requirement?</div>
             <div className="text-xs text-slate-500">Speak directly with our senior strategy consultant.</div>
           </div>
           <button
             onClick={onOpenConsultation}
-            className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-full text-xs font-bold shadow-md shadow-blue-500/20 transition-all hover:scale-102 cursor-pointer"
+            className="btn-drone-primary py-2.5 px-5"
           >
             <span>Book Strategy Call</span>
-            <ArrowRight className="w-3.5 h-3.5" />
+            <ArrowRight className="w-3.5 h-3.5 ml-1" />
           </button>
         </div>
 

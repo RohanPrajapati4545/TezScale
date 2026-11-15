@@ -95,21 +95,21 @@ const IndustrySolutions = ({ onOpenConsultation }) => {
         
         {/* Header */}
         <div className="max-w-3xl mx-auto text-center space-y-3 mb-14">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-100 text-blue-700 text-xs font-bold tracking-wide shadow-xs">
-            <span className="w-1.5 h-1.5 rounded-full bg-blue-600 live-pulse-dot" />
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#e0f4ff] border border-[#00A3E0]/30 text-[#007ba8] text-xs font-bold tracking-wide shadow-2xs">
+            <span className="w-2 h-2 rounded-full bg-[#00A3E0] live-pulse-dot" />
             <span>Target Audience Specialization</span>
           </div>
           <h2 className="text-3xl sm:text-4xl lg:text-[42px] font-black text-slate-900 tracking-tight leading-tight">
-            Engineered For Your <span className="text-blue-600">Specific Industry</span>
+            Engineered For Your <span className="text-[#00A3E0]">Specific Industry</span>
           </h2>
           <p className="text-slate-600 text-base leading-relaxed">
             We don't do generic marketing. Every vertical benefits from battle-tested strategies tailored to your exact buyer journey.
           </p>
         </div>
 
-        {/* Olive-style Interactive Segmented Tabs */}
+        {/* Drone-style Interactive Segmented Tabs */}
         <div className="flex justify-center mb-10 overflow-x-auto pb-2 scrollbar-none">
-          <div className="inline-flex items-center gap-2 p-1.5 rounded-full bg-white border border-slate-200/90 shadow-sm">
+          <div className="inline-flex items-center gap-2 p-1.5 rounded-full bg-white border border-slate-200/90 shadow-xs">
             {verticals.map((v) => {
               const isActive = activeTab === v.id;
               return (
@@ -118,7 +118,7 @@ const IndustrySolutions = ({ onOpenConsultation }) => {
                   onClick={() => setActiveTab(v.id)}
                   className={`subnav-pill ${isActive ? 'active' : ''}`}
                 >
-                  {isActive && <span className="w-2 h-2 rounded-full bg-emerald-400 live-pulse-dot" />}
+                  {isActive && <span className="w-2 h-2 rounded-full bg-white live-pulse-dot" />}
                   {v.icon}
                   <span>{v.badge}</span>
                 </button>
@@ -127,14 +127,14 @@ const IndustrySolutions = ({ onOpenConsultation }) => {
           </div>
         </div>
 
-        {/* Detailed Portal Showcase Card with Olive Smooth Animation */}
-        <div className="bg-white rounded-3xl p-8 sm:p-12 border border-slate-200 shadow-md max-w-5xl mx-auto text-left transition-all duration-300">
+        {/* Detailed Portal Showcase Card with Drone Style */}
+        <div className="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200/90 shadow-sm max-w-5xl mx-auto text-left transition-all duration-300">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             
             {/* Left Content (7 cols) */}
             <div className="lg:col-span-7 space-y-5">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-lg bg-blue-50 text-blue-700 text-xs font-bold uppercase tracking-wider">
-                <ShieldCheck className="w-3.5 h-3.5" />
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-[#e0f4ff] text-[#007ba8] text-xs font-bold uppercase tracking-wider">
+                <ShieldCheck className="w-3.5 h-3.5 text-[#00A3E0]" />
                 <span>{activeData.tagline}</span>
               </div>
 
@@ -150,7 +150,7 @@ const IndustrySolutions = ({ onOpenConsultation }) => {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
                 {activeData.features.map((feat, idx) => (
                   <div key={idx} className="flex items-start gap-2 text-xs font-semibold text-slate-700">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" />
+                    <CheckCircle2 className="w-4 h-4 text-[#00A3E0] flex-shrink-0 mt-0.5" />
                     <span>{feat}</span>
                   </div>
                 ))}
@@ -159,25 +159,25 @@ const IndustrySolutions = ({ onOpenConsultation }) => {
               <div className="pt-4">
                 <button
                   onClick={onOpenConsultation}
-                  className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-full text-sm font-bold shadow-md shadow-blue-500/25 transition-all hover:scale-102 cursor-pointer"
+                  className="btn-drone-primary"
                 >
                   <span>Request {activeData.badge} Strategy Call</span>
-                  <ArrowRight className="w-4 h-4" />
+                  <ArrowRight className="w-4 h-4 ml-1" />
                 </button>
               </div>
             </div>
 
-            {/* Right KPI Metric Box (5 cols) */}
-            <div className="lg:col-span-5 bg-gradient-to-br from-slate-900 to-blue-950 rounded-2xl p-6 text-white space-y-4 shadow-xl border border-slate-800">
-              <div className="text-xs font-bold text-blue-300 uppercase tracking-wider border-b border-white/10 pb-2">
+            {/* Right KPI Metric Box (5 cols) in Drone Tech Navy */}
+            <div className="lg:col-span-5 bg-gradient-to-br from-[#08101e] to-[#0b192c] rounded-xl p-6 text-white space-y-4 shadow-xl border border-sky-900/40">
+              <div className="text-xs font-bold text-[#38bdf8] uppercase tracking-wider border-b border-white/10 pb-2">
                 Proven Impact Benchmarks
               </div>
 
               <div className="space-y-4">
                 {activeData.kpis.map((kpi, idx) => (
-                  <div key={idx} className="p-3.5 rounded-xl bg-white/5 border border-white/10 flex items-center justify-between">
+                  <div key={idx} className="p-3.5 rounded-lg bg-white/5 border border-white/10 flex items-center justify-between">
                     <span className="text-xs text-slate-300 font-medium">{kpi.label}</span>
-                    <span className="text-xl font-black text-cyan-400">{kpi.value}</span>
+                    <span className="text-xl font-black text-[#00A3E0]">{kpi.value}</span>
                   </div>
                 ))}
               </div>

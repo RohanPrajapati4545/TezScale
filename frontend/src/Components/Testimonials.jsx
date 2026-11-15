@@ -30,7 +30,7 @@ const Testimonials = ({ onOpenConsultation }) => {
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
           <div className="max-w-xl text-left space-y-2">
-            <div className="inline-flex items-center px-3.5 py-1.5 rounded-full bg-blue-100 text-blue-700 text-xs font-bold tracking-wide">
+            <div className="inline-flex items-center px-3.5 py-1.5 rounded-full bg-[#e0f4ff] border border-[#00A3E0]/30 text-[#007ba8] text-xs font-bold tracking-wide shadow-2xs">
               {testimonialsSection.badge || 'Testimonials'}
             </div>
             <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
@@ -44,14 +44,14 @@ const Testimonials = ({ onOpenConsultation }) => {
           <div className="flex items-center gap-3 self-start md:self-end">
             <button
               onClick={prev}
-              className="w-10 h-10 rounded-full border border-slate-300 bg-white hover:bg-slate-100 flex items-center justify-center text-slate-600 transition-colors shadow-xs cursor-pointer"
+              className="w-10 h-10 rounded-full border border-slate-300 bg-white hover:bg-slate-100 flex items-center justify-center text-slate-600 transition-colors shadow-2xs cursor-pointer"
               aria-label="Previous Testimonial"
             >
               <ChevronLeft className="w-5 h-5" />
             </button>
             <button
               onClick={next}
-              className="w-10 h-10 rounded-full border border-slate-300 bg-white hover:bg-slate-100 flex items-center justify-center text-slate-600 transition-colors shadow-xs cursor-pointer"
+              className="w-10 h-10 rounded-full border border-slate-300 bg-white hover:bg-slate-100 flex items-center justify-center text-slate-600 transition-colors shadow-2xs cursor-pointer"
               aria-label="Next Testimonial"
             >
               <ChevronRight className="w-5 h-5" />
@@ -63,9 +63,9 @@ const Testimonials = ({ onOpenConsultation }) => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
           
           {/* Left: Testimonial Card */}
-          <div className="lg:col-span-7 bg-white rounded-3xl p-8 sm:p-10 border border-slate-200/80 shadow-md card-lift text-left flex flex-col justify-between">
+          <div className="lg:col-span-7 bg-white rounded-2xl p-8 sm:p-10 border border-slate-200/80 shadow-2xs card-lift text-left flex flex-col justify-between hover:border-[#00A3E0]/40">
             <div>
-              <Quote className="w-10 h-10 text-blue-600 fill-blue-50 mb-4" />
+              <Quote className="w-10 h-10 text-[#00A3E0] fill-[#e0f4ff] mb-4" />
               <blockquote className="text-lg sm:text-xl text-slate-800 font-semibold leading-relaxed">
                 {current.quote}
               </blockquote>
@@ -73,7 +73,7 @@ const Testimonials = ({ onOpenConsultation }) => {
 
             <div className="pt-8 flex items-center justify-between border-t border-slate-100 mt-6">
               <div className="flex items-center gap-3.5">
-                <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-blue-500 shadow-xs bg-blue-100">
+                <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-[#00A3E0] shadow-2xs bg-[#e0f4ff]">
                   <img
                     src={current.avatar || 'https://images.unsplash.com/photo-1594824813589-9a25b1641ba5?auto=format&fit=crop&w=150&q=80'}
                     alt={current.name}
@@ -96,7 +96,7 @@ const Testimonials = ({ onOpenConsultation }) => {
                     key={idx}
                     onClick={() => setCurrentIndex(idx)}
                     className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${
-                      currentIndex === idx ? 'w-6 bg-blue-600' : 'w-2 bg-slate-300'
+                      currentIndex === idx ? 'w-6 bg-[#00A3E0]' : 'w-2 bg-slate-300'
                     }`}
                   />
                 ))}
@@ -104,17 +104,17 @@ const Testimonials = ({ onOpenConsultation }) => {
             </div>
           </div>
 
-          {/* Right: "Ready to Grow Your Business?" Card matching screenshot */}
-          <div className="lg:col-span-5 relative bg-white rounded-3xl p-8 sm:p-10 border border-slate-200/80 shadow-md card-lift flex flex-col items-center justify-center text-center space-y-5">
+          {/* Right: "Ready to Grow Your Business?" Card */}
+          <div className="lg:col-span-5 relative bg-white rounded-2xl p-8 sm:p-10 border border-slate-200/80 shadow-2xs card-lift flex flex-col items-center justify-center text-center space-y-5 hover:border-[#00A3E0]/40">
             {/* Curved arrow doodle */}
             <div className="absolute top-4 right-4 hidden sm:block pointer-events-none select-none">
-              <svg className="w-10 h-10 text-blue-400 stroke-current opacity-70" viewBox="0 0 50 50" fill="none">
+              <svg className="w-10 h-10 text-[#00A3E0]/50 stroke-current" viewBox="0 0 50 50" fill="none">
                 <path d="M10 10 Q 35 15, 30 35 M 30 35 L 24 30 M 30 35 L 36 28" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </div>
 
-            {/* Blue Paper plane icon */}
-            <div className="w-16 h-16 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center shadow-xs">
+            {/* Cyan Paper plane icon */}
+            <div className="w-16 h-16 rounded-full bg-[#e0f4ff] text-[#00A3E0] flex items-center justify-center shadow-2xs">
               <Send className="w-7 h-7 -rotate-12 translate-x-0.5" />
             </div>
 
@@ -129,10 +129,10 @@ const Testimonials = ({ onOpenConsultation }) => {
 
             <button
               onClick={onOpenConsultation}
-              className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-7 py-3.5 rounded-full text-sm font-bold shadow-lg shadow-blue-600/30 transition-all hover:scale-102 cursor-pointer"
+              className="btn-drone-primary"
             >
-              <span>{cta.buttonText || 'Get a Free Consultation'}</span>
-              <ArrowRight className="w-4 h-4" />
+              <span>{cta.buttonText || 'GET A FREE CONSULTATION'}</span>
+              <ArrowRight className="w-4 h-4 ml-1" />
             </button>
           </div>
 
@@ -142,10 +142,10 @@ const Testimonials = ({ onOpenConsultation }) => {
         <div className="mt-12 text-center">
           <Link
             to="/testimonials"
-            className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-white hover:bg-blue-50 text-slate-800 hover:text-blue-600 border border-slate-200 font-bold text-sm transition-all hover:scale-102 shadow-xs"
+            className="btn-drone-secondary border border-slate-200 hover:border-[#00A3E0]"
           >
             <span>Read All 240+ Verified Client Reviews</span>
-            <ArrowRight className="w-4 h-4" />
+            <ArrowRight className="w-4 h-4 ml-1" />
           </Link>
         </div>
 

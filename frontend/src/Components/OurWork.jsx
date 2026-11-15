@@ -26,7 +26,7 @@ const OurWork = ({ onOpenConsultation }) => {
         {/* Header with Nav Arrows */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
           <div className="max-w-2xl text-left space-y-2">
-            <div className="inline-flex items-center px-3.5 py-1.5 rounded-full bg-blue-100 text-blue-700 text-xs font-bold tracking-wide">
+            <div className="inline-flex items-center px-3.5 py-1.5 rounded-full bg-[#e0f4ff] border border-[#00A3E0]/30 text-[#007ba8] text-xs font-bold tracking-wide shadow-2xs">
               {portfolioSection.badge || 'Our Work'}
             </div>
             <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
@@ -58,43 +58,43 @@ const OurWork = ({ onOpenConsultation }) => {
 
         {/* 3 Metric counters row */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-12">
-          <div className="bg-slate-50/70 p-6 rounded-3xl border border-slate-200/80 text-left flex items-center gap-4 shadow-xs">
-            <div className="w-12 h-12 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center font-bold">
+          <div className="bg-slate-50/70 p-6 rounded-2xl border border-slate-200/80 text-left flex items-center gap-4 shadow-2xs">
+            <div className="w-12 h-12 rounded-xl bg-[#e0f4ff] text-[#00A3E0] flex items-center justify-center font-bold">
               <BarChart3 className="w-6 h-6" />
             </div>
             <div>
               <div className="text-3xl font-extrabold text-slate-900 leading-tight">
                 {metrics.stat1Value || '250%'}
               </div>
-              <div className="text-xs font-semibold text-slate-500">
+              <div className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
                 {metrics.stat1Label || 'Average Growth'}
               </div>
             </div>
           </div>
 
-          <div className="bg-slate-50/70 p-6 rounded-3xl border border-slate-200/80 text-left flex items-center gap-4 shadow-xs">
-            <div className="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold">
+          <div className="bg-slate-50/70 p-6 rounded-2xl border border-slate-200/80 text-left flex items-center gap-4 shadow-2xs">
+            <div className="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold">
               <Users className="w-6 h-6" />
             </div>
             <div>
               <div className="text-3xl font-extrabold text-slate-900 leading-tight">
                 {metrics.stat2Value || '500+'}
               </div>
-              <div className="text-xs font-semibold text-slate-500">
+              <div className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
                 {metrics.stat2Label || 'Happy Clients'}
               </div>
             </div>
           </div>
 
-          <div className="bg-slate-50/70 p-6 rounded-3xl border border-slate-200/80 text-left flex items-center gap-4 shadow-xs">
-            <div className="w-12 h-12 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center font-bold">
+          <div className="bg-slate-50/70 p-6 rounded-2xl border border-slate-200/80 text-left flex items-center gap-4 shadow-2xs">
+            <div className="w-12 h-12 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center font-bold">
               <Clock className="w-6 h-6" />
             </div>
             <div>
               <div className="text-3xl font-extrabold text-slate-900 leading-tight">
                 {metrics.stat3Value || '5+'}
               </div>
-              <div className="text-xs font-semibold text-slate-500">
+              <div className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
                 {metrics.stat3Label || 'Years Experience'}
               </div>
             </div>
@@ -106,7 +106,7 @@ const OurWork = ({ onOpenConsultation }) => {
           {caseStudies.map((study, idx) => (
             <div
               key={study._id || idx}
-              className="group bg-white rounded-3xl border border-slate-200/80 overflow-hidden shadow-sm card-lift flex flex-col text-left"
+              className="group bg-white rounded-2xl border border-slate-200/80 overflow-hidden shadow-2xs card-lift flex flex-col text-left hover:border-[#00A3E0]/50"
             >
               {/* Photo preview */}
               <div className="h-52 w-full overflow-hidden relative bg-slate-100">
@@ -123,7 +123,7 @@ const OurWork = ({ onOpenConsultation }) => {
               {/* Card Footer details */}
               <div className="p-5 flex items-center justify-between">
                 <div>
-                  <h4 className="font-extrabold text-slate-900 text-base group-hover:text-blue-600 transition-colors">
+                  <h4 className="font-extrabold text-slate-900 text-base group-hover:text-[#00A3E0] transition-colors">
                     {study.title}
                   </h4>
                   <div className="text-xs font-bold text-slate-500 mt-0.5">
@@ -133,7 +133,7 @@ const OurWork = ({ onOpenConsultation }) => {
 
                 <button
                   onClick={onOpenConsultation}
-                  className="w-9 h-9 rounded-full border border-slate-200 hover:border-blue-600 hover:bg-blue-600 hover:text-white flex items-center justify-center text-slate-600 transition-all cursor-pointer"
+                  className="w-9 h-9 rounded-full border border-slate-200 hover:border-[#00A3E0] hover:bg-[#00A3E0] hover:text-white flex items-center justify-center text-slate-600 transition-all cursor-pointer shadow-2xs"
                   aria-label="View project"
                 >
                   <ArrowUpRight className="w-4 h-4" />
@@ -147,10 +147,10 @@ const OurWork = ({ onOpenConsultation }) => {
         <div className="mt-12 text-center">
           <Link
             to="/portfolio"
-            className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-slate-100 hover:bg-blue-50 text-slate-800 hover:text-blue-600 border border-slate-200 font-bold text-sm transition-all hover:scale-102 shadow-xs"
+            className="btn-drone-secondary border border-slate-200 hover:border-[#00A3E0]"
           >
             <span>Explore All Client Case Studies & Metrics</span>
-            <ArrowRight className="w-4 h-4" />
+            <ArrowRight className="w-4 h-4 ml-1" />
           </Link>
         </div>
 

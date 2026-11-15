@@ -84,8 +84,8 @@ const WhyChooseUs = ({ onOpenConsultation }) => {
 
           {/* Right Column: Mission & Points */}
           <div className="lg:col-span-7 space-y-6 text-left">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-100 text-blue-700 text-xs font-bold tracking-wide">
-              <span className="w-1.5 h-1.5 rounded-full bg-blue-600 live-pulse-dot" />
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#e0f4ff] border border-[#00A3E0]/30 text-[#007ba8] text-xs font-bold tracking-wide shadow-2xs">
+              <span className="w-2 h-2 rounded-full bg-[#00A3E0] live-pulse-dot" />
               <span>{why.badge || 'Why Choose TezScale'}</span>
             </div>
 
@@ -102,7 +102,7 @@ const WhyChooseUs = ({ onOpenConsultation }) => {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 pt-2">
               {points.map((point, idx) => (
                 <div key={idx} className="flex items-center gap-2.5 text-sm font-semibold text-slate-700">
-                  <CheckCircle2 className="w-5 h-5 text-blue-600 flex-shrink-0" />
+                  <CheckCircle2 className="w-5 h-5 text-[#00A3E0] flex-shrink-0" />
                   <span>{point}</span>
                 </div>
               ))}
@@ -111,18 +111,18 @@ const WhyChooseUs = ({ onOpenConsultation }) => {
             <div className="pt-2 flex flex-wrap items-center gap-4">
               <button
                 onClick={onOpenConsultation}
-                className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3.5 rounded-full text-sm font-bold shadow-md shadow-blue-500/25 transition-all hover:scale-102 cursor-pointer"
+                className="btn-drone-primary"
               >
-                <span>{why.buttonText || 'Schedule Strategy Call'}</span>
-                <ArrowRight className="w-4 h-4" />
+                <span>{why.buttonText || 'SCHEDULE STRATEGY CALL'}</span>
+                <ArrowRight className="w-4 h-4 ml-1" />
               </button>
 
               <Link
                 to="/about"
-                className="inline-flex items-center gap-2 bg-slate-100 hover:bg-slate-200 text-slate-800 px-6 py-3.5 rounded-full text-sm font-bold border border-slate-200 transition-all hover:scale-102"
+                className="btn-drone-secondary border border-slate-200 hover:border-[#00A3E0]"
               >
-                <span>Read Full Agency Story</span>
-                <ArrowRight className="w-4 h-4" />
+                <span>READ FULL STORY</span>
+                <ArrowRight className="w-4 h-4 ml-1" />
               </Link>
             </div>
 
@@ -135,13 +135,13 @@ const WhyChooseUs = ({ onOpenConsultation }) => {
                   className="w-full h-48 sm:h-56 object-cover group-hover:scale-105 transition-transform duration-500"
                 />
                 
-                <div className="absolute top-4 right-4 bg-white/95 backdrop-blur-md px-3.5 py-1 rounded-xl text-xs font-black text-slate-900 shadow-sm">
-                  Tez<span className="text-blue-600">Scale</span> Agency HQ
+                <div className="absolute top-4 right-4 bg-white/95 backdrop-blur-md px-3.5 py-1 rounded-md text-xs font-black text-slate-900 shadow-sm uppercase">
+                  Tez<span className="text-[#00A3E0]">Scale</span> Agency HQ
                 </div>
 
                 <button
                   onClick={onOpenConsultation}
-                  className="absolute inset-0 m-auto w-14 h-14 rounded-full bg-white/90 hover:bg-white text-blue-600 shadow-xl flex items-center justify-center transition-transform hover:scale-110 cursor-pointer"
+                  className="absolute inset-0 m-auto w-14 h-14 rounded-full bg-white/90 hover:bg-white text-[#00A3E0] shadow-xl flex items-center justify-center transition-transform hover:scale-110 cursor-pointer"
                   aria-label="Play video"
                 >
                   <Play className="w-6 h-6 fill-current ml-1" />
@@ -153,10 +153,10 @@ const WhyChooseUs = ({ onOpenConsultation }) => {
 
         </div>
 
-        {/* Olive-style 4-Step Progressive Journey Timeline (PDF Section 2.2 Our Approach) */}
+        {/* 4-Step Progressive Journey Timeline (Drone Style) */}
         <div className="pt-16 border-t border-slate-100">
           <div className="text-center max-w-2xl mx-auto space-y-2 mb-12">
-            <div className="text-xs font-bold text-blue-600 uppercase tracking-wider">Our Proven Approach</div>
+            <div className="text-xs font-bold text-[#00A3E0] uppercase tracking-wider">Our Proven Approach</div>
             <h3 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
               From Inquiry to Predictable Growth
             </h3>
@@ -169,11 +169,11 @@ const WhyChooseUs = ({ onOpenConsultation }) => {
             {steps.map((st, idx) => (
               <div
                 key={idx}
-                className="bg-slate-50/70 p-6 rounded-3xl border border-slate-200/80 card-lift flex flex-col justify-between relative group hover:bg-white"
+                className="bg-slate-50/70 p-6 rounded-2xl border border-slate-200/80 card-lift flex flex-col justify-between relative group hover:bg-white hover:border-[#00A3E0]/40"
               >
                 <div>
                   <div className="flex items-center justify-between mb-4">
-                    <span className="text-3xl font-black text-slate-300 group-hover:text-blue-600 transition-colors">
+                    <span className="text-3xl font-black text-slate-300 group-hover:text-[#00A3E0] transition-colors">
                       {st.step}
                     </span>
                     <div className="w-10 h-10 rounded-xl bg-white shadow-xs border border-slate-100 flex items-center justify-center">
