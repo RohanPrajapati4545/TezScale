@@ -4,28 +4,54 @@ import Lead from '../models/Lead.js';
 // @route   POST /api/leads
 export const createLead = async (req, res) => {
   try {
-    const { name, whatsapp, email, businessType, serviceRequired, message, website } = req.body;
+    const name = (req.body.name || '').trim();
+    const whatsapp = (req.body.whatsapp || req.body.phone || req.body.phoneNumber || '').trim();
+    const email = (req.body.email || '').trim().toLowerCase();
+    const message = (req.body.message || req.body.projectBrief || '').trim().slice(0, 500);
+    const website = (req.body.website || req.body.company || '').trim();
 
-    if (!name || name.trim().length < 2) {
+    // Normalize serviceRequired to valid enum
+    const validServices = [
+      'Website Builder & Development',
+      'Graphic Design',
+      'Digital Marketing Support',
+      'E-commerce Support',
+      'Social Media Services',
+      'Meta Ads Management',
+      'General Consultation',
+    ];
+    let serviceRequired = req.body.serviceRequired || req.body.service || 'Website Builder & Development';
+    if (!validServices.includes(serviceRequired)) {
+      serviceRequired = 'Website Builder & Development';
+    }
+
+    // Normalize businessType to valid enum
+    const validBusinessTypes = ['Doctor / Clinic', 'Real Estate', 'Engineering', 'Retail / E-commerce', 'Other'];
+    let businessType = req.body.businessType || 'Other';
+    if (!validBusinessTypes.includes(businessType)) {
+      businessType = 'Other';
+    }
+
+    if (!name || name.length < 2) {
       return res.status(400).json({ success: false, message: 'Full Name must be at least 2 characters' });
     }
 
-    if (!whatsapp) {
-      return res.status(400).json({ success: false, message: 'WhatsApp number is required' });
+    if (!whatsapp || whatsapp.length < 7) {
+      return res.status(400).json({ success: false, message: 'Valid phone / WhatsApp number is required' });
     }
 
-    if (!email) {
-      return res.status(400).json({ success: false, message: 'Email address is required' });
+    if (!email || !email.includes('@')) {
+      return res.status(400).json({ success: false, message: 'Valid email address is required' });
     }
 
     const newLead = await Lead.create({
-      name: name.trim(),
-      whatsapp: whatsapp.trim(),
-      email: email.trim().toLowerCase(),
-      businessType: businessType || 'Other',
-      serviceRequired: serviceRequired || 'Website Builder & Development',
-      message: message ? message.trim().slice(0, 500) : '',
-      website: website ? website.trim() : '',
+      name,
+      whatsapp,
+      email,
+      businessType,
+      serviceRequired,
+      message,
+      website,
       status: 'New',
     });
 

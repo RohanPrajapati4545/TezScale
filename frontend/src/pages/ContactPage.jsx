@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Navbar from '../Components/Navbar';
 import Footer from '../Components/Footer';
 import ConsultationModal from '../Components/ConsultationModal';
+import PhoneInput from '../Components/PhoneInput';
 import { 
   Phone, 
   Mail, 
@@ -19,10 +20,11 @@ import apiFetch from '../api/apiClient';
 
 const ContactPage = () => {
   const [modalOpen, setModalOpen] = useState(false);
+  const [countryCode, setCountryCode] = useState('+91');
+  const [phoneNumber, setPhoneNumber] = useState('');
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    phone: '',
     company: '',
     service: 'Website Builder & Development',
     budget: '₹50,000 - ₹1,00,000',
@@ -41,10 +43,44 @@ const ContactPage = () => {
     e.preventDefault();
     setError('');
 
-    if (!formData.name || !formData.email || !formData.phone) {
-      setError('Please fill in your name, email and phone number.');
+    const cleanName = formData.name.trim();
+    const cleanEmail = formData.email.trim().toLowerCase();
+    const cleanDigits = phoneNumber.trim();
+
+    if (!cleanName || cleanName.length < 2) {
+      setError('Please enter your full name (minimum 2 characters).');
       return;
     }
+
+    if (!cleanEmail || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(cleanEmail)) {
+      setError('Please provide a valid business email address.');
+      return;
+    }
+
+    if (!cleanDigits || cleanDigits.length < 7) {
+      setError('Please enter a valid phone number (digits only).');
+      return;
+    }
+
+    if (countryCode === '+91' && cleanDigits.length !== 10) {
+      setError('Please enter a valid 10-digit Indian mobile number.');
+      return;
+    }
+
+    const fullPhone = `${countryCode} ${cleanDigits}`;
+    const payload = {
+      name: cleanName,
+      email: cleanEmail,
+      whatsapp: fullPhone,
+      phone: fullPhone,
+      phoneNumber: fullPhone,
+      company: formData.company.trim(),
+      website: formData.company.trim(),
+      service: formData.service,
+      serviceRequired: formData.service,
+      budget: formData.budget,
+      message: formData.message.trim(),
+    };
 
     setLoading(true);
 
@@ -52,7 +88,7 @@ const ContactPage = () => {
       const res = await apiFetch('/leads', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(payload),
       });
 
       const data = await res.json();
@@ -60,7 +96,7 @@ const ContactPage = () => {
       if (res.ok && data.success) {
         setSuccess(true);
         // Optional pre-filled WhatsApp trigger
-        const waMsg = `Hello TezScale, I submitted a consultation inquiry for ${formData.service}. My name is ${formData.name}.`;
+        const waMsg = `Hello TezScale, I submitted a consultation inquiry for ${formData.service}. My name is ${cleanName}.`;
         const waUrl = `https://wa.me/919876543210?text=${encodeURIComponent(waMsg)}`;
         
         setTimeout(() => {
@@ -94,7 +130,7 @@ const ContactPage = () => {
               <span>Let’s Start a Conversation</span>
             </div>
 
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-slate-900 tracking-tight leading-tight max-w-4xl mx-auto">
+            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-slate-900 tracking-tight leading-tight max-w-4xl mx-auto">
               Get in Touch with Our <span className="text-blue-600">Growth Experts</span>
             </h1>
 
@@ -196,7 +232,7 @@ const ContactPage = () => {
 
               {/* Right Column: Lead Form */}
               <div className="lg:col-span-7">
-                <div className="bg-white rounded-xl p-8 sm:p-9 border border-slate-200/90 shadow-xl relative overflow-hidden anim-slow-slide">
+                <div className="bg-white rounded-xl p-5 sm:p-8 md:p-9 border border-slate-200/90 shadow-xl relative overflow-hidden anim-slow-slide">
                   <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-600 via-blue-500 to-cyan-500" />
 
                   {success ? (
@@ -268,16 +304,15 @@ const ContactPage = () => {
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
                           <label className="block text-xs font-bold text-slate-700 uppercase mb-1">
-                            Phone / WhatsApp *
+                            Phone / WhatsApp * <span className="text-[10px] text-slate-400 font-normal">(Digits only)</span>
                           </label>
-                          <input
-                            type="tel"
-                            required
-                            name="phone"
-                            value={formData.phone}
-                            onChange={handleChange}
-                            placeholder="+91 98765 43210"
-                            className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-xs font-medium focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none transition-all duration-300"
+                          <PhoneInput
+                            countryCode={countryCode}
+                            setCountryCode={setCountryCode}
+                            phoneNumber={phoneNumber}
+                            setPhoneNumber={setPhoneNumber}
+                            placeholder="98765 43210"
+                            id="contact-phone-input"
                           />
                         </div>
 

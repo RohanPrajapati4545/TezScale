@@ -1,17 +1,19 @@
 import React, { useState } from 'react';
-import { User, Mail, Phone, Briefcase, Layers, ArrowRight, Lock, CheckCircle2, AlertCircle, Loader2 } from 'lucide-react';
+import { User, Mail, Briefcase, Layers, ArrowRight, Lock, CheckCircle2, AlertCircle, Loader2 } from 'lucide-react';
+import PhoneInput from './PhoneInput';
 import apiFetch from '../api/apiClient';
 
 const LeadForm = () => {
   const [formData, setFormData] = useState({
     name: '',
-    whatsapp: '',
     email: '',
     businessType: 'Doctor / Clinic',
     serviceRequired: 'Website Builder & Development',
     message: '',
   });
 
+  const [countryCode, setCountryCode] = useState('+91');
+  const [phoneNumber, setPhoneNumber] = useState('');
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState({ type: '', message: '' });
 
@@ -25,10 +27,18 @@ const LeadForm = () => {
       setStatus({ type: 'error', message: 'Full Name must be at least 2 characters.' });
       return;
     }
-    if (!formData.whatsapp || formData.whatsapp.trim().length < 8) {
-      setStatus({ type: 'error', message: 'Please provide a valid WhatsApp number.' });
+
+    const cleanDigits = phoneNumber.replace(/\D/g, '');
+    if (!cleanDigits || cleanDigits.length < 7) {
+      setStatus({ type: 'error', message: 'Please enter a valid phone number (digits only).' });
       return;
     }
+
+    if (countryCode === '+91' && cleanDigits.length !== 10) {
+      setStatus({ type: 'error', message: 'Please enter a valid 10-digit Indian mobile number.' });
+      return;
+    }
+
     if (!formData.email) {
       setStatus({ type: 'error', message: 'Please provide a valid email.' });
       return;
@@ -37,11 +47,19 @@ const LeadForm = () => {
     setLoading(true);
     setStatus({ type: '', message: '' });
 
+    const fullPhone = `${countryCode} ${cleanDigits}`;
+    const payload = {
+      ...formData,
+      whatsapp: fullPhone,
+      phone: fullPhone,
+      phoneNumber: fullPhone,
+    };
+
     try {
       const response = await apiFetch('/leads', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(payload),
       });
 
       const data = await response.json();
@@ -53,12 +71,12 @@ const LeadForm = () => {
         });
         setFormData({
           name: '',
-          whatsapp: '',
           email: '',
           businessType: 'Doctor / Clinic',
           serviceRequired: 'Website Builder & Development',
           message: '',
         });
+        setPhoneNumber('');
       } else {
         setStatus({
           type: 'success',
@@ -73,12 +91,12 @@ const LeadForm = () => {
       });
       setFormData({
         name: '',
-        whatsapp: '',
         email: '',
         businessType: 'Doctor / Clinic',
         serviceRequired: 'Website Builder & Development',
         message: '',
       });
+      setPhoneNumber('');
     } finally {
       setLoading(false);
     }
@@ -128,22 +146,21 @@ const LeadForm = () => {
           />
         </div>
 
-        {/* WhatsApp & Email */}
+        {/* Phone / WhatsApp & Email */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <div className="relative">
-            <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
-              <Phone className="w-4 h-4" />
-            </div>
-            <input
-              type="tel"
-              name="whatsapp"
-              value={formData.whatsapp}
-              onChange={handleChange}
+          <div>
+            <PhoneInput
+              countryCode={countryCode}
+              setCountryCode={setCountryCode}
+              phoneNumber={phoneNumber}
+              setPhoneNumber={setPhoneNumber}
               placeholder="WhatsApp Number *"
-              required
-              className="w-full pl-10 pr-4 py-2.5 bg-white text-slate-900 rounded-xl text-sm font-medium focus:outline-none focus:ring-2 focus:ring-blue-500"
+              id="lead-phone-input"
+              className="bg-white border-none rounded-xl"
             />
           </div>
+
+          <div className="relative">
 
           <div className="relative">
             <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">

@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
-import { X, Send, CheckCircle2, User, Mail, Phone, Briefcase, Layers, MessageSquare, Loader2, Lock } from 'lucide-react';
+import { X, Send, CheckCircle2, User, Mail, Briefcase, Layers, MessageSquare, Loader2, Lock } from 'lucide-react';
 import apiFetch from '../api/apiClient';
+import PhoneInput from './PhoneInput';
 
 const ConsultationModal = ({ isOpen, onClose }) => {
+  const [countryCode, setCountryCode] = useState('+91');
+  const [phoneNumber, setPhoneNumber] = useState('');
   const [formData, setFormData] = useState({
     name: '',
-    whatsapp: '',
     email: '',
     businessType: 'Doctor / Clinic',
     serviceRequired: 'Website Builder & Development',
@@ -24,36 +26,60 @@ const ConsultationModal = ({ isOpen, onClose }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!formData.name || formData.name.trim().length < 2) {
+    setError('');
+
+    const cleanName = formData.name.trim();
+    const cleanEmail = formData.email.trim().toLowerCase();
+    const cleanDigits = phoneNumber.trim();
+
+    if (!cleanName || cleanName.length < 2) {
       setError('Full Name is required (minimum 2 characters)');
       return;
     }
-    if (!formData.whatsapp || formData.whatsapp.trim().length < 8) {
-      setError('Please provide a valid WhatsApp number with country code');
-      return;
-    }
-    if (!formData.email || !formData.email.includes('@')) {
-      setError('Please provide a valid email address');
+
+    if (!cleanEmail || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(cleanEmail)) {
+      setError('Please provide a valid business email address');
       return;
     }
 
+    if (!cleanDigits || cleanDigits.length < 7) {
+      setError('Please enter a valid phone/WhatsApp number (digits only)');
+      return;
+    }
+
+    if (countryCode === '+91' && cleanDigits.length !== 10) {
+      setError('Please enter a valid 10-digit Indian mobile number');
+      return;
+    }
+
+    const fullWhatsapp = `${countryCode} ${cleanDigits}`;
+    const payload = {
+      name: cleanName,
+      whatsapp: fullWhatsapp,
+      phone: fullWhatsapp,
+      phoneNumber: fullWhatsapp,
+      email: cleanEmail,
+      businessType: formData.businessType,
+      serviceRequired: formData.serviceRequired,
+      message: formData.message?.trim() || '',
+    };
+
     setLoading(true);
-    setError('');
 
     try {
       const res = await apiFetch('/leads', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(payload),
       });
       const data = await res.json();
       if (res.ok && data.success) {
         setSuccess(true);
         setTimeout(() => {
           setSuccess(false);
+          setPhoneNumber('');
           setFormData({
             name: '',
-            whatsapp: '',
             email: '',
             businessType: 'Doctor / Clinic',
             serviceRequired: 'Website Builder & Development',
@@ -62,13 +88,10 @@ const ConsultationModal = ({ isOpen, onClose }) => {
           onClose();
         }, 2500);
       } else {
-        setSuccess(true);
-        setTimeout(() => {
-          setSuccess(false);
-          onClose();
-        }, 2200);
+        setError(data.message || 'Submission failed. Please check details or connect on WhatsApp.');
       }
     } catch (err) {
+      // Local fallback success so user is never blocked
       setSuccess(true);
       setTimeout(() => {
         setSuccess(false);
@@ -80,14 +103,14 @@ const ConsultationModal = ({ isOpen, onClose }) => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-sm transition-opacity duration-700 ease-out anim-slow-fade">
-      <div className="relative w-full max-w-lg bg-white rounded-xl shadow-2xl overflow-hidden border border-slate-200/90 transition-all duration-700 ease-out anim-slow-slide">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-950/70 backdrop-blur-sm transition-opacity duration-700 ease-out anim-slow-fade">
+      <div className="relative w-full max-w-lg bg-white rounded-xl shadow-2xl overflow-hidden border border-slate-200/90 transition-all duration-700 ease-out anim-slow-slide max-h-[90vh] flex flex-col">
         
         {/* Header in Drone Cyan */}
-        <div className="bg-gradient-to-r from-[#00A3E0] to-[#0284c7] px-6 py-4 text-white flex items-center justify-between">
+        <div className="bg-gradient-to-r from-[#00A3E0] to-[#0284c7] px-5 sm:px-6 py-3.5 sm:py-4 text-white flex items-center justify-between shrink-0">
           <div className="text-left">
             <div className="text-[10px] font-bold uppercase tracking-wider text-sky-100">TezScale Lead Capture</div>
-            <h3 className="text-lg font-extrabold tracking-tight">Request Free Growth Consultation</h3>
+            <h3 className="text-base sm:text-lg font-extrabold tracking-tight">Request Free Growth Consultation</h3>
           </div>
           <button
             onClick={onClose}
@@ -98,7 +121,7 @@ const ConsultationModal = ({ isOpen, onClose }) => {
         </div>
 
         {/* Content */}
-        <div className="p-6">
+        <div className="p-4 sm:p-6 overflow-y-auto">
           {success ? (
             <div className="py-8 text-center space-y-3 anim-slow-fade">
               <div className="w-14 h-14 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto shadow-sm">
@@ -140,20 +163,16 @@ const ConsultationModal = ({ isOpen, onClose }) => {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
                   <label className="block text-xs font-bold text-slate-700 uppercase mb-1">
-                    WhatsApp Number *
+                    WhatsApp Number * <span className="text-[10px] text-slate-400 font-normal">(Digits only)</span>
                   </label>
-                  <div className="relative">
-                    <Phone className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
-                    <input
-                      type="tel"
-                      name="whatsapp"
-                      required
-                      value={formData.whatsapp}
-                      onChange={handleChange}
-                      placeholder="+91 98765 43210"
-                      className="w-full pl-9 pr-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-xs font-medium focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none transition-all"
-                    />
-                  </div>
+                  <PhoneInput
+                    countryCode={countryCode}
+                    setCountryCode={setCountryCode}
+                    phoneNumber={phoneNumber}
+                    setPhoneNumber={setPhoneNumber}
+                    placeholder="98765 43210"
+                    id="modal-phone-input"
+                  />
                 </div>
 
                 <div>
