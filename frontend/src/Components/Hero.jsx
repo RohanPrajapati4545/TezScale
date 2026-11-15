@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowRight, TrendingUp, Heart, Star, Building2, Stethoscope, Wrench, CheckCircle2, BarChart2, ShieldCheck, Zap } from 'lucide-react';
+import { ArrowRight, TrendingUp, Heart, Star, Building2, Stethoscope, Wrench, ShoppingBag, CheckCircle2, BarChart2, ShieldCheck, Zap } from 'lucide-react';
 import { useContent } from '../context/ContentContext';
 
 const Hero = ({ onOpenConsultation }) => {
@@ -175,17 +175,20 @@ const Hero = ({ onOpenConsultation }) => {
 
         </div>
 
-        {/* Bottom Trust & Sector Row */}
+        {/* Bottom Trust & Sector Row (Section 1.1 Target Industry Personas) */}
         <div className="mt-16 pt-8 border-t border-slate-200/80 flex flex-wrap items-center justify-between gap-6">
-          <div className="flex flex-wrap items-center gap-3 sm:gap-4 text-xs font-bold text-slate-700">
-            <span className="flex items-center gap-2 px-3.5 py-1.5 rounded-md bg-white border border-slate-200 shadow-2xs hover:border-[#00A3E0]/40 transition-colors">
-              <Stethoscope className="w-3.5 h-3.5 text-[#00A3E0]" /> Healthcare & Clinics
+          <div className="flex flex-wrap items-center gap-2.5 sm:gap-3 text-xs font-bold text-slate-700">
+            <span className="flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-white border border-slate-200 shadow-2xs hover:border-[#00A3E0]/40 transition-colors">
+              <Stethoscope className="w-3.5 h-3.5 text-[#00A3E0]" /> Doctors & Clinics
             </span>
-            <span className="flex items-center gap-2 px-3.5 py-1.5 rounded-md bg-white border border-slate-200 shadow-2xs hover:border-[#00A3E0]/40 transition-colors">
+            <span className="flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-white border border-slate-200 shadow-2xs hover:border-[#00A3E0]/40 transition-colors">
               <Building2 className="w-3.5 h-3.5 text-emerald-600" /> Real Estate Brokers
             </span>
-            <span className="flex items-center gap-2 px-3.5 py-1.5 rounded-md bg-white border border-slate-200 shadow-2xs hover:border-[#00A3E0]/40 transition-colors">
-              <Wrench className="w-3.5 h-3.5 text-amber-600" /> Engineering & Manufacturing
+            <span className="flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-white border border-slate-200 shadow-2xs hover:border-[#00A3E0]/40 transition-colors">
+              <Wrench className="w-3.5 h-3.5 text-amber-600" /> Engineering B2B
+            </span>
+            <span className="flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-white border border-slate-200 shadow-2xs hover:border-[#00A3E0]/40 transition-colors">
+              <ShoppingBag className="w-3.5 h-3.5 text-indigo-600" /> Retail & Entrepreneurs
             </span>
           </div>
 

@@ -273,6 +273,88 @@ const About = () => {
           </div>
         </section>
 
+        {/* Section 2.2 Team & Leadership (Section 2.2 Specification) */}
+        <section className="py-20 bg-slate-50/60 border-t border-slate-200/80">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-left">
+            <div className="text-center max-w-3xl mx-auto mb-14 space-y-3">
+              <div className="inline-flex items-center px-3.5 py-1.5 rounded-full bg-blue-100 text-blue-700 text-xs font-bold tracking-wide">
+                Leadership & Vision
+              </div>
+              <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+                Meet the Growth Architects
+              </h2>
+              <p className="text-slate-600 text-base">
+                A multidisciplinary leadership team combining engineering discipline, creative branding, and algorithmic media buying.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {[
+                {
+                  name: 'Aarav Singhania',
+                  role: 'Founder & Chief Growth Officer',
+                  bio: 'Strategic advisor to 200+ high-growth B2B firms. Specializes in scalable inbound funnels and predictable revenue systems.',
+                  image: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80',
+                  badge: 'Growth Strategy',
+                },
+                {
+                  name: 'Dr. Neha Kulkarni',
+                  role: 'VP, Performance & Meta Ads',
+                  bio: 'Ex-agency media director overseeing ₹15M+ in ad spend with an average ROAS of 4.2x across healthcare and real estate campaigns.',
+                  image: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=400&q=80',
+                  badge: 'Paid Acquisition',
+                },
+                {
+                  name: 'Rohan Sharma',
+                  role: 'Lead Full-Stack Web Architect',
+                  bio: 'Crafts ultra-fast modern web platforms with 95+ PageSpeed scores, zero-latency APIs, and seamless WhatsApp CRM integrations.',
+                  image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80',
+                  badge: 'Web Architecture',
+                },
+                {
+                  name: 'Ananya Roy',
+                  role: 'Creative & Brand Identity Lead',
+                  bio: 'Turns complex business values into iconic brand kits, high-CTR visual assets, and high-converting marketing collateral.',
+                  image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=400&q=80',
+                  badge: 'Brand Kits & UI',
+                },
+              ].map((member, idx) => (
+                <div
+                  key={idx}
+                  className="bg-white rounded-2xl border border-slate-200/90 overflow-hidden shadow-xs card-lift flex flex-col justify-between"
+                >
+                  <div>
+                    <div className="h-56 w-full overflow-hidden bg-slate-100 relative">
+                      <img
+                        src={member.image}
+                        alt={member.name}
+                        className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-500"
+                      />
+                      <span className="absolute top-3 right-3 text-[10px] font-bold text-white bg-[#00A3E0] px-2.5 py-1 rounded-md shadow-xs">
+                        {member.badge}
+                      </span>
+                    </div>
+                    <div className="p-5">
+                      <h3 className="font-extrabold text-slate-900 text-base">{member.name}</h3>
+                      <div className="text-xs font-bold text-[#00A3E0] mt-0.5">{member.role}</div>
+                      <p className="text-xs text-slate-600 mt-2.5 leading-relaxed">{member.bio}</p>
+                    </div>
+                  </div>
+                  <div className="px-5 pb-5 pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-400">
+                    <span className="font-semibold text-[11px] text-slate-500">TezScale Core Team</span>
+                    <button
+                      onClick={() => setModalOpen(true)}
+                      className="text-[#00A3E0] hover:text-[#008bc0] font-bold text-xs cursor-pointer"
+                    >
+                      Connect &rarr;
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
         {/* Bottom CTA Banner */}
         <section className="py-16 bg-gradient-to-r from-blue-700 via-blue-600 to-cyan-600 text-white">
           <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">

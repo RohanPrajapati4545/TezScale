@@ -109,6 +109,51 @@ const portfolioItems = [
       'Built a loyal VIP customer WhatsApp broadcast database',
     ],
   },
+  {
+    id: 7,
+    title: 'Modern Corporate Identity & Brand Kit',
+    subtitle: 'B2B Tech & Enterprise Consulting',
+    category: 'design',
+    categoryName: 'Graphic Design & Brand Kit',
+    metric: 'Full Brand Suite',
+    image: 'https://images.unsplash.com/photo-1600132806370-bf17e65e942f?auto=format&fit=crop&w=800&q=80',
+    description: 'End-to-end visual identity architecture featuring vector logo typography, iconography suite, high-resolution stationery, and comprehensive design tokens.',
+    results: [
+      'Complete brand guideline documentation & asset kit',
+      'Vector logo system with light/dark adaptive variations',
+      '100% brand consistency across web, social, and print',
+    ],
+  },
+  {
+    id: 8,
+    title: 'High-Converting Ad Creatives & Social Suite',
+    subtitle: 'Retail & Multi-Channel E-Commerce',
+    category: 'design',
+    categoryName: 'Ad Creatives & Social Assets',
+    metric: '+3.2x Click-Through',
+    image: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=800&q=80',
+    description: 'High-CTR social media ad graphics, carousel layouts, story promotional assets, and dynamic product catalog banners engineered for Meta & Google campaigns.',
+    results: [
+      '3.2x boost in advertising click-through rate (CTR)',
+      'Over 40+ customized banner variations for split testing',
+      'Pixel-perfect assets optimized for mobile feed algorithms',
+    ],
+  },
+  {
+    id: 9,
+    title: 'Technical Product Brochures & Catalogs',
+    subtitle: 'Precision Engineering & OEM Exporters',
+    category: 'design',
+    categoryName: 'Brochures & Catalogs',
+    metric: 'Global B2B Catalog',
+    image: 'https://images.unsplash.com/photo-1542744094-3a31f272c490?auto=format&fit=crop&w=800&q=80',
+    description: 'High-authority technical product brochures, structured engineering specification catalogs, and corporate pitch decks crafted for global RFP submissions.',
+    results: [
+      '24-page full color print-ready and digital interactive PDF',
+      'Structured technical specification comparison tables',
+      'Accelerated international deal closures with UAE and EU buyers',
+    ],
+  },
 ];
 
 const PortfolioPage = () => {
@@ -197,6 +242,7 @@ const PortfolioPage = () => {
             <div className="flex items-center justify-center gap-2 mb-12 flex-wrap">
               {[
                 { id: 'all', label: 'All Case Studies' },
+                { id: 'design', label: 'Graphic Design & Brand Kits' },
                 { id: 'healthcare', label: 'Medical & Clinics' },
                 { id: 'realestate', label: 'Real Estate' },
                 { id: 'ecommerce', label: 'E-Commerce' },

@@ -1,4 +1,5 @@
 import Lead from '../models/Lead.js';
+import { sendLeadEmails } from '../utils/emailService.js';
 
 // @desc    Submit a new lead from landing page / consultation modal
 // @route   POST /api/leads
@@ -55,10 +56,10 @@ export const createLead = async (req, res) => {
       status: 'New',
     });
 
-    // Automated Email Notification Simulation (per PDF Section 3.2)
-    const emailSubject = `New Lead Alert: [${newLead.serviceRequired}] - [${newLead.name}]`;
-    console.log(`📧 [Admin Notification Email Triggered] Subject: "${emailSubject}"`);
-    console.log(`📩 [Client Welcome Notification Scheduled] Sent to: ${newLead.email} & WhatsApp: ${newLead.whatsapp}`);
+    // Automated Email Workflow System (Section 3.2: Admin Alert + Client Welcome)
+    sendLeadEmails(newLead).catch((err) => {
+      console.warn('Email dispatch notice:', err?.message || err);
+    });
 
     res.status(201).json({
       success: true,

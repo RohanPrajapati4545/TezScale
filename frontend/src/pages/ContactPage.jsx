@@ -408,6 +408,47 @@ const ContactPage = () => {
             </div>
           </div>
         </section>
+
+        {/* Interactive Location: Google Maps Integration (Section 2.4 Specification) */}
+        <section className="pb-20 bg-white">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="rounded-2xl overflow-hidden border border-slate-200/90 shadow-lg bg-slate-100">
+              <div className="p-4 sm:p-5 bg-slate-50 border-b border-slate-200 flex flex-wrap items-center justify-between gap-4 text-left">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center font-bold">
+                    <MapPin className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <h4 className="text-sm font-extrabold text-slate-900">TezScale Strategic Headquarters</h4>
+                    <p className="text-xs text-slate-500">AB Road / Vijay Nagar Commercial Hub, Indore, Madhya Pradesh, India</p>
+                  </div>
+                </div>
+                <a
+                  href="https://maps.google.com/?q=Indore,Madhya+Pradesh,India"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="px-4 py-2 bg-white hover:bg-slate-50 border border-slate-200 rounded-lg text-xs font-bold text-blue-600 transition-colors inline-flex items-center gap-1.5 cursor-pointer"
+                >
+                  <span>Open in Google Maps</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </a>
+              </div>
+              <div className="w-full h-72 sm:h-96">
+                <iframe
+                  title="TezScale Headquarters Location"
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d117763.5514571813!2d75.79380954335938!3d22.7242284!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3962fcad1b410ddb%3A0x96ec4da356240f4!2sIndore%2C%20Madhya%20Pradesh!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"
+                  width="100%"
+                  height="100%"
+                  style={{ border: 0 }}
+                  allowFullScreen=""
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  className="w-full h-full filter saturate-105"
+                />
+              </div>
+            </div>
+          </div>
+        </section>
       </main>
 
       <Footer onOpenConsultation={() => setModalOpen(true)} />
