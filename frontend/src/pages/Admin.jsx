@@ -27,7 +27,7 @@ import {
 import { useContent } from '../context/ContentContext';
 import apiFetch from '../api/apiClient';
 
-const Admin = () => {
+const Admin = ({ onLogout }) => {
   const { content, updateContent, resetContent } = useContent();
   const navigate = useNavigate();
 
@@ -35,14 +35,22 @@ const Admin = () => {
   useEffect(() => {
     const token = localStorage.getItem('adminToken');
     if (!token) {
-      navigate('/backoffice');
+      if (onLogout) {
+        onLogout();
+      } else {
+        navigate('/backoffice');
+      }
     }
-  }, [navigate]);
+  }, [navigate, onLogout]);
 
   const handleLogout = () => {
     localStorage.removeItem('adminToken');
     localStorage.removeItem('adminUser');
-    navigate('/backoffice');
+    if (onLogout) {
+      onLogout();
+    } else {
+      navigate('/backoffice');
+    }
   };
 
   const [activeTab, setActiveTab] = useState('leads');
@@ -68,9 +76,13 @@ const Admin = () => {
 
   // Fetch leads
   const fetchLeads = async () => {
+    const token = localStorage.getItem('adminToken');
+    if (!token) return;
     setLeadsLoading(true);
     try {
-      const res = await apiFetch('/leads');
+      const res = await apiFetch('/leads', {
+        signal: AbortSignal.timeout(4000),
+      });
       const data = await res.json();
       if (res.ok && data.data) {
         setLeads(data.data);
@@ -169,7 +181,7 @@ const Admin = () => {
             </div>
             <div>
               <div className="font-extrabold text-base tracking-tight flex items-center gap-2">
-                Tezscale <span className="text-blue-400">Admin Portal</span>
+                Tezscale <span className="text-blue-400">Backoffice</span>
                 <span className="text-[10px] font-semibold bg-blue-500/30 text-blue-300 px-2 py-0.5 rounded-full border border-blue-400/30">
                   Live Control
                 </span>

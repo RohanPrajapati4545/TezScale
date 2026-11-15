@@ -167,17 +167,19 @@ export const defaultSiteContent = {
 
 export const ContentProvider = ({ children }) => {
   const [content, setContent] = useState(defaultSiteContent);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const fetchContent = async () => {
     try {
-      const res = await apiFetch('/content');
+      const res = await apiFetch('/content', {
+        signal: AbortSignal.timeout(3000),
+      });
       const data = await res.json();
       if (res.ok && data.data) {
         setContent(data.data);
       }
     } catch (err) {
-      console.warn('Using default content:', err);
+      // Retain instant default content without blocking
     } finally {
       setLoading(false);
     }

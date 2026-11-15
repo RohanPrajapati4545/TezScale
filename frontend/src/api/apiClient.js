@@ -41,7 +41,21 @@ export const apiFetch = async (endpoint, options = {}) => {
   const cleanEndpoint = endpoint.startsWith('/') ? endpoint : `/${endpoint}`;
   const cleanBase = base.endsWith('/') ? base.slice(0, -1) : base;
   const url = `${cleanBase}${cleanEndpoint}`;
-  return fetch(url, options);
+
+  // Default timeout of 6 seconds if no custom signal is provided
+  const hasCustomSignal = Boolean(options.signal);
+  const controller = hasCustomSignal ? null : new AbortController();
+  const timeoutId = controller ? setTimeout(() => controller.abort(), 6000) : null;
+  const signal = options.signal || controller?.signal;
+
+  try {
+    const res = await fetch(url, { ...options, signal });
+    if (timeoutId) clearTimeout(timeoutId);
+    return res;
+  } catch (err) {
+    if (timeoutId) clearTimeout(timeoutId);
+    throw err;
+  }
 };
 
 export default apiFetch;

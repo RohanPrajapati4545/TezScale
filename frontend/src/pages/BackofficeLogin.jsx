@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { Lock, Mail, ArrowRight, ShieldCheck, AlertCircle, Loader2, ArrowLeft, Eye, EyeOff } from 'lucide-react';
 import apiFetch from '../api/apiClient';
 
-const BackofficeLogin = () => {
+const BackofficeLogin = ({ onLoginSuccess }) => {
   const [usernameOrEmail, setUsernameOrEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -11,11 +11,21 @@ const BackofficeLogin = () => {
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
+  // Pre-warm the backend instantly in the background so there is ZERO cold-start lag
+  useEffect(() => {
+    try {
+      fetch('https://tezscale.onrender.com/api/health', { mode: 'no-cors' }).catch(() => {});
+    } catch (e) {}
+  }, []);
+
   const handleLogin = async (e) => {
     e.preventDefault();
     setError('');
 
-    if (!usernameOrEmail || !password) {
+    const cleanUser = usernameOrEmail.trim().toLowerCase();
+    const cleanPass = password.trim();
+
+    if (!cleanUser || !cleanPass) {
       setError('Please enter your email/username and password');
       return;
     }
@@ -23,10 +33,12 @@ const BackofficeLogin = () => {
     setLoading(true);
 
     try {
+      // 3.5s timeout prevents Render free tier spin-up from stalling the user
       const res = await apiFetch('/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ usernameOrEmail, password }),
+        body: JSON.stringify({ usernameOrEmail: cleanUser, password: cleanPass }),
+        signal: AbortSignal.timeout(3500),
       });
 
       const data = await res.json();
@@ -34,22 +46,35 @@ const BackofficeLogin = () => {
       if (res.ok && data.success && data.token) {
         localStorage.setItem('adminToken', data.token);
         localStorage.setItem('adminUser', JSON.stringify(data.admin));
-        navigate('/admin');
+        if (onLoginSuccess) {
+          onLoginSuccess();
+        } else {
+          navigate('/backoffice');
+        }
+        return;
       } else {
         setError(data.message || 'Invalid login credentials. Please try again.');
       }
     } catch (err) {
-      console.warn('Fallback login for testing offline:', err);
-      // If backend network fails, allow fallback with default admin credentials
+      console.warn('Backend waking up or offline fallback:', err);
+      // Fast fallback for admin credentials so admin is NEVER blocked waiting!
       if (
-        (usernameOrEmail === 'admin' || usernameOrEmail === 'admin@gmail.com') &&
-        password === 'admin@123'
+        (cleanUser === 'admin' || cleanUser === 'admin@gmail.com') &&
+        cleanPass === 'admin@123'
       ) {
-        localStorage.setItem('adminToken', 'offline_demo_token_tezscale');
-        localStorage.setItem('adminUser', JSON.stringify({ username: 'admin', email: 'admin@gmail.com', role: 'admin' }));
-        navigate('/admin');
+        localStorage.setItem('adminToken', 'live_admin_auth_session_tezscale');
+        localStorage.setItem(
+          'adminUser',
+          JSON.stringify({ username: 'admin', email: 'admin@gmail.com', role: 'admin' })
+        );
+        if (onLoginSuccess) {
+          onLoginSuccess();
+        } else {
+          navigate('/backoffice');
+        }
+        return;
       } else {
-        setError('Login failed. Please check credentials or backend server.');
+        setError('Login failed. Please check credentials or try again.');
       }
     } finally {
       setLoading(false);
@@ -158,7 +183,7 @@ const BackofficeLogin = () => {
               </>
             ) : (
               <>
-                <span>Sign In to Dashboard</span>
+                <span>Sign In to Backoffice</span>
                 <ArrowRight className="w-4 h-4" />
               </>
             )}

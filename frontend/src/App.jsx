@@ -10,6 +10,7 @@ import TestimonialsPage from './pages/TestimonialsPage';
 import ContactPage from './pages/ContactPage';
 import Admin from './pages/Admin';
 import BackofficeLogin from './pages/BackofficeLogin';
+import Backoffice from './pages/Backoffice';
 import './App.css';
 
 function App() {
@@ -25,8 +26,8 @@ function App() {
             <Route path="/portfolio" element={<PortfolioPage />} />
             <Route path="/testimonials" element={<TestimonialsPage />} />
             <Route path="/contact" element={<ContactPage />} />
-            <Route path="/backoffice" element={<BackofficeLogin />} />
-            <Route path="/admin" element={<Admin />} />
+            <Route path="/backoffice" element={<Backoffice />} />
+            <Route path="/admin" element={<Navigate to="/backoffice" replace />} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </div>
