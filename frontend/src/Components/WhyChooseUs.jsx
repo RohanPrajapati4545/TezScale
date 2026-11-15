@@ -51,11 +51,13 @@ const WhyChooseUs = ({ onOpenConsultation }) => {
           
           {/* Left Visual: Marketer photo with floating badges */}
           <div className="lg:col-span-5 relative flex justify-center">
-            <div className="relative w-full max-w-sm rounded-3xl overflow-hidden shadow-2xl border-4 border-white bg-blue-100">
+            <div className="relative w-full max-w-sm rounded-3xl overflow-hidden shadow-2xl border-4 border-white bg-slate-100">
               <img
-                src="https://images.unsplash.com/photo-1556157382-97eda2d62296?auto=format&fit=crop&w=700&q=80"
-                alt="Entrepreneur at laptop"
-                className="w-full h-80 sm:h-96 object-cover object-top hover:scale-105 transition-transform duration-500"
+                src="/tezscale-founder.jpg"
+                alt="TezScale Digital Growth Specialist"
+                className="w-full h-80 sm:h-96 md:h-[420px] object-cover object-top hover:scale-105 transition-transform duration-500"
+                loading="lazy"
+                decoding="async"
               />
 
               {/* Stationary Badge 1: Your Growth Our Priority */}

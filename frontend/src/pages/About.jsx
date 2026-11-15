@@ -304,7 +304,7 @@ const About = () => {
                   name: 'Aarav Singhania',
                   role: 'Founder & Chief Growth Officer',
                   bio: 'Strategic advisor to 200+ high-growth B2B firms. Specializes in scalable inbound funnels and predictable revenue systems.',
-                  image: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80',
+                  image: '/tezscale-founder.jpg',
                   badge: 'Growth Strategy',
                 },
                 {
