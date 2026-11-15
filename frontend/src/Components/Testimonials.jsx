@@ -75,8 +75,10 @@ const Testimonials = ({ onOpenConsultation }) => {
               <div className="flex items-center gap-3.5">
                 <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-[#00A3E0] shadow-2xs bg-[#e0f4ff]">
                   <img
-                    src={current.avatar || 'https://images.unsplash.com/photo-1594824813589-9a25b1641ba5?auto=format&fit=crop&w=150&q=80'}
+                    src={current.avatar || 'https://images.unsplash.com/photo-1594824813589-9a25b1641ba5?auto=format&fit=crop&w=150&q=75'}
                     alt={current.name}
+                    loading="lazy"
+                    decoding="async"
                     className="w-full h-full object-cover"
                     onError={(e) => {
                       e.currentTarget.style.display = 'none';

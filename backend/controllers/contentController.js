@@ -162,25 +162,45 @@ export const defaultContent = {
   },
 };
 
+// High-Speed In-Memory Cache (0ms DB Latency for GET requests)
+let cachedContent = null;
+let lastCacheTime = 0;
+const CACHE_TTL_MS = 60 * 1000; // 1 minute in memory
+
 // @desc    Get active site content (auto-seed if empty or reset)
 export const getContent = async (req, res) => {
   try {
+    const now = Date.now();
+    if (cachedContent && now - lastCacheTime < CACHE_TTL_MS) {
+      res.set('Cache-Control', 'public, max-age=60, s-maxage=300, stale-while-revalidate=86400');
+      return res.status(200).json({
+        success: true,
+        data: cachedContent,
+        cached: true,
+      });
+    }
+
     let content = await SiteContent.findOne();
     if (!content) {
       content = await SiteContent.create(defaultContent);
       console.log('🌱 Seeded TezScale specification content into MongoDB');
     }
 
+    cachedContent = content;
+    lastCacheTime = now;
+
+    res.set('Cache-Control', 'public, max-age=60, s-maxage=300, stale-while-revalidate=86400');
     res.status(200).json({
       success: true,
       data: content,
     });
   } catch (error) {
     console.error('Error fetching site content:', error);
-    res.status(500).json({
-      success: false,
-      message: 'Failed to fetch site content',
-      error: error.message,
+    // If DB fails, instantly return fallback default content
+    res.status(200).json({
+      success: true,
+      data: defaultContent,
+      fallback: true,
     });
   }
 };
@@ -199,6 +219,8 @@ export const updateContent = async (req, res) => {
     });
 
     await content.save();
+    cachedContent = content;
+    lastCacheTime = Date.now();
 
     res.status(200).json({
       success: true,
@@ -220,6 +242,8 @@ export const resetContent = async (req, res) => {
   try {
     await SiteContent.deleteMany({});
     const content = await SiteContent.create(defaultContent);
+    cachedContent = content;
+    lastCacheTime = Date.now();
 
     res.status(200).json({
       success: true,

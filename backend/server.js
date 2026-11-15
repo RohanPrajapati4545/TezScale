@@ -1,5 +1,6 @@
 import express from 'express';
 import cors from 'cors';
+import compression from 'compression';
 import dotenv from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -49,6 +50,7 @@ connectDB().then(() => {
 });
 
 // Middlewares
+app.use(compression());
 app.use(
   cors({
     origin: '*',

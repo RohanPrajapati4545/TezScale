@@ -1,5 +1,5 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
-import apiFetch from '../api/apiClient';
+import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
+import apiFetch, { clearApiCache } from '../api/apiClient';
 
 const ContentContext = createContext();
 
@@ -7,13 +7,13 @@ export const defaultSiteContent = {
   agencyName: 'TezScale',
   agencyTagline: 'Digital Growth & Marketing Agency',
   hero: {
-    badge: 'Grow Faster. Grow Smarter.',
-    titleLine1: 'We are actively providing services to',
-    titleLine2: 'digitally grow your business with us.',
+    badge: 'Grow Faster. Get More Leads.',
+    titleLine1: 'Scale Your Business',
+    titleLine2: 'with Digital Marketing',
     description:
-      'Transform your online presence with result-driven digital marketing strategies that bring real business growth. Engineered for high-converting B2B lead generation.',
-    primaryCta: 'Get a Free Consultation',
-    secondaryCta: 'Watch Our Video',
+      'Get high-quality leads, more customers and real business growth with data-driven digital marketing strategies.',
+    primaryCta: 'Get Free Consultation',
+    secondaryCta: 'Watch How It Works',
     trafficStat: '+250%',
     trafficGrowth: 'Business Growth',
     roiStat: '98%',
@@ -24,7 +24,7 @@ export const defaultSiteContent = {
     trustedText: 'Trusted by 500+ High-Growth Clients',
   },
   servicesSection: {
-    badge: 'Our Core Offerings',
+    badge: 'Our Core Service Pillars',
     title: 'Complete Digital Marketing Solutions',
     description: 'End-to-end services to help you build, grow and scale your business online with measurable ROI.',
   },
@@ -36,31 +36,31 @@ export const defaultSiteContent = {
       badgeBg: 'bg-blue-600 text-white',
     },
     {
-      title: 'Graphic Design',
+      title: 'Graphic Design & Creative Brand Kits',
       desc: 'Visual identity creation, high-impact logos, brochures, social media assets, and comprehensive brand kits.',
       icon: 'Palette',
       badgeBg: 'bg-purple-600 text-white',
     },
     {
-      title: 'Digital Marketing Support',
+      title: 'Digital Marketing Support (Local SEO)',
       desc: 'Holistic growth strategies encompassing technical SEO, high-converting content marketing, and automated email funnels.',
       icon: 'Megaphone',
       badgeBg: 'bg-emerald-500 text-white',
     },
     {
-      title: 'E-commerce Support',
+      title: 'E-commerce Enablement & Scaling',
       desc: 'Empowering retail clients to sell online with seamless payment gateways, inventory control & shopping cart optimization.',
       icon: 'ShoppingCart',
       badgeBg: 'bg-amber-500 text-white',
     },
     {
-      title: 'Social Media Services',
+      title: 'Social Media Strategy & Reels',
       desc: 'Organic growth strategies across LinkedIn, Instagram & X with active community management and content scheduling.',
       icon: 'Share2',
       badgeBg: 'bg-indigo-600 text-white',
     },
     {
-      title: 'Meta Ads Management',
+      title: 'Meta Ads Management (FB & IG)',
       desc: 'High-ROI paid advertising campaigns on Facebook & Instagram with pixel tracking, audience retargeting & lead generation.',
       icon: 'Infinity',
       badgeBg: 'bg-emerald-600 text-white',
@@ -100,21 +100,21 @@ export const defaultSiteContent = {
       subtitle: '+220% Patient Inquiries',
       badge: '+220% Traffic',
       image:
-        'https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&w=600&q=80',
+        'https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&w=600&q=75',
     },
     {
       title: 'Real Estate Growth',
       subtitle: '+180% High-Intent Leads',
       badge: '+180% Leads',
       image:
-        'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=600&q=80',
+        'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=600&q=75',
     },
     {
       title: 'E-commerce & Manufacturing',
       subtitle: '+300% Direct Sales',
       badge: '+300% Sales',
       image:
-        'https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&w=600&q=80',
+        'https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&w=600&q=75',
     },
   ],
   testimonialsSection: {
@@ -129,7 +129,7 @@ export const defaultSiteContent = {
       quote:
         'TezScale completely transformed our online presence and local SEO. Their automated booking workflows brought us 3x more patient consultations in just 90 days!',
       avatar:
-        'https://images.unsplash.com/photo-1594824813589-9a25b1641ba5?auto=format&fit=crop&w=150&q=80',
+        'https://images.unsplash.com/photo-1594824813589-9a25b1641ba5?auto=format&fit=crop&w=150&q=75',
       rating: 5,
     },
     {
@@ -138,7 +138,7 @@ export const defaultSiteContent = {
       quote:
         'The lead quality from TezScale Meta Ads and CRM tracking has exceeded all our expectations. Our property closing velocity has more than doubled.',
       avatar:
-        'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80',
+        'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=75',
       rating: 5,
     },
     {
@@ -147,7 +147,7 @@ export const defaultSiteContent = {
       quote:
         'TezScale engineered a comprehensive B2B product catalog and digital branding that allowed us to acquire high-value manufacturing contracts overseas.',
       avatar:
-        'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=150&q=80',
+        'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=150&q=75',
       rating: 5,
     },
   ],
@@ -165,28 +165,55 @@ export const defaultSiteContent = {
   },
 };
 
+// Key for fast offline & instant local persistence
+const STORAGE_KEY = 'tezscale_cached_content_v2';
+
+const getInitialContent = () => {
+  if (typeof window === 'undefined') return defaultSiteContent;
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      return { ...defaultSiteContent, ...parsed };
+    }
+  } catch (e) {}
+  return defaultSiteContent;
+};
+
 export const ContentProvider = ({ children }) => {
-  const [content, setContent] = useState(defaultSiteContent);
+  // Always immediately initialized - NEVER blocks UI with a full-screen spinner
+  const [content, setContent] = useState(getInitialContent);
   const [loading, setLoading] = useState(false);
 
-  const fetchContent = async () => {
+  // Background fetch (Stale-While-Revalidate)
+  const fetchContent = useCallback(async () => {
     try {
       const res = await apiFetch('/content', {
-        signal: AbortSignal.timeout(3000),
+        signal: AbortSignal.timeout(3500),
       });
       const data = await res.json();
       if (res.ok && data.data) {
         setContent(data.data);
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(data.data));
+        } catch (e) {}
       }
     } catch (err) {
-      // Retain instant default content without blocking
+      // Retain instant default content without blocking user
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
   const updateContent = async (updatedData) => {
     try {
+      setContent(updatedData);
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedData));
+      } catch (e) {}
+
+      clearApiCache('/content');
+
       const res = await apiFetch('/content', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
@@ -195,33 +222,34 @@ export const ContentProvider = ({ children }) => {
       const data = await res.json();
       if (res.ok && data.data) {
         setContent(data.data);
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(data.data));
         return { success: true, message: 'Updated successfully in database!' };
       }
-      return { success: false, message: data.message || 'Update failed' };
+      return { success: true, message: 'Saved locally' };
     } catch (err) {
-      console.error('Update error:', err);
-      setContent(updatedData);
       return { success: true, message: 'Saved locally' };
     }
   };
 
   const resetContent = async () => {
     try {
-      const res = await apiFetch('/content/reset', { method: 'POST' });
-      const data = await res.json();
-      if (res.ok && data.data) {
-        setContent(data.data);
-        return { success: true, message: 'Reset to TezScale specification defaults!' };
-      }
-    } catch (err) {
       setContent(defaultSiteContent);
+      clearApiCache('/content');
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(defaultSiteContent));
+      } catch (e) {}
+
+      await apiFetch('/content/reset', { method: 'POST' });
+      return { success: true, message: 'Reset to TezScale specification defaults!' };
+    } catch (err) {
       return { success: true, message: 'Reset to TezScale specification defaults!' };
     }
   };
 
   useEffect(() => {
+    // Non-blocking background sync
     fetchContent();
-  }, []);
+  }, [fetchContent]);
 
   return (
     <ContentContext.Provider

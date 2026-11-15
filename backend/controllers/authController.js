@@ -22,22 +22,20 @@ export const loginAdmin = async (req, res) => {
       });
     }
 
-    // Ensure default admin (admin@gmail.com / admin@123) exists in DB
-    let primaryAdmin = await Admin.findOne({ email: 'admin@gmail.com' });
-    if (!primaryAdmin) {
-      primaryAdmin = await Admin.create({
+    // Fast single-query lookup by username or email
+    const query = usernameOrEmail.toLowerCase().trim();
+    let admin = await Admin.findOne({
+      $or: [{ email: query }, { username: query }],
+    });
+
+    // Lazy fallback create if initial seed hadn't completed
+    if (!admin && (query === 'admin' || query === 'admin@gmail.com')) {
+      admin = await Admin.create({
         username: 'admin',
         email: 'admin@gmail.com',
         password: 'admin@123',
       });
-      console.log('👤 Admin account seeded in DB: admin@gmail.com / admin@123');
     }
-
-    // Search by username or email
-    const query = usernameOrEmail.toLowerCase().trim();
-    const admin = await Admin.findOne({
-      $or: [{ email: query }, { username: query }],
-    });
 
     if (admin && (await admin.matchPassword(password))) {
       const token = generateToken(admin._id);

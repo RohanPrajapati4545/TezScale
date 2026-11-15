@@ -114,9 +114,11 @@ const OurWork = ({ onOpenConsultation }) => {
                 <img
                   src={
                     study.image ||
-                    'https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&w=600&q=80'
+                    'https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&w=600&q=75'
                   }
                   alt={study.title}
+                  loading="lazy"
+                  decoding="async"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
               </div>
