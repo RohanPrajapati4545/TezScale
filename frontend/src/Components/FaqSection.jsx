@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { ChevronDown, HelpCircle, ArrowRight } from 'lucide-react';
+import AnimatedContent from './AnimatedContent';
 
 const faqs = [
   {
@@ -32,25 +33,41 @@ const FaqSection = ({ onOpenConsultation }) => {
   };
 
   return (
-    <section id="faq" className="py-24 bg-white border-t border-slate-100">
+    <section id="faq" className="py-24 bg-white border-t border-slate-100 scroll-mt-24">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-left">
         
         {/* Header */}
-        <div className="text-center space-y-3 mb-14">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#e0f4ff] border border-[#00A3E0]/30 text-[#007ba8] text-xs font-bold tracking-wide shadow-2xs">
-            <HelpCircle className="w-3.5 h-3.5 text-[#00A3E0]" />
-            <span>Got Questions?</span>
+        <AnimatedContent
+          distance={50}
+          direction="vertical"
+          duration={0.8}
+          ease="power3.out"
+          threshold={0.15}
+        >
+          <div className="text-center space-y-3 mb-14">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#e0f4ff] border border-[#00A3E0]/30 text-[#007ba8] text-xs font-bold tracking-wide shadow-2xs">
+              <HelpCircle className="w-3.5 h-3.5 text-[#00A3E0]" />
+              <span>Got Questions?</span>
+            </div>
+            <h2 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">
+              Frequently Asked <span className="text-[#00A3E0]">Questions</span>
+            </h2>
+            <p className="text-slate-500 text-sm max-w-xl mx-auto">
+              Everything you need to know about partnering with TezScale for your digital growth.
+            </p>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">
-            Frequently Asked <span className="text-[#00A3E0]">Questions</span>
-          </h2>
-          <p className="text-slate-500 text-sm max-w-xl mx-auto">
-            Everything you need to know about partnering with TezScale for your digital growth.
-          </p>
-        </div>
+        </AnimatedContent>
 
         {/* Accordion list with Drone-style smoothness */}
-        <div className="space-y-3.5">
+        <AnimatedContent
+          distance={60}
+          direction="vertical"
+          duration={0.7}
+          ease="power3.out"
+          stagger={0.08}
+          threshold={0.12}
+          className="space-y-3.5"
+        >
           {faqs.map((faq, idx) => {
             const isOpen = openIndex === idx;
             return (
@@ -86,22 +103,30 @@ const FaqSection = ({ onOpenConsultation }) => {
               </div>
             );
           })}
-        </div>
+        </AnimatedContent>
 
         {/* Bottom prompt */}
-        <div className="mt-10 p-6 rounded-2xl bg-slate-50 border border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
-          <div>
-            <div className="font-bold text-slate-900 text-sm">Have a unique business requirement?</div>
-            <div className="text-xs text-slate-500">Speak directly with our senior strategy consultant.</div>
+        <AnimatedContent
+          distance={40}
+          direction="vertical"
+          duration={0.7}
+          delay={0.2}
+          threshold={0.1}
+        >
+          <div className="mt-10 p-6 rounded-2xl bg-slate-50 border border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
+            <div>
+              <div className="font-bold text-slate-900 text-sm">Have a unique business requirement?</div>
+              <div className="text-xs text-slate-500">Speak directly with our senior strategy consultant.</div>
+            </div>
+            <button
+              onClick={onOpenConsultation}
+              className="btn-drone-primary py-2.5 px-5"
+            >
+              <span>Book Strategy Call</span>
+              <ArrowRight className="w-3.5 h-3.5 ml-1" />
+            </button>
           </div>
-          <button
-            onClick={onOpenConsultation}
-            className="btn-drone-primary py-2.5 px-5"
-          >
-            <span>Book Strategy Call</span>
-            <ArrowRight className="w-3.5 h-3.5 ml-1" />
-          </button>
-        </div>
+        </AnimatedContent>
 
       </div>
     </section>

@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import Navbar from '../Components/Navbar';
 import Footer from '../Components/Footer';
 import ConsultationModal from '../Components/ConsultationModal';
 import AnimatedCounter from '../Components/AnimatedCounter';
+import AnimatedContent from '../Components/AnimatedContent';
 import {
   ShieldCheck,
   Target,
@@ -72,58 +73,119 @@ const pillars = [
 
 const About = () => {
   const [modalOpen, setModalOpen] = useState(false);
+  const videoRef = useRef(null);
   const { content } = useContent();
   const whyUs = content?.whyChooseUs || {};
+
+  // Ensure background video plays continuously across all browsers
+  useEffect(() => {
+    const video = videoRef.current;
+    if (video) {
+      video.muted = true;
+      video.defaultMuted = true;
+      const playVideo = () => {
+        const promise = video.play();
+        if (promise !== undefined) {
+          promise.catch(() => {});
+        }
+      };
+      playVideo();
+      video.addEventListener('ended', playVideo);
+      return () => video.removeEventListener('ended', playVideo);
+    }
+  }, []);
+
+  // Auto-open modal on first-time visit
+  useEffect(() => {
+    try {
+      const hasSeenModal = sessionStorage.getItem('tezscale_first_visit_modal');
+      if (!hasSeenModal) {
+        const timer = setTimeout(() => {
+          setModalOpen(true);
+          sessionStorage.setItem('tezscale_first_visit_modal', 'true');
+        }, 1200);
+        return () => clearTimeout(timer);
+      }
+    } catch (e) {
+      // ignore
+    }
+  }, []);
 
   return (
     <div className="min-h-screen flex flex-col bg-white text-slate-800 font-sans antialiased selection:bg-blue-600 selection:text-white">
       <Navbar onOpenConsultation={() => setModalOpen(true)} />
 
       <main className="flex-1">
-        {/* Hero Section */}
-        <section className="pt-20 sm:pt-24 pb-16 bg-gradient-to-br from-[#ebf5ff] via-[#f7fbff] to-white border-b border-slate-100 relative overflow-hidden">
-          <div className="absolute top-10 right-10 w-96 h-96 bg-[#00A3E0]/10 rounded-full blur-3xl pointer-events-none" />
+        {/* Hero Section with Live Background Video */}
+        <section className="relative pt-24 sm:pt-28 lg:pt-32 pb-20 sm:pb-24 overflow-hidden bg-slate-950 border-b border-slate-800 text-white">
+          {/* Background Video */}
+          <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
+            <video
+              ref={videoRef}
+              autoPlay
+              loop
+              muted
+              playsInline
+              preload="auto"
+              className="w-full h-full object-cover opacity-75 sm:opacity-80 scale-105"
+            >
+              <source src="/page-hero-video.mp4" type="video/mp4" />
+              <source src="/services-hero-video.mp4" type="video/mp4" />
+              <source src="/tezscale-hero-video-full.mp4" type="video/mp4" />
+            </video>
+            <div className="absolute inset-0 bg-gradient-to-b from-slate-950/85 via-slate-950/50 to-slate-950/95 pointer-events-none" />
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-[#00A3E0]/15 via-transparent to-transparent pointer-events-none" />
+          </div>
+
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6 relative z-10">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/95 border border-sky-200 text-[#00A3E0] text-xs font-bold tracking-wide shadow-2xs">
-              <Sparkles className="w-3.5 h-3.5 text-[#00A3E0]" />
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-sky-400/30 text-sky-300 text-xs font-bold tracking-wide shadow-sm">
+              <span className="w-2 h-2 rounded-full bg-[#00A3E0] animate-pulse" />
               <span>About TezScale</span>
             </div>
 
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-slate-900 tracking-tight leading-tight max-w-4xl mx-auto">
+            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-[1.15] max-w-4xl mx-auto">
               Engineering Predictable <span className="text-[#00A3E0]">Digital Growth</span> for Modern Enterprises
             </h1>
 
-            <p className="text-slate-600 text-lg sm:text-xl max-w-2xl mx-auto leading-relaxed">
+            <p className="text-slate-200 text-sm sm:text-base lg:text-lg max-w-2xl mx-auto leading-relaxed font-normal">
               We are a full-service digital marketing and tech acceleration partner helping clinics, real estate brokers, B2B exporters, and retailers dominate their markets.
             </p>
 
-            {/* Quick Metrics Banner (Oliveflex Style Animated Count-Up) */}
-            <div className="pt-6 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
-              <div className="p-5 rounded-2xl bg-white border border-slate-200/80 shadow-2xs text-center card-lift">
-                <div className="text-3xl font-black text-[#00A3E0]">
+            {/* Quick Metrics Banner */}
+            <AnimatedContent
+              distance={50}
+              direction="vertical"
+              duration={0.8}
+              ease="power3.out"
+              stagger={0.1}
+              threshold={0.15}
+              className="pt-6 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto"
+            >
+              <div className="p-5 rounded-2xl bg-white/10 backdrop-blur-md border border-white/15 text-center card-lift">
+                <div className="text-3xl font-black text-[#38bdf8]">
                   <AnimatedCounter value="250%" duration={1400} />
                 </div>
-                <div className="text-xs font-semibold text-slate-500 mt-1">Average ROI Growth</div>
+                <div className="text-xs font-semibold text-slate-300 mt-1">Average ROI Growth</div>
               </div>
-              <div className="p-5 rounded-2xl bg-white border border-slate-200/80 shadow-2xs text-center card-lift">
-                <div className="text-3xl font-black text-emerald-600">
+              <div className="p-5 rounded-2xl bg-white/10 backdrop-blur-md border border-white/15 text-center card-lift">
+                <div className="text-3xl font-black text-emerald-400">
                   <AnimatedCounter value="500+" duration={1500} />
                 </div>
-                <div className="text-xs font-semibold text-slate-500 mt-1">Happy Clients</div>
+                <div className="text-xs font-semibold text-slate-300 mt-1">Happy Clients</div>
               </div>
-              <div className="p-5 rounded-2xl bg-white border border-slate-200/80 shadow-2xs text-center card-lift">
-                <div className="text-3xl font-black text-indigo-600">
+              <div className="p-5 rounded-2xl bg-white/10 backdrop-blur-md border border-white/15 text-center card-lift">
+                <div className="text-3xl font-black text-indigo-400">
                   <AnimatedCounter value="5+" duration={1200} />
                 </div>
-                <div className="text-xs font-semibold text-slate-500 mt-1">Years Experience</div>
+                <div className="text-xs font-semibold text-slate-300 mt-1">Years Experience</div>
               </div>
-              <div className="p-5 rounded-2xl bg-white border border-slate-200/80 shadow-xs text-center card-lift">
-                <div className="text-3xl font-black text-amber-500">
+              <div className="p-5 rounded-2xl bg-white/10 backdrop-blur-md border border-white/15 text-center card-lift">
+                <div className="text-3xl font-black text-amber-400">
                   <AnimatedCounter value="98%" duration={1300} />
                 </div>
-                <div className="text-xs font-semibold text-slate-500 mt-1">Client Retention Rate</div>
+                <div className="text-xs font-semibold text-slate-300 mt-1">Client Retention Rate</div>
               </div>
-            </div>
+            </AnimatedContent>
           </div>
         </section>
 
@@ -229,7 +291,15 @@ const About = () => {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <AnimatedContent
+              distance={70}
+              direction="vertical"
+              duration={0.8}
+              ease="power3.out"
+              stagger={0.12}
+              threshold={0.12}
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
+            >
               {steps.map((st) => (
                 <div
                   key={st.step}
@@ -253,7 +323,7 @@ const About = () => {
                   </div>
                 </div>
               ))}
-            </div>
+            </AnimatedContent>
           </div>
         </section>
 
@@ -269,7 +339,15 @@ const About = () => {
               </h2>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <AnimatedContent
+              distance={70}
+              direction="vertical"
+              duration={0.8}
+              ease="power3.out"
+              stagger={0.12}
+              threshold={0.12}
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
+            >
               {pillars.map((pil, idx) => (
                 <div key={idx} className="bg-slate-50/60 p-6 rounded-3xl border border-slate-200/80 card-lift">
                   <div className="w-12 h-12 rounded-2xl bg-white border border-slate-200 flex items-center justify-center shadow-xs mb-4">
@@ -279,7 +357,7 @@ const About = () => {
                   <p className="text-xs text-slate-600 leading-relaxed">{pil.desc}</p>
                 </div>
               ))}
-            </div>
+            </AnimatedContent>
           </div>
         </section>
 
@@ -298,7 +376,15 @@ const About = () => {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <AnimatedContent
+              distance={70}
+              direction="vertical"
+              duration={0.8}
+              ease="power3.out"
+              stagger={0.12}
+              threshold={0.12}
+              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
+            >
               {[
                 {
                   name: 'Aarav Singhania',
@@ -361,7 +447,7 @@ const About = () => {
                   </div>
                 </div>
               ))}
-            </div>
+            </AnimatedContent>
           </div>
         </section>
 

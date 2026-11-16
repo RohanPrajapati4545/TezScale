@@ -11,7 +11,7 @@ import {
   Share2, 
   Infinity as InfinityIcon
 } from 'lucide-react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 const servicesDropdownList = [
   {
@@ -57,9 +57,12 @@ const Navbar = ({ onOpenConsultation }) => {
   const [servicesDropdownOpen, setServicesDropdownOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
   const dropdownTimeoutRef = useRef(null);
 
-  // Smooth scroll listener: completely transparent at 0% scroll, smoothly transitions to white when scrolling down
+  const isHomePage = location.pathname === '/';
+
+  // Smooth scroll listener
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 20) {
@@ -91,13 +94,37 @@ const Navbar = ({ onOpenConsultation }) => {
     return location.pathname.startsWith(path);
   };
 
+  // Nav link color switcher: Dark on Home page, Light on all other pages (as requested)
+  const getNavLinkClass = (path) => {
+    const active = isActive(path);
+    if (isHomePage) {
+      return active
+        ? 'text-[#00A3E0] font-black'
+        : 'text-slate-900 font-bold hover:text-[#00A3E0]';
+    } else {
+      return active
+        ? 'text-[#38bdf8] font-black'
+        : 'text-slate-100 font-semibold hover:text-white';
+    }
+  };
+
+  const getUnderlineClass = () => (isHomePage ? 'bg-[#00A3E0]' : 'bg-[#38bdf8]');
+
+  // Cross-page and same-page smooth scroll to Home FAQs section
   const scrollToFaq = (e) => {
+    if (e) e.preventDefault();
+    setMobileMenuOpen(false);
+
     if (location.pathname === '/') {
-      e.preventDefault();
       const el = document.getElementById('faq');
       if (el) {
-        el.scrollIntoView({ behavior: 'smooth' });
+        const navHeight = 80;
+        const targetY = el.getBoundingClientRect().top + window.pageYOffset - navHeight;
+        window.scrollTo({ top: targetY, behavior: 'smooth' });
+        window.history.pushState(null, '', '/#faq');
       }
+    } else {
+      navigate('/#faq');
     }
   };
 
@@ -108,13 +135,15 @@ const Navbar = ({ onOpenConsultation }) => {
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-in-out ${
         isTransparent
           ? 'bg-transparent border-b border-transparent shadow-none'
-          : 'bg-white/95 backdrop-blur-md border-b border-slate-200/80 shadow-xs'
+          : isHomePage
+            ? 'bg-white/95 backdrop-blur-md border-b border-slate-200/80 shadow-xs'
+            : 'bg-slate-950/95 backdrop-blur-md border-b border-slate-800 shadow-md'
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-18 sm:h-20">
           
-          {/* TezScale Logo (Matching Reference Design) */}
+          {/* TezScale Logo */}
           <Link to="/" className="flex items-center gap-2.5 sm:gap-3 cursor-pointer group">
             <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-gradient-to-tr from-[#00A3E0] to-[#38bdf8] flex items-center justify-center text-white shadow-md shadow-[#00A3E0]/25 group-hover:scale-105 transition-transform duration-300">
               <svg className="w-4 h-4 sm:w-5 sm:h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -124,28 +153,30 @@ const Navbar = ({ onOpenConsultation }) => {
               </svg>
             </div>
             <div className="text-left">
-              <div className="text-lg sm:text-2xl font-black text-slate-900 tracking-tight leading-none uppercase">
+              <div className={`text-lg sm:text-2xl font-black tracking-tight leading-none uppercase ${
+                isHomePage ? 'text-slate-900' : 'text-white'
+              }`}>
                 TEZ<span className="text-[#00A3E0]">SCALE</span>
               </div>
-              <div className="text-[8px] sm:text-[9px] uppercase tracking-widest text-slate-500 font-bold mt-0.5 sm:mt-1">
+              <div className={`text-[8px] sm:text-[9px] uppercase tracking-widest font-bold mt-0.5 sm:mt-1 ${
+                isHomePage ? 'text-slate-500' : 'text-slate-300'
+              }`}>
                 by DIGITAL GROWTH
               </div>
             </div>
           </Link>
 
-          {/* Navigation Links (Home, Services, About, Results, Testimonials, FAQs) */}
-          <nav className="hidden md:flex items-center gap-7 lg:gap-8 text-sm font-semibold tracking-normal">
+          {/* Navigation Links: Dark on Home, Light on all other pages */}
+          <nav className="hidden md:flex items-center gap-7 lg:gap-8 text-[15.5px] lg:text-base font-bold tracking-normal">
             
             {/* Home */}
             <Link
               to="/"
-              className={`relative py-1.5 transition-colors ${
-                isActive('/') ? 'text-[#00A3E0] font-bold' : 'text-slate-700 hover:text-[#00A3E0]'
-              }`}
+              className={`relative py-1.5 transition-colors ${getNavLinkClass('/')}`}
             >
               <span>Home</span>
               {isActive('/') && (
-                <span className="absolute -bottom-1 left-0 right-0 h-[2.5px] bg-[#00A3E0] rounded-full transition-all duration-300" />
+                <span className={`absolute -bottom-1 left-0 right-0 h-[3px] rounded-full transition-all duration-300 ${getUnderlineClass()}`} />
               )}
             </Link>
 
@@ -157,25 +188,25 @@ const Navbar = ({ onOpenConsultation }) => {
             >
               <Link
                 to="/services"
-                className={`relative py-1.5 flex items-center gap-1 transition-colors cursor-pointer ${
-                  isActive('/services') ? 'text-[#00A3E0] font-bold' : 'text-slate-700 hover:text-[#00A3E0]'
-                }`}
+                className={`relative py-1.5 flex items-center gap-1 transition-colors cursor-pointer ${getNavLinkClass('/services')}`}
               >
                 <span>Services</span>
                 <ChevronDown
-                  className={`w-3.5 h-3.5 transition-transform duration-300 ${
-                    servicesDropdownOpen ? 'rotate-180 text-[#00A3E0]' : 'text-slate-400'
+                  className={`w-4 h-4 transition-transform duration-300 ${
+                    servicesDropdownOpen
+                      ? (isHomePage ? 'rotate-180 text-[#00A3E0]' : 'rotate-180 text-[#38bdf8]')
+                      : (isHomePage ? 'text-slate-900' : 'text-slate-300')
                   }`}
                 />
                 {isActive('/services') && (
-                  <span className="absolute -bottom-1 left-0 right-0 h-[2.5px] bg-[#00A3E0] rounded-full transition-all duration-300" />
+                  <span className={`absolute -bottom-1 left-0 right-0 h-[3px] rounded-full transition-all duration-300 ${getUnderlineClass()}`} />
                 )}
               </Link>
 
-              {/* Animated Services Dropdown Menu */}
+              {/* Animated Services Dropdown Menu - Always Solid White */}
               {servicesDropdownOpen && (
                 <div className="absolute top-full -left-16 pt-2 w-[460px] z-50 anim-dropdown">
-                  <div className="bg-white rounded-xl shadow-2xl border border-slate-100 p-4 text-left overflow-hidden">
+                  <div className="bg-white rounded-xl shadow-2xl border border-slate-100 p-4 text-left overflow-hidden text-slate-800">
                     <div className="px-3 py-2 border-b border-slate-100 flex items-center justify-between mb-2">
                       <span className="text-[11px] font-extrabold uppercase tracking-wider text-slate-400">
                         Our Core Service Pillars
@@ -228,47 +259,45 @@ const Navbar = ({ onOpenConsultation }) => {
             {/* About */}
             <Link
               to="/about"
-              className={`relative py-1.5 transition-colors ${
-                isActive('/about') ? 'text-[#00A3E0] font-bold' : 'text-slate-700 hover:text-[#00A3E0]'
-              }`}
+              className={`relative py-1.5 transition-colors ${getNavLinkClass('/about')}`}
             >
               <span>About</span>
               {isActive('/about') && (
-                <span className="absolute -bottom-1 left-0 right-0 h-[2.5px] bg-[#00A3E0] rounded-full transition-all duration-300" />
+                <span className={`absolute -bottom-1 left-0 right-0 h-[3px] rounded-full transition-all duration-300 ${getUnderlineClass()}`} />
               )}
             </Link>
 
             {/* Results (Portfolio) */}
             <Link
               to="/portfolio"
-              className={`relative py-1.5 transition-colors ${
-                isActive('/portfolio') ? 'text-[#00A3E0] font-bold' : 'text-slate-700 hover:text-[#00A3E0]'
-              }`}
+              className={`relative py-1.5 transition-colors ${getNavLinkClass('/portfolio')}`}
             >
               <span>Results</span>
               {isActive('/portfolio') && (
-                <span className="absolute -bottom-1 left-0 right-0 h-[2.5px] bg-[#00A3E0] rounded-full transition-all duration-300" />
+                <span className={`absolute -bottom-1 left-0 right-0 h-[3px] rounded-full transition-all duration-300 ${getUnderlineClass()}`} />
               )}
             </Link>
 
             {/* Testimonials */}
             <Link
               to="/testimonials"
-              className={`relative py-1.5 transition-colors ${
-                isActive('/testimonials') ? 'text-[#00A3E0] font-bold' : 'text-slate-700 hover:text-[#00A3E0]'
-              }`}
+              className={`relative py-1.5 transition-colors ${getNavLinkClass('/testimonials')}`}
             >
               <span>Testimonials</span>
               {isActive('/testimonials') && (
-                <span className="absolute -bottom-1 left-0 right-0 h-[2.5px] bg-[#00A3E0] rounded-full transition-all duration-300" />
+                <span className={`absolute -bottom-1 left-0 right-0 h-[3px] rounded-full transition-all duration-300 ${getUnderlineClass()}`} />
               )}
             </Link>
 
-            {/* FAQs */}
+            {/* FAQs: Works from ANY page, scrolls to Home FAQs */}
             <Link
               to="/#faq"
               onClick={scrollToFaq}
-              className="relative py-1.5 transition-colors text-slate-700 hover:text-[#00A3E0]"
+              className={`relative py-1.5 transition-colors cursor-pointer ${
+                isHomePage
+                  ? 'text-slate-900 font-bold hover:text-[#00A3E0]'
+                  : 'text-slate-100 font-semibold hover:text-white'
+              }`}
             >
               <span>FAQs</span>
             </Link>
@@ -289,7 +318,11 @@ const Navbar = ({ onOpenConsultation }) => {
           <div className="flex md:hidden items-center gap-2">
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 rounded-lg text-slate-700 hover:text-[#00A3E0] hover:bg-white/80 focus:outline-none transition-colors"
+              className={`p-2 rounded-lg focus:outline-none transition-colors ${
+                isHomePage
+                  ? 'text-slate-700 hover:text-[#00A3E0] hover:bg-slate-100'
+                  : 'text-white hover:text-sky-300 hover:bg-white/10'
+              }`}
               aria-label="Toggle menu"
             >
               {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -301,7 +334,11 @@ const Navbar = ({ onOpenConsultation }) => {
 
       {/* Mobile Menu Dropdown */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-b border-slate-200 bg-white px-4 pt-3 pb-6 space-y-1.5 text-left shadow-xl anim-slow-slide">
+        <div className={`md:hidden border-b px-4 pt-3 pb-6 space-y-1.5 text-left shadow-xl anim-slow-slide ${
+          isHomePage
+            ? 'border-slate-200 bg-white'
+            : 'border-slate-800 bg-slate-950/98 backdrop-blur-xl'
+        }`}>
           {[
             { name: 'Home', path: '/' },
             { name: 'Services', path: '/services' },
@@ -310,7 +347,7 @@ const Navbar = ({ onOpenConsultation }) => {
             { name: 'Testimonials', path: '/testimonials' },
             { name: 'FAQs', path: '/#faq' },
           ].map((item) => {
-            const active = isActive(item.path);
+            const active = item.path === '/#faq' ? false : isActive(item.path);
             return (
               <Link
                 key={item.path}
@@ -318,13 +355,18 @@ const Navbar = ({ onOpenConsultation }) => {
                 onClick={(e) => {
                   if (item.path === '/#faq') {
                     scrollToFaq(e);
+                  } else {
+                    setMobileMenuOpen(false);
                   }
-                  setMobileMenuOpen(false);
                 }}
                 className={`block px-3.5 py-2.5 rounded-lg text-sm font-semibold transition-colors ${
-                  active
-                    ? 'text-[#00A3E0] font-bold bg-[#f0f9ff]'
-                    : 'text-slate-800 hover:bg-slate-50 hover:text-[#00A3E0]'
+                  isHomePage
+                    ? active
+                      ? 'text-[#00A3E0] font-bold bg-[#f0f9ff]'
+                      : 'text-slate-800 hover:bg-slate-50 hover:text-[#00A3E0]'
+                    : active
+                      ? 'text-[#38bdf8] font-bold bg-white/10'
+                      : 'text-slate-200 hover:bg-white/5 hover:text-white'
                 }`}
               >
                 {item.name}
@@ -332,7 +374,7 @@ const Navbar = ({ onOpenConsultation }) => {
             );
           })}
           
-          <div className="pt-2 border-t border-slate-100">
+          <div className={`pt-2 border-t ${isHomePage ? 'border-slate-100' : 'border-slate-800'}`}>
             <button
               onClick={() => {
                 setMobileMenuOpen(false);

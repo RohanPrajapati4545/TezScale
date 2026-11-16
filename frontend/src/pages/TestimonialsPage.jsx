@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import Navbar from '../Components/Navbar';
 import Footer from '../Components/Footer';
 import ConsultationModal from '../Components/ConsultationModal';
+import AnimatedContent from '../Components/AnimatedContent';
 import {
   Star,
   Quote,
@@ -88,40 +89,77 @@ const brandLogos = ['Google', 'Meta', 'Microsoft', 'HubSpot', 'Slack', 'Notion']
 
 const TestimonialsPage = () => {
   const [modalOpen, setModalOpen] = useState(false);
+  const videoRef = useRef(null);
   const { content } = useContent();
+
+  // Ensure background video plays continuously across all browsers
+  useEffect(() => {
+    const video = videoRef.current;
+    if (video) {
+      video.muted = true;
+      video.defaultMuted = true;
+      const playVideo = () => {
+        const promise = video.play();
+        if (promise !== undefined) {
+          promise.catch(() => {});
+        }
+      };
+      playVideo();
+      video.addEventListener('ended', playVideo);
+      return () => video.removeEventListener('ended', playVideo);
+    }
+  }, []);
 
   return (
     <div className="min-h-screen flex flex-col bg-white text-slate-800 font-sans antialiased selection:bg-blue-600 selection:text-white">
       <Navbar onOpenConsultation={() => setModalOpen(true)} />
 
       <main className="flex-1">
-        {/* Hero Section */}
-        <section className="pt-20 sm:pt-24 pb-16 bg-gradient-to-br from-[#ebf5ff] via-[#f7fbff] to-white border-b border-slate-100 relative overflow-hidden">
-          <div className="absolute top-10 right-10 w-96 h-96 bg-[#00A3E0]/10 rounded-full blur-3xl pointer-events-none" />
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-5 relative z-10">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/95 border border-sky-200 text-[#00A3E0] text-xs font-bold tracking-wide shadow-2xs">
-              <Sparkles className="w-3.5 h-3.5 text-[#00A3E0]" />
+        {/* Hero Section with Live Background Video */}
+        <section className="relative pt-24 sm:pt-28 lg:pt-32 pb-20 sm:pb-24 overflow-hidden bg-slate-950 border-b border-slate-800 text-white">
+          {/* Background Video */}
+          <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
+            <video
+              ref={videoRef}
+              autoPlay
+              loop
+              muted
+              playsInline
+              preload="auto"
+              className="w-full h-full object-cover opacity-75 sm:opacity-80 scale-105"
+            >
+              <source src="/page-hero-video.mp4" type="video/mp4" />
+              <source src="/services-hero-video.mp4" type="video/mp4" />
+              <source src="/tezscale-hero-video-full.mp4" type="video/mp4" />
+            </video>
+            <div className="absolute inset-0 bg-gradient-to-b from-slate-950/85 via-slate-950/50 to-slate-950/95 pointer-events-none" />
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-[#00A3E0]/15 via-transparent to-transparent pointer-events-none" />
+          </div>
+
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6 relative z-10">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-sky-400/30 text-sky-300 text-xs font-bold tracking-wide shadow-sm">
+              <span className="w-2 h-2 rounded-full bg-[#00A3E0] animate-pulse" />
               <span>Social Proof & Client Stories</span>
             </div>
 
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-slate-900 tracking-tight leading-tight max-w-4xl mx-auto">
+            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-[1.15] max-w-4xl mx-auto">
               Trusted by Over <span className="text-[#00A3E0]">500+ Businesses</span> Across Industries
             </h1>
 
-            <p className="text-slate-600 text-lg sm:text-xl max-w-2xl mx-auto leading-relaxed">
+            <p className="text-slate-200 text-sm sm:text-base lg:text-lg max-w-2xl mx-auto leading-relaxed font-normal">
               Don’t just take our word for it. Here is what healthcare founders, real estate developers, and business owners say about partnering with TezScale.
             </p>
 
             {/* 5-Star Rating Aggregate Banner */}
-            <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
-              <div className="inline-flex items-center gap-2 p-3 bg-white rounded-2xl border border-slate-200/90 shadow-xs">
+            <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-4">
+              <div className="inline-flex items-center gap-2.5 p-3.5 bg-white/10 backdrop-blur-md rounded-2xl border border-white/15 shadow-sm text-white">
                 <div className="flex text-amber-400">
                   {[...Array(5)].map((_, i) => (
                     <Star key={i} className="w-5 h-5 fill-current" />
                   ))}
                 </div>
-                <span className="text-sm font-extrabold text-slate-900">4.9 / 5.0 Rating</span>
-                <span className="text-xs text-slate-400 font-medium">(240+ Verified Reviews)</span>
+                <span className="text-sm font-extrabold text-white">4.9 / 5.0 Rating</span>
+                <span className="text-xs text-slate-300 font-medium">(240+ Verified Reviews)</span>
               </div>
             </div>
           </div>
@@ -143,7 +181,15 @@ const TestimonialsPage = () => {
         {/* Testimonials Grid */}
         <section className="py-20 bg-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 text-left">
+            <AnimatedContent
+              distance={80}
+              direction="vertical"
+              duration={0.8}
+              ease="power3.out"
+              stagger={0.12}
+              threshold={0.12}
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 text-left"
+            >
               {clientReviews.map((item) => (
                 <div
                   key={item.id}
@@ -185,7 +231,7 @@ const TestimonialsPage = () => {
                   </div>
                 </div>
               ))}
-            </div>
+            </AnimatedContent>
           </div>
         </section>
 

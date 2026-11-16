@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Stethoscope, Building2, Wrench, ShoppingBag, ArrowRight, CheckCircle2, TrendingUp, ShieldCheck } from 'lucide-react';
 import AnimatedCounter from './AnimatedCounter';
+import AnimatedContent from './AnimatedContent';
 
 const verticals = [
   {
@@ -95,20 +96,35 @@ const IndustrySolutions = ({ onOpenConsultation }) => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Header */}
-        <div className="max-w-3xl mx-auto text-center space-y-3 mb-14">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-md bg-[#e0f4ff] border border-[#00A3E0]/30 text-[#007ba8] text-xs font-bold tracking-wide">
-            <span>Target Audience Specialization</span>
+        <AnimatedContent
+          distance={50}
+          direction="vertical"
+          duration={0.8}
+          ease="power3.out"
+          threshold={0.15}
+        >
+          <div className="max-w-3xl mx-auto text-center space-y-3 mb-14">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-md bg-[#e0f4ff] border border-[#00A3E0]/30 text-[#007ba8] text-xs font-bold tracking-wide">
+              <span>Target Audience Specialization</span>
+            </div>
+            <h2 className="text-3xl sm:text-4xl lg:text-[42px] font-black text-slate-900 tracking-tight leading-tight">
+              Engineered For Your <span className="text-[#00A3E0]">Specific Industry</span>
+            </h2>
+            <p className="text-slate-600 text-base leading-relaxed">
+              We don't do generic marketing. Every vertical benefits from battle-tested strategies tailored to your exact buyer journey.
+            </p>
           </div>
-          <h2 className="text-3xl sm:text-4xl lg:text-[42px] font-black text-slate-900 tracking-tight leading-tight">
-            Engineered For Your <span className="text-[#00A3E0]">Specific Industry</span>
-          </h2>
-          <p className="text-slate-600 text-base leading-relaxed">
-            We don't do generic marketing. Every vertical benefits from battle-tested strategies tailored to your exact buyer journey.
-          </p>
-        </div>
+        </AnimatedContent>
 
         {/* Drone-style Interactive Segmented Tabs */}
-        <div className="flex justify-start sm:justify-center mb-10 overflow-x-auto pb-2 scrollbar-none px-1 max-w-full">
+        <AnimatedContent
+          distance={40}
+          direction="vertical"
+          duration={0.7}
+          delay={0.1}
+          threshold={0.15}
+          className="flex justify-start sm:justify-center mb-10 overflow-x-auto pb-2 scrollbar-none px-1 max-w-full"
+        >
           <div className="inline-flex items-center gap-2 p-1.5 rounded-full bg-white border border-slate-200/90 shadow-xs">
             {verticals.map((v) => {
               const isActive = activeTab === v.id;
@@ -124,72 +140,80 @@ const IndustrySolutions = ({ onOpenConsultation }) => {
               );
             })}
           </div>
-        </div>
+        </AnimatedContent>
 
         {/* Detailed Portal Showcase Card with Drone Style */}
-        <div className="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200/90 shadow-sm max-w-5xl mx-auto text-left transition-all duration-300">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-            
-            {/* Left Content (7 cols) */}
-            <div className="lg:col-span-7 space-y-5">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-[#e0f4ff] text-[#007ba8] text-xs font-bold uppercase tracking-wider">
-                <ShieldCheck className="w-3.5 h-3.5 text-[#00A3E0]" />
-                <span>{activeData.tagline}</span>
+        <AnimatedContent
+          distance={70}
+          direction="vertical"
+          duration={0.8}
+          ease="power3.out"
+          threshold={0.15}
+        >
+          <div className="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200/90 shadow-sm max-w-5xl mx-auto text-left transition-all duration-300">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+              
+              {/* Left Content (7 cols) */}
+              <div className="lg:col-span-7 space-y-5">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-[#e0f4ff] text-[#007ba8] text-xs font-bold uppercase tracking-wider">
+                  <ShieldCheck className="w-3.5 h-3.5 text-[#00A3E0]" />
+                  <span>{activeData.tagline}</span>
+                </div>
+
+                <h3 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight leading-tight">
+                  {activeData.title}
+                </h3>
+
+                <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
+                  {activeData.description}
+                </p>
+
+                {/* Checklist */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+                  {activeData.features.map((feat, idx) => (
+                    <div key={idx} className="flex items-start gap-2 text-xs font-semibold text-slate-700">
+                      <CheckCircle2 className="w-4 h-4 text-[#00A3E0] flex-shrink-0 mt-0.5" />
+                      <span>{feat}</span>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="pt-4">
+                  <button
+                    onClick={onOpenConsultation}
+                    className="btn-drone-primary"
+                  >
+                    <span>Request {activeData.badge} Strategy Call</span>
+                    <ArrowRight className="w-4 h-4 ml-1" />
+                  </button>
+                </div>
               </div>
 
-              <h3 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight leading-tight">
-                {activeData.title}
-              </h3>
+              {/* Right KPI Metric Box (5 cols) in Drone Tech Navy */}
+              <div className="lg:col-span-5 bg-gradient-to-br from-[#08101e] to-[#0b192c] rounded-xl p-6 text-white space-y-4 shadow-xl border border-sky-900/40">
+                <div className="text-xs font-bold text-[#38bdf8] uppercase tracking-wider border-b border-white/10 pb-2">
+                  Proven Impact Benchmarks
+                </div>
 
-              <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
-                {activeData.description}
-              </p>
+                <div className="space-y-4">
+                  {activeData.kpis.map((kpi, idx) => (
+                    <div key={idx} className="p-3.5 rounded-lg bg-white/5 border border-white/10 flex items-center justify-between">
+                      <span className="text-xs text-slate-300 font-medium">{kpi.label}</span>
+                      <span className="text-xl font-black text-[#00A3E0]">
+                        <AnimatedCounter value={kpi.value} duration={1200} />
+                      </span>
+                    </div>
+                  ))}
+                </div>
 
-              {/* Checklist */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
-                {activeData.features.map((feat, idx) => (
-                  <div key={idx} className="flex items-start gap-2 text-xs font-semibold text-slate-700">
-                    <CheckCircle2 className="w-4 h-4 text-[#00A3E0] flex-shrink-0 mt-0.5" />
-                    <span>{feat}</span>
-                  </div>
-                ))}
+                <div className="text-[11px] text-slate-400 pt-1 text-center italic">
+                  *Verified client outcomes across Q1-Q3 deployments
+                </div>
               </div>
 
-              <div className="pt-4">
-                <button
-                  onClick={onOpenConsultation}
-                  className="btn-drone-primary"
-                >
-                  <span>Request {activeData.badge} Strategy Call</span>
-                  <ArrowRight className="w-4 h-4 ml-1" />
-                </button>
-              </div>
             </div>
-
-            {/* Right KPI Metric Box (5 cols) in Drone Tech Navy */}
-            <div className="lg:col-span-5 bg-gradient-to-br from-[#08101e] to-[#0b192c] rounded-xl p-6 text-white space-y-4 shadow-xl border border-sky-900/40">
-              <div className="text-xs font-bold text-[#38bdf8] uppercase tracking-wider border-b border-white/10 pb-2">
-                Proven Impact Benchmarks
-              </div>
-
-              <div className="space-y-4">
-                {activeData.kpis.map((kpi, idx) => (
-                  <div key={idx} className="p-3.5 rounded-lg bg-white/5 border border-white/10 flex items-center justify-between">
-                    <span className="text-xs text-slate-300 font-medium">{kpi.label}</span>
-                    <span className="text-xl font-black text-[#00A3E0]">
-                      <AnimatedCounter value={kpi.value} duration={1200} />
-                    </span>
-                  </div>
-                ))}
-              </div>
-
-              <div className="text-[11px] text-slate-400 pt-1 text-center italic">
-                *Verified client outcomes across Q1-Q3 deployments
-              </div>
-            </div>
-
           </div>
-        </div>
+        </AnimatedContent>
 
       </div>
     </section>

@@ -12,6 +12,7 @@ import {
   Sparkles,
 } from 'lucide-react';
 import { useContent } from '../context/ContentContext';
+import AnimatedContent from './AnimatedContent';
 
 const serviceSlugMap = {
   'Website Builder & Development': 'web-development',
@@ -70,21 +71,37 @@ const Services = ({ onOpenConsultation }) => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header with Eyebrow Tag */}
-        <div className="max-w-3xl mx-auto text-center space-y-3 mb-16">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-md bg-[#e0f4ff] border border-[#00A3E0]/30 text-[#007ba8] text-xs font-bold tracking-wide">
-            <span>{servicesSection.badge || 'Our Core Offerings'}</span>
+        <AnimatedContent
+          distance={50}
+          direction="vertical"
+          duration={0.8}
+          ease="power3.out"
+          threshold={0.15}
+        >
+          <div className="max-w-3xl mx-auto text-center space-y-3 mb-16">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-md bg-[#e0f4ff] border border-[#00A3E0]/30 text-[#007ba8] text-xs font-bold tracking-wide">
+              <span>{servicesSection.badge || 'Our Core Offerings'}</span>
+            </div>
+            <h2 className="text-3xl sm:text-4xl lg:text-[42px] font-black text-slate-900 tracking-tight leading-tight">
+              Complete <span className="text-[#00A3E0]">Digital Marketing</span> Solutions
+            </h2>
+            <p className="text-slate-600 text-base leading-relaxed">
+              {servicesSection.description ||
+                'End-to-end services to help you build, grow and scale your business online with measurable ROI.'}
+            </p>
           </div>
-          <h2 className="text-3xl sm:text-4xl lg:text-[42px] font-black text-slate-900 tracking-tight leading-tight">
-            Complete <span className="text-[#00A3E0]">Digital Marketing</span> Solutions
-          </h2>
-          <p className="text-slate-600 text-base leading-relaxed">
-            {servicesSection.description ||
-              'End-to-end services to help you build, grow and scale your business online with measurable ROI.'}
-          </p>
-        </div>
+        </AnimatedContent>
 
-        {/* 6 Services Grid (Clickable cards jumping to individual service detail pages) */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 text-left">
+        {/* 6 Services Grid (Smooth GSAP scroll-triggered cascade animation from bottom to top) */}
+        <AnimatedContent
+          distance={80}
+          direction="vertical"
+          duration={0.8}
+          ease="power3.out"
+          stagger={0.12}
+          threshold={0.12}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 text-left"
+        >
           {servicesList.map((service, idx) => {
             const iconBg = service.badgeBg || defaultCardColors[idx % defaultCardColors.length];
             const slug = serviceSlugMap[service.title] || defaultSlugs[idx % defaultSlugs.length];
@@ -122,10 +139,17 @@ const Services = ({ onOpenConsultation }) => {
               </Link>
             );
           })}
-        </div>
+        </AnimatedContent>
 
         {/* View All Services Page Link */}
-        <div className="mt-12 text-center">
+        <AnimatedContent
+          distance={40}
+          direction="vertical"
+          duration={0.7}
+          delay={0.2}
+          threshold={0.1}
+          className="mt-12 text-center"
+        >
           <a
             href="/services"
             className="btn-drone-secondary border border-slate-200 hover:border-[#00A3E0]"
@@ -133,7 +157,7 @@ const Services = ({ onOpenConsultation }) => {
             <span>Explore All Services & Tech Deliverables</span>
             <ArrowRight className="w-4 h-4 ml-2" />
           </a>
-        </div>
+        </AnimatedContent>
 
       </div>
     </section>

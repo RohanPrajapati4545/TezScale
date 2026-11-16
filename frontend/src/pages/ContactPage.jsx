@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import Navbar from '../Components/Navbar';
 import Footer from '../Components/Footer';
 import ConsultationModal from '../Components/ConsultationModal';
 import PhoneInput from '../Components/PhoneInput';
+import AnimatedContent from '../Components/AnimatedContent';
 import {
   Phone,
   Mail,
@@ -20,6 +21,24 @@ import apiFetch from '../api/apiClient';
 
 const ContactPage = () => {
   const [modalOpen, setModalOpen] = useState(false);
+  const videoRef = useRef(null);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (video) {
+      video.muted = true;
+      video.defaultMuted = true;
+      const playVideo = () => {
+        const promise = video.play();
+        if (promise !== undefined) {
+          promise.catch(() => {});
+        }
+      };
+      playVideo();
+      video.addEventListener('ended', playVideo);
+      return () => video.removeEventListener('ended', playVideo);
+    }
+  }, []);
   const [countryCode, setCountryCode] = useState('+91');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [formData, setFormData] = useState({
@@ -122,20 +141,38 @@ const ContactPage = () => {
       <Navbar onOpenConsultation={() => setModalOpen(true)} />
 
       <main className="flex-1">
-        {/* Hero Section */}
-        <section className="pt-20 sm:pt-24 pb-12 bg-gradient-to-br from-[#ebf5ff] via-[#f7fbff] to-white border-b border-slate-100 relative overflow-hidden">
-          <div className="absolute top-10 right-10 w-96 h-96 bg-[#00A3E0]/10 rounded-full blur-3xl pointer-events-none" />
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-4 relative z-10">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/95 border border-sky-200 text-[#00A3E0] text-xs font-bold tracking-wide shadow-2xs">
+        {/* Hero Section with Live Background Video */}
+        <section className="relative pt-24 sm:pt-28 lg:pt-32 pb-20 sm:pb-24 overflow-hidden bg-slate-950 border-b border-slate-800 text-white">
+          {/* Background Video */}
+          <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
+            <video
+              ref={videoRef}
+              autoPlay
+              loop
+              muted
+              playsInline
+              preload="auto"
+              className="w-full h-full object-cover opacity-75 sm:opacity-80 scale-105"
+            >
+              <source src="/page-hero-video.mp4" type="video/mp4" />
+              <source src="/services-hero-video.mp4" type="video/mp4" />
+              <source src="/tezscale-hero-video-full.mp4" type="video/mp4" />
+            </video>
+            <div className="absolute inset-0 bg-gradient-to-b from-slate-950/85 via-slate-950/50 to-slate-950/95 pointer-events-none" />
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-[#00A3E0]/15 via-transparent to-transparent pointer-events-none" />
+          </div>
+
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-5 relative z-10">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-sky-400/30 text-sky-300 text-xs font-bold tracking-wide shadow-sm">
               <Sparkles className="w-3.5 h-3.5 text-[#00A3E0]" />
               <span>Let’s Start a Conversation</span>
             </div>
 
-            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-slate-900 tracking-tight leading-tight max-w-4xl mx-auto">
+            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-[1.15] max-w-4xl mx-auto">
               Get in Touch with Our <span className="text-[#00A3E0]">Growth Experts</span>
             </h1>
 
-            <p className="text-slate-600 text-lg sm:text-xl max-w-2xl mx-auto leading-relaxed">
+            <p className="text-slate-200 text-base sm:text-lg max-w-2xl mx-auto leading-relaxed font-normal">
               Have a question or ready to scale your inbound inquiries? Fill out the brief below or connect directly on WhatsApp.
             </p>
           </div>
@@ -147,7 +184,14 @@ const ContactPage = () => {
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 text-left">
 
               {/* Left Column: Contact Cards & WhatsApp Direct */}
-              <div className="lg:col-span-5 space-y-6">
+              <AnimatedContent
+                distance={60}
+                direction="vertical"
+                duration={0.8}
+                ease="power3.out"
+                threshold={0.15}
+                className="lg:col-span-5 space-y-6"
+              >
                 <div>
                   <h2 className="text-2xl font-black text-slate-900 tracking-tight">
                     Direct Contact Channels
@@ -229,10 +273,18 @@ const ContactPage = () => {
                   <ShieldCheck className="w-4 h-4 text-blue-600" />
                   <span>100% Confidential. We respect your privacy and never spam.</span>
                 </div>
-              </div>
+              </AnimatedContent>
 
               {/* Right Column: Lead Form */}
-              <div className="lg:col-span-7">
+              <AnimatedContent
+                distance={60}
+                direction="vertical"
+                duration={0.8}
+                delay={0.15}
+                ease="power3.out"
+                threshold={0.15}
+                className="lg:col-span-7"
+              >
                 <div className="bg-white rounded-xl p-5 sm:p-8 md:p-9 border border-slate-200/90 shadow-xl relative overflow-hidden anim-slow-slide">
                   <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-600 via-blue-500 to-cyan-500" />
 
@@ -404,7 +456,7 @@ const ContactPage = () => {
                     </form>
                   )}
                 </div>
-              </div>
+              </AnimatedContent>
 
             </div>
           </div>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import {
   ArrowLeft,
@@ -82,6 +82,24 @@ const ServiceDetailPage = () => {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState('');
+  const videoRef = useRef(null);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (video) {
+      video.muted = true;
+      video.defaultMuted = true;
+      const playVideo = () => {
+        const promise = video.play();
+        if (promise !== undefined) {
+          promise.catch(() => {});
+        }
+      };
+      playVideo();
+      video.addEventListener('ended', playVideo);
+      return () => video.removeEventListener('ended', playVideo);
+    }
+  }, []);
 
   // Scroll to top on route change
   useEffect(() => {
@@ -178,34 +196,52 @@ const ServiceDetailPage = () => {
       <Navbar onOpenConsultation={() => setModalOpen(true)} />
 
       <main className="flex-1">
-        {/* Breadcrumbs & Header Banner */}
-        <section className="pt-20 sm:pt-24 pb-14 bg-gradient-to-br from-[#ebf5ff] via-[#f7fbff] to-white border-b border-slate-100 relative overflow-hidden">
-          <div className="absolute top-10 right-10 w-96 h-96 bg-[#00A3E0]/10 rounded-full blur-3xl pointer-events-none" />
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-left">
+        {/* Breadcrumbs & Header Banner with Live Background Video */}
+        <section className="relative pt-24 sm:pt-28 pb-16 overflow-hidden bg-slate-950 border-b border-slate-800 text-white">
+          {/* Background Video */}
+          <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
+            <video
+              ref={videoRef}
+              autoPlay
+              loop
+              muted
+              playsInline
+              preload="auto"
+              className="w-full h-full object-cover opacity-70 sm:opacity-75 scale-105"
+            >
+              <source src="/page-hero-video.mp4" type="video/mp4" />
+              <source src="/services-hero-video.mp4" type="video/mp4" />
+              <source src="/tezscale-hero-video-full.mp4" type="video/mp4" />
+            </video>
+            <div className="absolute inset-0 bg-gradient-to-b from-slate-950/85 via-slate-950/50 to-slate-950/95 pointer-events-none" />
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-[#00A3E0]/15 via-transparent to-transparent pointer-events-none" />
+          </div>
+
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-left relative z-10">
 
             {/* Breadcrumb row */}
-            <div className="flex items-center gap-2 text-xs font-semibold text-slate-500 mb-6 flex-wrap">
-              <Link to="/" className="hover:text-[#00A3E0] transition-colors">Home</Link>
+            <div className="flex items-center gap-2 text-xs font-semibold text-slate-300 mb-6 flex-wrap">
+              <Link to="/" className="hover:text-white transition-colors">Home</Link>
               <span>/</span>
-              <Link to="/services" className="hover:text-[#00A3E0] transition-colors">Services</Link>
+              <Link to="/services" className="hover:text-white transition-colors">Services</Link>
               <span>/</span>
-              <span className="text-[#00A3E0] font-bold">{service.title}</span>
+              <span className="text-sky-300 font-bold">{service.title}</span>
             </div>
 
             {/* Hero Main Content */}
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
 
               <div className="lg:col-span-8 space-y-5">
-                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#e0f4ff] border border-[#00A3E0]/30 text-[#007ba8] text-xs font-bold tracking-wide">
+                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-sky-400/30 text-sky-300 text-xs font-bold tracking-wide shadow-sm">
                   <Sparkles className="w-3.5 h-3.5 text-[#00A3E0]" />
                   <span>{service.badge}</span>
                 </div>
 
-                <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 tracking-tight leading-tight">
+                <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight leading-tight">
                   {service.heroHeadline}
                 </h1>
 
-                <p className="text-slate-600 text-base sm:text-lg leading-relaxed max-w-2xl">
+                <p className="text-slate-200 text-base sm:text-lg leading-relaxed max-w-2xl font-normal">
                   {service.longDesc}
                 </p>
 
@@ -213,7 +249,7 @@ const ServiceDetailPage = () => {
                 <div className="flex flex-wrap items-center gap-4 pt-3">
                   <a
                     href="#service-lead-form"
-                    className="px-7 py-3.5 rounded-full bg-[#00A3E0] hover:bg-[#008bc0] text-white font-bold text-xs sm:text-sm shadow-md shadow-[#00A3E0]/25 transition-all duration-300 flex items-center gap-2 cursor-pointer hover:scale-[1.02]"
+                    className="px-7 py-3.5 rounded-full bg-[#00A3E0] hover:bg-[#008bc0] text-white font-bold text-xs sm:text-sm shadow-md shadow-[#00A3E0]/30 transition-all duration-300 flex items-center gap-2 cursor-pointer hover:scale-[1.02]"
                   >
                     <span>REQUEST STRATEGY BRIEF</span>
                     <ArrowRight className="w-4 h-4" />
@@ -223,30 +259,30 @@ const ServiceDetailPage = () => {
                     href={whatsappInquiryUrl}
                     target="_blank"
                     rel="noreferrer"
-                    className="px-7 py-3.5 rounded-full bg-white hover:bg-slate-50 border border-slate-200 text-slate-800 font-bold text-xs sm:text-sm shadow-2xs transition-all duration-300 flex items-center gap-2 cursor-pointer hover:border-emerald-400"
+                    className="px-7 py-3.5 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-white font-bold text-xs sm:text-sm shadow-sm backdrop-blur-md transition-all duration-300 flex items-center gap-2 cursor-pointer hover:border-emerald-400"
                   >
-                    <span className="w-2.5 h-2.5 rounded-full bg-emerald-500" />
+                    <span className="w-2.5 h-2.5 rounded-full bg-emerald-400" />
                     <span>CHAT ON WHATSAPP</span>
-                    <ArrowRight className="w-4 h-4 text-slate-400" />
+                    <ArrowRight className="w-4 h-4 text-slate-300" />
                   </a>
                 </div>
               </div>
 
               {/* Service Icon Box / Visual Summary */}
               <div className="lg:col-span-4 flex justify-center">
-                <div className="w-full max-w-sm bg-white rounded-3xl border border-slate-200/90 p-8 shadow-xl relative overflow-hidden text-center space-y-4">
-                  <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-[#00A3E0] via-cyan-400 to-blue-600" />
-                  <div className="w-16 h-16 rounded-2xl bg-[#e0f4ff] text-[#00A3E0] flex items-center justify-center mx-auto shadow-md">
+                <div className="w-full max-w-sm bg-white/10 backdrop-blur-xl rounded-3xl border border-white/15 p-8 shadow-2xl relative overflow-hidden text-center space-y-4">
+                  <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-[#00A3E0] via-cyan-400 to-blue-500" />
+                  <div className="w-16 h-16 rounded-2xl bg-white/10 text-sky-300 flex items-center justify-center mx-auto shadow-md border border-white/10">
                     {renderIcon(service.iconName, "w-8 h-8")}
                   </div>
-                  <div className="text-xs font-bold text-[#00A3E0] uppercase tracking-wider">
+                  <div className="text-xs font-bold text-sky-300 uppercase tracking-wider">
                     {service.category}
                   </div>
-                  <h3 className="text-xl font-black text-slate-900 leading-tight">
+                  <h3 className="text-xl font-black text-white leading-tight">
                     {service.title}
                   </h3>
-                  <div className="pt-3 border-t border-slate-100 flex items-center justify-center gap-2 text-xs font-semibold text-slate-500">
-                    <ShieldCheck className="w-4 h-4 text-emerald-600" />
+                  <div className="pt-3 border-t border-white/10 flex items-center justify-center gap-2 text-xs font-medium text-slate-300">
+                    <ShieldCheck className="w-4 h-4 text-emerald-400" />
                     <span>Production Specification Verified</span>
                   </div>
                 </div>

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ChevronLeft, ChevronRight, Quote, Send, ArrowRight } from 'lucide-react';
 import { useContent } from '../context/ContentContext';
+import AnimatedContent from './AnimatedContent';
 
 const Testimonials = ({ onOpenConsultation }) => {
   const { content } = useContent();
@@ -28,40 +29,55 @@ const Testimonials = ({ onOpenConsultation }) => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
-          <div className="max-w-xl text-left space-y-2">
-            <div className="inline-flex items-center px-3.5 py-1.5 rounded-full bg-[#e0f4ff] border border-[#00A3E0]/30 text-[#007ba8] text-xs font-bold tracking-wide shadow-2xs">
-              {testimonialsSection.badge || 'Testimonials'}
+        <AnimatedContent
+          distance={50}
+          direction="vertical"
+          duration={0.8}
+          ease="power3.out"
+          threshold={0.15}
+        >
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+            <div className="max-w-xl text-left space-y-2">
+              <div className="inline-flex items-center px-3.5 py-1.5 rounded-full bg-[#e0f4ff] border border-[#00A3E0]/30 text-[#007ba8] text-xs font-bold tracking-wide shadow-2xs">
+                {testimonialsSection.badge || 'Testimonials'}
+              </div>
+              <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+                {testimonialsSection.title || 'What Our Clients Say'}
+              </h2>
+              <p className="text-slate-600 text-base leading-relaxed">
+                {testimonialsSection.description || 'Trusted by businesses across industries.'}
+              </p>
             </div>
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
-              {testimonialsSection.title || 'What Our Clients Say'}
-            </h2>
-            <p className="text-slate-600 text-base leading-relaxed">
-              {testimonialsSection.description || 'Trusted by businesses across industries.'}
-            </p>
-          </div>
 
-          <div className="flex items-center gap-3 self-start md:self-end">
-            <button
-              onClick={prev}
-              className="w-10 h-10 rounded-full border border-slate-300 bg-white hover:bg-slate-100 flex items-center justify-center text-slate-600 transition-colors shadow-2xs cursor-pointer"
-              aria-label="Previous Testimonial"
-            >
-              <ChevronLeft className="w-5 h-5" />
-            </button>
-            <button
-              onClick={next}
-              className="w-10 h-10 rounded-full border border-slate-300 bg-white hover:bg-slate-100 flex items-center justify-center text-slate-600 transition-colors shadow-2xs cursor-pointer"
-              aria-label="Next Testimonial"
-            >
-              <ChevronRight className="w-5 h-5" />
-            </button>
+            <div className="flex items-center gap-3 self-start md:self-end">
+              <button
+                onClick={prev}
+                className="w-10 h-10 rounded-full border border-slate-300 bg-white hover:bg-slate-100 flex items-center justify-center text-slate-600 transition-colors shadow-2xs cursor-pointer"
+                aria-label="Previous Testimonial"
+              >
+                <ChevronLeft className="w-5 h-5" />
+              </button>
+              <button
+                onClick={next}
+                className="w-10 h-10 rounded-full border border-slate-300 bg-white hover:bg-slate-100 flex items-center justify-center text-slate-600 transition-colors shadow-2xs cursor-pointer"
+                aria-label="Next Testimonial"
+              >
+                <ChevronRight className="w-5 h-5" />
+              </button>
+            </div>
           </div>
-        </div>
+        </AnimatedContent>
 
         {/* Side-by-Side: Testimonial Quote Card on Left + CTA Card on Right */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-          
+        <AnimatedContent
+          distance={70}
+          direction="vertical"
+          duration={0.8}
+          ease="power3.out"
+          stagger={0.15}
+          threshold={0.12}
+          className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch"
+        >
           {/* Left: Testimonial Card */}
           <div className="lg:col-span-7 bg-white rounded-2xl p-8 sm:p-10 border border-slate-200/80 shadow-2xs card-lift text-left flex flex-col justify-between hover:border-[#00A3E0]/40">
             <div>
@@ -137,8 +153,7 @@ const Testimonials = ({ onOpenConsultation }) => {
               <ArrowRight className="w-4 h-4 ml-1" />
             </button>
           </div>
-
-        </div>
+        </AnimatedContent>
 
         {/* View All Testimonials Link */}
         <div className="mt-12 text-center">

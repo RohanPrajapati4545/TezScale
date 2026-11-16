@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { ChevronLeft, ChevronRight, ArrowUpRight, BarChart3, Users, Clock, ArrowRight } from 'lucide-react';
 import { useContent } from '../context/ContentContext';
 import AnimatedCounter from './AnimatedCounter';
+import AnimatedContent from './AnimatedContent';
 
 const OurWork = ({ onOpenConsultation }) => {
   const { content } = useContent();
@@ -25,40 +26,56 @@ const OurWork = ({ onOpenConsultation }) => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Header with Nav Arrows */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
-          <div className="max-w-2xl text-left space-y-2">
-            <div className="inline-flex items-center px-3.5 py-1.5 rounded-full bg-[#e0f4ff] border border-[#00A3E0]/30 text-[#007ba8] text-xs font-bold tracking-wide shadow-2xs">
-              {portfolioSection.badge || 'Our Work'}
+        <AnimatedContent
+          distance={50}
+          direction="vertical"
+          duration={0.8}
+          ease="power3.out"
+          threshold={0.15}
+        >
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+            <div className="max-w-2xl text-left space-y-2">
+              <div className="inline-flex items-center px-3.5 py-1.5 rounded-full bg-[#e0f4ff] border border-[#00A3E0]/30 text-[#007ba8] text-xs font-bold tracking-wide shadow-2xs">
+                {portfolioSection.badge || 'Our Work'}
+              </div>
+              <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
+                {portfolioSection.title || 'Some Success Stories'}
+              </h2>
+              <p className="text-slate-600 text-base leading-relaxed">
+                {portfolioSection.description || 'Real results. Real businesses. Real growth.'}
+              </p>
             </div>
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
-              {portfolioSection.title || 'Some Success Stories'}
-            </h2>
-            <p className="text-slate-600 text-base leading-relaxed">
-              {portfolioSection.description || 'Real results. Real businesses. Real growth.'}
-            </p>
-          </div>
 
-          {/* Carousel Arrows matching screenshot */}
-          <div className="flex items-center gap-3 self-start md:self-end">
-            <button
-              onClick={prevSlide}
-              className="w-10 h-10 rounded-full border border-slate-300 bg-white hover:bg-slate-100 flex items-center justify-center text-slate-600 transition-colors shadow-xs cursor-pointer"
-              aria-label="Previous story"
-            >
-              <ChevronLeft className="w-5 h-5" />
-            </button>
-            <button
-              onClick={nextSlide}
-              className="w-10 h-10 rounded-full border border-slate-300 bg-white hover:bg-slate-100 flex items-center justify-center text-slate-600 transition-colors shadow-xs cursor-pointer"
-              aria-label="Next story"
-            >
-              <ChevronRight className="w-5 h-5" />
-            </button>
+            {/* Carousel Arrows matching screenshot */}
+            <div className="flex items-center gap-3 self-start md:self-end">
+              <button
+                onClick={prevSlide}
+                className="w-10 h-10 rounded-full border border-slate-300 bg-white hover:bg-slate-100 flex items-center justify-center text-slate-600 transition-colors shadow-xs cursor-pointer"
+                aria-label="Previous story"
+              >
+                <ChevronLeft className="w-5 h-5" />
+              </button>
+              <button
+                onClick={nextSlide}
+                className="w-10 h-10 rounded-full border border-slate-300 bg-white hover:bg-slate-100 flex items-center justify-center text-slate-600 transition-colors shadow-xs cursor-pointer"
+                aria-label="Next story"
+              >
+                <ChevronRight className="w-5 h-5" />
+              </button>
+            </div>
           </div>
-        </div>
+        </AnimatedContent>
 
         {/* 3 Metric counters row (Section 2.0 / Oliveflex Style Animated Count-Up) */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-12">
+        <AnimatedContent
+          distance={60}
+          direction="vertical"
+          duration={0.8}
+          ease="power3.out"
+          stagger={0.12}
+          threshold={0.15}
+          className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-12"
+        >
           <div className="bg-white p-6 rounded-2xl border border-slate-200/90 text-left flex items-center gap-4.5 shadow-2xs hover:shadow-md hover:border-[#00A3E0]/40 transition-all duration-300">
             <div className="w-12 h-12 rounded-xl bg-[#e0f4ff] text-[#00A3E0] flex items-center justify-center font-bold shrink-0">
               <BarChart3 className="w-6 h-6" />
@@ -100,10 +117,18 @@ const OurWork = ({ onOpenConsultation }) => {
               </div>
             </div>
           </div>
-        </div>
+        </AnimatedContent>
 
         {/* 3 Case Study Cards matching screenshot */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <AnimatedContent
+          distance={80}
+          direction="vertical"
+          duration={0.8}
+          ease="power3.out"
+          stagger={0.12}
+          threshold={0.12}
+          className="grid grid-cols-1 md:grid-cols-3 gap-6"
+        >
           {caseStudies.map((study, idx) => (
             <div
               key={study._id || idx}
@@ -144,10 +169,17 @@ const OurWork = ({ onOpenConsultation }) => {
               </div>
             </div>
           ))}
-        </div>
+        </AnimatedContent>
 
         {/* View All Case Studies Link */}
-        <div className="mt-12 text-center">
+        <AnimatedContent
+          distance={40}
+          direction="vertical"
+          duration={0.7}
+          delay={0.2}
+          threshold={0.1}
+          className="mt-12 text-center"
+        >
           <Link
             to="/portfolio"
             className="btn-drone-secondary border border-slate-200 hover:border-[#00A3E0]"
@@ -155,7 +187,7 @@ const OurWork = ({ onOpenConsultation }) => {
             <span>Explore All Client Case Studies & Metrics</span>
             <ArrowRight className="w-4 h-4 ml-1" />
           </Link>
-        </div>
+        </AnimatedContent>
 
       </div>
     </section>

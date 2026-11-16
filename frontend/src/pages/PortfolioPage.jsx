@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import Navbar from '../Components/Navbar';
 import Footer from '../Components/Footer';
 import ConsultationModal from '../Components/ConsultationModal';
 import AnimatedCounter from '../Components/AnimatedCounter';
+import AnimatedContent from '../Components/AnimatedContent';
 import {
   BarChart3,
   Users,
@@ -160,8 +161,27 @@ const portfolioItems = [
 const PortfolioPage = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [filter, setFilter] = useState('all');
+  const videoRef = useRef(null);
   const { content } = useContent();
   const metrics = content?.metrics || {};
+
+  // Ensure background video plays continuously across all browsers
+  useEffect(() => {
+    const video = videoRef.current;
+    if (video) {
+      video.muted = true;
+      video.defaultMuted = true;
+      const playVideo = () => {
+        const promise = video.play();
+        if (promise !== undefined) {
+          promise.catch(() => {});
+        }
+      };
+      playVideo();
+      video.addEventListener('ended', playVideo);
+      return () => video.removeEventListener('ended', playVideo);
+    }
+  }, []);
 
   const filteredItems = filter === 'all'
     ? portfolioItems
@@ -172,67 +192,93 @@ const PortfolioPage = () => {
       <Navbar onOpenConsultation={() => setModalOpen(true)} />
 
       <main className="flex-1">
-        {/* Hero Section */}
-        <section className="pt-20 sm:pt-24 pb-16 bg-gradient-to-br from-[#ebf5ff] via-[#f7fbff] to-white border-b border-slate-100 relative overflow-hidden">
-          <div className="absolute top-10 right-10 w-96 h-96 bg-[#00A3E0]/10 rounded-full blur-3xl pointer-events-none" />
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-5 relative z-10">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/95 border border-sky-200 text-[#00A3E0] text-xs font-bold tracking-wide shadow-2xs">
-              <Sparkles className="w-3.5 h-3.5 text-[#00A3E0]" />
-              <span>Proven Client Impact</span>
+        {/* Hero Section with Live Background Video */}
+        <section className="relative pt-24 sm:pt-28 lg:pt-32 pb-20 sm:pb-24 overflow-hidden bg-slate-950 border-b border-slate-800 text-white">
+          {/* Background Video */}
+          <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
+            <video
+              ref={videoRef}
+              autoPlay
+              loop
+              muted
+              playsInline
+              preload="auto"
+              className="w-full h-full object-cover opacity-75 sm:opacity-80 scale-105"
+            >
+              <source src="/page-hero-video.mp4" type="video/mp4" />
+              <source src="/services-hero-video.mp4" type="video/mp4" />
+              <source src="/tezscale-hero-video-full.mp4" type="video/mp4" />
+            </video>
+            <div className="absolute inset-0 bg-gradient-to-b from-slate-950/85 via-slate-950/50 to-slate-950/95 pointer-events-none" />
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-[#00A3E0]/15 via-transparent to-transparent pointer-events-none" />
+          </div>
+
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6 relative z-10">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-sky-400/30 text-sky-300 text-xs font-bold tracking-wide shadow-sm">
+              <span className="w-2 h-2 rounded-full bg-[#00A3E0] animate-pulse" />
+              <span>Proven Client Impact & Case Studies</span>
             </div>
 
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-slate-900 tracking-tight leading-tight max-w-4xl mx-auto">
+            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-[1.15] max-w-4xl mx-auto">
               Real Results for <span className="text-[#00A3E0]">Real Businesses</span>
             </h1>
 
-            <p className="text-slate-600 text-lg sm:text-xl max-w-2xl mx-auto leading-relaxed">
+            <p className="text-slate-200 text-sm sm:text-base lg:text-lg max-w-2xl mx-auto leading-relaxed font-normal">
               Explore how we helped healthcare clinics, property developers, manufacturers, and direct-to-consumer brands unlock predictable growth.
             </p>
 
-            {/* 3 Metric Counters (Oliveflex Style Animated Count-Up) */}
-            <div className="pt-6 grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-3xl mx-auto">
-              <div className="bg-white p-6 rounded-2xl border border-slate-200/90 text-left flex items-center gap-4.5 shadow-2xs hover:shadow-md transition-all duration-300">
-                <div className="w-12 h-12 rounded-xl bg-[#e0f4ff] text-[#00A3E0] flex items-center justify-center font-bold shrink-0">
+            {/* 3 Metric Counters */}
+            <AnimatedContent
+              distance={50}
+              direction="vertical"
+              duration={0.8}
+              ease="power3.out"
+              stagger={0.1}
+              threshold={0.15}
+              className="pt-6 grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-3xl mx-auto"
+            >
+              <div className="p-6 rounded-2xl bg-white/10 backdrop-blur-md border border-white/15 text-left flex items-center gap-4.5 shadow-2xs hover:shadow-md transition-all duration-300">
+                <div className="w-12 h-12 rounded-xl bg-sky-500/20 border border-sky-400/30 text-[#38bdf8] flex items-center justify-center font-bold shrink-0">
                   <BarChart3 className="w-6 h-6" />
                 </div>
                 <div>
-                  <div className="text-3xl sm:text-[34px] font-black text-slate-900 leading-tight">
+                  <div className="text-3xl sm:text-[34px] font-black text-white leading-tight">
                     <AnimatedCounter value={metrics.stat1Value || '250%'} duration={1400} />
                   </div>
-                  <div className="text-[11px] font-bold text-slate-500 uppercase tracking-wider mt-0.5">
+                  <div className="text-[11px] font-bold text-slate-300 uppercase tracking-wider mt-0.5">
                     {metrics.stat1Label || 'AVERAGE GROWTH'}
                   </div>
                 </div>
               </div>
 
-              <div className="bg-white p-6 rounded-2xl border border-slate-200/90 text-left flex items-center gap-4.5 shadow-2xs hover:shadow-md transition-all duration-300">
-                <div className="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold shrink-0">
+              <div className="p-6 rounded-2xl bg-white/10 backdrop-blur-md border border-white/15 text-left flex items-center gap-4.5 shadow-2xs hover:shadow-md transition-all duration-300">
+                <div className="w-12 h-12 rounded-xl bg-emerald-500/20 border border-emerald-400/30 text-emerald-400 flex items-center justify-center font-bold shrink-0">
                   <Users className="w-6 h-6" />
                 </div>
                 <div>
-                  <div className="text-3xl sm:text-[34px] font-black text-slate-900 leading-tight">
+                  <div className="text-3xl sm:text-[34px] font-black text-white leading-tight">
                     <AnimatedCounter value={metrics.stat2Value || '500+'} duration={1500} />
                   </div>
-                  <div className="text-[11px] font-bold text-slate-500 uppercase tracking-wider mt-0.5">
+                  <div className="text-[11px] font-bold text-slate-300 uppercase tracking-wider mt-0.5">
                     {metrics.stat2Label || 'HAPPY CLIENTS'}
                   </div>
                 </div>
               </div>
 
-              <div className="bg-white p-6 rounded-2xl border border-slate-200/90 text-left flex items-center gap-4.5 shadow-2xs hover:shadow-md transition-all duration-300">
-                <div className="w-12 h-12 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center font-bold shrink-0">
+              <div className="p-6 rounded-2xl bg-white/10 backdrop-blur-md border border-white/15 text-left flex items-center gap-4.5 shadow-2xs hover:shadow-md transition-all duration-300">
+                <div className="w-12 h-12 rounded-xl bg-amber-500/20 border border-amber-400/30 text-amber-400 flex items-center justify-center font-bold shrink-0">
                   <Clock className="w-6 h-6" />
                 </div>
                 <div>
-                  <div className="text-3xl sm:text-[34px] font-black text-slate-900 leading-tight">
+                  <div className="text-3xl sm:text-[34px] font-black text-white leading-tight">
                     <AnimatedCounter value={metrics.stat3Value || '5+'} duration={1200} />
                   </div>
-                  <div className="text-[11px] font-bold text-slate-500 uppercase tracking-wider mt-0.5">
+                  <div className="text-[11px] font-bold text-slate-300 uppercase tracking-wider mt-0.5">
                     {metrics.stat3Label || 'YEARS EXPERIENCE'}
                   </div>
                 </div>
               </div>
-            </div>
+            </AnimatedContent>
           </div>
         </section>
 
@@ -265,7 +311,15 @@ const PortfolioPage = () => {
             </div>
 
             {/* Case Studies Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <AnimatedContent
+              distance={80}
+              direction="vertical"
+              duration={0.8}
+              ease="power3.out"
+              stagger={0.12}
+              threshold={0.12}
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+            >
               {filteredItems.map((study) => (
                 <div
                   key={study.id}
@@ -324,7 +378,7 @@ const PortfolioPage = () => {
                   </div>
                 </div>
               ))}
-            </div>
+            </AnimatedContent>
 
           </div>
         </section>

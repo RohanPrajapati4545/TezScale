@@ -90,6 +90,7 @@ const Footer = ({ onOpenConsultation }) => {
               <li><Link to="/services" className="hover:text-[#00A3E0] transition-colors">Services</Link></li>
               <li><Link to="/portfolio" className="hover:text-[#00A3E0] transition-colors">Portfolio</Link></li>
               <li><Link to="/testimonials" className="hover:text-[#00A3E0] transition-colors">Testimonials</Link></li>
+              <li><Link to="/#faq" className="hover:text-[#00A3E0] transition-colors">FAQs</Link></li>
               <li><Link to="/contact" className="hover:text-[#00A3E0] transition-colors">Contact</Link></li>
             </ul>
           </div>

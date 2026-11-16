@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Navbar from '../Components/Navbar';
 import Footer from '../Components/Footer';
 import ConsultationModal from '../Components/ConsultationModal';
+import AnimatedContent from '../Components/AnimatedContent';
 import {
   Code2,
   Palette,
@@ -17,7 +18,9 @@ import {
   ShieldCheck,
   TrendingUp,
   Clock,
-  Layers
+  Layers,
+  Play,
+  X
 } from 'lucide-react';
 import { useContent } from '../context/ContentContext';
 
@@ -134,38 +137,124 @@ const detailedServices = [
 
 const ServicesPage = () => {
   const [modalOpen, setModalOpen] = useState(false);
+  const [videoModalOpen, setVideoModalOpen] = useState(false);
+  const videoRef = useRef(null);
   const { content } = useContent();
+
+  // Ensure background video plays continuously across all browsers
+  useEffect(() => {
+    const video = videoRef.current;
+    if (video) {
+      video.muted = true;
+      video.defaultMuted = true;
+      const playVideo = () => {
+        const promise = video.play();
+        if (promise !== undefined) {
+          promise.catch(() => {});
+        }
+      };
+      playVideo();
+      video.addEventListener('ended', playVideo);
+      return () => video.removeEventListener('ended', playVideo);
+    }
+  }, []);
+
+  // Auto-open modal on first-time visit
+  useEffect(() => {
+    try {
+      const hasSeenModal = sessionStorage.getItem('tezscale_first_visit_modal');
+      if (!hasSeenModal) {
+        const timer = setTimeout(() => {
+          setModalOpen(true);
+          sessionStorage.setItem('tezscale_first_visit_modal', 'true');
+        }, 1200);
+        return () => clearTimeout(timer);
+      }
+    } catch (e) {
+      // ignore
+    }
+  }, []);
 
   return (
     <div className="min-h-screen flex flex-col bg-white text-slate-800 font-sans antialiased selection:bg-blue-600 selection:text-white">
       <Navbar onOpenConsultation={() => setModalOpen(true)} />
 
       <main className="flex-1">
-        {/* Services Page Hero */}
-        <section className="pt-20 sm:pt-24 pb-16 bg-gradient-to-br from-[#ebf5ff] via-[#f7fbff] to-white border-b border-slate-100 relative overflow-hidden">
-          <div className="absolute top-10 right-10 w-96 h-96 bg-[#00A3E0]/10 rounded-full blur-3xl pointer-events-none" />
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-5 relative z-10">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/95 border border-sky-200 text-[#00A3E0] text-xs font-bold tracking-wide shadow-2xs">
-              <Sparkles className="w-3.5 h-3.5 text-[#00A3E0]" />
-              <span>Full-Stack Growth Services</span>
+        {/* Services Page Hero with Live Background Video */}
+        <section className="relative pt-24 sm:pt-28 lg:pt-32 pb-20 sm:pb-24 overflow-hidden bg-slate-950 border-b border-slate-800 text-white">
+          {/* Background Video: Continuous loop with optimal cinematic clarity */}
+          <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
+            <video
+              ref={videoRef}
+              autoPlay
+              loop
+              muted
+              playsInline
+              preload="auto"
+              className="w-full h-full object-cover opacity-75 sm:opacity-80 scale-105"
+            >
+              <source src="/services-hero-video.mp4" type="video/mp4" />
+              <source src="/tezscale-hero-video-full.mp4" type="video/mp4" />
+              <source src="/tezscale-hero-video.mp4" type="video/mp4" />
+            </video>
+            {/* Dual gradient overlay: Keeps 3D video graphics vivid while ensuring 100% text readability */}
+            <div className="absolute inset-0 bg-gradient-to-b from-slate-950/85 via-slate-950/45 to-slate-950/95 pointer-events-none" />
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-[#00A3E0]/15 via-transparent to-transparent pointer-events-none" />
+          </div>
+
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6 relative z-10">
+            {/* Pill Tag */}
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-sky-400/30 text-sky-300 text-xs sm:text-[13px] font-bold tracking-wide shadow-sm">
+              <span className="w-2 h-2 rounded-full bg-[#00A3E0] animate-pulse" />
+              <span>Full-Stack Growth Services & Digital Architecture</span>
             </div>
 
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-slate-900 tracking-tight leading-tight max-w-4xl mx-auto">
-              Complete <span className="text-[#00A3E0]">Digital Solutions</span> Built to Convert & Scale
+            {/* Main Headline */}
+            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-[1.15] max-w-4xl mx-auto drop-shadow-sm">
+              Complete <span className="text-[#00A3E0]">Digital Solutions</span> <br className="hidden sm:inline" />
+              Built to Convert & Scale
             </h1>
 
-            <p className="text-slate-600 text-lg sm:text-xl max-w-3xl mx-auto leading-relaxed">
+            {/* Description */}
+            <p className="text-slate-200 text-sm sm:text-base lg:text-lg max-w-2xl mx-auto leading-relaxed font-normal">
               From accelerated web architecture to precision Meta Ads and Local Map dominance, we build the digital infrastructure your business needs to win.
             </p>
 
-            <div className="pt-4 flex flex-wrap items-center justify-center gap-4">
+            {/* Action Buttons: Book Strategy Call + Watch Showreel */}
+            <div className="pt-2 flex flex-wrap items-center justify-center gap-4">
               <button
                 onClick={() => setModalOpen(true)}
-                className="inline-flex items-center gap-2 bg-[#00A3E0] hover:bg-[#008bc0] text-white px-7 py-3 rounded-full text-sm font-bold shadow-lg shadow-[#00A3E0]/30 transition-all hover:scale-[1.02] cursor-pointer"
+                className="inline-flex items-center gap-2 bg-[#00A3E0] hover:bg-[#008bc0] text-white px-7 py-3.5 rounded-full text-xs sm:text-sm font-bold shadow-lg shadow-[#00A3E0]/35 transition-all duration-300 hover:scale-[1.02] cursor-pointer"
               >
                 <span>Book a Strategy Call</span>
                 <ArrowRight className="w-4 h-4" />
               </button>
+
+              <button
+                onClick={() => setVideoModalOpen(true)}
+                className="px-5 py-3 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 text-white font-bold text-xs sm:text-sm transition-all flex items-center gap-2.5 cursor-pointer group shadow-xs"
+              >
+                <div className="w-7 h-7 rounded-full bg-[#00A3E0] flex items-center justify-center text-white group-hover:scale-110 transition-transform">
+                  <Play className="w-3.5 h-3.5 fill-current ml-0.5 text-white" />
+                </div>
+                <span>Watch Showreel</span>
+              </button>
+            </div>
+
+            {/* Key Deliverable Highlights Pill Row */}
+            <div className="pt-4 flex flex-wrap items-center justify-center gap-3 sm:gap-6 text-xs text-slate-300 font-semibold">
+              <div className="flex items-center gap-2 bg-white/5 backdrop-blur-xs px-3.5 py-1.5 rounded-full border border-white/10">
+                <CheckCircle2 className="w-4 h-4 text-[#00A3E0]" />
+                <span>2-Day Staging Draft</span>
+              </div>
+              <div className="flex items-center gap-2 bg-white/5 backdrop-blur-xs px-3.5 py-1.5 rounded-full border border-white/10">
+                <CheckCircle2 className="w-4 h-4 text-[#00A3E0]" />
+                <span>95+ Mobile PageSpeed</span>
+              </div>
+              <div className="flex items-center gap-2 bg-white/5 backdrop-blur-xs px-3.5 py-1.5 rounded-full border border-white/10">
+                <CheckCircle2 className="w-4 h-4 text-[#00A3E0]" />
+                <span>WhatsApp CRM Routing</span>
+              </div>
             </div>
           </div>
         </section>
@@ -173,7 +262,15 @@ const ServicesPage = () => {
         {/* 6 Core Detailed Services Grid */}
         <section className="py-20 bg-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <AnimatedContent
+              distance={80}
+              direction="vertical"
+              duration={0.8}
+              ease="power3.out"
+              stagger={0.12}
+              threshold={0.12}
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+            >
               {detailedServices.map((service) => (
                 <div
                   key={service.id}
@@ -247,40 +344,101 @@ const ServicesPage = () => {
                   </div>
                 </div>
               ))}
-            </div>
+            </AnimatedContent>
           </div>
         </section>
 
         {/* Industry Solutions Banner */}
         <section className="py-16 bg-slate-50 border-t border-slate-200/80">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-left">
-            <div className="bg-gradient-to-br from-slate-900 to-blue-950 text-white rounded-3xl p-8 sm:p-12 shadow-xl border border-slate-800 flex flex-col lg:flex-row lg:items-center justify-between gap-8">
-              <div className="max-w-2xl space-y-3">
-                <span className="text-xs font-bold text-cyan-400 uppercase tracking-wider">
-                  Tailored Industry Blueprints
-                </span>
-                <h3 className="text-2xl sm:text-3xl font-black tracking-tight leading-tight">
-                  Need a Custom Solution for Your Specific Sector?
-                </h3>
-                <p className="text-slate-300 text-sm leading-relaxed">
-                  We have specialized high-converting frameworks for Medical Clinics, Real Estate Developers, Industrial Manufacturing Exporters, and E-commerce brands.
-                </p>
-              </div>
+            <AnimatedContent
+              distance={60}
+              direction="vertical"
+              duration={0.8}
+              ease="power3.out"
+              threshold={0.15}
+            >
+              <div className="bg-gradient-to-br from-slate-900 to-blue-950 text-white rounded-3xl p-8 sm:p-12 shadow-xl border border-slate-800 flex flex-col lg:flex-row lg:items-center justify-between gap-8">
+                <div className="max-w-2xl space-y-3">
+                  <span className="text-xs font-bold text-cyan-400 uppercase tracking-wider">
+                    Tailored Industry Blueprints
+                  </span>
+                  <h3 className="text-2xl sm:text-3xl font-black tracking-tight leading-tight">
+                    Need a Custom Solution for Your Specific Sector?
+                  </h3>
+                  <p className="text-slate-300 text-sm leading-relaxed">
+                    We have specialized high-converting frameworks for Medical Clinics, Real Estate Developers, Industrial Manufacturing Exporters, and E-commerce brands.
+                  </p>
+                </div>
 
-              <button
-                onClick={() => setModalOpen(true)}
-                className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-500 text-white px-7 py-3.5 rounded-full text-sm font-bold shadow-lg transition-all hover:scale-105 cursor-pointer whitespace-nowrap self-start lg:self-auto"
-              >
-                <span>Get Sector Strategy</span>
-                <ArrowRight className="w-4 h-4" />
-              </button>
-            </div>
+                <button
+                  onClick={() => setModalOpen(true)}
+                  className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-500 text-white px-7 py-3.5 rounded-full text-sm font-bold shadow-lg transition-all hover:scale-105 cursor-pointer whitespace-nowrap self-start lg:self-auto"
+                >
+                  <span>Get Sector Strategy</span>
+                  <ArrowRight className="w-4 h-4" />
+                </button>
+              </div>
+            </AnimatedContent>
           </div>
         </section>
       </main>
 
       <Footer onOpenConsultation={() => setModalOpen(true)} />
       <ConsultationModal isOpen={modalOpen} onClose={() => setModalOpen(false)} />
+
+      {/* Interactive HD Video Modal */}
+      {videoModalOpen && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/85 backdrop-blur-md p-4 anim-fade-in"
+          onClick={() => setVideoModalOpen(false)}
+        >
+          <div
+            className="relative w-full max-w-4xl bg-slate-900 rounded-2xl overflow-hidden shadow-2xl border border-white/10"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Close button */}
+            <button
+              onClick={() => setVideoModalOpen(false)}
+              className="absolute top-3 right-3 z-20 w-10 h-10 rounded-full bg-black/60 hover:bg-black/90 text-white flex items-center justify-center transition-all cursor-pointer border border-white/20"
+              aria-label="Close video"
+            >
+              <X className="w-5 h-5" />
+            </button>
+
+            {/* Video Player */}
+            <div className="aspect-video w-full bg-black flex items-center justify-center">
+              <video
+                autoPlay
+                controls
+                playsInline
+                className="w-full h-full object-contain"
+              >
+                <source src="/services-hero-video.mp4" type="video/mp4" />
+                <source src="/tezscale-hero-video.mp4" type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+            </div>
+
+            {/* Modal Footer Info */}
+            <div className="p-4 bg-slate-900 border-t border-slate-800 flex flex-wrap items-center justify-between gap-3 text-left">
+              <div>
+                <div className="text-white font-bold text-sm">TEZSCALE — Full-Stack Growth Services</div>
+                <div className="text-slate-400 text-xs mt-0.5">High-speed web platforms, Meta Ads scaling & local map dominance.</div>
+              </div>
+              <button
+                onClick={() => {
+                  setVideoModalOpen(false);
+                  setModalOpen(true);
+                }}
+                className="px-5 py-2 rounded-full bg-[#00A3E0] hover:bg-[#008bc0] text-white text-xs font-bold transition-all shadow-md shadow-[#00A3E0]/30 cursor-pointer"
+              >
+                Book Strategy Call
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Navbar from '../Components/Navbar';
 import Hero from '../Components/Hero';
 import Services from '../Components/Services';
@@ -12,6 +12,23 @@ import ConsultationModal from '../Components/ConsultationModal';
 
 const Home = () => {
   const [modalOpen, setModalOpen] = useState(false);
+
+  // Auto-open enquiry modal on first-time website visit
+  useEffect(() => {
+    try {
+      const hasSeenModal = sessionStorage.getItem('tezscale_first_visit_modal');
+      if (!hasSeenModal) {
+        const timer = setTimeout(() => {
+          setModalOpen(true);
+          sessionStorage.setItem('tezscale_first_visit_modal', 'true');
+        }, 1200);
+        return () => clearTimeout(timer);
+      }
+    } catch (e) {
+      const timer = setTimeout(() => setModalOpen(true), 1200);
+      return () => clearTimeout(timer);
+    }
+  }, []);
 
   return (
     <div className="min-h-screen flex flex-col bg-white text-slate-800 font-sans antialiased selection:bg-[#00A3E0] selection:text-white">
