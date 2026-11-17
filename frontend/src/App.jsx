@@ -12,6 +12,7 @@ const ServiceDetailPage = lazy(() => import('./pages/ServiceDetailPage'));
 const PortfolioPage = lazy(() => import('./pages/PortfolioPage'));
 const TestimonialsPage = lazy(() => import('./pages/TestimonialsPage'));
 const ContactPage = lazy(() => import('./pages/ContactPage'));
+const TeamMemberPage = lazy(() => import('./pages/TeamMemberPage'));
 const Backoffice = lazy(() => import('./pages/Backoffice'));
 
 // Sleek minimal fallback - no screen jitter
@@ -36,6 +37,7 @@ function App() {
               <Route path="/portfolio" element={<PortfolioPage />} />
               <Route path="/testimonials" element={<TestimonialsPage />} />
               <Route path="/contact" element={<ContactPage />} />
+              <Route path="/team/:memberSlug" element={<TeamMemberPage />} />
               <Route path="/backoffice" element={<Backoffice />} />
               <Route path="/admin" element={<Navigate to="/backoffice" replace />} />
               <Route path="*" element={<Navigate to="/" replace />} />

@@ -9,10 +9,11 @@ const AnimatedCounter = ({ value = '0', duration = 1400, className = '' }) => {
   const [displayValue, setDisplayValue] = useState(() => {
     // Initial display: show 0 with matching prefix/suffix
     const str = String(value);
-    const match = str.match(/^([^\d.]*)(\d+(?:\.\d+)?)([^\d.]*)$/);
+    const match = str.match(/^([^\d.]*)(\d+(?:\.\d+)?)(.*)$/);
     if (match) {
-      const [, prefix, , suffix] = match;
-      return `${prefix}0${suffix}`;
+      const [, prefix, numStr, suffix] = match;
+      const initialZero = numStr.includes('.') ? '0.0' : '0';
+      return `${prefix}${initialZero}${suffix}`;
     }
     return str;
   });
@@ -25,7 +26,7 @@ const AnimatedCounter = ({ value = '0', duration = 1400, className = '' }) => {
     if (!node) return;
 
     const str = String(value).trim();
-    const match = str.match(/^([^\d.]*)(\d+(?:\.\d+)?)([^\d.]*)$/);
+    const match = str.match(/^([^\d.]*)(\d+(?:\.\d+)?)(.*)$/);
 
     if (!match) {
       setDisplayValue(str);
@@ -73,8 +74,8 @@ const AnimatedCounter = ({ value = '0', duration = 1400, className = '' }) => {
         });
       },
       {
-        threshold: 0.15,
-        rootMargin: '0px 0px -30px 0px',
+        threshold: 0.05,
+        rootMargin: '0px',
       }
     );
 

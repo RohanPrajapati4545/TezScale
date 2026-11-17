@@ -94,21 +94,15 @@ const Navbar = ({ onOpenConsultation }) => {
     return location.pathname.startsWith(path);
   };
 
-  // Nav link color switcher: Dark on Home page, Light on all other pages (as requested)
+  // Nav link styling: High contrast light text with glowing sky active state
   const getNavLinkClass = (path) => {
     const active = isActive(path);
-    if (isHomePage) {
-      return active
-        ? 'text-[#00A3E0] font-black'
-        : 'text-slate-900 font-bold hover:text-[#00A3E0]';
-    } else {
-      return active
-        ? 'text-[#38bdf8] font-black'
-        : 'text-slate-100 font-semibold hover:text-white';
-    }
+    return active
+      ? 'text-[#38bdf8] font-black'
+      : 'text-slate-100 font-semibold hover:text-white';
   };
 
-  const getUnderlineClass = () => (isHomePage ? 'bg-[#00A3E0]' : 'bg-[#38bdf8]');
+  const getUnderlineClass = () => 'bg-[#38bdf8]';
 
   // Cross-page and same-page smooth scroll to Home FAQs section
   const scrollToFaq = (e) => {
@@ -135,9 +129,7 @@ const Navbar = ({ onOpenConsultation }) => {
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-in-out ${
         isTransparent
           ? 'bg-transparent border-b border-transparent shadow-none'
-          : isHomePage
-            ? 'bg-white/95 backdrop-blur-md border-b border-slate-200/80 shadow-xs'
-            : 'bg-slate-950/95 backdrop-blur-md border-b border-slate-800 shadow-md'
+          : 'bg-slate-950/95 backdrop-blur-md border-b border-slate-800 shadow-md'
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -153,14 +145,10 @@ const Navbar = ({ onOpenConsultation }) => {
               </svg>
             </div>
             <div className="text-left">
-              <div className={`text-lg sm:text-2xl font-black tracking-tight leading-none uppercase ${
-                isHomePage ? 'text-slate-900' : 'text-white'
-              }`}>
+              <div className="text-lg sm:text-2xl font-black tracking-tight leading-none uppercase text-white">
                 TEZ<span className="text-[#00A3E0]">SCALE</span>
               </div>
-              <div className={`text-[8px] sm:text-[9px] uppercase tracking-widest font-bold mt-0.5 sm:mt-1 ${
-                isHomePage ? 'text-slate-500' : 'text-slate-300'
-              }`}>
+              <div className="text-[8px] sm:text-[9px] uppercase tracking-widest font-bold mt-0.5 sm:mt-1 text-slate-300">
                 by DIGITAL GROWTH
               </div>
             </div>
@@ -194,8 +182,8 @@ const Navbar = ({ onOpenConsultation }) => {
                 <ChevronDown
                   className={`w-4 h-4 transition-transform duration-300 ${
                     servicesDropdownOpen
-                      ? (isHomePage ? 'rotate-180 text-[#00A3E0]' : 'rotate-180 text-[#38bdf8]')
-                      : (isHomePage ? 'text-slate-900' : 'text-slate-300')
+                      ? 'rotate-180 text-[#38bdf8]'
+                      : 'text-slate-300'
                   }`}
                 />
                 {isActive('/services') && (
@@ -293,24 +281,20 @@ const Navbar = ({ onOpenConsultation }) => {
             <Link
               to="/#faq"
               onClick={scrollToFaq}
-              className={`relative py-1.5 transition-colors cursor-pointer ${
-                isHomePage
-                  ? 'text-slate-900 font-bold hover:text-[#00A3E0]'
-                  : 'text-slate-100 font-semibold hover:text-white'
-              }`}
+              className="relative py-1.5 transition-colors cursor-pointer text-slate-100 font-semibold hover:text-white"
             >
               <span>FAQs</span>
             </Link>
           </nav>
 
-          {/* Right Action Button (Get Free Strategy ->) */}
+          {/* Right Action Button (Matches reference image's outline pill) */}
           <div className="hidden md:flex items-center gap-3">
             <button
               onClick={onOpenConsultation}
-              className="px-5 py-2.5 rounded-full bg-[#00A3E0] hover:bg-[#008bc0] text-white font-semibold text-xs sm:text-sm shadow-md shadow-[#00A3E0]/20 transition-all duration-300 flex items-center gap-1.5 cursor-pointer hover:scale-[1.02]"
+              className="px-5 py-2 rounded-full border border-white/25 hover:border-sky-400/80 bg-white/[0.05] hover:bg-white/[0.12] backdrop-blur-md text-white font-medium text-xs sm:text-sm transition-all duration-300 flex items-center gap-1.5 cursor-pointer hover:scale-[1.02] shadow-sm"
             >
-              <span>Get Free Strategy</span>
-              <ArrowRight className="w-3.5 h-3.5" />
+              <span>Explore Services</span>
+              <ArrowRight className="w-3.5 h-3.5 text-slate-300" />
             </button>
           </div>
 
@@ -318,11 +302,7 @@ const Navbar = ({ onOpenConsultation }) => {
           <div className="flex md:hidden items-center gap-2">
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className={`p-2 rounded-lg focus:outline-none transition-colors ${
-                isHomePage
-                  ? 'text-slate-700 hover:text-[#00A3E0] hover:bg-slate-100'
-                  : 'text-white hover:text-sky-300 hover:bg-white/10'
-              }`}
+              className="p-2 rounded-lg focus:outline-none transition-colors text-white hover:text-sky-300 hover:bg-white/10"
               aria-label="Toggle menu"
             >
               {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -334,11 +314,7 @@ const Navbar = ({ onOpenConsultation }) => {
 
       {/* Mobile Menu Dropdown */}
       {mobileMenuOpen && (
-        <div className={`md:hidden border-b px-4 pt-3 pb-6 space-y-1.5 text-left shadow-xl anim-slow-slide ${
-          isHomePage
-            ? 'border-slate-200 bg-white'
-            : 'border-slate-800 bg-slate-950/98 backdrop-blur-xl'
-        }`}>
+        <div className="md:hidden border-b px-4 pt-3 pb-6 space-y-1.5 text-left shadow-xl anim-slow-slide border-slate-800 bg-slate-950/98 backdrop-blur-xl">
           {[
             { name: 'Home', path: '/' },
             { name: 'Services', path: '/services' },
@@ -360,13 +336,9 @@ const Navbar = ({ onOpenConsultation }) => {
                   }
                 }}
                 className={`block px-3.5 py-2.5 rounded-lg text-sm font-semibold transition-colors ${
-                  isHomePage
-                    ? active
-                      ? 'text-[#00A3E0] font-bold bg-[#f0f9ff]'
-                      : 'text-slate-800 hover:bg-slate-50 hover:text-[#00A3E0]'
-                    : active
-                      ? 'text-[#38bdf8] font-bold bg-white/10'
-                      : 'text-slate-200 hover:bg-white/5 hover:text-white'
+                  active
+                    ? 'text-[#38bdf8] font-bold bg-white/10'
+                    : 'text-slate-200 hover:bg-white/5 hover:text-white'
                 }`}
               >
                 {item.name}
@@ -374,7 +346,7 @@ const Navbar = ({ onOpenConsultation }) => {
             );
           })}
           
-          <div className={`pt-2 border-t ${isHomePage ? 'border-slate-100' : 'border-slate-800'}`}>
+          <div className="pt-2 border-t border-slate-800">
             <button
               onClick={() => {
                 setMobileMenuOpen(false);

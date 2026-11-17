@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import Navbar from '../Components/Navbar';
 import Footer from '../Components/Footer';
 import ConsultationModal from '../Components/ConsultationModal';
@@ -17,7 +18,14 @@ import {
   Sparkles,
   Search,
   Layers,
-  Rocket
+  Rocket,
+  ExternalLink,
+  Globe,
+  Github,
+  Linkedin,
+  Mail,
+  Phone,
+  Code2
 } from 'lucide-react';
 import { useContent } from '../context/ContentContext';
 
@@ -71,28 +79,133 @@ const pillars = [
   },
 ];
 
+const growthArchitects = [
+  {
+    slug: 'rohan-prajapati',
+    name: 'Rohan Prajapati',
+    role: 'Lead Full-Stack Web Developer',
+    badge: 'Full-Stack Developer',
+    image: '/rohan-prajapati.jpg',
+    imageClass: 'object-cover object-top',
+    bio: 'MERN Stack Developer with extensive expertise building microservices-based SaaS platforms (React.js, Node.js, Express.js, MongoDB, Docker, Socket.IO, WebRTC). Leading digital engineering at TezScale.',
+    social: {
+      github: 'https://github.com/RohanPrajapati4545',
+      linkedin: 'https://linkedin.com/in/rohan-prajapati-517128206/',
+      email: 'mailto:rohan.tech0608@gmail.com',
+      phone: 'tel:+917415377427',
+    },
+  },
+  {
+    slug: 'rustam-rathore',
+    name: 'Rustam Rathore',
+    role: 'AI/ML Engineer',
+    badge: 'AI & Machine Learning',
+    image: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=400&q=80',
+    imageClass: 'object-cover object-top',
+    bio: 'AI/ML specialist with deep expertise in Python, PyTorch, Scikit-learn, LangChain, and RAG pipelines. Architecting automated machine learning pipelines and generative AI solutions.',
+    social: {
+      github: 'https://github.com/Rustam-Rathore',
+      linkedin: 'https://linkedin.com/in/rustam-rathore-9637162a7/',
+      email: 'mailto:rustam.rathore931@gmail.com',
+      phone: 'tel:+918224847598',
+    },
+  },
+  {
+    slug: 'aarav-singhania',
+    name: 'Aarav Singhania',
+    role: 'Founder & Chief Growth Officer',
+    badge: 'Growth Strategy',
+    image: '/tezscale-founder.jpg',
+    imageClass: 'object-cover object-top',
+    bio: 'Strategic advisor to 200+ high-growth B2B firms. Specializes in scalable inbound funnels, algorithmic media buying, and predictable revenue acceleration systems.',
+    social: {
+      linkedin: 'https://linkedin.com',
+      email: 'mailto:contact@tezscale.com',
+      phone: 'tel:+919876543210',
+    },
+  },
+  {
+    slug: 'neha-kulkarni',
+    name: 'Dr. Neha Kulkarni',
+    role: 'VP, Performance & Meta Ads',
+    badge: 'Paid Acquisition',
+    image: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=400&q=80',
+    imageClass: 'object-cover object-[center_20%]',
+    bio: 'Ex-agency media director overseeing ₹15M+ in ad spend with an average ROAS of 4.2x across healthcare, dental clinics, and high-ticket real estate campaigns.',
+    social: {
+      linkedin: 'https://linkedin.com',
+      email: 'mailto:neha@tezscale.com',
+    },
+  },
+  {
+    slug: 'vikram-malhotra',
+    name: 'Vikram Malhotra',
+    role: 'Senior Cloud & DevOps Engineer',
+    badge: 'Cloud & DevOps',
+    image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80',
+    imageClass: 'object-cover object-[center_20%]',
+    bio: 'Specializes in high-availability cloud infrastructure, Docker containerization, zero-downtime CI/CD workflows, and high-concurrency microservices performance.',
+    social: {
+      github: 'https://github.com',
+      linkedin: 'https://linkedin.com',
+      email: 'mailto:vikram@tezscale.com',
+    },
+  },
+  {
+    slug: 'ananya-roy',
+    name: 'Ananya Roy',
+    role: 'Creative & Brand Identity Lead',
+    badge: 'Brand Kits & UI',
+    image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=400&q=80',
+    imageClass: 'object-cover object-top',
+    bio: 'Turns complex business values into iconic brand kits, high-CTR visual assets, scalable design systems, and high-converting marketing collateral.',
+    social: {
+      linkedin: 'https://linkedin.com',
+      email: 'mailto:ananya@tezscale.com',
+    },
+  },
+];
+
 const About = () => {
   const [modalOpen, setModalOpen] = useState(false);
+  const [contentVisible, setContentVisible] = useState(true);
   const videoRef = useRef(null);
   const { content } = useContent();
   const whyUs = content?.whyChooseUs || {};
 
-  // Ensure background video plays continuously across all browsers
+  // Sync content visibility with background video playback
   useEffect(() => {
     const video = videoRef.current;
-    if (video) {
-      video.muted = true;
-      video.defaultMuted = true;
-      const playVideo = () => {
-        const promise = video.play();
-        if (promise !== undefined) {
-          promise.catch(() => {});
-        }
-      };
-      playVideo();
-      video.addEventListener('ended', playVideo);
-      return () => video.removeEventListener('ended', playVideo);
-    }
+    if (!video) return;
+
+    video.muted = true;
+    video.defaultMuted = true;
+    const playVideo = () => {
+      const promise = video.play();
+      if (promise !== undefined) {
+        promise.catch(() => {});
+      }
+    };
+    playVideo();
+    video.addEventListener('ended', playVideo);
+
+    let animId;
+    const updateVisibility = () => {
+      if (video && !video.paused) {
+        const time = video.currentTime;
+        const dur = video.duration || 10.03;
+        const shouldHide = time >= 5.8 && time <= dur;
+        setContentVisible((prev) => (prev !== !shouldHide ? !shouldHide : prev));
+      }
+      animId = requestAnimationFrame(updateVisibility);
+    };
+
+    animId = requestAnimationFrame(updateVisibility);
+
+    return () => {
+      video.removeEventListener('ended', playVideo);
+      if (animId) cancelAnimationFrame(animId);
+    };
   }, []);
 
   // Auto-open modal on first-time visit
@@ -117,8 +230,8 @@ const About = () => {
 
       <main className="flex-1">
         {/* Hero Section with Live Background Video */}
-        <section className="relative pt-24 sm:pt-28 lg:pt-32 pb-20 sm:pb-24 overflow-hidden bg-slate-950 border-b border-slate-800 text-white">
-          {/* Background Video */}
+        <section className="relative min-h-[92vh] sm:min-h-screen flex flex-col justify-center items-center pt-24 sm:pt-28 pb-12 sm:pb-16 overflow-hidden bg-[#070913] border-b border-slate-800 text-white">
+          {/* Background Video: Shifted upwards with scale-120 for 100% full screen cover and perfect logo clearance */}
           <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
             <video
               ref={videoRef}
@@ -127,66 +240,331 @@ const About = () => {
               muted
               playsInline
               preload="auto"
-              className="w-full h-full object-cover opacity-75 sm:opacity-80 scale-105"
+              className={`w-full h-full object-contain md:object-cover portrait:object-contain landscape:object-cover object-center portrait:scale-100 landscape:scale-120 md:scale-120 portrait:-translate-y-6 sm:portrait:-translate-y-8 landscape:-translate-y-10 lg:landscape:-translate-y-16 portrait:[mask-image:linear-gradient(to_bottom,transparent_0%,black_10%,black_90%,transparent_100%)] landscape:[mask-image:none] transition-opacity duration-700 ease-in-out ${
+                contentVisible ? 'opacity-75 sm:opacity-80' : 'opacity-100'
+              }`}
             >
               <source src="/page-hero-video.mp4" type="video/mp4" />
               <source src="/services-hero-video.mp4" type="video/mp4" />
               <source src="/tezscale-hero-video-full.mp4" type="video/mp4" />
             </video>
-            <div className="absolute inset-0 bg-gradient-to-b from-slate-950/85 via-slate-950/50 to-slate-950/95 pointer-events-none" />
-            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-[#00A3E0]/15 via-transparent to-transparent pointer-events-none" />
+            {/* Soft atmospheric gradient overlays - completely fades out when content hides for full real video visibility */}
+            <div
+              className={`absolute inset-0 transition-opacity duration-700 pointer-events-none ${
+                contentVisible
+                  ? 'opacity-100 bg-gradient-to-b from-[#070913]/70 via-[#070913]/35 to-[#070913]/80'
+                  : 'opacity-0'
+              }`}
+            />
+            <div
+              className={`absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-sky-500/20 via-blue-500/10 to-transparent pointer-events-none transition-opacity duration-700 ${
+                contentVisible ? 'opacity-100' : 'opacity-0'
+              }`}
+            />
           </div>
 
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6 relative z-10">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-sky-400/30 text-sky-300 text-xs font-bold tracking-wide shadow-sm">
-              <span className="w-2 h-2 rounded-full bg-[#00A3E0] animate-pulse" />
-              <span>About TezScale</span>
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10 w-full flex-1 flex flex-col justify-center items-center">
+            {/* All Hero Content: Eyebrow, Title, Description, AND 4 Metric Cards smoothly hide together when TEZSCALE appears */}
+            <div
+              className={`w-full flex flex-col items-center transition-all duration-700 ease-in-out transform ${
+                contentVisible
+                  ? 'opacity-100 scale-100 translate-y-0 pointer-events-auto'
+                  : 'opacity-0 scale-95 -translate-y-4 pointer-events-none'
+              }`}
+            >
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-sky-400/30 text-sky-300 text-xs font-bold tracking-wide shadow-sm mb-4">
+                <span className="w-2 h-2 rounded-full bg-[#00A3E0] animate-pulse" />
+                <span>About TezScale</span>
+              </div>
+
+              <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-[1.15] max-w-4xl mx-auto mb-4">
+                Engineering Predictable <span className="text-[#00A3E0]">Digital Growth</span> for Modern Enterprises
+              </h1>
+
+              <p className="text-slate-200 text-sm sm:text-base lg:text-lg max-w-2xl mx-auto leading-relaxed font-normal mb-8 sm:mb-10">
+                We are a full-service digital marketing and tech acceleration partner helping clinics, real estate brokers, B2B exporters, and retailers dominate their markets.
+              </p>
+
+              {/* Quick Metrics Banner: Smoothly fades out with content */}
+              <div className="w-full max-w-4xl mx-auto">
+                <AnimatedContent
+                  distance={50}
+                  direction="vertical"
+                  duration={0.8}
+                  ease="power3.out"
+                  stagger={0.1}
+                  threshold={0.15}
+                  className="grid grid-cols-2 md:grid-cols-4 gap-4"
+                >
+                  <div className="p-5 rounded-2xl bg-white/10 backdrop-blur-md border border-white/15 text-center card-lift">
+                    <div className="text-3xl font-black text-[#38bdf8]">
+                      <AnimatedCounter value="250%" duration={1400} />
+                    </div>
+                    <div className="text-xs font-semibold text-slate-300 mt-1">Average ROI Growth</div>
+                  </div>
+                  <div className="p-5 rounded-2xl bg-white/10 backdrop-blur-md border border-white/15 text-center card-lift">
+                    <div className="text-3xl font-black text-emerald-400">
+                      <AnimatedCounter value="500+" duration={1500} />
+                    </div>
+                    <div className="text-xs font-semibold text-slate-300 mt-1">Happy Clients</div>
+                  </div>
+                  <div className="p-5 rounded-2xl bg-white/10 backdrop-blur-md border border-white/15 text-center card-lift">
+                    <div className="text-3xl font-black text-indigo-400">
+                      <AnimatedCounter value="5+" duration={1200} />
+                    </div>
+                    <div className="text-xs font-semibold text-slate-300 mt-1">Years Experience</div>
+                  </div>
+                  <div className="p-5 rounded-2xl bg-white/10 backdrop-blur-md border border-white/15 text-center card-lift">
+                    <div className="text-3xl font-black text-amber-400">
+                      <AnimatedCounter value="98%" duration={1300} />
+                    </div>
+                    <div className="text-xs font-semibold text-slate-300 mt-1">Client Retention Rate</div>
+                  </div>
+                </AnimatedContent>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Section 2: Leadership & Core Architects (Placed directly below Hero Section) */}
+        <section id="team" className="py-20 bg-gradient-to-b from-slate-50/90 via-white to-slate-50/90 border-b border-slate-200/80 relative overflow-hidden">
+          {/* Subtle ambient cyan glow behind track */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-sky-200/30 blur-[130px] pointer-events-none rounded-full" />
+
+          <AnimatedContent
+            distance={80}
+            direction="horizontal"
+            duration={0.8}
+            ease="power3.out"
+            threshold={0.15}
+          >
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-left mb-10 relative z-10">
+              <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+                <div>
+                  <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-sky-50 text-[#00A3E0] border border-sky-200/80 text-xs font-bold tracking-wide mb-3 shadow-2xs">
+                    <Sparkles className="w-3.5 h-3.5 text-[#00A3E0]" />
+                    <span>Leadership & Vision</span>
+                  </div>
+                  <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 tracking-tight leading-tight">
+                    Meet the Growth Architects
+                  </h2>
+                  <p className="text-slate-600 text-base sm:text-lg mt-2 max-w-2xl leading-relaxed">
+                    A multidisciplinary leadership team combining full-stack engineering discipline, creative branding, and algorithmic media buying.
+                  </p>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white text-slate-700 border border-slate-200 text-xs font-bold shadow-xs">
+                    <span className="w-2.5 h-2.5 rounded-full bg-[#00A3E0] animate-pulse" />
+                    <span>Right-to-Left Scroll • Hover to Pause</span>
+                  </div>
+                </div>
+              </div>
             </div>
 
-            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-[1.15] max-w-4xl mx-auto">
-              Engineering Predictable <span className="text-[#00A3E0]">Digital Growth</span> for Modern Enterprises
-            </h1>
+            {/* Infinite Right-to-Left Marquee Track */}
+            <div className="relative w-full overflow-hidden">
+              {/* Left & Right Soft Edge Gradient Masks */}
+              <div className="pointer-events-none absolute inset-y-0 left-0 w-16 sm:w-32 bg-gradient-to-r from-slate-50 via-slate-50/90 to-transparent z-10" />
+              <div className="pointer-events-none absolute inset-y-0 right-0 w-16 sm:w-32 bg-gradient-to-l from-slate-50 via-slate-50/90 to-transparent z-10" />
 
-            <p className="text-slate-200 text-sm sm:text-base lg:text-lg max-w-2xl mx-auto leading-relaxed font-normal">
-              We are a full-service digital marketing and tech acceleration partner helping clinics, real estate brokers, B2B exporters, and retailers dominate their markets.
-            </p>
+              <div className="anim-marquee-left flex gap-6 py-4 px-4 sm:px-6">
+                {/* Block 1 */}
+                <div className="flex gap-6 shrink-0">
+                  {growthArchitects.map((member, idx) => (
+                    <div
+                      key={`ga-set1-${idx}`}
+                      className="w-[300px] sm:w-[340px] shrink-0 bg-white rounded-3xl border border-slate-200/90 hover:border-sky-400/60 overflow-hidden shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 flex flex-col justify-between group cursor-pointer"
+                    >
+                      <div>
+                        {/* Image Container with Zoom & Badge */}
+                        <Link to={`/team/${member.slug}`} className="block h-60 w-full overflow-hidden bg-slate-100 relative cursor-pointer">
+                          <img
+                            src={member.image}
+                            alt={member.name}
+                            className={`w-full h-full ${member.imageClass || 'object-cover object-center'} group-hover:scale-108 transition-transform duration-700 ease-out`}
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-slate-950/40 via-transparent to-transparent pointer-events-none" />
+                          <span className="absolute top-3.5 right-3.5 text-[11px] font-bold text-white bg-slate-900/80 backdrop-blur-md border border-white/20 px-3 py-1 rounded-full shadow-md">
+                            {member.badge}
+                          </span>
+                        </Link>
 
-            {/* Quick Metrics Banner */}
-            <AnimatedContent
-              distance={50}
-              direction="vertical"
-              duration={0.8}
-              ease="power3.out"
-              stagger={0.1}
-              threshold={0.15}
-              className="pt-6 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto"
-            >
-              <div className="p-5 rounded-2xl bg-white/10 backdrop-blur-md border border-white/15 text-center card-lift">
-                <div className="text-3xl font-black text-[#38bdf8]">
-                  <AnimatedCounter value="250%" duration={1400} />
+                        {/* Content Body */}
+                        <div className="p-5 sm:p-6 text-left">
+                          <Link to={`/team/${member.slug}`} className="block group/title">
+                            <h3 className="font-black text-slate-900 text-lg group-hover/title:text-[#00A3E0] transition-colors leading-snug">
+                              {member.name}
+                            </h3>
+                          </Link>
+                          <div className="text-xs font-bold text-[#00A3E0] mt-1 tracking-wide">{member.role}</div>
+                          <p className="text-xs text-slate-600 mt-3 line-clamp-3 leading-relaxed min-h-[48px]">
+                            {member.bio}
+                          </p>
+
+                          {/* Social Icons Strip with Consistent Height */}
+                          <div className="flex items-center gap-2 mt-4 pt-3.5 border-t border-slate-100 min-h-[44px]">
+                            {member.social?.github && (
+                              <a
+                                href={member.social.github}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                aria-label="GitHub Profile"
+                                className="w-8 h-8 rounded-xl bg-slate-100 hover:bg-slate-900 hover:text-white text-slate-600 flex items-center justify-center transition-colors shadow-2xs"
+                              >
+                                <Github className="w-4 h-4" />
+                              </a>
+                            )}
+                            {member.social?.linkedin && (
+                              <a
+                                href={member.social.linkedin}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                aria-label="LinkedIn Profile"
+                                className="w-8 h-8 rounded-xl bg-slate-100 hover:bg-[#0077b5] hover:text-white text-slate-600 flex items-center justify-center transition-colors shadow-2xs"
+                              >
+                                <Linkedin className="w-4 h-4" />
+                              </a>
+                            )}
+                            {member.social?.email && (
+                              <a
+                                href={member.social.email}
+                                aria-label="Email"
+                                className="w-8 h-8 rounded-xl bg-slate-100 hover:bg-sky-600 hover:text-white text-slate-600 flex items-center justify-center transition-colors shadow-2xs"
+                              >
+                                <Mail className="w-4 h-4" />
+                              </a>
+                            )}
+                            {member.social?.phone && (
+                              <a
+                                href={member.social.phone}
+                                aria-label="Phone"
+                                className="w-8 h-8 rounded-xl bg-slate-100 hover:bg-emerald-600 hover:text-white text-slate-600 flex items-center justify-center transition-colors shadow-2xs"
+                              >
+                                <Phone className="w-4 h-4" />
+                              </a>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Card Bottom CTA */}
+                      <div className="px-5 sm:px-6 pb-5 pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
+                        <span className="font-semibold text-[11px] text-slate-500 flex items-center gap-1.5">
+                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                          TezScale Core
+                        </span>
+                        <Link
+                          to={`/team/${member.slug}`}
+                          className="text-[#00A3E0] hover:text-[#008bc0] font-bold text-xs cursor-pointer flex items-center gap-1 group-hover:gap-2 transition-all"
+                        >
+                          <span>View Profile</span>
+                          <span>&rarr;</span>
+                        </Link>
+                      </div>
+                    </div>
+                  ))}
                 </div>
-                <div className="text-xs font-semibold text-slate-300 mt-1">Average ROI Growth</div>
-              </div>
-              <div className="p-5 rounded-2xl bg-white/10 backdrop-blur-md border border-white/15 text-center card-lift">
-                <div className="text-3xl font-black text-emerald-400">
-                  <AnimatedCounter value="500+" duration={1500} />
+
+                {/* Block 2 (Duplicate for Seamless Infinite Marquee Loop) */}
+                <div className="flex gap-6 shrink-0" aria-hidden="true">
+                  {growthArchitects.map((member, idx) => (
+                    <div
+                      key={`ga-set2-${idx}`}
+                      className="w-[300px] sm:w-[340px] shrink-0 bg-white rounded-3xl border border-slate-200/90 hover:border-sky-400/60 overflow-hidden shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 flex flex-col justify-between group cursor-pointer"
+                    >
+                      <div>
+                        {/* Image Container with Zoom & Badge */}
+                        <Link to={`/team/${member.slug}`} tabIndex={-1} className="block h-60 w-full overflow-hidden bg-slate-100 relative cursor-pointer">
+                          <img
+                            src={member.image}
+                            alt={member.name}
+                            className={`w-full h-full ${member.imageClass || 'object-cover object-center'} group-hover:scale-108 transition-transform duration-700 ease-out`}
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-slate-950/40 via-transparent to-transparent pointer-events-none" />
+                          <span className="absolute top-3.5 right-3.5 text-[11px] font-bold text-white bg-slate-900/80 backdrop-blur-md border border-white/20 px-3 py-1 rounded-full shadow-md">
+                            {member.badge}
+                          </span>
+                        </Link>
+
+                        {/* Content Body */}
+                        <div className="p-5 sm:p-6 text-left">
+                          <Link to={`/team/${member.slug}`} tabIndex={-1} className="block group/title">
+                            <h3 className="font-black text-slate-900 text-lg group-hover/title:text-[#00A3E0] transition-colors leading-snug">
+                              {member.name}
+                            </h3>
+                          </Link>
+                          <div className="text-xs font-bold text-[#00A3E0] mt-1 tracking-wide">{member.role}</div>
+                          <p className="text-xs text-slate-600 mt-3 line-clamp-3 leading-relaxed min-h-[48px]">
+                            {member.bio}
+                          </p>
+
+                          {/* Social Icons Strip with Consistent Height */}
+                          <div className="flex items-center gap-2 mt-4 pt-3.5 border-t border-slate-100 min-h-[44px]">
+                            {member.social?.github && (
+                              <a
+                                href={member.social.github}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                aria-label="GitHub Profile"
+                                className="w-8 h-8 rounded-xl bg-slate-100 hover:bg-slate-900 hover:text-white text-slate-600 flex items-center justify-center transition-colors shadow-2xs"
+                              >
+                                <Github className="w-4 h-4" />
+                              </a>
+                            )}
+                            {member.social?.linkedin && (
+                              <a
+                                href={member.social.linkedin}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                aria-label="LinkedIn Profile"
+                                className="w-8 h-8 rounded-xl bg-slate-100 hover:bg-[#0077b5] hover:text-white text-slate-600 flex items-center justify-center transition-colors shadow-2xs"
+                              >
+                                <Linkedin className="w-4 h-4" />
+                              </a>
+                            )}
+                            {member.social?.email && (
+                              <a
+                                href={member.social.email}
+                                aria-label="Email"
+                                className="w-8 h-8 rounded-xl bg-slate-100 hover:bg-sky-600 hover:text-white text-slate-600 flex items-center justify-center transition-colors shadow-2xs"
+                              >
+                                <Mail className="w-4 h-4" />
+                              </a>
+                            )}
+                            {member.social?.phone && (
+                              <a
+                                href={member.social.phone}
+                                aria-label="Phone"
+                                className="w-8 h-8 rounded-xl bg-slate-100 hover:bg-emerald-600 hover:text-white text-slate-600 flex items-center justify-center transition-colors shadow-2xs"
+                              >
+                                <Phone className="w-4 h-4" />
+                              </a>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Card Bottom CTA */}
+                      <div className="px-5 sm:px-6 pb-5 pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
+                        <span className="font-semibold text-[11px] text-slate-500 flex items-center gap-1.5">
+                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                          TezScale Core
+                        </span>
+                        <Link
+                          to={`/team/${member.slug}`}
+                          tabIndex={-1}
+                          className="text-[#00A3E0] hover:text-[#008bc0] font-bold text-xs cursor-pointer flex items-center gap-1 group-hover:gap-2 transition-all"
+                        >
+                          <span>View Profile</span>
+                          <span>&rarr;</span>
+                        </Link>
+                      </div>
+                    </div>
+                  ))}
                 </div>
-                <div className="text-xs font-semibold text-slate-300 mt-1">Happy Clients</div>
               </div>
-              <div className="p-5 rounded-2xl bg-white/10 backdrop-blur-md border border-white/15 text-center card-lift">
-                <div className="text-3xl font-black text-indigo-400">
-                  <AnimatedCounter value="5+" duration={1200} />
-                </div>
-                <div className="text-xs font-semibold text-slate-300 mt-1">Years Experience</div>
-              </div>
-              <div className="p-5 rounded-2xl bg-white/10 backdrop-blur-md border border-white/15 text-center card-lift">
-                <div className="text-3xl font-black text-amber-400">
-                  <AnimatedCounter value="98%" duration={1300} />
-                </div>
-                <div className="text-xs font-semibold text-slate-300 mt-1">Client Retention Rate</div>
-              </div>
-            </AnimatedContent>
-          </div>
+            </div>
+          </AnimatedContent>
         </section>
 
         {/* Agency Story & Mission */}
@@ -355,96 +733,6 @@ const About = () => {
                   </div>
                   <h3 className="text-base font-bold text-slate-900 mb-2">{pil.title}</h3>
                   <p className="text-xs text-slate-600 leading-relaxed">{pil.desc}</p>
-                </div>
-              ))}
-            </AnimatedContent>
-          </div>
-        </section>
-
-        {/* Section 2.2 Team & Leadership (Section 2.2 Specification) */}
-        <section className="py-20 bg-slate-50/60 border-t border-slate-200/80">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-left">
-            <div className="text-center max-w-3xl mx-auto mb-14 space-y-3">
-              <div className="inline-flex items-center px-3.5 py-1.5 rounded-full bg-blue-100 text-blue-700 text-xs font-bold tracking-wide">
-                Leadership & Vision
-              </div>
-              <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
-                Meet the Growth Architects
-              </h2>
-              <p className="text-slate-600 text-base">
-                A multidisciplinary leadership team combining engineering discipline, creative branding, and algorithmic media buying.
-              </p>
-            </div>
-
-            <AnimatedContent
-              distance={70}
-              direction="vertical"
-              duration={0.8}
-              ease="power3.out"
-              stagger={0.12}
-              threshold={0.12}
-              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
-            >
-              {[
-                {
-                  name: 'Aarav Singhania',
-                  role: 'Founder & Chief Growth Officer',
-                  bio: 'Strategic advisor to 200+ high-growth B2B firms. Specializes in scalable inbound funnels and predictable revenue systems.',
-                  image: '/tezscale-founder.jpg',
-                  badge: 'Growth Strategy',
-                },
-                {
-                  name: 'Dr. Neha Kulkarni',
-                  role: 'VP, Performance & Meta Ads',
-                  bio: 'Ex-agency media director overseeing ₹15M+ in ad spend with an average ROAS of 4.2x across healthcare and real estate campaigns.',
-                  image: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=400&q=80',
-                  badge: 'Paid Acquisition',
-                },
-                {
-                  name: 'Rohan Sharma',
-                  role: 'Lead Full-Stack Web Architect',
-                  bio: 'Crafts ultra-fast modern web platforms with 95+ PageSpeed scores, zero-latency APIs, and seamless WhatsApp CRM integrations.',
-                  image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80',
-                  badge: 'Web Architecture',
-                },
-                {
-                  name: 'Ananya Roy',
-                  role: 'Creative & Brand Identity Lead',
-                  bio: 'Turns complex business values into iconic brand kits, high-CTR visual assets, and high-converting marketing collateral.',
-                  image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=400&q=80',
-                  badge: 'Brand Kits & UI',
-                },
-              ].map((member, idx) => (
-                <div
-                  key={idx}
-                  className="bg-white rounded-2xl border border-slate-200/90 overflow-hidden shadow-xs card-lift flex flex-col justify-between"
-                >
-                  <div>
-                    <div className="h-56 w-full overflow-hidden bg-slate-100 relative">
-                      <img
-                        src={member.image}
-                        alt={member.name}
-                        className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-500"
-                      />
-                      <span className="absolute top-3 right-3 text-[10px] font-bold text-white bg-[#00A3E0] px-2.5 py-1 rounded-md shadow-xs">
-                        {member.badge}
-                      </span>
-                    </div>
-                    <div className="p-5">
-                      <h3 className="font-extrabold text-slate-900 text-base">{member.name}</h3>
-                      <div className="text-xs font-bold text-[#00A3E0] mt-0.5">{member.role}</div>
-                      <p className="text-xs text-slate-600 mt-2.5 leading-relaxed">{member.bio}</p>
-                    </div>
-                  </div>
-                  <div className="px-5 pb-5 pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-400">
-                    <span className="font-semibold text-[11px] text-slate-500">TezScale Core Team</span>
-                    <button
-                      onClick={() => setModalOpen(true)}
-                      className="text-[#00A3E0] hover:text-[#008bc0] font-bold text-xs cursor-pointer"
-                    >
-                      Connect &rarr;
-                    </button>
-                  </div>
                 </div>
               ))}
             </AnimatedContent>

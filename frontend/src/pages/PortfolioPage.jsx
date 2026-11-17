@@ -16,7 +16,8 @@ import {
   Stethoscope,
   ShoppingCart,
   Layers,
-  ArrowRight
+  ArrowRight,
+  ExternalLink
 } from 'lucide-react';
 import { useContent } from '../context/ContentContext';
 
@@ -156,31 +157,161 @@ const portfolioItems = [
       'Accelerated international deal closures with UAE and EU buyers',
     ],
   },
+  {
+    id: 101,
+    title: 'Ayurflex — Clinical Practice & Healthcare SaaS',
+    subtitle: 'Healthcare SaaS & Clinic Automation',
+    category: 'saas',
+    categoryName: 'Healthcare SaaS',
+    metric: 'Production SaaS',
+    image: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=800&q=80',
+    description: 'Microservices-based healthcare SaaS platform built for Ayurveda doctors with patient appointments, digital medical records, prescription generation, and automated clinic billing.',
+    liveUrl: 'https://ayurflex.digiflex.ai',
+    results: [
+      'Microservices architecture built on React.js, Node.js, and MongoDB',
+      'Docker containerized deployment with high availability',
+      'Automated patient appointment booking and WhatsApp reminders',
+    ],
+  },
+  {
+    id: 102,
+    title: 'Oliveflex — Enterprise Workflow Automation Suite',
+    subtitle: 'Enterprise Microservices Platform',
+    category: 'saas',
+    categoryName: 'Enterprise SaaS',
+    metric: 'Enterprise Suite',
+    image: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=800&q=80',
+    description: 'Modular enterprise workflow automation, client CRM, and high-concurrency microservices platform managing service communication and scalable operations.',
+    liveUrl: 'https://oliveflex.digiflex.ai',
+    results: [
+      'Modular microservices architecture with asynchronous queues',
+      'Integrated client and vendor management dashboards',
+      'Role-based permissions and high-throughput REST APIs',
+    ],
+  },
+  {
+    id: 103,
+    title: 'Assetzo — Cloud Asset Management SaaS',
+    subtitle: 'Enterprise Asset & Equipment Tracking',
+    category: 'saas',
+    categoryName: 'Cloud SaaS',
+    metric: 'Live SaaS',
+    image: 'https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?auto=format&fit=crop&w=800&q=80',
+    description: 'Cloud asset management and lifecycle tracking SaaS platform providing complete asset tracking, depreciation audits, maintenance schedules, and equipment logs.',
+    liveUrl: 'https://assetzo.questdigiflex.ai',
+    results: [
+      'End-to-end asset lifecycle and depreciation audit trail',
+      'Interactive QR/barcode tracking and maintenance logging',
+      'Role-based multi-department equipment management',
+    ],
+  },
+  {
+    id: 104,
+    title: 'Ekon — Multi-Service Business Intelligence',
+    subtitle: 'Digital Business Acceleration Platform',
+    category: 'saas',
+    categoryName: 'Business SaaS',
+    metric: 'Live SaaS',
+    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80',
+    description: 'Scalable business acceleration platform built for unified service management, real-time client performance tracking, and actionable revenue intelligence.',
+    liveUrl: 'https://ekonn.questdigiflex.ai',
+    results: [
+      'Unified multi-service dashboard for business performance',
+      'Real-time metrics tracking and custom client reporting',
+      'High-performance React and Node.js REST API architecture',
+    ],
+  },
+  {
+    id: 105,
+    title: 'Talkify — Real-Time Chat & WebRTC Video',
+    subtitle: 'Real-Time Communication Platform',
+    category: 'saas',
+    categoryName: 'Real-Time App',
+    metric: 'WebSockets & WebRTC',
+    image: 'https://images.unsplash.com/photo-1611746872915-64382b5c76da?auto=format&fit=crop&w=800&q=80',
+    description: 'Full-duplex real-time communication platform featuring peer-to-peer WebRTC audio/video calls, private & group messaging, invite codes, online status, and media uploads.',
+    liveUrl: 'https://talkify-git-main-rohanprajjapati-5449s-projects.vercel.app/login',
+    results: [
+      'Peer-to-peer WebRTC high-definition voice and video calls',
+      'Sub-50ms Socket.IO WebSocket private and group messaging',
+      'Encrypted JWT authentication and Cloudinary media processing',
+    ],
+  },
+  {
+    id: 106,
+    title: 'Gym SaaS — Multi-Tenant Fitness Management',
+    subtitle: 'Multi-Tenant SaaS Platform',
+    category: 'saas',
+    categoryName: 'Multi-Tenant SaaS',
+    metric: 'Multi-Tenant',
+    image: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=800&q=80',
+    description: 'Multi-tenant fitness management platform with role-based access for Super Admin, Owner, Manager, and Trainer with automated billing and member tracking.',
+    liveUrl: 'https://gym-saas-git-main-rohanprajjapati-5449s-projects.vercel.app/',
+    results: [
+      'Multi-tenant database isolation using tenantId and branchId',
+      'Automated membership plans, payment tracking, and invoicing',
+      'Docker containerized backend services for high scalability',
+    ],
+  },
+  {
+    id: 107,
+    title: 'Quick Seva — On-Demand Home Services Platform',
+    subtitle: 'Hyperlocal Services Marketplace',
+    category: 'saas',
+    categoryName: 'Marketplace App',
+    metric: 'Payments Ready',
+    image: 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=800&q=80',
+    description: 'Hyperlocal home services marketplace connecting customers with verified trade technicians, with Razorpay payments and live service booking.',
+    liveUrl: 'https://quick-seva-git-main-rohanprajjapati-5449s-projects.vercel.app/',
+    results: [
+      'Customer, vendor, and admin modules with service workflows',
+      'Seamless Razorpay payment gateway integration',
+      'Automated Nodemailer email notifications and real-time updates',
+    ],
+  },
 ];
 
 const PortfolioPage = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [filter, setFilter] = useState('all');
+  const [contentVisible, setContentVisible] = useState(true);
   const videoRef = useRef(null);
   const { content } = useContent();
   const metrics = content?.metrics || {};
 
-  // Ensure background video plays continuously across all browsers
+  // Sync content visibility with background video playback
   useEffect(() => {
     const video = videoRef.current;
-    if (video) {
-      video.muted = true;
-      video.defaultMuted = true;
-      const playVideo = () => {
-        const promise = video.play();
-        if (promise !== undefined) {
-          promise.catch(() => {});
-        }
-      };
-      playVideo();
-      video.addEventListener('ended', playVideo);
-      return () => video.removeEventListener('ended', playVideo);
-    }
+    if (!video) return;
+
+    video.muted = true;
+    video.defaultMuted = true;
+    const playVideo = () => {
+      const promise = video.play();
+      if (promise !== undefined) {
+        promise.catch(() => {});
+      }
+    };
+    playVideo();
+    video.addEventListener('ended', playVideo);
+
+    let animId;
+    const updateVisibility = () => {
+      if (video && !video.paused) {
+        const time = video.currentTime;
+        const dur = video.duration || 10.03;
+        const shouldHide = time >= 5.8 && time <= dur;
+        setContentVisible((prev) => (prev !== !shouldHide ? !shouldHide : prev));
+      }
+      animId = requestAnimationFrame(updateVisibility);
+    };
+
+    animId = requestAnimationFrame(updateVisibility);
+
+    return () => {
+      video.removeEventListener('ended', playVideo);
+      if (animId) cancelAnimationFrame(animId);
+    };
   }, []);
 
   const filteredItems = filter === 'all'
@@ -193,8 +324,8 @@ const PortfolioPage = () => {
 
       <main className="flex-1">
         {/* Hero Section with Live Background Video */}
-        <section className="relative pt-24 sm:pt-28 lg:pt-32 pb-20 sm:pb-24 overflow-hidden bg-slate-950 border-b border-slate-800 text-white">
-          {/* Background Video */}
+        <section className="relative min-h-[92vh] sm:min-h-screen flex flex-col justify-center items-center pt-24 sm:pt-28 pb-12 sm:pb-16 overflow-hidden bg-[#070913] border-b border-slate-800 text-white">
+          {/* Background Video: Shifted upwards with scale-120 for 100% full screen cover and perfect logo clearance */}
           <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
             <video
               ref={videoRef}
@@ -203,82 +334,106 @@ const PortfolioPage = () => {
               muted
               playsInline
               preload="auto"
-              className="w-full h-full object-cover opacity-75 sm:opacity-80 scale-105"
+              className={`w-full h-full object-contain md:object-cover portrait:object-contain landscape:object-cover object-center portrait:scale-100 landscape:scale-120 md:scale-120 portrait:-translate-y-6 sm:portrait:-translate-y-8 landscape:-translate-y-10 lg:landscape:-translate-y-16 portrait:[mask-image:linear-gradient(to_bottom,transparent_0%,black_10%,black_90%,transparent_100%)] landscape:[mask-image:none] transition-opacity duration-700 ease-in-out ${
+                contentVisible ? 'opacity-75 sm:opacity-80' : 'opacity-100'
+              }`}
             >
               <source src="/page-hero-video.mp4" type="video/mp4" />
               <source src="/services-hero-video.mp4" type="video/mp4" />
               <source src="/tezscale-hero-video-full.mp4" type="video/mp4" />
             </video>
-            <div className="absolute inset-0 bg-gradient-to-b from-slate-950/85 via-slate-950/50 to-slate-950/95 pointer-events-none" />
-            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-[#00A3E0]/15 via-transparent to-transparent pointer-events-none" />
+            {/* Soft atmospheric gradient overlays - completely fades out when content hides for full real video visibility */}
+            <div
+              className={`absolute inset-0 transition-opacity duration-700 pointer-events-none ${
+                contentVisible
+                  ? 'opacity-100 bg-gradient-to-b from-[#070913]/70 via-[#070913]/35 to-[#070913]/80'
+                  : 'opacity-0'
+              }`}
+            />
+            <div
+              className={`absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-sky-500/20 via-blue-500/10 to-transparent pointer-events-none transition-opacity duration-700 ${
+                contentVisible ? 'opacity-100' : 'opacity-0'
+              }`}
+            />
           </div>
 
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6 relative z-10">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-sky-400/30 text-sky-300 text-xs font-bold tracking-wide shadow-sm">
-              <span className="w-2 h-2 rounded-full bg-[#00A3E0] animate-pulse" />
-              <span>Proven Client Impact & Case Studies</span>
-            </div>
-
-            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-[1.15] max-w-4xl mx-auto">
-              Real Results for <span className="text-[#00A3E0]">Real Businesses</span>
-            </h1>
-
-            <p className="text-slate-200 text-sm sm:text-base lg:text-lg max-w-2xl mx-auto leading-relaxed font-normal">
-              Explore how we helped healthcare clinics, property developers, manufacturers, and direct-to-consumer brands unlock predictable growth.
-            </p>
-
-            {/* 3 Metric Counters */}
-            <AnimatedContent
-              distance={50}
-              direction="vertical"
-              duration={0.8}
-              ease="power3.out"
-              stagger={0.1}
-              threshold={0.15}
-              className="pt-6 grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-3xl mx-auto"
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10 w-full flex-1 flex flex-col justify-center items-center">
+            {/* All Hero Content: Eyebrow, Title, Description, AND 3 Metric Counters smoothly hide together when TEZSCALE appears */}
+            <div
+              className={`w-full flex flex-col items-center transition-all duration-700 ease-in-out transform ${
+                contentVisible
+                  ? 'opacity-100 scale-100 translate-y-0 pointer-events-auto'
+                  : 'opacity-0 scale-95 -translate-y-4 pointer-events-none'
+              }`}
             >
-              <div className="p-6 rounded-2xl bg-white/10 backdrop-blur-md border border-white/15 text-left flex items-center gap-4.5 shadow-2xs hover:shadow-md transition-all duration-300">
-                <div className="w-12 h-12 rounded-xl bg-sky-500/20 border border-sky-400/30 text-[#38bdf8] flex items-center justify-center font-bold shrink-0">
-                  <BarChart3 className="w-6 h-6" />
-                </div>
-                <div>
-                  <div className="text-3xl sm:text-[34px] font-black text-white leading-tight">
-                    <AnimatedCounter value={metrics.stat1Value || '250%'} duration={1400} />
-                  </div>
-                  <div className="text-[11px] font-bold text-slate-300 uppercase tracking-wider mt-0.5">
-                    {metrics.stat1Label || 'AVERAGE GROWTH'}
-                  </div>
-                </div>
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-sky-400/30 text-sky-300 text-xs font-bold tracking-wide shadow-sm mb-4">
+                <span className="w-2 h-2 rounded-full bg-[#00A3E0] animate-pulse" />
+                <span>Proven Client Impact & Case Studies</span>
               </div>
 
-              <div className="p-6 rounded-2xl bg-white/10 backdrop-blur-md border border-white/15 text-left flex items-center gap-4.5 shadow-2xs hover:shadow-md transition-all duration-300">
-                <div className="w-12 h-12 rounded-xl bg-emerald-500/20 border border-emerald-400/30 text-emerald-400 flex items-center justify-center font-bold shrink-0">
-                  <Users className="w-6 h-6" />
-                </div>
-                <div>
-                  <div className="text-3xl sm:text-[34px] font-black text-white leading-tight">
-                    <AnimatedCounter value={metrics.stat2Value || '500+'} duration={1500} />
-                  </div>
-                  <div className="text-[11px] font-bold text-slate-300 uppercase tracking-wider mt-0.5">
-                    {metrics.stat2Label || 'HAPPY CLIENTS'}
-                  </div>
-                </div>
-              </div>
+              <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-[1.15] max-w-4xl mx-auto mb-4">
+                Real Results for <span className="text-[#00A3E0]">Real Businesses</span>
+              </h1>
 
-              <div className="p-6 rounded-2xl bg-white/10 backdrop-blur-md border border-white/15 text-left flex items-center gap-4.5 shadow-2xs hover:shadow-md transition-all duration-300">
-                <div className="w-12 h-12 rounded-xl bg-amber-500/20 border border-amber-400/30 text-amber-400 flex items-center justify-center font-bold shrink-0">
-                  <Clock className="w-6 h-6" />
-                </div>
-                <div>
-                  <div className="text-3xl sm:text-[34px] font-black text-white leading-tight">
-                    <AnimatedCounter value={metrics.stat3Value || '5+'} duration={1200} />
+              <p className="text-slate-200 text-sm sm:text-base lg:text-lg max-w-2xl mx-auto leading-relaxed font-normal mb-8 sm:mb-10">
+                Explore how we helped healthcare clinics, property developers, manufacturers, and direct-to-consumer brands unlock predictable growth.
+              </p>
+
+              {/* 3 Metric Counters: Smoothly fades out with content */}
+              <div className="w-full max-w-3xl mx-auto">
+                <AnimatedContent
+                  distance={50}
+                  direction="vertical"
+                  duration={0.8}
+                  ease="power3.out"
+                  stagger={0.1}
+                  threshold={0.15}
+                  className="grid grid-cols-1 sm:grid-cols-3 gap-6"
+                >
+                  <div className="p-6 rounded-2xl bg-white/10 backdrop-blur-md border border-white/15 text-left flex items-center gap-4.5 shadow-2xs hover:shadow-md transition-all duration-300">
+                    <div className="w-12 h-12 rounded-xl bg-sky-500/20 border border-sky-400/30 text-[#38bdf8] flex items-center justify-center font-bold shrink-0">
+                      <BarChart3 className="w-6 h-6" />
+                    </div>
+                    <div>
+                      <div className="text-3xl sm:text-[34px] font-black text-white leading-tight">
+                        <AnimatedCounter value={metrics.stat1Value || '250%'} duration={1400} />
+                      </div>
+                      <div className="text-[11px] font-bold text-slate-300 uppercase tracking-wider mt-0.5">
+                        {metrics.stat1Label || 'AVERAGE GROWTH'}
+                      </div>
+                    </div>
                   </div>
-                  <div className="text-[11px] font-bold text-slate-300 uppercase tracking-wider mt-0.5">
-                    {metrics.stat3Label || 'YEARS EXPERIENCE'}
+
+                  <div className="p-6 rounded-2xl bg-white/10 backdrop-blur-md border border-white/15 text-left flex items-center gap-4.5 shadow-2xs hover:shadow-md transition-all duration-300">
+                    <div className="w-12 h-12 rounded-xl bg-emerald-500/20 border border-emerald-400/30 text-emerald-400 flex items-center justify-center font-bold shrink-0">
+                      <Users className="w-6 h-6" />
+                    </div>
+                    <div>
+                      <div className="text-3xl sm:text-[34px] font-black text-white leading-tight">
+                        <AnimatedCounter value={metrics.stat2Value || '500+'} duration={1500} />
+                      </div>
+                      <div className="text-[11px] font-bold text-slate-300 uppercase tracking-wider mt-0.5">
+                        {metrics.stat2Label || 'HAPPY CLIENTS'}
+                      </div>
+                    </div>
                   </div>
-                </div>
+
+                  <div className="p-6 rounded-2xl bg-white/10 backdrop-blur-md border border-white/15 text-left flex items-center gap-4.5 shadow-2xs hover:shadow-md transition-all duration-300">
+                    <div className="w-12 h-12 rounded-xl bg-amber-500/20 border border-amber-400/30 text-amber-400 flex items-center justify-center font-bold shrink-0">
+                      <Clock className="w-6 h-6" />
+                    </div>
+                    <div>
+                      <div className="text-3xl sm:text-[34px] font-black text-white leading-tight">
+                        <AnimatedCounter value={metrics.stat3Value || '5+'} duration={1200} />
+                      </div>
+                      <div className="text-[11px] font-bold text-slate-300 uppercase tracking-wider mt-0.5">
+                        {metrics.stat3Label || 'YEARS EXPERIENCE'}
+                      </div>
+                    </div>
+                  </div>
+                </AnimatedContent>
               </div>
-            </AnimatedContent>
+            </div>
           </div>
         </section>
 
@@ -295,7 +450,7 @@ const PortfolioPage = () => {
                 { id: 'realestate', label: 'Real Estate' },
                 { id: 'ecommerce', label: 'E-Commerce' },
                 { id: 'engineering', label: 'Engineering B2B' },
-                { id: 'saas', label: 'SaaS' },
+                { id: 'saas', label: 'SaaS & Web Platforms' },
               ].map((tab) => (
                 <button
                   key={tab.id}
@@ -366,14 +521,35 @@ const PortfolioPage = () => {
                     </div>
 
                     {/* CTA link */}
-                    <div className="pt-3">
-                      <button
-                        onClick={() => setModalOpen(true)}
-                        className="w-full py-2.5 rounded-xl border border-slate-200 hover:border-blue-600 hover:bg-blue-50 text-slate-700 hover:text-blue-700 text-xs font-bold transition-all flex items-center justify-center gap-1.5 cursor-pointer"
-                      >
-                        <span>Replicate These Results</span>
-                        <ArrowUpRight className="w-3.5 h-3.5" />
-                      </button>
+                    <div className="pt-3 flex items-center gap-2">
+                      {study.liveUrl ? (
+                        <>
+                          <a
+                            href={study.liveUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex-1 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold transition-all flex items-center justify-center gap-1.5 cursor-pointer shadow-xs hover:scale-[1.02]"
+                          >
+                            <span>Live Demo</span>
+                            <ExternalLink className="w-3.5 h-3.5" />
+                          </a>
+                          <button
+                            onClick={() => setModalOpen(true)}
+                            className="py-2.5 px-3.5 rounded-xl border border-slate-200 hover:border-blue-600 hover:bg-blue-50 text-slate-700 hover:text-blue-700 text-xs font-bold transition-all flex items-center justify-center gap-1.5 cursor-pointer"
+                            title="Replicate These Results"
+                          >
+                            <ArrowUpRight className="w-3.5 h-3.5" />
+                          </button>
+                        </>
+                      ) : (
+                        <button
+                          onClick={() => setModalOpen(true)}
+                          className="w-full py-2.5 rounded-xl border border-slate-200 hover:border-blue-600 hover:bg-blue-50 text-slate-700 hover:text-blue-700 text-xs font-bold transition-all flex items-center justify-center gap-1.5 cursor-pointer"
+                        >
+                          <span>Replicate These Results</span>
+                          <ArrowUpRight className="w-3.5 h-3.5" />
+                        </button>
+                      )}
                     </div>
                   </div>
                 </div>

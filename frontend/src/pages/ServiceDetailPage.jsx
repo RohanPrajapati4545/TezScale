@@ -23,7 +23,8 @@ import {
   Share2,
   Infinity as InfinityIcon,
   Loader2,
-  Lock
+  Lock,
+  ExternalLink
 } from 'lucide-react';
 import Navbar from '../Components/Navbar';
 import Footer from '../Components/Footer';
@@ -82,23 +83,42 @@ const ServiceDetailPage = () => {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState('');
+  const [contentVisible, setContentVisible] = useState(true);
   const videoRef = useRef(null);
 
+  // Sync content visibility with background video playback
   useEffect(() => {
     const video = videoRef.current;
-    if (video) {
-      video.muted = true;
-      video.defaultMuted = true;
-      const playVideo = () => {
-        const promise = video.play();
-        if (promise !== undefined) {
-          promise.catch(() => {});
-        }
-      };
-      playVideo();
-      video.addEventListener('ended', playVideo);
-      return () => video.removeEventListener('ended', playVideo);
-    }
+    if (!video) return;
+
+    video.muted = true;
+    video.defaultMuted = true;
+    const playVideo = () => {
+      const promise = video.play();
+      if (promise !== undefined) {
+        promise.catch(() => {});
+      }
+    };
+    playVideo();
+    video.addEventListener('ended', playVideo);
+
+    let animId;
+    const updateVisibility = () => {
+      if (video && !video.paused) {
+        const time = video.currentTime;
+        const dur = video.duration || 10.03;
+        const shouldHide = time >= 5.8 && time <= dur;
+        setContentVisible((prev) => (prev !== !shouldHide ? !shouldHide : prev));
+      }
+      animId = requestAnimationFrame(updateVisibility);
+    };
+
+    animId = requestAnimationFrame(updateVisibility);
+
+    return () => {
+      video.removeEventListener('ended', playVideo);
+      if (animId) cancelAnimationFrame(animId);
+    };
   }, []);
 
   // Scroll to top on route change
@@ -197,8 +217,8 @@ const ServiceDetailPage = () => {
 
       <main className="flex-1">
         {/* Breadcrumbs & Header Banner with Live Background Video */}
-        <section className="relative pt-24 sm:pt-28 pb-16 overflow-hidden bg-slate-950 border-b border-slate-800 text-white">
-          {/* Background Video */}
+        <section className="relative min-h-[92vh] sm:min-h-screen flex flex-col justify-center pt-24 sm:pt-28 pb-12 sm:pb-16 overflow-hidden bg-[#070913] border-b border-slate-800 text-white">
+          {/* Background Video: Shifted upwards with scale-120 for 100% full screen cover and perfect logo clearance */}
           <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
             <video
               ref={videoRef}
@@ -207,20 +227,33 @@ const ServiceDetailPage = () => {
               muted
               playsInline
               preload="auto"
-              className="w-full h-full object-cover opacity-70 sm:opacity-75 scale-105"
+              className={`w-full h-full object-contain md:object-cover portrait:object-contain landscape:object-cover object-center portrait:scale-100 landscape:scale-120 md:scale-120 portrait:-translate-y-6 sm:portrait:-translate-y-8 landscape:-translate-y-10 lg:landscape:-translate-y-16 portrait:[mask-image:linear-gradient(to_bottom,transparent_0%,black_10%,black_90%,transparent_100%)] landscape:[mask-image:none] transition-opacity duration-700 ease-in-out ${
+                contentVisible ? 'opacity-75 sm:opacity-80' : 'opacity-100'
+              }`}
             >
               <source src="/page-hero-video.mp4" type="video/mp4" />
               <source src="/services-hero-video.mp4" type="video/mp4" />
               <source src="/tezscale-hero-video-full.mp4" type="video/mp4" />
             </video>
-            <div className="absolute inset-0 bg-gradient-to-b from-slate-950/85 via-slate-950/50 to-slate-950/95 pointer-events-none" />
-            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-[#00A3E0]/15 via-transparent to-transparent pointer-events-none" />
+            {/* Soft atmospheric gradient overlays - completely fades out when content hides for full real video visibility */}
+            <div
+              className={`absolute inset-0 transition-opacity duration-700 pointer-events-none ${
+                contentVisible
+                  ? 'opacity-100 bg-gradient-to-b from-[#070913]/70 via-[#070913]/35 to-[#070913]/80'
+                  : 'opacity-0'
+              }`}
+            />
+            <div
+              className={`absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-sky-500/20 via-blue-500/10 to-transparent pointer-events-none transition-opacity duration-700 ${
+                contentVisible ? 'opacity-100' : 'opacity-0'
+              }`}
+            />
           </div>
 
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-left relative z-10">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-left relative z-10 w-full flex-1 flex flex-col justify-center">
 
-            {/* Breadcrumb row */}
-            <div className="flex items-center gap-2 text-xs font-semibold text-slate-300 mb-6 flex-wrap">
+            {/* Breadcrumb row: Fades smoothly with content */}
+            <div className={`flex items-center gap-2 text-xs font-semibold text-slate-300 mb-6 flex-wrap transition-opacity duration-700 ${contentVisible ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
               <Link to="/" className="hover:text-white transition-colors">Home</Link>
               <span>/</span>
               <Link to="/services" className="hover:text-white transition-colors">Services</Link>
@@ -232,21 +265,30 @@ const ServiceDetailPage = () => {
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
 
               <div className="lg:col-span-8 space-y-5">
-                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-sky-400/30 text-sky-300 text-xs font-bold tracking-wide shadow-sm">
-                  <Sparkles className="w-3.5 h-3.5 text-[#00A3E0]" />
-                  <span>{service.badge}</span>
+                {/* Content ABOVE the buttons: Smoothly hides when TEZSCALE appears, restores when video loops */}
+                <div
+                  className={`w-full flex flex-col items-start transition-all duration-700 ease-in-out transform ${
+                    contentVisible
+                      ? 'opacity-100 scale-100 translate-y-0 pointer-events-auto'
+                      : 'opacity-0 scale-95 -translate-y-4 pointer-events-none'
+                  }`}
+                >
+                  <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-sky-400/30 text-sky-300 text-xs font-bold tracking-wide shadow-sm mb-4">
+                    <span className="w-2 h-2 rounded-full bg-[#00A3E0] animate-pulse" />
+                    <span>{service.badge}</span>
+                  </div>
+
+                  <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight leading-tight mb-4">
+                    {service.heroHeadline}
+                  </h1>
+
+                  <p className="text-slate-200 text-base sm:text-lg leading-relaxed max-w-2xl font-normal">
+                    {service.longDesc}
+                  </p>
                 </div>
 
-                <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight leading-tight">
-                  {service.heroHeadline}
-                </h1>
-
-                <p className="text-slate-200 text-base sm:text-lg leading-relaxed max-w-2xl font-normal">
-                  {service.longDesc}
-                </p>
-
-                {/* Dual Pill CTA Buttons */}
-                <div className="flex flex-wrap items-center gap-4 pt-3">
+                {/* Dual Pill CTA Buttons: PERMANENTLY VISIBLE */}
+                <div className="flex flex-wrap items-center gap-4 pt-3 relative z-20 mt-3 sm:mt-5">
                   <a
                     href="#service-lead-form"
                     className="px-7 py-3.5 rounded-full bg-[#00A3E0] hover:bg-[#008bc0] text-white font-bold text-xs sm:text-sm shadow-md shadow-[#00A3E0]/30 transition-all duration-300 flex items-center gap-2 cursor-pointer hover:scale-[1.02]"
@@ -589,6 +631,77 @@ const ServiceDetailPage = () => {
             </div>
           </div>
         </section>
+
+        {/* Featured Live SaaS Platforms & Production Web Applications */}
+        {service.liveProjects && service.liveProjects.length > 0 && (
+          <section className="py-20 bg-slate-900 text-white border-t border-slate-800">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <div className="text-center max-w-3xl mx-auto space-y-4 mb-14">
+                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-sky-500/10 border border-sky-400/30 text-sky-300 text-xs font-bold uppercase tracking-wider">
+                  <Code2 className="w-3.5 h-3.5 text-sky-400" />
+                  <span>Real-World Proof of Concept</span>
+                </div>
+                <h2 className="text-3xl sm:text-4xl font-black text-white tracking-tight">
+                  Featured Live SaaS Platforms & Web Applications
+                </h2>
+                <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
+                  Direct production applications architected with modern microservices, WebSockets, real-time WebRTC, and high-concurrency database systems. Test the live platforms directly below.
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {service.liveProjects.map((proj, idx) => (
+                  <div
+                    key={idx}
+                    className="bg-slate-800/80 rounded-2xl border border-slate-700/80 p-6 hover:border-sky-400/60 shadow-lg transition-all duration-300 card-lift flex flex-col justify-between group"
+                  >
+                    <div className="space-y-4">
+                      <div className="flex items-center justify-between gap-2">
+                        <span className="text-[11px] font-bold text-sky-300 bg-sky-950/80 border border-sky-500/30 px-2.5 py-1 rounded-md">
+                          {proj.badge}
+                        </span>
+                        <span className="text-[11px] text-slate-400 font-semibold">{proj.category}</span>
+                      </div>
+
+                      <div>
+                        <h3 className="text-xl font-black text-white group-hover:text-[#38bdf8] transition-colors flex items-center gap-2">
+                          <span>{proj.name}</span>
+                          <ExternalLink className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity text-[#38bdf8]" />
+                        </h3>
+                        <p className="text-xs text-slate-300 mt-2 leading-relaxed">
+                          {proj.desc}
+                        </p>
+                      </div>
+
+                      <div className="pt-2">
+                        <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1">Architecture</span>
+                        <div className="text-[11px] font-semibold text-slate-200">
+                          {proj.tech}
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="pt-5 mt-5 border-t border-slate-700/70 flex items-center justify-between">
+                      <span className="text-xs font-semibold text-emerald-400 flex items-center gap-1.5">
+                        <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                        Live Demo Ready
+                      </span>
+                      <a
+                        href={proj.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1.5 text-xs font-bold text-white bg-[#00A3E0] hover:bg-[#008bc0] px-4 py-2 rounded-xl shadow-xs transition-all hover:scale-105"
+                      >
+                        <span>Launch Demo</span>
+                        <ExternalLink className="w-3.5 h-3.5" />
+                      </a>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
 
         {/* Explore Other Services Section */}
         <section className="py-16 bg-slate-50 border-t border-slate-200/80">

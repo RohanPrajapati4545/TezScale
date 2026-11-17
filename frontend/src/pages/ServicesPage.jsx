@@ -20,7 +20,8 @@ import {
   Clock,
   Layers,
   Play,
-  X
+  X,
+  ExternalLink
 } from 'lucide-react';
 import { useContent } from '../context/ContentContext';
 
@@ -138,25 +139,43 @@ const detailedServices = [
 const ServicesPage = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [videoModalOpen, setVideoModalOpen] = useState(false);
+  const [contentVisible, setContentVisible] = useState(true);
   const videoRef = useRef(null);
   const { content } = useContent();
 
-  // Ensure background video plays continuously across all browsers
+  // Sync content visibility with background video playback
   useEffect(() => {
     const video = videoRef.current;
-    if (video) {
-      video.muted = true;
-      video.defaultMuted = true;
-      const playVideo = () => {
-        const promise = video.play();
-        if (promise !== undefined) {
-          promise.catch(() => {});
-        }
-      };
-      playVideo();
-      video.addEventListener('ended', playVideo);
-      return () => video.removeEventListener('ended', playVideo);
-    }
+    if (!video) return;
+
+    video.muted = true;
+    video.defaultMuted = true;
+    const playVideo = () => {
+      const promise = video.play();
+      if (promise !== undefined) {
+        promise.catch(() => {});
+      }
+    };
+    playVideo();
+    video.addEventListener('ended', playVideo);
+
+    let animId;
+    const updateVisibility = () => {
+      if (video && !video.paused) {
+        const time = video.currentTime;
+        const dur = video.duration || 10.03;
+        const shouldHide = time >= 5.8 && time <= dur;
+        setContentVisible((prev) => (prev !== !shouldHide ? !shouldHide : prev));
+      }
+      animId = requestAnimationFrame(updateVisibility);
+    };
+
+    animId = requestAnimationFrame(updateVisibility);
+
+    return () => {
+      video.removeEventListener('ended', playVideo);
+      if (animId) cancelAnimationFrame(animId);
+    };
   }, []);
 
   // Auto-open modal on first-time visit
@@ -181,8 +200,8 @@ const ServicesPage = () => {
 
       <main className="flex-1">
         {/* Services Page Hero with Live Background Video */}
-        <section className="relative pt-24 sm:pt-28 lg:pt-32 pb-20 sm:pb-24 overflow-hidden bg-slate-950 border-b border-slate-800 text-white">
-          {/* Background Video: Continuous loop with optimal cinematic clarity */}
+        <section className="relative min-h-[92vh] sm:min-h-screen flex flex-col justify-center items-center pt-24 sm:pt-28 pb-12 sm:pb-16 overflow-hidden bg-[#070913] border-b border-slate-800 text-white">
+          {/* Background Video: Shifted upwards with scale-120 for 100% full screen cover and perfect logo clearance */}
           <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
             <video
               ref={videoRef}
@@ -191,37 +210,58 @@ const ServicesPage = () => {
               muted
               playsInline
               preload="auto"
-              className="w-full h-full object-cover opacity-75 sm:opacity-80 scale-105"
+              className={`w-full h-full object-contain md:object-cover portrait:object-contain landscape:object-cover object-center portrait:scale-100 landscape:scale-120 md:scale-120 portrait:-translate-y-6 sm:portrait:-translate-y-8 landscape:-translate-y-10 lg:landscape:-translate-y-16 portrait:[mask-image:linear-gradient(to_bottom,transparent_0%,black_10%,black_90%,transparent_100%)] landscape:[mask-image:none] transition-opacity duration-700 ease-in-out ${
+                contentVisible ? 'opacity-75 sm:opacity-80' : 'opacity-100'
+              }`}
             >
               <source src="/services-hero-video.mp4" type="video/mp4" />
               <source src="/tezscale-hero-video-full.mp4" type="video/mp4" />
               <source src="/tezscale-hero-video.mp4" type="video/mp4" />
             </video>
-            {/* Dual gradient overlay: Keeps 3D video graphics vivid while ensuring 100% text readability */}
-            <div className="absolute inset-0 bg-gradient-to-b from-slate-950/85 via-slate-950/45 to-slate-950/95 pointer-events-none" />
-            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-[#00A3E0]/15 via-transparent to-transparent pointer-events-none" />
+            {/* Soft atmospheric gradient overlays - completely fades out when content hides for full real video visibility */}
+            <div
+              className={`absolute inset-0 transition-opacity duration-700 pointer-events-none ${
+                contentVisible
+                  ? 'opacity-100 bg-gradient-to-b from-[#070913]/70 via-[#070913]/35 to-[#070913]/80'
+                  : 'opacity-0'
+              }`}
+            />
+            <div
+              className={`absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-sky-500/20 via-blue-500/10 to-transparent pointer-events-none transition-opacity duration-700 ${
+                contentVisible ? 'opacity-100' : 'opacity-0'
+              }`}
+            />
           </div>
 
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6 relative z-10">
-            {/* Pill Tag */}
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-sky-400/30 text-sky-300 text-xs sm:text-[13px] font-bold tracking-wide shadow-sm">
-              <span className="w-2 h-2 rounded-full bg-[#00A3E0] animate-pulse" />
-              <span>Full-Stack Growth Services & Digital Architecture</span>
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10 w-full flex-1 flex flex-col justify-center items-center">
+            {/* Content ABOVE the buttons: Smoothly hides when TEZSCALE appears, restores when video loops */}
+            <div
+              className={`w-full flex flex-col items-center transition-all duration-700 ease-in-out transform ${
+                contentVisible
+                  ? 'opacity-100 scale-100 translate-y-0 pointer-events-auto'
+                  : 'opacity-0 scale-95 -translate-y-4 pointer-events-none'
+              }`}
+            >
+              {/* Pill Tag */}
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-sky-400/30 text-sky-300 text-xs sm:text-[13px] font-bold tracking-wide shadow-sm mb-4">
+                <span className="w-2 h-2 rounded-full bg-[#00A3E0] animate-pulse" />
+                <span>Full-Stack Growth Services & Digital Architecture</span>
+              </div>
+
+              {/* Main Headline */}
+              <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-[1.15] max-w-4xl mx-auto drop-shadow-sm mb-4">
+                Complete <span className="text-[#00A3E0]">Digital Solutions</span> <br className="hidden sm:inline" />
+                Built to Convert & Scale
+              </h1>
+
+              {/* Description */}
+              <p className="text-slate-200 text-sm sm:text-base lg:text-lg max-w-2xl mx-auto leading-relaxed font-normal mb-2">
+                From accelerated web architecture to precision Meta Ads and Local Map dominance, we build the digital infrastructure your business needs to win.
+              </p>
             </div>
 
-            {/* Main Headline */}
-            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-[1.15] max-w-4xl mx-auto drop-shadow-sm">
-              Complete <span className="text-[#00A3E0]">Digital Solutions</span> <br className="hidden sm:inline" />
-              Built to Convert & Scale
-            </h1>
-
-            {/* Description */}
-            <p className="text-slate-200 text-sm sm:text-base lg:text-lg max-w-2xl mx-auto leading-relaxed font-normal">
-              From accelerated web architecture to precision Meta Ads and Local Map dominance, we build the digital infrastructure your business needs to win.
-            </p>
-
-            {/* Action Buttons: Book Strategy Call + Watch Showreel */}
-            <div className="pt-2 flex flex-wrap items-center justify-center gap-4">
+            {/* Action Buttons: PERMANENTLY VISIBLE, NEVER HIDDEN */}
+            <div className="pt-2 flex flex-wrap items-center justify-center gap-4 relative z-20 mt-3 sm:mt-5">
               <button
                 onClick={() => setModalOpen(true)}
                 className="inline-flex items-center gap-2 bg-[#00A3E0] hover:bg-[#008bc0] text-white px-7 py-3.5 rounded-full text-xs sm:text-sm font-bold shadow-lg shadow-[#00A3E0]/35 transition-all duration-300 hover:scale-[1.02] cursor-pointer"
@@ -241,8 +281,14 @@ const ServicesPage = () => {
               </button>
             </div>
 
-            {/* Key Deliverable Highlights Pill Row */}
-            <div className="pt-4 flex flex-wrap items-center justify-center gap-3 sm:gap-6 text-xs text-slate-300 font-semibold">
+            {/* Key Deliverable Highlights Pill Row: Smoothly hides with content */}
+            <div
+              className={`pt-4 flex flex-wrap items-center justify-center gap-3 sm:gap-6 text-xs text-slate-300 font-semibold relative z-20 transition-all duration-700 ease-in-out ${
+                contentVisible
+                  ? 'opacity-100 scale-100 translate-y-0 pointer-events-auto'
+                  : 'opacity-0 scale-95 -translate-y-4 pointer-events-none'
+              }`}
+            >
               <div className="flex items-center gap-2 bg-white/5 backdrop-blur-xs px-3.5 py-1.5 rounded-full border border-white/10">
                 <CheckCircle2 className="w-4 h-4 text-[#00A3E0]" />
                 <span>2-Day Staging Draft</span>
@@ -345,6 +391,132 @@ const ServicesPage = () => {
                 </div>
               ))}
             </AnimatedContent>
+          </div>
+        </section>
+
+        {/* Featured Live Web Development & SaaS Platforms */}
+        <section className="py-20 bg-slate-900 text-white border-t border-slate-800">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center max-w-3xl mx-auto space-y-4 mb-14">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-sky-500/10 border border-sky-400/30 text-sky-300 text-xs font-bold uppercase tracking-wider">
+                <Code2 className="w-3.5 h-3.5 text-sky-400" />
+                <span>Web Architecture Proof</span>
+              </div>
+              <h2 className="text-3xl sm:text-4xl font-black text-white tracking-tight">
+                Live Production SaaS & Web Architectures
+              </h2>
+              <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
+                Explore live enterprise platforms and microservices-based SaaS systems architected by TezScale's engineering team. Direct production links below:
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {[
+                {
+                  title: 'Ayurflex',
+                  url: 'https://ayurflex.digiflex.ai',
+                  category: 'Healthcare & Clinical Practice SaaS',
+                  badge: 'Microservices SaaS',
+                  tech: 'React.js • Node.js • Express • MongoDB • Docker',
+                  desc: 'Comprehensive clinical SaaS management platform built for Ayurveda practices with patient booking and medical workflows.',
+                },
+                {
+                  title: 'Oliveflex',
+                  url: 'https://oliveflex.digiflex.ai',
+                  category: 'Enterprise Microservices Platform',
+                  badge: 'Enterprise SaaS',
+                  tech: 'React.js • Node.js • Express • MongoDB • Docker',
+                  desc: 'Modular workflow automation and client CRM suite architected on scalable microservices with zero-latency communication.',
+                },
+                {
+                  title: 'Assetzo',
+                  url: 'https://assetzo.questdigiflex.ai',
+                  category: 'Cloud Asset Management SaaS',
+                  badge: 'Cloud SaaS',
+                  tech: 'React.js • Express.js • REST APIs • MongoDB',
+                  desc: 'Cloud asset management and equipment lifecycle tracking SaaS for enterprise inventory auditing and depreciation logging.',
+                },
+                {
+                  title: 'Ekon',
+                  url: 'https://ekonn.questdigiflex.ai',
+                  category: 'Business Growth & Multi-Service SaaS',
+                  badge: 'Live SaaS',
+                  tech: 'React.js • Node.js • REST APIs • MongoDB',
+                  desc: 'Scalable business acceleration platform built for unified service management, real-time client performance tracking, and analytics.',
+                },
+                {
+                  title: 'Talkify',
+                  url: 'https://talkify-git-main-rohanprajjapati-5449s-projects.vercel.app/login',
+                  category: 'Real-Time Chat & WebRTC Video',
+                  badge: 'WebSockets & WebRTC',
+                  tech: 'React.js • Socket.IO • WebRTC • Cloudinary • JWT',
+                  desc: 'Ultra-low-latency real-time chat platform with peer-to-peer WebRTC audio/video calls, private/group messaging, and media sharing.',
+                },
+                {
+                  title: 'Gym SaaS',
+                  url: 'https://gym-saas-git-main-rohanprajjapati-5449s-projects.vercel.app/',
+                  category: 'Multi-Tenant Fitness Center SaaS',
+                  badge: 'Multi-Tenant Platform',
+                  tech: 'React.js • Node.js • Redux Toolkit • MongoDB • Docker',
+                  desc: 'Multi-tenant fitness management platform with role-based access for Super Admin, Owner, Manager, and Trainer with automated billing.',
+                },
+                {
+                  title: 'Quick Seva',
+                  url: 'https://quick-seva-git-main-rohanprajjapati-5449s-projects.vercel.app/',
+                  category: 'On-Demand Home Services Platform',
+                  badge: 'Marketplace SaaS',
+                  tech: 'React.js • Node.js • Express • Razorpay • Nodemailer',
+                  desc: 'Hyperlocal home services marketplace connecting customers with verified trade technicians, with Razorpay payments and live service booking.',
+                },
+              ].map((proj, idx) => (
+                <div
+                  key={idx}
+                  className="bg-slate-800/80 rounded-2xl border border-slate-700/80 p-6 hover:border-sky-400/60 shadow-lg transition-all duration-300 card-lift flex flex-col justify-between group"
+                >
+                  <div className="space-y-4">
+                    <div className="flex items-center justify-between gap-2">
+                      <span className="text-[11px] font-bold text-sky-300 bg-sky-950/80 border border-sky-500/30 px-2.5 py-1 rounded-md">
+                        {proj.badge}
+                      </span>
+                      <span className="text-[11px] text-slate-400 font-semibold">{proj.category}</span>
+                    </div>
+
+                    <div>
+                      <h3 className="text-xl font-black text-white group-hover:text-[#38bdf8] transition-colors flex items-center gap-2">
+                        <span>{proj.title}</span>
+                        <ExternalLink className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity text-[#38bdf8]" />
+                      </h3>
+                      <p className="text-xs text-slate-300 mt-2 leading-relaxed">
+                        {proj.desc}
+                      </p>
+                    </div>
+
+                    <div className="pt-2">
+                      <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1">Architecture</span>
+                      <div className="text-[11px] font-semibold text-slate-200">
+                        {proj.tech}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="pt-5 mt-5 border-t border-slate-700/70 flex items-center justify-between">
+                    <span className="text-xs font-semibold text-emerald-400 flex items-center gap-1.5">
+                      <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                      Live in Production
+                    </span>
+                    <a
+                      href={proj.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 text-xs font-bold text-white bg-[#00A3E0] hover:bg-[#008bc0] px-4 py-2 rounded-xl shadow-xs transition-all hover:scale-105"
+                    >
+                      <span>Live Demo</span>
+                      <ExternalLink className="w-3.5 h-3.5" />
+                    </a>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </section>
 

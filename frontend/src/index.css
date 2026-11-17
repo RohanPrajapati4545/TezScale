@@ -70,6 +70,28 @@
   animation: softPulseGlow 3.5s ease-in-out infinite;
 }
 
+/* Continuous Right-to-Left Marquee Motion */
+@keyframes marqueeMoveLeft {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.anim-marquee-left {
+  display: flex;
+  width: max-content;
+  animation: marqueeMoveLeft 28s linear infinite;
+  will-change: transform;
+}
+
+.anim-marquee-left:hover,
+.anim-marquee-left:focus-within {
+  animation-play-state: paused;
+}
+
 /* Olive-style Keyframe Animations */
 @keyframes navbarEntrance {
   0% {

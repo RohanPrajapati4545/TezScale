@@ -89,25 +89,43 @@ const brandLogos = ['Google', 'Meta', 'Microsoft', 'HubSpot', 'Slack', 'Notion']
 
 const TestimonialsPage = () => {
   const [modalOpen, setModalOpen] = useState(false);
+  const [contentVisible, setContentVisible] = useState(true);
   const videoRef = useRef(null);
   const { content } = useContent();
 
-  // Ensure background video plays continuously across all browsers
+  // Sync content visibility with background video playback
   useEffect(() => {
     const video = videoRef.current;
-    if (video) {
-      video.muted = true;
-      video.defaultMuted = true;
-      const playVideo = () => {
-        const promise = video.play();
-        if (promise !== undefined) {
-          promise.catch(() => {});
-        }
-      };
-      playVideo();
-      video.addEventListener('ended', playVideo);
-      return () => video.removeEventListener('ended', playVideo);
-    }
+    if (!video) return;
+
+    video.muted = true;
+    video.defaultMuted = true;
+    const playVideo = () => {
+      const promise = video.play();
+      if (promise !== undefined) {
+        promise.catch(() => {});
+      }
+    };
+    playVideo();
+    video.addEventListener('ended', playVideo);
+
+    let animId;
+    const updateVisibility = () => {
+      if (video && !video.paused) {
+        const time = video.currentTime;
+        const dur = video.duration || 10.03;
+        const shouldHide = time >= 5.8 && time <= dur;
+        setContentVisible((prev) => (prev !== !shouldHide ? !shouldHide : prev));
+      }
+      animId = requestAnimationFrame(updateVisibility);
+    };
+
+    animId = requestAnimationFrame(updateVisibility);
+
+    return () => {
+      video.removeEventListener('ended', playVideo);
+      if (animId) cancelAnimationFrame(animId);
+    };
   }, []);
 
   return (
@@ -116,8 +134,8 @@ const TestimonialsPage = () => {
 
       <main className="flex-1">
         {/* Hero Section with Live Background Video */}
-        <section className="relative pt-24 sm:pt-28 lg:pt-32 pb-20 sm:pb-24 overflow-hidden bg-slate-950 border-b border-slate-800 text-white">
-          {/* Background Video */}
+        <section className="relative min-h-[92vh] sm:min-h-screen flex flex-col justify-center items-center pt-24 sm:pt-28 pb-12 sm:pb-16 overflow-hidden bg-[#070913] border-b border-slate-800 text-white">
+          {/* Background Video: Shifted upwards with scale-120 for 100% full screen cover and perfect logo clearance */}
           <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
             <video
               ref={videoRef}
@@ -126,32 +144,52 @@ const TestimonialsPage = () => {
               muted
               playsInline
               preload="auto"
-              className="w-full h-full object-cover opacity-75 sm:opacity-80 scale-105"
+              className={`w-full h-full object-contain md:object-cover portrait:object-contain landscape:object-cover object-center portrait:scale-100 landscape:scale-120 md:scale-120 portrait:-translate-y-6 sm:portrait:-translate-y-8 landscape:-translate-y-10 lg:landscape:-translate-y-16 portrait:[mask-image:linear-gradient(to_bottom,transparent_0%,black_10%,black_90%,transparent_100%)] landscape:[mask-image:none] transition-opacity duration-700 ease-in-out ${
+                contentVisible ? 'opacity-75 sm:opacity-80' : 'opacity-100'
+              }`}
             >
               <source src="/page-hero-video.mp4" type="video/mp4" />
               <source src="/services-hero-video.mp4" type="video/mp4" />
               <source src="/tezscale-hero-video-full.mp4" type="video/mp4" />
             </video>
-            <div className="absolute inset-0 bg-gradient-to-b from-slate-950/85 via-slate-950/50 to-slate-950/95 pointer-events-none" />
-            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-[#00A3E0]/15 via-transparent to-transparent pointer-events-none" />
+            {/* Soft atmospheric gradient overlays - completely fades out when content hides for full real video visibility */}
+            <div
+              className={`absolute inset-0 transition-opacity duration-700 pointer-events-none ${
+                contentVisible
+                  ? 'opacity-100 bg-gradient-to-b from-[#070913]/70 via-[#070913]/35 to-[#070913]/80'
+                  : 'opacity-0'
+              }`}
+            />
+            <div
+              className={`absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-sky-500/20 via-blue-500/10 to-transparent pointer-events-none transition-opacity duration-700 ${
+                contentVisible ? 'opacity-100' : 'opacity-0'
+              }`}
+            />
           </div>
 
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6 relative z-10">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-sky-400/30 text-sky-300 text-xs font-bold tracking-wide shadow-sm">
-              <span className="w-2 h-2 rounded-full bg-[#00A3E0] animate-pulse" />
-              <span>Social Proof & Client Stories</span>
-            </div>
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10 w-full flex-1 flex flex-col justify-center items-center">
+            {/* All Hero Content: Eyebrow, Title, Description, AND 5-Star Rating Badge smoothly hide together when TEZSCALE appears */}
+            <div
+              className={`w-full flex flex-col items-center transition-all duration-700 ease-in-out transform ${
+                contentVisible
+                  ? 'opacity-100 scale-100 translate-y-0 pointer-events-auto'
+                  : 'opacity-0 scale-95 -translate-y-4 pointer-events-none'
+              }`}
+            >
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-sky-400/30 text-sky-300 text-xs font-bold tracking-wide shadow-sm mb-4">
+                <span className="w-2 h-2 rounded-full bg-[#00A3E0] animate-pulse" />
+                <span>Social Proof & Client Stories</span>
+              </div>
 
-            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-[1.15] max-w-4xl mx-auto">
-              Trusted by Over <span className="text-[#00A3E0]">500+ Businesses</span> Across Industries
-            </h1>
+              <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-[1.15] max-w-4xl mx-auto mb-4">
+                Trusted by Over <span className="text-[#00A3E0]">500+ Businesses</span> Across Industries
+              </h1>
 
-            <p className="text-slate-200 text-sm sm:text-base lg:text-lg max-w-2xl mx-auto leading-relaxed font-normal">
-              Don’t just take our word for it. Here is what healthcare founders, real estate developers, and business owners say about partnering with TezScale.
-            </p>
+              <p className="text-slate-200 text-sm sm:text-base lg:text-lg max-w-2xl mx-auto leading-relaxed font-normal mb-6 sm:mb-8">
+                Don’t just take our word for it. Here is what healthcare founders, real estate developers, and business owners say about partnering with TezScale.
+              </p>
 
-            {/* 5-Star Rating Aggregate Banner */}
-            <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-4">
+              {/* 5-Star Rating Aggregate Banner: Smoothly fades out with content */}
               <div className="inline-flex items-center gap-2.5 p-3.5 bg-white/10 backdrop-blur-md rounded-2xl border border-white/15 shadow-sm text-white">
                 <div className="flex text-amber-400">
                   {[...Array(5)].map((_, i) => (

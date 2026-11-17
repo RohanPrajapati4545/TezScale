@@ -1,44 +1,66 @@
 import React, { useState, useRef, useEffect } from 'react';
 import {
   ArrowRight,
-  TrendingUp,
-  Star,
-  Users,
+  ArrowUpRight,
   Play,
   X
 } from 'lucide-react';
 import AnimatedCounter from './AnimatedCounter';
-import founderNobg from '../assets/founder-nobg.png';
 
 const Hero = ({ onOpenConsultation }) => {
   const [videoModalOpen, setVideoModalOpen] = useState(false);
+  const [contentVisible, setContentVisible] = useState(true);
   const videoRef = useRef(null);
 
-  // Ensure background video plays continuously across all browsers
+  // Sync content visibility with background video playback
   useEffect(() => {
     const video = videoRef.current;
-    if (video) {
-      video.muted = true;
-      video.defaultMuted = true;
-      const playVideo = () => {
-        const promise = video.play();
-        if (promise !== undefined) {
-          promise.catch(() => {});
-        }
-      };
-      playVideo();
-      video.addEventListener('ended', playVideo);
-      return () => video.removeEventListener('ended', playVideo);
-    }
+    if (!video) return;
+
+    video.muted = true;
+    video.defaultMuted = true;
+    const playVideo = () => {
+      const promise = video.play();
+      if (promise !== undefined) {
+        promise.catch(() => {});
+      }
+    };
+    playVideo();
+    video.addEventListener('ended', playVideo);
+
+    // Frame-accurate loop to smoothly hide HTML content when 3D "TEZSCALE" logo appears,
+    // and smoothly restore content when video loops back to start
+    let animId;
+    const updateVisibility = () => {
+      if (video && !video.paused) {
+        const time = video.currentTime;
+        const dur = video.duration || 10.03;
+
+        // The 3D "TEZSCALE" logo text appears in the final segment before video ends (~last 4.2 seconds).
+        // Fade out content above buttons when reaching logo reveal (~5.8s - 10.0s).
+        // Fade back in smoothly when video loops to beginning (0s - 5.8s).
+        const shouldHide = time >= 5.8 && time <= dur;
+        setContentVisible((prev) => (prev !== !shouldHide ? !shouldHide : prev));
+      }
+      animId = requestAnimationFrame(updateVisibility);
+    };
+
+    animId = requestAnimationFrame(updateVisibility);
+
+    return () => {
+      video.removeEventListener('ended', playVideo);
+      if (animId) cancelAnimationFrame(animId);
+    };
   }, []);
 
   return (
     <section
       id="home"
-      className="relative min-h-screen w-full flex flex-col justify-center pt-24 sm:pt-28 lg:pt-16 pb-12 sm:pb-16 lg:pb-0 overflow-hidden bg-slate-900"
+      className="relative min-h-[92vh] sm:min-h-screen w-full flex flex-col justify-between pt-24 sm:pt-28 lg:pt-24 pb-8 sm:pb-12 overflow-hidden bg-[#070913] text-white"
     >
-      {/* Background Video: Full screen cover running continuously with high clarity */}
+      {/* Dynamic Background: Smoothly transitions to 100% natural real video when logo appears */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
+        {/* Background video: Responsive object-fit & scaling so text/logo is 100% visible on mobile and full-screen cover on desktop */}
         <video
           ref={videoRef}
           autoPlay
@@ -46,114 +68,136 @@ const Hero = ({ onOpenConsultation }) => {
           muted
           playsInline
           preload="auto"
-          className="w-full h-full object-cover object-center opacity-80 sm:opacity-85 scale-105"
+          className={`w-full h-full object-contain md:object-cover portrait:object-contain landscape:object-cover object-center portrait:scale-100 landscape:scale-120 md:scale-120 portrait:-translate-y-6 sm:portrait:-translate-y-8 landscape:-translate-y-10 lg:landscape:-translate-y-16 portrait:[mask-image:linear-gradient(to_bottom,transparent_0%,black_10%,black_90%,transparent_100%)] landscape:[mask-image:none] transition-opacity duration-700 ease-in-out ${
+            contentVisible ? 'opacity-70 sm:opacity-75' : 'opacity-100'
+          }`}
         >
           <source src="/tezscale-hero-video.mp4" type="video/mp4" />
           <source src="/tezscale-hero-video-full.mp4" type="video/mp4" />
         </video>
-        {/* Soft directional gradient: protects text contrast across mobile & desktop without washing out the video */}
-        <div className="absolute inset-0 bg-gradient-to-b from-white/80 via-white/45 to-white/75 lg:bg-gradient-to-r lg:from-white/85 lg:via-white/40 lg:to-transparent pointer-events-none" />
-        <div className="absolute inset-0 bg-gradient-to-t from-transparent via-transparent to-white/20 pointer-events-none" />
+
+        {/* Soft atmospheric gradient overlays - completely fades out when content hides for full real video visibility */}
+        <div
+          className={`absolute inset-0 transition-opacity duration-700 pointer-events-none ${
+            contentVisible
+              ? 'opacity-100 bg-gradient-to-b from-[#070913]/70 via-[#070913]/35 to-[#070913]/80'
+              : 'opacity-0'
+          }`}
+        />
+        <div
+          className={`absolute inset-0 bg-radial-[ellipse_at_center] from-transparent via-[#070913]/20 to-[#070913]/55 pointer-events-none transition-opacity duration-700 ${
+            contentVisible ? 'opacity-100' : 'opacity-0'
+          }`}
+        />
+
+        {/* Top-Right Angled Spotlight Beam */}
+        <div className={`absolute -top-32 right-0 w-[500px] lg:w-[700px] h-[500px] lg:h-[700px] bg-gradient-to-bl from-sky-400/25 via-blue-500/10 to-transparent rounded-full blur-[100px] pointer-events-none transition-opacity duration-700 ${
+          contentVisible ? 'opacity-100' : 'opacity-40'
+        }`} />
+
+        {/* Top-Left Ambient Beam */}
+        <div className={`absolute -top-32 left-0 w-[500px] lg:w-[650px] h-[500px] lg:h-[650px] bg-gradient-to-br from-indigo-600/15 via-blue-600/5 to-transparent rounded-full blur-[100px] pointer-events-none transition-opacity duration-700 ${
+          contentVisible ? 'opacity-100' : 'opacity-40'
+        }`} />
+
+        {/* Center Ambient Glow Halo behind Headline */}
+        <div className={`absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-sky-500/10 blur-[100px] pointer-events-none transition-opacity duration-700 ${
+          contentVisible ? 'opacity-100' : 'opacity-0'
+        }`} />
+
+        {/* Bottom smooth fade to next section */}
+        <div className="absolute bottom-0 inset-x-0 h-24 bg-gradient-to-t from-[#070913] to-transparent pointer-events-none" />
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full flex-1 flex flex-col justify-center pt-4 sm:pt-6">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-4 items-center lg:items-end w-full">
-
-          {/* Left Column: Headlines, Copy, Dual CTAs & Bottom Stats */}
-          <div className="lg:col-span-7 xl:col-span-6 space-y-4 sm:space-y-5 text-left py-4 sm:py-6 lg:py-8 max-w-2xl">
-
-            {/* Tagline Eyebrow Pill */}
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/95 backdrop-blur-xs border border-sky-200/80 text-[#00A3E0] text-xs sm:text-[13px] font-bold tracking-wide shadow-2xs">
-              <span className="w-2 h-2 rounded-full bg-[#00A3E0] animate-pulse" />
-              <span>Accelerating Digital Growth.</span>
-            </div>
-
-            {/* Slogan & Main Headline (Clean, prominent typography, no underline lines) */}
-            <h1 className="text-2xl sm:text-4xl lg:text-[40px] xl:text-[46px] font-black text-slate-900 tracking-tight leading-[1.16]">
-              We don't just provide digital services. <br />
-              <span className="text-slate-900">We help businesses </span>
-              <span className="text-[#00A3E0]">grow faster and scale smarter.</span>
-            </h1>
-
-            {/* Description */}
-            <p className="text-slate-700 text-xs sm:text-sm lg:text-base leading-relaxed max-w-lg font-normal">
-              A digital solutions and growth partner helping businesses build, strengthen, and scale their digital presence through technology, creativity, and strategic execution.
-            </p>
-
-            {/* Action Buttons: Get Free Consultation & Watch How It Works */}
-            <div className="flex flex-wrap items-center gap-3 pt-1">
-              <button
-                onClick={onOpenConsultation}
-                className="px-6 py-3 rounded-full bg-[#00A3E0] hover:bg-[#008bc0] text-white font-bold text-xs sm:text-sm shadow-md shadow-[#00A3E0]/25 transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer hover:scale-[1.02]"
-              >
-                <span>Get Free Consultation</span>
-                <ArrowRight className="w-4 h-4" />
-              </button>
-
-              <button
-                onClick={() => setVideoModalOpen(true)}
-                className="px-4 py-2.5 rounded-full bg-white/85 hover:bg-white backdrop-blur-xs border border-slate-200/80 transition-all flex items-center gap-2.5 cursor-pointer group shadow-2xs"
-              >
-                <div className="w-8 h-8 rounded-full bg-sky-50 shadow-2xs border border-sky-200 flex items-center justify-center text-[#00A3E0] group-hover:scale-105 transition-transform">
-                  <Play className="w-3.5 h-3.5 fill-current ml-0.5 text-[#00A3E0]" />
-                </div>
-                <span className="text-xs sm:text-sm font-bold text-slate-800 group-hover:text-[#00A3E0] transition-colors">
-                  Watch How It Works
-                </span>
-              </button>
-            </div>
-
-            {/* Bottom Stats Row (Clean, line-free format with mobile pill styling) */}
-            <div className="pt-2 sm:pt-4 flex flex-wrap items-center gap-2.5 sm:gap-6 text-left">
-              {/* Stat 1: 5K+ Happy Clients */}
-              <div className="flex items-center gap-2 sm:gap-2.5 bg-white/70 sm:bg-transparent backdrop-blur-xs sm:backdrop-blur-none px-3 py-1.5 sm:p-0 rounded-xl sm:rounded-none border border-sky-100/80 sm:border-0 shadow-2xs sm:shadow-none">
-                <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-white/90 backdrop-blur-xs border border-sky-100 flex items-center justify-center text-[#00A3E0] shrink-0 shadow-2xs">
-                  <Users className="w-4 h-4" />
-                </div>
-                <div>
-                  <div className="text-sm sm:text-lg font-black text-slate-900 leading-none">5K+</div>
-                  <div className="text-[10px] sm:text-[11px] text-slate-600 font-medium mt-0.5">Happy Clients</div>
-                </div>
-              </div>
-
-              {/* Stat 2: 300%+ Average Growth */}
-              <div className="flex items-center gap-2 sm:gap-2.5 bg-white/70 sm:bg-transparent backdrop-blur-xs sm:backdrop-blur-none px-3 py-1.5 sm:p-0 rounded-xl sm:rounded-none border border-sky-100/80 sm:border-0 shadow-2xs sm:shadow-none">
-                <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-white/90 backdrop-blur-xs border border-sky-100 flex items-center justify-center text-[#00A3E0] shrink-0 shadow-2xs">
-                  <TrendingUp className="w-4 h-4" />
-                </div>
-                <div>
-                  <div className="text-sm sm:text-lg font-black text-slate-900 leading-none">
-                    <AnimatedCounter value="300%+" duration={1400} />
-                  </div>
-                  <div className="text-[10px] sm:text-[11px] text-slate-600 font-medium mt-0.5">Average Growth</div>
-                </div>
-              </div>
-
-              {/* Stat 3: 4.9/5 Client Rating */}
-              <div className="flex items-center gap-2 sm:gap-2.5 bg-white/70 sm:bg-transparent backdrop-blur-xs sm:backdrop-blur-none px-3 py-1.5 sm:p-0 rounded-xl sm:rounded-none border border-sky-100/80 sm:border-0 shadow-2xs sm:shadow-none">
-                <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-white/90 backdrop-blur-xs border border-sky-100 flex items-center justify-center text-[#00A3E0] shrink-0 shadow-2xs">
-                  <Star className="w-4 h-4 text-[#00A3E0]" />
-                </div>
-                <div>
-                  <div className="text-sm sm:text-lg font-black text-slate-900 leading-none">4.9/5</div>
-                  <div className="text-[10px] sm:text-[11px] text-slate-600 font-medium mt-0.5">Client Rating</div>
-                </div>
-              </div>
-            </div>
-
+      {/* Main Centered Content */}
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10 flex-1 flex flex-col justify-center items-center w-full py-4 sm:py-6">
+        
+        {/* Content ABOVE the buttons: Smoothly hides when TEZSCALE appears, restores when video loops */}
+        <div
+          className={`w-full flex flex-col items-center transition-all duration-700 ease-in-out transform ${
+            contentVisible
+              ? 'opacity-100 scale-100 translate-y-0 pointer-events-auto'
+              : 'opacity-0 scale-95 -translate-y-4 pointer-events-none'
+          }`}
+        >
+          {/* Eyebrow Pill Badge (Clean text, star/AI icon removed per feedback) */}
+          <div className="inline-flex items-center px-4 py-1.5 rounded-full bg-white/[0.08] hover:bg-white/[0.12] backdrop-blur-md border border-white/20 text-slate-200 text-xs sm:text-[13px] font-semibold transition-all shadow-sm mb-4 sm:mb-5 select-none">
+            <span>Welcome to TezScale</span>
           </div>
 
-          {/* Right Column: Founder Cutout (Hidden on Mobile/Tablet, Displayed Only on Desktop lg+) */}
-          <div className="hidden lg:flex lg:col-span-5 xl:col-span-6 relative justify-end items-end select-none self-end h-full">
-            <div className="relative w-full max-w-lg xl:max-w-xl flex items-end justify-end">
-              <img
-                src={founderNobg}
-                alt="TezScale Digital Marketing Specialist"
-                className="w-auto h-[500px] lg:h-[580px] xl:h-[640px] max-h-[88vh] object-contain object-bottom select-none relative z-10"
-                loading="eager"
-                fetchpriority="high"
-              />
-            </div>
+          {/* 2-Line Centered Hero Headline (Balanced font size & proper line wraps) */}
+          <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-[54px] xl:text-[58px] font-black text-white tracking-tight leading-[1.18] sm:leading-[1.15] max-w-5xl mx-auto mb-4 sm:mb-5">
+            <span className="block sm:inline">
+              Transform <span className="text-[#38bdf8]">your</span> Marketing Strategy
+            </span>{' '}
+            <span className="block text-transparent bg-clip-text bg-gradient-to-r from-sky-400 via-cyan-300 to-blue-400 sm:mt-1">
+              with the Power of TezScale
+            </span>
+          </h1>
+
+          {/* Subtitle Description */}
+          <p className="text-slate-200/90 text-xs sm:text-base md:text-lg max-w-2xl mx-auto font-normal leading-relaxed mb-6 sm:mb-8">
+            Elevate your campaigns, maximize ROI, and accelerate predictable digital growth with our full-stack web, branding, and performance marketing solutions.
+          </p>
+        </div>
+
+        {/* Dual Center CTA Buttons: PERMANENTLY VISIBLE, NEVER HIDDEN */}
+        <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 relative z-20 mt-3 sm:mt-5">
+          
+          {/* Button 1 (Outline Pill): What we do? -> */}
+          <button
+            onClick={() => setVideoModalOpen(true)}
+            className="px-6 sm:px-7 py-2.5 sm:py-3 rounded-full bg-white/[0.05] hover:bg-white/[0.12] backdrop-blur-md border border-white/25 hover:border-white/40 text-white font-medium text-xs sm:text-sm transition-all duration-300 flex items-center gap-2 cursor-pointer group shadow-sm hover:scale-[1.02]"
+          >
+            <span>What we do?</span>
+            <ArrowRight className="w-4 h-4 text-slate-300 group-hover:text-white group-hover:translate-x-1 transition-all" />
+          </button>
+
+          {/* Button 2 (Cyan Gradient Pill): ↗ Explore Services */}
+          <button
+            onClick={onOpenConsultation}
+            className="px-6 sm:px-7 py-2.5 sm:py-3 rounded-full bg-gradient-to-r from-sky-400 via-cyan-300 to-sky-500 hover:from-sky-300 hover:via-cyan-200 hover:to-sky-400 text-slate-950 font-bold text-xs sm:text-sm transition-all duration-300 flex items-center gap-2 cursor-pointer shadow-lg shadow-sky-500/25 hover:shadow-sky-500/40 hover:scale-[1.02]"
+          >
+            <ArrowUpRight className="w-4 h-4 text-slate-950 stroke-[2.5]" />
+            <span>Explore Services</span>
+          </button>
+        </div>
+
+      </div>
+
+      {/* Verified Performance Stats Indicators (Enlarged & Animated Count-Up) */}
+      <div className="w-full max-w-4xl mx-auto px-4 sm:px-6 relative z-10 text-center pt-6 sm:pt-8 pb-3">
+        <div className="inline-flex flex-wrap items-center justify-center gap-4 sm:gap-8 px-6 sm:px-9 py-3 sm:py-4 rounded-full bg-white/[0.07] hover:bg-white/[0.1] backdrop-blur-md border border-white/20 shadow-2xl transition-all duration-300">
+          
+          {/* Stat 1: 5K+ Clients Scaled */}
+          <div className="flex items-center gap-2 text-xs sm:text-sm md:text-base text-slate-200">
+            <span className="w-2.5 h-2.5 rounded-full bg-sky-400 animate-pulse shadow-[0_0_8px_rgba(56,189,248,0.9)]" />
+            <span className="font-black text-white text-base sm:text-lg md:text-xl tracking-tight">
+              <AnimatedCounter value="5K+" duration={1600} />
+            </span>
+            <span className="text-slate-300 font-medium">Clients Scaled</span>
+          </div>
+
+          <span className="text-slate-500 hidden sm:inline select-none text-base">•</span>
+
+          {/* Stat 2: 300%+ Avg ROAS Growth */}
+          <div className="flex items-center gap-2 text-xs sm:text-sm md:text-base text-slate-200">
+            <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.9)]" />
+            <span className="font-black text-white text-base sm:text-lg md:text-xl tracking-tight">
+              <AnimatedCounter value="300%+" duration={1700} />
+            </span>
+            <span className="text-slate-300 font-medium">Avg ROAS Growth</span>
+          </div>
+
+          <span className="text-slate-500 hidden sm:inline select-none text-base">•</span>
+
+          {/* Stat 3: 4.9/5 Client Rating */}
+          <div className="flex items-center gap-2 text-xs sm:text-sm md:text-base text-slate-200">
+            <span className="w-2.5 h-2.5 rounded-full bg-amber-400 shadow-[0_0_8px_rgba(251,191,36,0.9)]" />
+            <span className="font-black text-white text-base sm:text-lg md:text-xl tracking-tight">
+              <AnimatedCounter value="4.9/5" duration={1500} />
+            </span>
+            <span className="text-slate-300 font-medium">Client Rating</span>
           </div>
 
         </div>
