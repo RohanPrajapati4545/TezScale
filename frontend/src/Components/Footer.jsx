@@ -42,23 +42,25 @@ const Footer = ({ onOpenConsultation }) => {
           
           {/* Col 1: Branding & Social (4 cols) */}
           <div className="lg:col-span-4 space-y-5">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-[#00A3E0] to-[#38bdf8] flex items-center justify-center text-white shadow-md shadow-[#00A3E0]/25">
-                <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                  <circle cx="12" cy="12" r="9" />
-                  <path d="M12 3v4M12 17v4M3 12h4M17 12h4" />
-                  <circle cx="12" cy="12" r="3" fill="currentColor" />
-                </svg>
-              </div>
-              <div>
-                <div className="text-xl sm:text-2xl font-black text-white tracking-tight uppercase leading-none">
+            <Link
+              to="/"
+              className="inline-flex items-center gap-3 sm:gap-4 select-none py-1 bg-transparent"
+              aria-label="TezScale - Return to homepage"
+            >
+              <img
+                src="/tezscale-logo.png"
+                alt="TezScale Logo"
+                className="h-12 sm:h-14 w-auto object-contain bg-transparent flex-shrink-0"
+              />
+              <div className="text-left flex flex-col justify-center">
+                <div className="text-3xl sm:text-4xl font-black text-white tracking-tight uppercase leading-none">
                   TEZ<span className="text-[#00A3E0]">SCALE</span>
                 </div>
-                <div className="text-[9px] uppercase tracking-widest text-slate-400 font-bold mt-1">
-                  by DIGITAL GROWTH
+                <div className="text-[8.5px] sm:text-[10px] uppercase font-bold tracking-tight sm:tracking-normal mt-1 text-slate-300 whitespace-nowrap">
+                  ACCELERATING DIGITAL GROWTH
                 </div>
               </div>
-            </div>
+            </Link>
 
             <p className="text-slate-400 text-sm leading-relaxed max-w-sm">
               We are actively providing services to digitally grow your business with us. Engineered for high-converting B2B lead generation.

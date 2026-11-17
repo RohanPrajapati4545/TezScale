@@ -135,21 +135,26 @@ const Navbar = ({ onOpenConsultation }) => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-18 sm:h-20">
           
-          {/* TezScale Logo */}
-          <Link to="/" className="flex items-center gap-2.5 sm:gap-3 cursor-pointer group">
-            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-gradient-to-tr from-[#00A3E0] to-[#38bdf8] flex items-center justify-center text-white shadow-md shadow-[#00A3E0]/25 group-hover:scale-105 transition-transform duration-300">
-              <svg className="w-4 h-4 sm:w-5 sm:h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <circle cx="12" cy="12" r="9" />
-                <path d="M12 3v4M12 17v4M3 12h4M17 12h4" />
-                <circle cx="12" cy="12" r="3" fill="currentColor" />
-              </svg>
-            </div>
-            <div className="text-left">
-              <div className="text-lg sm:text-2xl font-black tracking-tight leading-none uppercase text-white">
+          {/* TezScale Brand Header: Clean, Static & Transparent */}
+          <Link
+            to="/"
+            className="flex items-center gap-3 sm:gap-4 cursor-pointer select-none py-1 bg-transparent"
+            aria-label="TezScale - Return to homepage"
+          >
+            {/* 3D UHD Emblem Mark (Transparent Background, No Animation) */}
+            <img
+              src="/tezscale-logo.png"
+              alt="TezScale Logo"
+              className="h-11 sm:h-13 lg:h-14 w-auto object-contain bg-transparent flex-shrink-0"
+            />
+
+            {/* Brand Typography: Large TEZSCALE & Edge-Aligned Subtitle */}
+            <div className="text-left flex flex-col justify-center">
+              <div className="text-2xl sm:text-3xl lg:text-[32px] font-black tracking-tight leading-none uppercase text-white">
                 TEZ<span className="text-[#00A3E0]">SCALE</span>
               </div>
-              <div className="text-[8px] sm:text-[9px] uppercase tracking-widest font-bold mt-0.5 sm:mt-1 text-slate-300">
-                by DIGITAL GROWTH
+              <div className="text-[7px] sm:text-[8.5px] lg:text-[9.5px] uppercase font-bold tracking-tight sm:tracking-normal lg:tracking-[0.02em] mt-1 text-slate-300 whitespace-nowrap">
+                ACCELERATING DIGITAL GROWTH
               </div>
             </div>
           </Link>
