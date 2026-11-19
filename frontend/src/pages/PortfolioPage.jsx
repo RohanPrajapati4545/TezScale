@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import useSEO from '../hooks/useSEO';
 import Navbar from '../Components/Navbar';
 import Footer from '../Components/Footer';
 import ConsultationModal from '../Components/ConsultationModal';
@@ -272,6 +273,12 @@ const portfolioItems = [
 ];
 
 const PortfolioPage = () => {
+  useSEO({
+    title: 'Client Results & Live Case Studies | TezScale',
+    description: 'Explore verified growth case studies, production SaaS platforms, and revenue scaling results delivered by TezScale.',
+    canonical: '/portfolio'
+  });
+
   const [modalOpen, setModalOpen] = useState(false);
   const [filter, setFilter] = useState('all');
   const [contentVisible, setContentVisible] = useState(true);

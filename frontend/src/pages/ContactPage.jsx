@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import useSEO from '../hooks/useSEO';
 import Navbar from '../Components/Navbar';
 import Footer from '../Components/Footer';
 import ConsultationModal from '../Components/ConsultationModal';
@@ -20,6 +21,12 @@ import {
 import apiFetch from '../api/apiClient';
 
 const ContactPage = () => {
+  useSEO({
+    title: 'Contact TezScale | Accelerate Your Digital Growth',
+    description: 'Get in touch with TezScale technical team. Book a 20-minute digital growth consultation, request a quote, or chat on WhatsApp.',
+    canonical: '/contact'
+  });
+
   const [modalOpen, setModalOpen] = useState(false);
   const [contentVisible, setContentVisible] = useState(true);
   const videoRef = useRef(null);

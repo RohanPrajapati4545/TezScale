@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import useSEO from '../hooks/useSEO';
 import Navbar from '../Components/Navbar';
 import Footer from '../Components/Footer';
 import ConsultationModal from '../Components/ConsultationModal';
@@ -88,6 +89,12 @@ const clientReviews = [
 const brandLogos = ['Google', 'Meta', 'Microsoft', 'HubSpot', 'Slack', 'Notion'];
 
 const TestimonialsPage = () => {
+  useSEO({
+    title: 'Client Testimonials & Feedback | TezScale',
+    description: 'Read verified reviews and feedback from founders, doctors, and business leaders who scaled with TezScale.',
+    canonical: '/testimonials'
+  });
+
   const [modalOpen, setModalOpen] = useState(false);
   const [contentVisible, setContentVisible] = useState(true);
   const videoRef = useRef(null);

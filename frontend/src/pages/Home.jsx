@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import useSEO from '../hooks/useSEO';
 import Navbar from '../Components/Navbar';
 import Hero from '../Components/Hero';
 import Services from '../Components/Services';
@@ -11,6 +12,12 @@ import Footer from '../Components/Footer';
 import ConsultationModal from '../Components/ConsultationModal';
 
 const Home = () => {
+  useSEO({
+    title: 'TezScale - Accelerating Digital Growth | Web Development, SEO & Performance Marketing',
+    description: 'TezScale accelerates business growth with ultra-fast web development, local SEO, Google Ads, Meta advertising, and high-converting creative brand kits.',
+    canonical: '/'
+  });
+
   const [modalOpen, setModalOpen] = useState(false);
 
   // Auto-open enquiry modal on first-time website visit

@@ -6,10 +6,9 @@ export const teamMembers = [
     role: 'Lead Full-Stack Web Developer',
     badge: 'Full-Stack Developer',
     image: '/rohan-prajapati.jpg',
+    imageClass: 'object-cover object-center',
     location: 'Indore, India',
     experience: '1+ Years in Microservices SaaS & Full-Stack Development',
-    email: 'rohan.tech0608@gmail.com',
-    phone: '+91 7415377427',
     linkedin: 'https://linkedin.com/in/rohan-prajapati-517128206/',
     github: 'https://github.com/RohanPrajapati4545',
     bio: 'MERN Stack Developer with 1 year of hands-on experience in SaaS product development and full-stack web applications. Extensive experience building microservices-based SaaS platforms using React.js, Node.js, Express.js, and MongoDB, with Docker containerization, REST API integration, WebSockets, and WebRTC. Skilled in backend architecture, responsive UIs, secure authentication systems, and real-time communications.',
@@ -135,16 +134,107 @@ export const teamMembers = [
     ]
   },
   {
+    id: 'aarav-singhania',
+    slug: 'aarav-singhania',
+    name: 'Aarav Singhania',
+    role: 'Founder & Chief Growth Officer',
+    badge: 'Growth Strategy',
+    image: '/tezscale-founder.jpg',
+    imageClass: 'object-cover object-top',
+    location: 'Mumbai, India',
+    experience: '8+ Years in Digital Growth & Performance Marketing',
+    linkedin: 'https://linkedin.com',
+    bio: 'Strategic advisor to 200+ high-growth B2B firms. Specializes in scalable inbound funnels, algorithmic media buying, and predictable revenue acceleration systems.',
+    technicalSkills: {
+      languagesFrontend: ['Growth Funnel Architecture', 'Conversion Rate Optimization (CRO)', 'Landing Page UI Strategy'],
+      backendArchitecture: ['Full-Funnel Tracking', 'Attribution Modeling', 'Predictable Inbound Architectures'],
+      databasesCaching: ['Customer Data Platforms (CDP)', 'CRM Integrations', 'Analytics Pipelines'],
+      authRealtime: ['Multi-Touch Attribution', 'Marketing Automation', 'WhatsApp CRM Triggers'],
+      toolsDevops: ['Google Ads Manager', 'Meta Ads Manager', 'Google Analytics 4', 'Looker Studio', 'HubSpot']
+    },
+    professionalExperience: [
+      {
+        company: 'TezScale Digital Growth',
+        role: 'Founder & Chief Growth Officer',
+        duration: '2021 – Present',
+        description: 'Leading client growth strategy, omnichannel ad buying, and high-velocity digital customer acquisition.',
+        highlights: [
+          'Scaled over 500+ client funnels across Healthcare, Real Estate, and SaaS verticals.',
+          'Managed upwards of ₹50M+ in targeted advertising budgets with sustained average 3.8x ROAS.',
+          'Pioneered instant WhatsApp CRM integration reducing customer lead response times to under 2 minutes.'
+        ]
+      }
+    ],
+    education: [
+      {
+        degree: 'MBA in Marketing Strategy & Digital Business',
+        institution: 'NMIMS, Mumbai',
+        year: '2019',
+        score: 'Distinction'
+      }
+    ],
+    certifications: [
+      'Google Certified Professional Media Buyer',
+      'Meta Certified Media Planning Specialist',
+      'HubSpot Inbound Marketing Master'
+    ],
+    projects: []
+  },
+  {
+    id: 'neha-kulkarni',
+    slug: 'neha-kulkarni',
+    name: 'Dr. Neha Kulkarni',
+    role: 'VP, Performance & Meta Ads',
+    badge: 'Paid Acquisition',
+    image: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=600&h=600&q=80',
+    imageClass: 'object-cover object-top',
+    location: 'Pune, India',
+    experience: '6+ Years in Algorithmic Ad Buying',
+    linkedin: 'https://linkedin.com',
+    bio: 'Ex-agency media director overseeing ₹15M+ in ad spend with an average ROAS of 4.2x across healthcare, medical clinic patient acquisition, and luxury real estate campaigns.',
+    technicalSkills: {
+      languagesFrontend: ['Creative Ad Testing', 'Dynamic Product Ads (DPA)', 'Landing Page Messaging'],
+      backendArchitecture: ['Meta Conversions API (CAPI)', 'Server-Side Tagging', 'Google Tag Manager'],
+      databasesCaching: ['Audience Segmentation', 'Lookalike Modeling', 'Custom Event Telemetry'],
+      authRealtime: ['Pixel Health Audits', 'Conversion Event Prioritization', 'Real-time ROAS Tracking'],
+      toolsDevops: ['Meta Ads Manager', 'Google Search Ads', 'Triple Whale', 'Hyros', 'Supermetrics']
+    },
+    professionalExperience: [
+      {
+        company: 'TezScale Digital Growth',
+        role: 'VP, Performance & Meta Ads',
+        duration: '2022 – Present',
+        description: 'Leading performance media buying squads and algorithmic campaign scaling.',
+        highlights: [
+          'Consistently achieved 4.2x ROAS across multi-crore ad campaigns.',
+          'Architected server-side Meta CAPI setups eliminating iOS14 attribution drop-offs.'
+        ]
+      }
+    ],
+    education: [
+      {
+        degree: 'M.Sc. in Data Analytics & Media Science',
+        institution: 'Symbiosis International University',
+        year: '2018',
+        score: 'First Class'
+      }
+    ],
+    certifications: [
+      'Meta Certified Performance Marketing Master',
+      'Google Search & Display Advertising Specialist'
+    ],
+    projects: []
+  },
+  {
     id: 'rustam-rathore',
     slug: 'rustam-rathore',
     name: 'Rustam Rathore',
     role: 'AI/ML Engineer',
     badge: 'AI & Machine Learning',
-    image: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=400&q=80',
+    image: '/rustam-rathore.jpg',
+    imageClass: 'object-cover object-center',
     location: 'LIG Square, Indore (M.P), India',
     experience: 'Machine Learning, Deep Learning & Generative AI',
-    email: 'rustam.rathore931@gmail.com',
-    phone: '+91 8224847598',
     linkedin: 'https://linkedin.com/in/rustam-rathore-9637162a7/',
     github: 'https://github.com/Rustam-Rathore',
     bio: 'AI/ML enthusiast with a strong foundation in Python, Machine Learning, Deep Learning, Data Science, and Generative AI. Skilled in RAG pipelines, LangChain, Transformers, and predictive ML systems with a practical approach to understanding complex business challenges and developing effective AI solutions.',
@@ -211,110 +301,15 @@ export const teamMembers = [
     ]
   },
   {
-    id: 'aarav-singhania',
-    slug: 'aarav-singhania',
-    name: 'Aarav Singhania',
-    role: 'Founder & Chief Growth Officer',
-    badge: 'Growth Strategy',
-    image: '/tezscale-founder.jpg',
-    location: 'Mumbai, India',
-    experience: '8+ Years in Digital Growth & Performance Marketing',
-    email: 'contact@tezscale.com',
-    phone: '+91 9876543210',
-    linkedin: 'https://linkedin.com',
-    bio: 'Strategic advisor to 200+ high-growth B2B firms. Specializes in scalable inbound funnels, algorithmic media buying, and predictable revenue acceleration systems.',
-    technicalSkills: {
-      languagesFrontend: ['Growth Funnel Architecture', 'Conversion Rate Optimization (CRO)', 'Landing Page UI Strategy'],
-      backendArchitecture: ['Full-Funnel Tracking', 'Attribution Modeling', 'Predictable Inbound Architectures'],
-      databasesCaching: ['Customer Data Platforms (CDP)', 'CRM Integrations', 'Analytics Pipelines'],
-      authRealtime: ['Multi-Touch Attribution', 'Marketing Automation', 'WhatsApp CRM Triggers'],
-      toolsDevops: ['Google Ads Manager', 'Meta Ads Manager', 'Google Analytics 4', 'Looker Studio', 'HubSpot']
-    },
-    professionalExperience: [
-      {
-        company: 'TezScale Digital Growth',
-        role: 'Founder & Chief Growth Officer',
-        duration: '2021 – Present',
-        description: 'Leading client growth strategy, omnichannel ad buying, and high-velocity digital customer acquisition.',
-        highlights: [
-          'Scaled over 500+ client funnels across Healthcare, Real Estate, and SaaS verticals.',
-          'Managed upwards of ₹50M+ in targeted advertising budgets with sustained average 3.8x ROAS.',
-          'Pioneered instant WhatsApp CRM integration reducing customer lead response times to under 2 minutes.'
-        ]
-      }
-    ],
-    education: [
-      {
-        degree: 'MBA in Marketing Strategy & Digital Business',
-        institution: 'NMIMS, Mumbai',
-        year: '2019',
-        score: 'Distinction'
-      }
-    ],
-    certifications: [
-      'Google Certified Professional Media Buyer',
-      'Meta Certified Media Planning Specialist',
-      'HubSpot Inbound Marketing Master'
-    ],
-    projects: []
-  },
-  {
-    id: 'neha-kulkarni',
-    slug: 'neha-kulkarni',
-    name: 'Dr. Neha Kulkarni',
-    role: 'VP, Performance & Meta Ads',
-    badge: 'Paid Acquisition',
-    image: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=400&q=80',
-    location: 'Pune, India',
-    experience: '6+ Years in Algorithmic Ad Buying',
-    email: 'contact@tezscale.com',
-    phone: '+91 9876543210',
-    linkedin: 'https://linkedin.com',
-    bio: 'Ex-agency media director overseeing ₹15M+ in ad spend with an average ROAS of 4.2x across healthcare, medical clinic patient acquisition, and luxury real estate campaigns.',
-    technicalSkills: {
-      languagesFrontend: ['Creative Ad Testing', 'Dynamic Product Ads (DPA)', 'Landing Page Messaging'],
-      backendArchitecture: ['Meta Conversions API (CAPI)', 'Server-Side Tagging', 'Google Tag Manager'],
-      databasesCaching: ['Audience Segmentation', 'Lookalike Modeling', 'Custom Event Telemetry'],
-      authRealtime: ['Pixel Health Audits', 'Conversion Event Prioritization', 'Real-time ROAS Tracking'],
-      toolsDevops: ['Meta Ads Manager', 'Google Search Ads', 'Triple Whale', 'Hyros', 'Supermetrics']
-    },
-    professionalExperience: [
-      {
-        company: 'TezScale Digital Growth',
-        role: 'VP, Performance & Meta Ads',
-        duration: '2022 – Present',
-        description: 'Leading performance media buying squads and algorithmic campaign scaling.',
-        highlights: [
-          'Consistently achieved 4.2x ROAS across multi-crore ad campaigns.',
-          'Architected server-side Meta CAPI setups eliminating iOS14 attribution drop-offs.'
-        ]
-      }
-    ],
-    education: [
-      {
-        degree: 'M.Sc. in Data Analytics & Media Science',
-        institution: 'Symbiosis International University',
-        year: '2018',
-        score: 'First Class'
-      }
-    ],
-    certifications: [
-      'Meta Certified Performance Marketing Master',
-      'Google Search & Display Advertising Specialist'
-    ],
-    projects: []
-  },
-  {
     id: 'vikram-malhotra',
     slug: 'vikram-malhotra',
     name: 'Vikram Malhotra',
     role: 'Senior Cloud & DevOps Engineer',
     badge: 'Cloud & DevOps',
-    image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80',
+    image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=600&h=600&q=80',
+    imageClass: 'object-cover object-center',
     location: 'Bengaluru, India',
     experience: '7+ Years in Cloud Infrastructure',
-    email: 'contact@tezscale.com',
-    phone: '+91 9876543210',
     linkedin: 'https://linkedin.com',
     bio: 'Specializes in high-availability cloud infrastructure, Docker containerization, Kubernetes clusters, zero-downtime CI/CD workflows, and high-concurrency API performance.',
     technicalSkills: {
@@ -356,11 +351,10 @@ export const teamMembers = [
     name: 'Ananya Roy',
     role: 'Creative & Brand Identity Lead',
     badge: 'Brand Kits & UI',
-    image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=400&q=80',
+    image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=600&h=600&q=80',
+    imageClass: 'object-cover object-top',
     location: 'New Delhi, India',
     experience: '5+ Years in Brand Architecture',
-    email: 'contact@tezscale.com',
-    phone: '+91 9876543210',
     linkedin: 'https://linkedin.com',
     bio: 'Turns complex business values into iconic brand kits, high-CTR visual assets, scalable Figma design systems, and high-converting marketing collateral.',
     technicalSkills: {

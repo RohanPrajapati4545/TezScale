@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /backoffice
+Disallow: /admin
+
+Sitemap: https://tez-scale-git-main-rohanprajjjjapati-4650.vercel.app/sitemap.xml
