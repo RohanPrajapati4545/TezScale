@@ -13,8 +13,9 @@ import ConsultationModal from '../Components/ConsultationModal';
 
 const Home = () => {
   useSEO({
-    title: 'TezScale - Accelerating Digital Growth | Web Development, SEO & Performance Marketing',
-    description: 'TezScale accelerates business growth with ultra-fast web development, local SEO, Google Ads, Meta advertising, and high-converting creative brand kits.',
+    title: 'TezScale | Affordable Web Development, Viral Reels & Digital Marketing in Indore',
+    description: 'Looking for affordable, easy-cost website development in Indore, viral Instagram reels making, or local SEO to rank #1 on Google Maps? TezScale delivers high-speed results with 2-day staging draft.',
+    keywords: 'web development company in Indore, affordable website design Indore, easy cost website development Indore, website maker in Indore, viral reels making Indore, Instagram reels video production, short video editing Indore, social media marketing agency Indore, digital marketing agency in Indore, local SEO Indore, Google Maps ranking Indore, TezScale',
     canonical: '/'
   });
 

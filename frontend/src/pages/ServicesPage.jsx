@@ -33,8 +33,8 @@ const detailedServices = [
     title: 'Website Builder & Development',
     category: 'Engineering & Conversion UI',
     icon: <Code2 className="w-6 h-6 text-blue-600" />,
-    badge: 'Accelerated 2-Day Staging',
-    desc: 'High-speed, SEO-optimized web platforms built with Vite, React, and Tailwind CSS. Designed to turn visitors into booked consultation calls.',
+    badge: 'Indore • Easy Cost & 2-Day Staging',
+    desc: 'Affordable, high-speed, SEO-optimized web development in Indore built with React & Vite. Engineered to turn visitors into booked client inquiries with 98+ PageSpeed.',
     deliverables: [
       'Ultra-fast Vite/React single-page architecture',
       'Mobile-responsive layout with 95+ PageSpeed scores',
@@ -69,8 +69,8 @@ const detailedServices = [
     title: 'Digital Marketing Support (Local SEO)',
     category: 'Search Engine Dominance',
     icon: <Megaphone className="w-6 h-6 text-emerald-600" />,
-    badge: 'Google Maps Top 3',
-    desc: 'Comprehensive search engine optimization built to dominate local market share for clinics, property brokers, and local enterprises.',
+    badge: 'Indore Google Maps Top 3',
+    desc: 'Dominant local SEO and digital marketing in Indore built to secure Top 3 Google Maps positions and organic inquiries for clinics, stores, and businesses.',
     deliverables: [
       'Google My Business (GMB) / Maps pack optimization',
       'Structured schema markup for clinics & real estate',
@@ -105,8 +105,8 @@ const detailedServices = [
     title: 'Social Media Management & Viral Reach',
     category: 'Organic Audience Building',
     icon: <Share2 className="w-6 h-6 text-indigo-600" />,
-    badge: 'Engaged Community',
-    desc: 'Consistent, brand-aligned storytelling across Instagram, LinkedIn, and Facebook that transforms cold prospects into loyal brand advocates.',
+    badge: 'Viral Reels & Video Production',
+    desc: 'Viral Instagram reels making, high-retention video editing, and complete social media management in Indore that turns viewers into loyal brand customers.',
     deliverables: [
       'Monthly strategic content calendars & copywriting',
       'Engaging short-form video scripts & Reel creation',
@@ -139,8 +139,9 @@ const detailedServices = [
 
 const ServicesPage = () => {
   useSEO({
-    title: 'Digital Marketing & Web Development Services | TezScale',
-    description: 'Explore TezScale core digital service pillars: Website Builder & Development, Brand Kits, Local SEO, E-Commerce, Social Media, and Meta Ads Management.',
+    title: 'Affordable Web Development, Reels & Digital Marketing Services in Indore | TezScale',
+    description: 'Explore TezScale high-impact digital service pillars: Easy cost website development in Indore, viral reels video creation, local SEO Google Maps ranking, and high-ROAS Meta ads.',
+    keywords: 'web development services Indore, affordable website builder Indore, low cost web development, reels making services Indore, viral video marketing, digital marketing agency Indore, local SEO services, Google Maps ranking Indore, Meta ads agency, TezScale services',
     canonical: '/services'
   });
 

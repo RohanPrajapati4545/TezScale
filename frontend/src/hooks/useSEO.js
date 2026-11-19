@@ -4,7 +4,7 @@ import { useEffect } from 'react';
  * Lightweight, non-intrusive SEO Hook
  * Updates document.title, meta description, and canonical URL invisibly without altering UI or DOM structure.
  */
-export default function useSEO({ title, description, canonical }) {
+export default function useSEO({ title, description, canonical, keywords }) {
   useEffect(() => {
     if (title) {
       document.title = title;
@@ -21,6 +21,16 @@ export default function useSEO({ title, description, canonical }) {
       if (ogDesc) ogDesc.setAttribute('content', description);
       const twitterDesc = document.querySelector('meta[name="twitter:description"]');
       if (twitterDesc) twitterDesc.setAttribute('content', description);
+    }
+
+    if (keywords) {
+      let metaKeywords = document.querySelector('meta[name="keywords"]');
+      if (!metaKeywords) {
+        metaKeywords = document.createElement('meta');
+        metaKeywords.setAttribute('name', 'keywords');
+        document.head.appendChild(metaKeywords);
+      }
+      metaKeywords.setAttribute('content', keywords);
     }
 
     if (canonical) {
@@ -40,5 +50,5 @@ export default function useSEO({ title, description, canonical }) {
       const twitterUrl = document.querySelector('meta[name="twitter:url"]');
       if (twitterUrl) twitterUrl.setAttribute('content', canonicalUrl);
     }
-  }, [title, description, canonical]);
+  }, [title, description, canonical, keywords]);
 }

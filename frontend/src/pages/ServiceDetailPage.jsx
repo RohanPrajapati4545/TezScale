@@ -169,9 +169,50 @@ const ServiceDetailPage = () => {
   // Retrieve service from dataset
   const service = getServiceBySlug(serviceSlug) || servicesData[0];
 
-  useSEO({
+  // Laser-targeted SEO keyword configuration per service slug
+  const seoConfig = {
+    'web-development': {
+      title: 'Affordable Web Development in Indore | Easy Cost Website Maker | TezScale',
+      description: 'Get high-speed, modern websites made in Indore at an easy, pocket-friendly cost. 2-day staging draft, 98+ PageSpeed, mobile-friendly design, and direct developer access.',
+      keywords: 'web development company in Indore, affordable web development Indore, easy cost website design Indore, low cost website maker Indore, cheap and best website development Indore, custom website builder Indore, doctor clinic website Indore, real estate website design Indore, 2-day website delivery, freelance web developer Indore, TezScale'
+    },
+    'social-media': {
+      title: 'Viral Reels Making & Social Media Marketing Agency in Indore | TezScale',
+      description: 'Supercharge your brand with viral Instagram reels making, short-form video shooting & editing, and complete social media handling in Indore.',
+      keywords: 'reels making agency in Indore, viral reels making Indore, Instagram reels video production Indore, short video editing services Indore, social media marketing agency Indore, Instagram growth agency Indore, business reels creation, TezScale reels'
+    },
+    'digital-marketing': {
+      title: 'Digital Marketing & Local SEO in Indore | Rank Top 3 on Google Maps | TezScale',
+      description: 'Indore\'s premier digital marketing and local SEO agency. We rank your clinic, firm, or business in the Top 3 on Google Maps and drive high-intent organic calls.',
+      keywords: 'digital marketing agency in Indore, best digital marketing company Indore, local SEO services Indore, Google Maps ranking Indore, Google My Business optimization Indore, lead generation Indore, performance marketing agency Indore, TezScale'
+    },
+    'meta-ads': {
+      title: 'Meta Ads & Paid Lead Generation Agency in Indore | FB & IG Ads | TezScale',
+      description: 'High-ROI Meta advertising (Facebook & Instagram ads) engineered for qualified leads, minimum cost-per-acquisition, and 3.8x+ ROAS in Indore and India.',
+      keywords: 'Meta ads agency Indore, Facebook ads management Indore, Instagram paid ads Indore, lead generation agency Indore, performance marketing Indore, TezScale'
+    },
+    'ecommerce': {
+      title: 'E-Commerce Website Development & Scaling Services in Indore | TezScale',
+      description: 'Build high-converting online stores with fast UPI checkouts, WhatsApp abandoned cart recovery, and product catalog scaling in Indore.',
+      keywords: 'ecommerce website development Indore, online store builder Indore, Shopify developer Indore, ecommerce marketing agency Indore, TezScale'
+    },
+    'graphic-design': {
+      title: 'Graphic Design & Brand Identity Kits in Indore | TezScale',
+      description: 'Creative brand identity, logo design, marketing brochures, and high-CTR social media ad creatives crafted for maximum engagement in Indore.',
+      keywords: 'graphic design company in Indore, logo designer in Indore, branding agency Indore, social media banner design Indore, ad creatives designer, TezScale'
+    }
+  };
+
+  const currentSEO = seoConfig[service.slug] || {
     title: `${service.title} | TezScale Services`,
     description: service.shortDesc || service.longDesc || 'TezScale high-performance digital services.',
+    keywords: 'TezScale, digital services, Indore digital marketing, web development'
+  };
+
+  useSEO({
+    title: currentSEO.title,
+    description: currentSEO.description,
+    keywords: currentSEO.keywords,
     canonical: `/services/${service.slug}`
   });
 
