@@ -12,6 +12,7 @@ import {
   Infinity as InfinityIcon
 } from 'lucide-react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import tezscaleLogo from '../assets/tezscale-logo.png';
 
 const servicesDropdownList = [
   {
@@ -137,19 +138,17 @@ const Navbar = ({ onOpenConsultation }) => {
           
           {/* TezScale Logo */}
           <Link to="/" className="flex items-center gap-2.5 sm:gap-3 cursor-pointer group">
-            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-gradient-to-tr from-[#00A3E0] to-[#38bdf8] flex items-center justify-center text-white shadow-md shadow-[#00A3E0]/25 group-hover:scale-105 transition-transform duration-300">
-              <svg className="w-4 h-4 sm:w-5 sm:h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <circle cx="12" cy="12" r="9" />
-                <path d="M12 3v4M12 17v4M3 12h4M17 12h4" />
-                <circle cx="12" cy="12" r="3" fill="currentColor" />
-              </svg>
-            </div>
-            <div className="text-left">
-              <div className="text-lg sm:text-2xl font-black tracking-tight leading-none uppercase text-white">
+            <img
+              src={tezscaleLogo}
+              alt="TezScale Logo"
+              className="h-10 sm:h-12 w-auto object-contain drop-shadow-[0_0_12px_rgba(0,163,224,0.35)] group-hover:scale-105 transition-transform duration-300"
+            />
+            <div className="flex flex-col justify-center text-left">
+              <div className="text-xl sm:text-[27px] font-black tracking-tight leading-none uppercase text-white">
                 TEZ<span className="text-[#00A3E0]">SCALE</span>
               </div>
-              <div className="text-[8px] sm:text-[9px] uppercase tracking-widest font-bold mt-0.5 sm:mt-1 text-slate-300">
-                by DIGITAL GROWTH
+              <div className="text-[7.5px] sm:text-[8.5px] uppercase tracking-wider font-bold mt-1 text-slate-300 leading-none">
+                ACCELERATING DIGITAL GROWTH
               </div>
             </div>
           </Link>

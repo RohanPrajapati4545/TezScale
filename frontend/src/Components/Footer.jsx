@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Phone, Mail, MapPin, Send, MessageCircle, Clock, Check } from 'lucide-react';
 import { useContent } from '../context/ContentContext';
 import FloatingSpeedDial from './FloatingSpeedDial';
+import tezscaleLogo from '../assets/tezscale-logo.png';
 
 const Footer = ({ onOpenConsultation }) => {
   const { content } = useContent();
@@ -43,19 +44,17 @@ const Footer = ({ onOpenConsultation }) => {
           {/* Col 1: Branding & Social (4 cols) */}
           <div className="lg:col-span-4 space-y-5">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-[#00A3E0] to-[#38bdf8] flex items-center justify-center text-white shadow-md shadow-[#00A3E0]/25">
-                <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                  <circle cx="12" cy="12" r="9" />
-                  <path d="M12 3v4M12 17v4M3 12h4M17 12h4" />
-                  <circle cx="12" cy="12" r="3" fill="currentColor" />
-                </svg>
-              </div>
-              <div>
-                <div className="text-xl sm:text-2xl font-black text-white tracking-tight uppercase leading-none">
+              <img
+                src={tezscaleLogo}
+                alt="TezScale Logo"
+                className="h-11 sm:h-12 w-auto object-contain drop-shadow-[0_0_12px_rgba(0,163,224,0.35)]"
+              />
+              <div className="flex flex-col justify-center text-left">
+                <div className="text-xl sm:text-[27px] font-black text-white tracking-tight uppercase leading-none">
                   TEZ<span className="text-[#00A3E0]">SCALE</span>
                 </div>
-                <div className="text-[9px] uppercase tracking-widest text-slate-400 font-bold mt-1">
-                  by DIGITAL GROWTH
+                <div className="text-[7.5px] sm:text-[8.5px] uppercase tracking-wider text-slate-400 font-bold mt-1 leading-none">
+                  ACCELERATING DIGITAL GROWTH
                 </div>
               </div>
             </div>
