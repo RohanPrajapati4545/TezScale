@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Phone, Mail, MapPin, Send, MessageCircle, Clock, Check } from 'lucide-react';
 import { useContent } from '../context/ContentContext';
 import FloatingSpeedDial from './FloatingSpeedDial';
+import tezscaleLogo from '../assets/tezscale-logo.png';
 
 const Footer = ({ onOpenConsultation }) => {
   const { content } = useContent();
@@ -48,7 +49,7 @@ const Footer = ({ onOpenConsultation }) => {
               aria-label="TezScale - Return to homepage"
             >
               <img
-                src="/tezscale-logo.png"
+                src={tezscaleLogo}
                 alt="TezScale Logo"
                 className="h-12 sm:h-14 w-auto object-contain bg-transparent flex-shrink-0"
               />

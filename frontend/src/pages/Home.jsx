@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import useSEO from '../hooks/useSEO';
 import Navbar from '../Components/Navbar';
 import Hero from '../Components/Hero';
 import Services from '../Components/Services';
@@ -11,6 +12,13 @@ import Footer from '../Components/Footer';
 import ConsultationModal from '../Components/ConsultationModal';
 
 const Home = () => {
+  useSEO({
+    title: 'TezScale | Affordable Web Development, Viral Reels & Digital Marketing in Indore',
+    description: 'Looking for affordable, easy-cost website development in Indore, viral Instagram reels making, or local SEO to rank #1 on Google Maps? TezScale delivers high-speed results with 2-day staging draft.',
+    keywords: 'web development company in Indore, affordable website design Indore, easy cost website development Indore, website maker in Indore, viral reels making Indore, Instagram reels video production, short video editing Indore, social media marketing agency Indore, digital marketing agency in Indore, local SEO Indore, Google Maps ranking Indore, TezScale',
+    canonical: '/'
+  });
+
   const [modalOpen, setModalOpen] = useState(false);
 
   // Auto-open enquiry modal on first-time website visit

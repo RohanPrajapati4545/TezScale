@@ -31,7 +31,7 @@ export const defaultSiteContent = {
   services: [
     {
       title: 'Website Builder & Development',
-      desc: 'Creation of responsive, ultra-fast & SEO-optimized websites built on modern frameworks with mobile-first indexing.',
+      desc: 'Affordable, easy-cost website development in Indore. Ultra-fast 0.8s load speed, 2-day delivery & 100% mobile-friendly.',
       icon: 'Code',
       badgeBg: 'bg-blue-600 text-white',
     },
@@ -43,7 +43,7 @@ export const defaultSiteContent = {
     },
     {
       title: 'Digital Marketing Support (Local SEO)',
-      desc: 'Holistic growth strategies encompassing technical SEO, high-converting content marketing, and automated email funnels.',
+      desc: 'Dominant local SEO & Google Maps Top 3 pack ranking in Indore to turn local searches into paying customers.',
       icon: 'Megaphone',
       badgeBg: 'bg-emerald-500 text-white',
     },
@@ -55,7 +55,7 @@ export const defaultSiteContent = {
     },
     {
       title: 'Social Media Strategy & Reels',
-      desc: 'Organic growth strategies across LinkedIn, Instagram & X with active community management and content scheduling.',
+      desc: 'Viral Instagram reels video production, short-form editing & social media management in Indore that builds brand reach.',
       icon: 'Share2',
       badgeBg: 'bg-indigo-600 text-white',
     },

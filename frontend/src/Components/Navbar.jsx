@@ -12,6 +12,7 @@ import {
   Infinity as InfinityIcon
 } from 'lucide-react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import tezscaleLogo from '../assets/tezscale-logo.png';
 
 const servicesDropdownList = [
   {
@@ -143,7 +144,7 @@ const Navbar = ({ onOpenConsultation }) => {
           >
             {/* 3D UHD Emblem Mark (Transparent Background, No Animation) */}
             <img
-              src="/tezscale-logo.png"
+              src={tezscaleLogo}
               alt="TezScale Logo"
               className="h-11 sm:h-13 lg:h-14 w-auto object-contain bg-transparent flex-shrink-0"
             />

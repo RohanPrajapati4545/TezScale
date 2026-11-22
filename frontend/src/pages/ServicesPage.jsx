@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import useSEO from '../hooks/useSEO';
 import Navbar from '../Components/Navbar';
 import Footer from '../Components/Footer';
 import ConsultationModal from '../Components/ConsultationModal';
@@ -32,8 +33,8 @@ const detailedServices = [
     title: 'Website Builder & Development',
     category: 'Engineering & Conversion UI',
     icon: <Code2 className="w-6 h-6 text-blue-600" />,
-    badge: 'Accelerated 2-Day Staging',
-    desc: 'High-speed, SEO-optimized web platforms built with Vite, React, and Tailwind CSS. Designed to turn visitors into booked consultation calls.',
+    badge: 'Indore • Easy Cost & 2-Day Staging',
+    desc: 'Affordable, high-speed, SEO-optimized web development in Indore built with React & Vite. Engineered to turn visitors into booked client inquiries with 98+ PageSpeed.',
     deliverables: [
       'Ultra-fast Vite/React single-page architecture',
       'Mobile-responsive layout with 95+ PageSpeed scores',
@@ -68,8 +69,8 @@ const detailedServices = [
     title: 'Digital Marketing Support (Local SEO)',
     category: 'Search Engine Dominance',
     icon: <Megaphone className="w-6 h-6 text-emerald-600" />,
-    badge: 'Google Maps Top 3',
-    desc: 'Comprehensive search engine optimization built to dominate local market share for clinics, property brokers, and local enterprises.',
+    badge: 'Indore Google Maps Top 3',
+    desc: 'Dominant local SEO and digital marketing in Indore built to secure Top 3 Google Maps positions and organic inquiries for clinics, stores, and businesses.',
     deliverables: [
       'Google My Business (GMB) / Maps pack optimization',
       'Structured schema markup for clinics & real estate',
@@ -104,8 +105,8 @@ const detailedServices = [
     title: 'Social Media Management & Viral Reach',
     category: 'Organic Audience Building',
     icon: <Share2 className="w-6 h-6 text-indigo-600" />,
-    badge: 'Engaged Community',
-    desc: 'Consistent, brand-aligned storytelling across Instagram, LinkedIn, and Facebook that transforms cold prospects into loyal brand advocates.',
+    badge: 'Viral Reels & Video Production',
+    desc: 'Viral Instagram reels making, high-retention video editing, and complete social media management in Indore that turns viewers into loyal brand customers.',
     deliverables: [
       'Monthly strategic content calendars & copywriting',
       'Engaging short-form video scripts & Reel creation',
@@ -137,6 +138,13 @@ const detailedServices = [
 ];
 
 const ServicesPage = () => {
+  useSEO({
+    title: 'Affordable Web Development, Reels & Digital Marketing Services in Indore | TezScale',
+    description: 'Explore TezScale high-impact digital service pillars: Easy cost website development in Indore, viral reels video creation, local SEO Google Maps ranking, and high-ROAS Meta ads.',
+    keywords: 'web development services Indore, affordable website builder Indore, low cost web development, reels making services Indore, viral video marketing, digital marketing agency Indore, local SEO services, Google Maps ranking Indore, Meta ads agency, TezScale services',
+    canonical: '/services'
+  });
+
   const [modalOpen, setModalOpen] = useState(false);
   const [videoModalOpen, setVideoModalOpen] = useState(false);
   const [contentVisible, setContentVisible] = useState(true);
@@ -406,7 +414,7 @@ const ServicesPage = () => {
                 Live Production SaaS & Web Architectures
               </h2>
               <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
-                Explore live enterprise platforms and microservices-based SaaS systems architected by TezScale's engineering team. Direct production links below:
+                Explore live enterprise platforms, real-time web applications, and machine learning systems architected by TezScale's technical engineering team — Rohan Prajapati (Lead Full-Stack Web Developer) & Rustam Rathore (AI/ML Engineer). Direct production links below:
               </p>
             </div>
 
@@ -467,7 +475,26 @@ const ServicesPage = () => {
                   badge: 'Marketplace SaaS',
                   tech: 'React.js • Node.js • Express • Razorpay • Nodemailer',
                   desc: 'Hyperlocal home services marketplace connecting customers with verified trade technicians, with Razorpay payments and live service booking.',
+                  developer: 'Rohan Prajapati (Lead Full-Stack Web Developer)',
                 },
+                {
+                  title: 'AI-Based Hiring Prediction System',
+                  url: 'https://github.com/Rustam-Rathore',
+                  category: 'HR Automation & Machine Learning',
+                  badge: 'AI & Machine Learning',
+                  tech: 'Python • Scikit-learn • TF-IDF • Random Forest • Pandas',
+                  desc: 'End-to-end predictive machine learning pipeline transforming candidate resumes into feature vectors, automating recruitment screening with real-time accuracy.',
+                  developer: 'Rustam Rathore (AI/ML Engineer)',
+                },
+                {
+                  title: 'Wine Quality Prediction Pipeline',
+                  url: 'https://github.com/Rustam-Rathore',
+                  category: 'Supervised ML Analytics',
+                  badge: 'Supervised ML',
+                  tech: 'Python • Scikit-learn • Feature Engineering • Hyperparameter Tuning',
+                  desc: 'Supervised classification pipeline utilizing machine learning algorithms, cross-validation, and confusion matrix precision evaluation for automated quality prediction.',
+                  developer: 'Rustam Rathore (AI/ML Engineer)',
+                }
               ].map((proj, idx) => (
                 <div
                   key={idx}
@@ -491,6 +518,11 @@ const ServicesPage = () => {
                       </p>
                     </div>
 
+                    {proj.developer && (
+                      <div className="text-[11px] font-semibold text-sky-300/90 bg-slate-900/60 px-2.5 py-1 rounded-lg border border-slate-700/60 inline-flex items-center gap-1.5">
+                        <span>{proj.developer}</span>
+                      </div>
+                    )}
                     <div className="pt-2">
                       <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1">Architecture</span>
                       <div className="text-[11px] font-semibold text-slate-200">
@@ -516,6 +548,21 @@ const ServicesPage = () => {
                   </div>
                 </div>
               ))}
+            </div>
+            {/* Web Dev Panel Easy Cost CTA */}
+            <div className="mt-12 p-6 rounded-2xl bg-gradient-to-r from-sky-950/80 via-slate-800 to-slate-900 border border-sky-500/30 flex flex-col sm:flex-row items-center justify-between gap-4 text-left">
+              <div>
+                <span className="text-xs font-bold text-sky-400 uppercase tracking-wider">Fast 2-Day Delivery &bull; Pocket-Friendly</span>
+                <h4 className="text-lg font-bold text-white mt-0.5">Looking for the Best Quality Website at an Easy, Affordable Cost?</h4>
+                <p className="text-xs text-slate-300 mt-1">Explore our full Website Builder & Development panel with transparent plans, 0.8s load speed, and direct developer access.</p>
+              </div>
+              <Link
+                to="/services/web-development"
+                className="shrink-0 inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#00A3E0] hover:bg-[#008bc0] text-white text-xs font-bold transition-all shadow-md hover:scale-105"
+              >
+                <span>Explore Web Development Panel</span>
+                <ArrowRight className="w-4 h-4" />
+              </Link>
             </div>
           </div>
         </section>

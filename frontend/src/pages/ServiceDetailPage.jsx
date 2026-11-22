@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
+import useSEO from '../hooks/useSEO';
 import {
   ArrowLeft,
   ArrowRight,
@@ -24,7 +25,11 @@ import {
   Infinity as InfinityIcon,
   Loader2,
   Lock,
-  ExternalLink
+  ExternalLink,
+  Users,
+  Github,
+  Linkedin,
+  Cpu
 } from 'lucide-react';
 import Navbar from '../Components/Navbar';
 import Footer from '../Components/Footer';
@@ -61,6 +66,101 @@ const renderIcon = (name, className = "w-5 h-5") => {
   }
 };
 
+// Core Technical Team for Web Development Panel
+const technicalTeam = [
+  {
+    name: 'Rohan Prajapati',
+    role: 'Lead Full-Stack Web Developer',
+    specialty: 'MERN Stack, Microservices SaaS & Real-Time WebRTC Architecture',
+    badge: 'Lead Web Engineer',
+    image: '/rohan-prajapati.jpg',
+    imageClass: 'object-cover object-center',
+    slug: 'rohan-prajapati',
+    exp: '1+ Years in Microservices SaaS & Full-Stack Development',
+    skills: ['React.js', 'Node.js', 'Express.js', 'MongoDB', 'Docker', 'Socket.IO', 'WebRTC', 'REST APIs'],
+    projectsCount: '7+ Live Production Platforms',
+    github: 'https://github.com/RohanPrajapati4545',
+    linkedin: 'https://linkedin.com/in/rohan-prajapati-517128206/',
+    bio: 'Direct architect for enterprise-grade SaaS platforms and ultra-fast web architectures. Specializes in microservices backends, responsive React UIs, and real-time WebSockets with 98+ Google PageSpeed and sub-second latency.'
+  },
+  {
+    name: 'Rustam Rathore',
+    role: 'AI/ML Engineer',
+    specialty: 'Python, Predictive Machine Learning Pipelines & Intelligent Web Systems',
+    badge: 'AI/ML Architect',
+    image: '/rustam-rathore.jpg',
+    imageClass: 'object-cover object-center',
+    slug: 'rustam-rathore',
+    exp: 'Machine Learning, Deep Learning & Generative AI',
+    skills: ['Python', 'PyTorch', 'Scikit-learn', 'LangChain', 'RAG Pipelines', 'OpenAI APIs', 'MySQL'],
+    projectsCount: 'Machine Learning Pipelines',
+    github: 'https://github.com/Rustam-Rathore',
+    linkedin: 'https://linkedin.com/in/rustam-rathore-9637162a7/',
+    bio: 'Integrates artificial intelligence, predictive machine learning models, and automated reasoning pipelines into modern web applications to provide smart features, automated customer routing, and data analytics.'
+  }
+];
+
+// Easy Cost & Best Quality Website Plans
+const easyCostPackages = [
+  {
+    name: 'Starter Launchpad',
+    badge: 'Easy Cost • Pocket Friendly',
+    tagline: 'Best for Doctors, Clinics, Local Businesses & Startups',
+    subtitle: 'Transparent, Low-Cost One-Time Investment — Zero Recurring Agency Retainers',
+    delivery: '⚡ 2-Day Staging Delivery',
+    popular: false,
+    features: [
+      'Modern High-Speed Single-Page Architecture (React + Vite)',
+      '100% Mobile, Tablet & Desktop Responsive Layout',
+      '0.8s Ultra-Fast Load Speed with 95+ Google PageSpeed Guarantee',
+      'Instant Encrypted WhatsApp Lead Routing with 1-Tap Trigger',
+      'Contact & Patient/Client Inquiry Forms with Validation',
+      'Interactive Google Maps Embed & Local Search Schema',
+      'Free SSL Certificate & 1-Year DNS Setup Assistance',
+      '100% Full Code Ownership with Zero Vendor Lock-In'
+    ],
+    cta: 'Get Starter Website'
+  },
+  {
+    name: 'Business Growth Pro',
+    badge: 'Most Popular • Maximum ROI',
+    tagline: 'Best for B2B Firms, Real Estate & Established Brands',
+    subtitle: 'Maximum Conversions per Rupee Spent with Advanced Conversion Architecture',
+    delivery: '⚡ 3-4 Business Days Staging',
+    popular: true,
+    features: [
+      'Everything in Starter Launchpad +',
+      'Multi-Page Conversion Architecture with Tailored High-CTR Funnels',
+      'Comprehensive On-Page Technical SEO & Rich Snippets Schema',
+      'Dynamic Lead Capture Forms with Instant Email/WhatsApp Alerts',
+      'Interactive Service Calculators & Custom UI Widgets',
+      'Dynamic Video Hero Section with High-Resolution Visual Assets',
+      'WhatsApp Business Automated Greeting & CRM Integration',
+      'Dedicated Performance & Conversion Tracking Setup'
+    ],
+    cta: 'Launch Growth Website'
+  },
+  {
+    name: 'Custom SaaS & Web App',
+    badge: 'Enterprise Architecture',
+    tagline: 'Best for Multi-Tenant Platforms, Portals & Tech Startups',
+    subtitle: 'Enterprise Microservices & Cloud Scale at Startup-Friendly Development Rates',
+    delivery: '⚡ Agile Milestone Roadmap',
+    popular: false,
+    features: [
+      'Full Microservices Architecture (Node.js, Express, MongoDB, Docker)',
+      'Enterprise Authentication (JWT, Refresh Tokens, Role-Based RBAC)',
+      'Real-Time WebSockets / Socket.IO Push Notifications',
+      'WebRTC Peer-to-Peer Audio / Video Streaming Capabilities',
+      'Docker Containerization & High-Availability Cloud Staging',
+      'Custom Admin Backoffice Panel with Analytics & Management',
+      'Payment Gateway Integration (Razorpay / Stripe / Webhooks)',
+      'RESTful API Documentation & Scalable Database Migrations'
+    ],
+    cta: 'Architect Custom Platform'
+  }
+];
+
 const ServiceDetailPage = () => {
   const { serviceSlug } = useParams();
   const navigate = useNavigate();
@@ -68,6 +168,53 @@ const ServiceDetailPage = () => {
 
   // Retrieve service from dataset
   const service = getServiceBySlug(serviceSlug) || servicesData[0];
+
+  // Laser-targeted SEO keyword configuration per service slug
+  const seoConfig = {
+    'web-development': {
+      title: 'Affordable Web Development in Indore | Easy Cost Website Maker | TezScale',
+      description: 'Get high-speed, modern websites made in Indore at an easy, pocket-friendly cost. 2-day staging draft, 98+ PageSpeed, mobile-friendly design, and direct developer access.',
+      keywords: 'web development company in Indore, affordable web development Indore, easy cost website design Indore, low cost website maker Indore, cheap and best website development Indore, custom website builder Indore, doctor clinic website Indore, real estate website design Indore, 2-day website delivery, freelance web developer Indore, TezScale'
+    },
+    'social-media': {
+      title: 'Viral Reels Making & Social Media Marketing Agency in Indore | TezScale',
+      description: 'Supercharge your brand with viral Instagram reels making, short-form video shooting & editing, and complete social media handling in Indore.',
+      keywords: 'reels making agency in Indore, viral reels making Indore, Instagram reels video production Indore, short video editing services Indore, social media marketing agency Indore, Instagram growth agency Indore, business reels creation, TezScale reels'
+    },
+    'digital-marketing': {
+      title: 'Digital Marketing & Local SEO in Indore | Rank Top 3 on Google Maps | TezScale',
+      description: 'Indore\'s premier digital marketing and local SEO agency. We rank your clinic, firm, or business in the Top 3 on Google Maps and drive high-intent organic calls.',
+      keywords: 'digital marketing agency in Indore, best digital marketing company Indore, local SEO services Indore, Google Maps ranking Indore, Google My Business optimization Indore, lead generation Indore, performance marketing agency Indore, TezScale'
+    },
+    'meta-ads': {
+      title: 'Meta Ads & Paid Lead Generation Agency in Indore | FB & IG Ads | TezScale',
+      description: 'High-ROI Meta advertising (Facebook & Instagram ads) engineered for qualified leads, minimum cost-per-acquisition, and 3.8x+ ROAS in Indore and India.',
+      keywords: 'Meta ads agency Indore, Facebook ads management Indore, Instagram paid ads Indore, lead generation agency Indore, performance marketing Indore, TezScale'
+    },
+    'ecommerce': {
+      title: 'E-Commerce Website Development & Scaling Services in Indore | TezScale',
+      description: 'Build high-converting online stores with fast UPI checkouts, WhatsApp abandoned cart recovery, and product catalog scaling in Indore.',
+      keywords: 'ecommerce website development Indore, online store builder Indore, Shopify developer Indore, ecommerce marketing agency Indore, TezScale'
+    },
+    'graphic-design': {
+      title: 'Graphic Design & Brand Identity Kits in Indore | TezScale',
+      description: 'Creative brand identity, logo design, marketing brochures, and high-CTR social media ad creatives crafted for maximum engagement in Indore.',
+      keywords: 'graphic design company in Indore, logo designer in Indore, branding agency Indore, social media banner design Indore, ad creatives designer, TezScale'
+    }
+  };
+
+  const currentSEO = seoConfig[service.slug] || {
+    title: `${service.title} | TezScale Services`,
+    description: service.shortDesc || service.longDesc || 'TezScale high-performance digital services.',
+    keywords: 'TezScale, digital services, Indore digital marketing, web development'
+  };
+
+  useSEO({
+    title: currentSEO.title,
+    description: currentSEO.description,
+    keywords: currentSEO.keywords,
+    canonical: `/services/${service.slug}`
+  });
 
   // Targeted Inquiry Form State
   const [formData, setFormData] = useState({
@@ -121,7 +268,6 @@ const ServiceDetailPage = () => {
     };
   }, []);
 
-  // Scroll to top on route change
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
     setSuccess(false);
@@ -129,86 +275,64 @@ const ServiceDetailPage = () => {
   }, [serviceSlug]);
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setFormData((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
   };
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     setError('');
 
-    const cleanName = formData.name.trim();
-    const cleanEmail = formData.email.trim().toLowerCase();
-    const cleanDigits = phoneNumber.trim();
-
-    if (!cleanName || cleanName.length < 2) {
-      setError('Please enter your full name (minimum 2 characters).');
+    const cleanPhone = phoneNumber.replace(/\D/g, '');
+    if (!cleanPhone || cleanPhone.length < 7) {
+      setError('Please provide a valid contact number.');
+      setLoading(false);
       return;
     }
 
-    if (!cleanEmail || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(cleanEmail)) {
-      setError('Please provide a valid business email address.');
-      return;
-    }
-
-    if (!cleanDigits || cleanDigits.length < 7) {
-      setError('Please enter a valid phone / WhatsApp number (digits only).');
-      return;
-    }
-
-    if (countryCode === '+91' && cleanDigits.length !== 10) {
-      setError('Please enter a valid 10-digit Indian mobile number.');
-      return;
-    }
-
-    const fullPhone = `${countryCode} ${cleanDigits}`;
     const payload = {
-      name: cleanName,
-      email: cleanEmail,
-      whatsapp: fullPhone,
-      phone: fullPhone,
-      phoneNumber: fullPhone,
+      fullName: formData.name,
+      email: formData.email,
+      phone: `${countryCode} ${cleanPhone}`,
       businessType: formData.businessType,
-      serviceRequired: service.title,
-      service: service.title,
-      company: formData.company.trim(),
-      website: formData.company.trim(),
-      message: formData.message.trim(),
+      company: formData.company || 'Not Specified',
+      notes: `Service Inquiry: ${service.title}. Requirements: ${formData.message || 'No additional notes'}`,
+      source: `Service Page: ${service.slug}`,
     };
 
-    setLoading(true);
-
     try {
-      const res = await apiFetch('/leads', {
+      const res = await apiFetch('/api/consultations', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
       });
 
-      const data = await res.json();
-
-      if (res.ok && data.success) {
+      if (res.ok) {
         setSuccess(true);
-        const waMsg = `Hello TezScale, I submitted an inquiry for ${service.title}. My name is ${cleanName}.`;
-        const waUrl = `https://wa.me/919876543210?text=${encodeURIComponent(waMsg)}`;
+        const waText = encodeURIComponent(
+          `Hi TezScale, I just submitted an inquiry for "${service.title}". My name is ${formData.name} (${formData.businessType}). Looking forward to our growth consultation.`
+        );
         setTimeout(() => {
-          window.open(waUrl, '_blank');
+          window.open(`https://wa.me/919876543210?text=${waText}`, '_blank');
         }, 1200);
       } else {
-        setError(data.message || 'Failed to submit inquiry. Please try again or chat via WhatsApp.');
+        const data = await res.json().catch(() => ({}));
+        setError(data.message || 'Submission failed. Please reach us via WhatsApp directly.');
       }
     } catch (err) {
-      // Local fallback
-      setSuccess(true);
+      setError('Network communication failed. Please contact us via WhatsApp.');
     } finally {
       setLoading(false);
     }
   };
 
   const whatsappInquiryUrl = `https://wa.me/919876543210?text=${encodeURIComponent(
-    `Hello TezScale, I want to discuss ${service.title} for my business.`
+    `Hi TezScale, I want to learn more about "${service.title}". Please share case studies and roadmap.`
   )}`;
 
-  // Related Services (Other 5 services)
   const otherServices = servicesData.filter((s) => s.id !== service.id);
 
   return (
@@ -216,8 +340,8 @@ const ServiceDetailPage = () => {
       <Navbar onOpenConsultation={() => setModalOpen(true)} />
 
       <main className="flex-1">
-        {/* Breadcrumbs & Header Banner with Live Background Video */}
-        <section className="relative min-h-[92vh] sm:min-h-screen flex flex-col justify-center pt-24 sm:pt-28 pb-12 sm:pb-16 overflow-hidden bg-[#070913] border-b border-slate-800 text-white">
+        {/* Service Hero Header with Live Background Video */}
+        <section className="relative min-h-[92vh] sm:min-h-screen flex flex-col justify-center items-center pt-24 sm:pt-28 pb-12 sm:pb-16 overflow-hidden bg-[#070913] border-b border-slate-800 text-white">
           {/* Background Video: Shifted upwards with scale-120 for 100% full screen cover and perfect logo clearance */}
           <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
             <video
@@ -335,7 +459,7 @@ const ServiceDetailPage = () => {
           </div>
         </section>
 
-        {/* 4 Metric Counters (With Oliveflex Speed Animated Count-Up) */}
+        {/* 4 Metric Counters (With Speed Animated Count-Up) */}
         <section className="py-12 bg-white border-b border-slate-100">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 text-left">
@@ -391,7 +515,7 @@ const ServiceDetailPage = () => {
                   </div>
                 </div>
 
-                {/* Target Industry Persona Benefits (Section 1.1) */}
+                {/* Target Industry Persona Benefits */}
                 <div className="space-y-4 pt-6 border-t border-slate-100">
                   <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-emerald-50 text-emerald-700 text-xs font-bold uppercase tracking-wider">
                     Industry Specialization
@@ -462,7 +586,7 @@ const ServiceDetailPage = () => {
 
               </div>
 
-              {/* Right Column (5 cols): Targeted In-Page Inquiry Form (Section 2.3) */}
+              {/* Right Column (5 cols): Targeted In-Page Inquiry Form */}
               <div className="lg:col-span-5" id="service-lead-form">
                 <div className="sticky top-28 bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/90 shadow-xl relative overflow-hidden">
                   <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-[#00A3E0] to-[#0284c7]" />
@@ -632,6 +756,273 @@ const ServiceDetailPage = () => {
           </div>
         </section>
 
+        {/* Dedicated Core Technical Engineering Team Section (Featured on Web Development Panel) */}
+        {service.slug === 'web-development' && (
+          <section className="py-20 bg-slate-50 border-t border-slate-200/80">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-left">
+              <div className="text-center max-w-3xl mx-auto space-y-4 mb-14">
+                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-100 text-blue-700 text-xs font-bold uppercase tracking-wider">
+                  <Users className="w-3.5 h-3.5 text-blue-600" />
+                  <span>TezScale Core Technical Architects</span>
+                </div>
+                <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+                  Meet the Lead Web & AI Engineering Team
+                </h2>
+                <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
+                  Work directly with our senior engineering specialists — eliminating agency middleman markups so you get <strong>the highest quality, blazing-speed website at the most affordable, easy cost</strong>.
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+                {technicalTeam.map((member, idx) => (
+                  <div
+                    key={idx}
+                    className="bg-white rounded-3xl border border-slate-200/90 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 p-6 sm:p-8 flex flex-col justify-between group"
+                  >
+                    <div>
+                      {/* Member Header: Image + Name & Role */}
+                      <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6 mb-6">
+                        <div className="relative w-32 h-32 sm:w-36 sm:h-36 rounded-2xl overflow-hidden bg-slate-100 border-2 border-sky-400/40 shrink-0 shadow-md">
+                          <img
+                            src={member.image}
+                            alt={`${member.name} - ${member.role} at TezScale`}
+                            loading="lazy"
+                            className={`w-full h-full ${member.imageClass || 'object-cover object-center'} group-hover:scale-105 transition-transform duration-500`}
+                          />
+                          <span className="absolute bottom-2 right-2 text-[10px] font-bold text-white bg-slate-900/85 backdrop-blur-md px-2 py-0.5 rounded-md">
+                            {member.badge}
+                          </span>
+                        </div>
+
+                        <div className="space-y-2 text-center sm:text-left flex-1">
+                          <span className="inline-block text-[11px] font-extrabold text-[#00A3E0] uppercase tracking-wider bg-[#e0f4ff] px-2.5 py-1 rounded-md">
+                            {member.exp}
+                          </span>
+                          <h3 className="text-2xl font-black text-slate-900 group-hover:text-[#00A3E0] transition-colors">
+                            {member.name}
+                          </h3>
+                          <div className="text-xs font-bold text-slate-600">{member.role}</div>
+                          <div className="text-xs text-sky-600 font-semibold">{member.specialty}</div>
+                        </div>
+                      </div>
+
+                      {/* Bio */}
+                      <p className="text-xs sm:text-sm text-slate-600 leading-relaxed mb-6">
+                        {member.bio}
+                      </p>
+
+                      {/* Key Skills Pills */}
+                      <div className="mb-6">
+                        <div className="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">
+                          Core Technical Stack
+                        </div>
+                        <div className="flex flex-wrap gap-1.5">
+                          {member.skills.map((skill, sIdx) => (
+                            <span
+                              key={sIdx}
+                              className="px-2.5 py-1 rounded-lg bg-slate-100 text-slate-700 text-xs font-semibold border border-slate-200/60"
+                            >
+                              {skill}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Footer Actions */}
+                    <div className="pt-4 border-t border-slate-100 flex items-center justify-between gap-4">
+                      {/* Social Links (Only GitHub & LinkedIn) */}
+                      <div className="flex items-center gap-2">
+                        {member.github && (
+                          <a
+                            href={member.github}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label="GitHub Profile"
+                            className="w-8 h-8 rounded-xl bg-slate-100 hover:bg-slate-900 hover:text-white text-slate-600 flex items-center justify-center transition-colors shadow-2xs"
+                          >
+                            <Github className="w-4 h-4" />
+                          </a>
+                        )}
+                        {member.linkedin && (
+                          <a
+                            href={member.linkedin}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label="LinkedIn Profile"
+                            className="w-8 h-8 rounded-xl bg-slate-100 hover:bg-[#0077b5] hover:text-white text-slate-600 flex items-center justify-center transition-colors shadow-2xs"
+                          >
+                            <Linkedin className="w-4 h-4" />
+                          </a>
+                        )}
+                      </div>
+
+                      {/* View Profile Link */}
+                      <Link
+                        to={`/team/${member.slug}`}
+                        className="inline-flex items-center gap-1.5 text-xs font-bold text-[#00A3E0] hover:text-[#008bc0] transition-colors group-hover:gap-2"
+                      >
+                        <span>View Full Profile</span>
+                        <ArrowRight className="w-3.5 h-3.5" />
+                      </Link>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
+
+        {/* Dedicated Easy Cost & Best Quality Website Plans (Featured on Web Development Panel) */}
+        {service.slug === 'web-development' && (
+          <section className="py-20 bg-white border-t border-slate-200">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-left">
+              <div className="text-center max-w-3xl mx-auto space-y-4 mb-16">
+                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-50 text-emerald-700 text-xs font-bold uppercase tracking-wider">
+                  <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
+                  <span>Best Quality • Easy & Affordable Cost</span>
+                </div>
+                <h2 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">
+                  High-Performance Websites at Pocket-Friendly Costs
+                </h2>
+                <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
+                  Why pay bloated agency fees for slow, outdated templates? Get direct engineering from our technical team with <strong>2-day staging delivery, 98+ Google PageSpeed, and transparent pricing with zero hidden fees</strong>.
+                </p>
+              </div>
+
+              {/* 3 Package Cards */}
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch mb-16">
+                {easyCostPackages.map((pkg, idx) => (
+                  <div
+                    key={idx}
+                    className={`rounded-3xl p-8 flex flex-col justify-between transition-all duration-300 relative ${
+                      pkg.popular
+                        ? 'bg-slate-900 text-white shadow-2xl border-2 border-sky-400 scale-[1.02]'
+                        : 'bg-slate-50 text-slate-800 border border-slate-200 shadow-sm hover:shadow-lg'
+                    }`}
+                  >
+                    {pkg.popular && (
+                      <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-gradient-to-r from-sky-400 to-[#00A3E0] text-white text-[11px] font-black uppercase tracking-wider px-4 py-1 rounded-full shadow-md">
+                        Most Popular Choice
+                      </div>
+                    )}
+
+                    <div className="space-y-6">
+                      <div>
+                        <span className={`text-[11px] font-extrabold uppercase tracking-wider px-3 py-1 rounded-full inline-block mb-3 ${
+                          pkg.popular ? 'bg-sky-500/20 text-sky-300 border border-sky-400/30' : 'bg-blue-100 text-[#00A3E0]'
+                        }`}>
+                          {pkg.badge}
+                        </span>
+                        <h3 className={`text-2xl font-black ${pkg.popular ? 'text-white' : 'text-slate-900'}`}>
+                          {pkg.name}
+                        </h3>
+                        <div className={`text-xs font-bold mt-1 ${pkg.popular ? 'text-sky-300' : 'text-[#00A3E0]'}`}>
+                          {pkg.tagline}
+                        </div>
+                        <p className={`text-xs mt-3 leading-relaxed ${pkg.popular ? 'text-slate-300' : 'text-slate-600'}`}>
+                          {pkg.subtitle}
+                        </p>
+                      </div>
+
+                      <div className={`py-3 px-4 rounded-xl font-bold text-xs flex items-center justify-between ${
+                        pkg.popular ? 'bg-slate-800 text-emerald-400 border border-slate-700' : 'bg-white text-emerald-600 border border-slate-200'
+                      }`}>
+                        <span>Fast Turnaround:</span>
+                        <span className="font-extrabold">{pkg.delivery}</span>
+                      </div>
+
+                      {/* Features List */}
+                      <div className="space-y-3 pt-2">
+                        <div className={`text-[11px] font-extrabold uppercase tracking-wider ${pkg.popular ? 'text-slate-400' : 'text-slate-500'}`}>
+                          Included Architecture & Scope
+                        </div>
+                        <ul className="space-y-2.5">
+                          {pkg.features.map((feat, fIdx) => (
+                            <li key={fIdx} className="flex items-start gap-2.5 text-xs leading-snug">
+                              <CheckCircle2 className={`w-4 h-4 shrink-0 mt-0.5 ${pkg.popular ? 'text-sky-400' : 'text-[#00A3E0]'}`} />
+                              <span className={pkg.popular ? 'text-slate-200' : 'text-slate-700'}>{feat}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
+
+                    <div className="pt-8 mt-8 border-t border-slate-200/30">
+                      <a
+                        href="#service-lead-form"
+                        className={`w-full py-3.5 rounded-full font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all shadow-md cursor-pointer ${
+                          pkg.popular
+                            ? 'bg-[#00A3E0] hover:bg-[#008bc0] text-white hover:scale-102'
+                            : 'bg-slate-900 hover:bg-slate-800 text-white hover:scale-102'
+                        }`}
+                      >
+                        <span>{pkg.cta}</span>
+                        <ArrowRight className="w-4 h-4" />
+                      </a>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* 4 Value Props: Why TezScale Gives the Best Website at Lowest Cost */}
+              <div className="bg-gradient-to-br from-sky-50 via-white to-blue-50/60 rounded-3xl border border-sky-200/80 p-8 shadow-xs">
+                <div className="text-center max-w-2xl mx-auto mb-8">
+                  <h3 className="text-xl sm:text-2xl font-black text-slate-900">
+                    Why TezScale Gives You The Best Website at The Lowest Cost
+                  </h3>
+                  <p className="text-xs sm:text-sm text-slate-600 mt-1">
+                    Direct developer access, modern single-page frameworks, and lean execution.
+                  </p>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                  <div className="p-4 rounded-2xl bg-white border border-slate-200/80 shadow-2xs">
+                    <div className="w-10 h-10 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center font-bold mb-3">
+                      <Clock className="w-5 h-5" />
+                    </div>
+                    <h4 className="font-extrabold text-slate-900 text-sm">2-Day Staging Delivery</h4>
+                    <p className="text-xs text-slate-600 mt-1 leading-relaxed">
+                      Review a live working prototype in 48 hours. No endless agency delays.
+                    </p>
+                  </div>
+
+                  <div className="p-4 rounded-2xl bg-white border border-slate-200/80 shadow-2xs">
+                    <div className="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center font-bold mb-3">
+                      <ShieldCheck className="w-5 h-5" />
+                    </div>
+                    <h4 className="font-extrabold text-slate-900 text-sm">Zero Agency Retainers</h4>
+                    <p className="text-xs text-slate-600 mt-1 leading-relaxed">
+                      You own 100% of your code and domain with transparent, one-time investment.
+                    </p>
+                  </div>
+
+                  <div className="p-4 rounded-2xl bg-white border border-slate-200/80 shadow-2xs">
+                    <div className="w-10 h-10 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center font-bold mb-3">
+                      <Zap className="w-5 h-5" />
+                    </div>
+                    <h4 className="font-extrabold text-slate-900 text-sm">0.8s Ultra-Fast Speed</h4>
+                    <p className="text-xs text-slate-600 mt-1 leading-relaxed">
+                      98+ PageSpeed guarantees higher SEO ranking and lowers paid ad bounce rates.
+                    </p>
+                  </div>
+
+                  <div className="p-4 rounded-2xl bg-white border border-slate-200/80 shadow-2xs">
+                    <div className="w-10 h-10 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center font-bold mb-3">
+                      <MessageSquare className="w-5 h-5" />
+                    </div>
+                    <h4 className="font-extrabold text-slate-900 text-sm">WhatsApp Lead Routing</h4>
+                    <p className="text-xs text-slate-600 mt-1 leading-relaxed">
+                      Direct WhatsApp triggers connect buyer inquiries into your phone in &lt; 2 minutes.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </section>
+        )}
+
         {/* Featured Live SaaS Platforms & Production Web Applications */}
         {service.liveProjects && service.liveProjects.length > 0 && (
           <section className="py-20 bg-slate-900 text-white border-t border-slate-800">
@@ -645,7 +1036,7 @@ const ServiceDetailPage = () => {
                   Featured Live SaaS Platforms & Web Applications
                 </h2>
                 <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
-                  Direct production applications architected with modern microservices, WebSockets, real-time WebRTC, and high-concurrency database systems. Test the live platforms directly below.
+                  Real-world microservices, multi-tenant SaaS applications, and machine learning systems architected by our core technical team (<strong>Rohan Prajapati & Rustam Rathore</strong>). Click any platform to test the live demo.
                 </p>
               </div>
 
@@ -656,7 +1047,7 @@ const ServiceDetailPage = () => {
                     className="bg-slate-800/80 rounded-2xl border border-slate-700/80 p-6 hover:border-sky-400/60 shadow-lg transition-all duration-300 card-lift flex flex-col justify-between group"
                   >
                     <div className="space-y-4">
-                      <div className="flex items-center justify-between gap-2">
+                      <div className="flex items-center justify-between gap-2 flex-wrap">
                         <span className="text-[11px] font-bold text-sky-300 bg-sky-950/80 border border-sky-500/30 px-2.5 py-1 rounded-md">
                           {proj.badge}
                         </span>
@@ -673,6 +1064,14 @@ const ServiceDetailPage = () => {
                         </p>
                       </div>
 
+                      {/* Developer Attribution Tag */}
+                      {proj.developer && (
+                        <div className="text-[11px] font-semibold text-sky-300/90 bg-slate-900/60 px-2.5 py-1 rounded-lg border border-slate-700/60 inline-flex items-center gap-1.5">
+                          <Users className="w-3 h-3 text-[#00A3E0]" />
+                          <span>{proj.developer}</span>
+                        </div>
+                      )}
+
                       <div className="pt-2">
                         <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1">Architecture</span>
                         <div className="text-[11px] font-semibold text-slate-200">
@@ -684,7 +1083,7 @@ const ServiceDetailPage = () => {
                     <div className="pt-5 mt-5 border-t border-slate-700/70 flex items-center justify-between">
                       <span className="text-xs font-semibold text-emerald-400 flex items-center gap-1.5">
                         <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                        Live Demo Ready
+                        {proj.url && proj.url.startsWith('http') && !proj.url.includes('github') ? 'Live Demo Ready' : 'Architecture Verified'}
                       </span>
                       <a
                         href={proj.url}
@@ -692,7 +1091,7 @@ const ServiceDetailPage = () => {
                         rel="noopener noreferrer"
                         className="inline-flex items-center gap-1.5 text-xs font-bold text-white bg-[#00A3E0] hover:bg-[#008bc0] px-4 py-2 rounded-xl shadow-xs transition-all hover:scale-105"
                       >
-                        <span>Launch Demo</span>
+                        <span>{proj.url && proj.url.includes('github') ? 'View Architecture' : 'Launch Demo'}</span>
                         <ExternalLink className="w-3.5 h-3.5" />
                       </a>
                     </div>
@@ -745,8 +1144,9 @@ const ServiceDetailPage = () => {
                       {item.shortDesc}
                     </p>
                   </div>
-                  <div className="pt-4 mt-4 border-t border-slate-100 flex items-center text-xs font-bold text-[#00A3E0] gap-1.5 group-hover:gap-2.5 transition-all">
-                    <span>View In-Depth Details</span>
+
+                  <div className="pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-bold text-[#00A3E0] group-hover:gap-2 transition-all">
+                    <span>Explore Service</span>
                     <ArrowRight className="w-3.5 h-3.5" />
                   </div>
                 </Link>
@@ -755,6 +1155,35 @@ const ServiceDetailPage = () => {
           </div>
         </section>
 
+        {/* Bottom CTA Banner */}
+        <section className="py-16 bg-gradient-to-r from-blue-700 via-blue-600 to-cyan-600 text-white">
+          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
+            <h2 className="text-3xl sm:text-4xl font-black tracking-tight">
+              Ready to Accelerate With {service.title}?
+            </h2>
+            <p className="text-blue-100 text-base max-w-xl mx-auto">
+              Schedule your free 30-minute growth strategy consultation with our senior digital growth architects today.
+            </p>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
+              <button
+                onClick={() => setModalOpen(true)}
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-white text-blue-700 hover:bg-slate-100 px-8 py-3.5 rounded-full font-bold text-sm shadow-xl transition-all hover:scale-105 cursor-pointer"
+              >
+                <span>Get Free Consultation</span>
+                <ArrowRight className="w-4 h-4" />
+              </button>
+              <a
+                href={whatsappInquiryUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-full font-bold text-sm bg-white/10 hover:bg-white/20 border border-white/20 text-white backdrop-blur-md transition-all hover:border-emerald-400"
+              >
+                <span className="w-2.5 h-2.5 rounded-full bg-emerald-400" />
+                <span>Quick WhatsApp Chat</span>
+              </a>
+            </div>
+          </div>
+        </section>
       </main>
 
       <Footer onOpenConsultation={() => setModalOpen(true)} />
