@@ -5,9 +5,13 @@ import {
   Play,
   X
 } from 'lucide-react';
+import { useContent } from '../context/ContentContext';
 import AnimatedCounter from './AnimatedCounter';
 
 const Hero = ({ onOpenConsultation }) => {
+  const { content } = useContent();
+  const heroData = content?.hero || {};
+  const mediaData = content?.media || {};
   const [videoModalOpen, setVideoModalOpen] = useState(false);
   const [contentVisible, setContentVisible] = useState(true);
   const videoRef = useRef(null);
@@ -53,6 +57,20 @@ const Hero = ({ onOpenConsultation }) => {
     };
   }, []);
 
+  // Scroll smoothly into Services section on the page, with fallback to /services
+  const handleExploreServices = (e) => {
+    if (e) e.preventDefault();
+    const el = document.getElementById('services');
+    if (el) {
+      const navHeight = 75;
+      const targetY = el.getBoundingClientRect().top + window.pageYOffset - navHeight;
+      window.scrollTo({ top: targetY, behavior: 'smooth' });
+      window.history.pushState(null, '', '/#services');
+    } else {
+      window.location.href = '/services';
+    }
+  };
+
   return (
     <section
       id="home"
@@ -60,9 +78,19 @@ const Hero = ({ onOpenConsultation }) => {
     >
       {/* Dynamic Background: Smoothly transitions to 100% natural real video when logo appears */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
+        {/* Background image if set in backoffice */}
+        {(heroData.backgroundImage || mediaData.homeHeroBgImage) && (
+          <img
+            src={heroData.backgroundImage || mediaData.homeHeroBgImage}
+            alt="Hero Background"
+            className="absolute inset-0 w-full h-full object-cover z-0"
+          />
+        )}
+
         {/* Background video: Responsive object-fit & scaling so text/logo is 100% visible on mobile and full-screen cover on desktop */}
         <video
           ref={videoRef}
+          key={heroData.backgroundVideo || mediaData.homeHeroVideo || "/tezscale-hero-video.mp4"}
           autoPlay
           loop
           muted
@@ -72,7 +100,7 @@ const Hero = ({ onOpenConsultation }) => {
             contentVisible ? 'opacity-70 sm:opacity-75' : 'opacity-100'
           }`}
         >
-          <source src="/tezscale-hero-video.mp4" type="video/mp4" />
+          <source src={heroData.backgroundVideo || mediaData.homeHeroVideo || "/tezscale-hero-video.mp4"} type="video/mp4" />
           <source src="/tezscale-hero-video-full.mp4" type="video/mp4" />
         </video>
 
@@ -120,24 +148,24 @@ const Hero = ({ onOpenConsultation }) => {
               : 'opacity-0 scale-95 -translate-y-4 pointer-events-none'
           }`}
         >
-          {/* Eyebrow Pill Badge (Clean text, star/AI icon removed per feedback) */}
+          {/* Eyebrow Pill Badge */}
           <div className="inline-flex items-center px-4 py-1.5 rounded-full bg-white/[0.08] hover:bg-white/[0.12] backdrop-blur-md border border-white/20 text-slate-200 text-xs sm:text-[13px] font-semibold transition-all shadow-sm mb-4 sm:mb-5 select-none">
-            <span>Welcome to TezScale</span>
+            <span>{heroData.badge || 'Welcome to TezScale'}</span>
           </div>
 
-          {/* 2-Line Centered Hero Headline (Balanced font size & proper line wraps) */}
+          {/* 2-Line Centered Hero Headline */}
           <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-[54px] xl:text-[58px] font-black text-white tracking-tight leading-[1.18] sm:leading-[1.15] max-w-5xl mx-auto mb-4 sm:mb-5">
             <span className="block sm:inline">
-              Transform <span className="text-[#38bdf8]">your</span> Marketing Strategy
+              {heroData.titleLine1 || 'Transform your Marketing Strategy'}
             </span>{' '}
             <span className="block text-transparent bg-clip-text bg-gradient-to-r from-sky-400 via-cyan-300 to-blue-400 sm:mt-1">
-              with the Power of TezScale
+              {heroData.titleLine2 || 'with the Power of TezScale'}
             </span>
           </h1>
 
           {/* Subtitle Description */}
           <p className="text-slate-200/90 text-xs sm:text-base md:text-lg max-w-2xl mx-auto font-normal leading-relaxed mb-6 sm:mb-8">
-            Elevate your campaigns, maximize ROI, and accelerate predictable digital growth with our full-stack web, branding, and performance marketing solutions.
+            {heroData.description || 'Elevate your campaigns, maximize ROI, and accelerate predictable digital growth with our full-stack web, branding, and performance marketing solutions.'}
           </p>
         </div>
 
@@ -149,18 +177,19 @@ const Hero = ({ onOpenConsultation }) => {
             onClick={() => setVideoModalOpen(true)}
             className="px-6 sm:px-7 py-2.5 sm:py-3 rounded-full bg-white/[0.05] hover:bg-white/[0.12] backdrop-blur-md border border-white/25 hover:border-white/40 text-white font-medium text-xs sm:text-sm transition-all duration-300 flex items-center gap-2 cursor-pointer group shadow-sm hover:scale-[1.02]"
           >
-            <span>What we do?</span>
+            <span>{heroData.primaryCta || 'What we do?'}</span>
             <ArrowRight className="w-4 h-4 text-slate-300 group-hover:text-white group-hover:translate-x-1 transition-all" />
           </button>
 
-          {/* Button 2 (Cyan Gradient Pill): ↗ Explore Services */}
-          <button
-            onClick={onOpenConsultation}
+          {/* Button 2 (Cyan Gradient Pill): ↗ Explore Services - jumps to Services section */}
+          <a
+            href="#services"
+            onClick={handleExploreServices}
             className="px-6 sm:px-7 py-2.5 sm:py-3 rounded-full bg-gradient-to-r from-sky-400 via-cyan-300 to-sky-500 hover:from-sky-300 hover:via-cyan-200 hover:to-sky-400 text-slate-950 font-bold text-xs sm:text-sm transition-all duration-300 flex items-center gap-2 cursor-pointer shadow-lg shadow-sky-500/25 hover:shadow-sky-500/40 hover:scale-[1.02]"
           >
             <ArrowUpRight className="w-4 h-4 text-slate-950 stroke-[2.5]" />
-            <span>Explore Services</span>
-          </button>
+            <span>{heroData.secondaryCta || 'Explore Services'}</span>
+          </a>
         </div>
 
       </div>
@@ -169,35 +198,35 @@ const Hero = ({ onOpenConsultation }) => {
       <div className="w-full max-w-4xl mx-auto px-4 sm:px-6 relative z-10 text-center pt-6 sm:pt-8 pb-3">
         <div className="inline-flex flex-wrap items-center justify-center gap-4 sm:gap-8 px-6 sm:px-9 py-3 sm:py-4 rounded-full bg-white/[0.07] hover:bg-white/[0.1] backdrop-blur-md border border-white/20 shadow-2xl transition-all duration-300">
           
-          {/* Stat 1: 5K+ Clients Scaled */}
+          {/* Stat 1 */}
           <div className="flex items-center gap-2 text-xs sm:text-sm md:text-base text-slate-200">
             <span className="w-2.5 h-2.5 rounded-full bg-sky-400 animate-pulse shadow-[0_0_8px_rgba(56,189,248,0.9)]" />
             <span className="font-black text-white text-base sm:text-lg md:text-xl tracking-tight">
-              <AnimatedCounter value="5K+" duration={1600} />
+              <AnimatedCounter value={heroData.stat1Value || "5K+"} duration={1600} />
             </span>
-            <span className="text-slate-300 font-medium">Clients Scaled</span>
+            <span className="text-slate-300 font-medium">{heroData.stat1Label || "Clients Scaled"}</span>
           </div>
 
           <span className="text-slate-500 hidden sm:inline select-none text-base">•</span>
 
-          {/* Stat 2: 300%+ Avg ROAS Growth */}
+          {/* Stat 2 */}
           <div className="flex items-center gap-2 text-xs sm:text-sm md:text-base text-slate-200">
             <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.9)]" />
             <span className="font-black text-white text-base sm:text-lg md:text-xl tracking-tight">
-              <AnimatedCounter value="300%+" duration={1700} />
+              <AnimatedCounter value={heroData.stat2Value || "300%+"} duration={1700} />
             </span>
-            <span className="text-slate-300 font-medium">Avg ROAS Growth</span>
+            <span className="text-slate-300 font-medium">{heroData.stat2Label || "Avg ROAS Growth"}</span>
           </div>
 
           <span className="text-slate-500 hidden sm:inline select-none text-base">•</span>
 
-          {/* Stat 3: 4.9/5 Client Rating */}
+          {/* Stat 3 */}
           <div className="flex items-center gap-2 text-xs sm:text-sm md:text-base text-slate-200">
             <span className="w-2.5 h-2.5 rounded-full bg-amber-400 shadow-[0_0_8px_rgba(251,191,36,0.9)]" />
             <span className="font-black text-white text-base sm:text-lg md:text-xl tracking-tight">
-              <AnimatedCounter value="4.9/5" duration={1500} />
+              <AnimatedCounter value={heroData.stat3Value || "4.9/5"} duration={1500} />
             </span>
-            <span className="text-slate-300 font-medium">Client Rating</span>
+            <span className="text-slate-300 font-medium">{heroData.stat3Label || "Client Rating"}</span>
           </div>
 
         </div>
@@ -230,7 +259,7 @@ const Hero = ({ onOpenConsultation }) => {
                 playsInline
                 className="w-full h-full object-contain"
               >
-                <source src="/tezscale-hero-video.mp4" type="video/mp4" />
+                <source src={heroData.modalVideo || heroData.backgroundVideo || mediaData.homeHeroVideo || "/tezscale-hero-video.mp4"} type="video/mp4" />
                 Your browser does not support the video tag.
               </video>
             </div>

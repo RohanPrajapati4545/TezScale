@@ -5,7 +5,6 @@ import Hero from '../Components/Hero';
 import Services from '../Components/Services';
 import IndustrySolutions from '../Components/IndustrySolutions';
 import WhyChooseUs from '../Components/WhyChooseUs';
-import OurWork from '../Components/OurWork';
 import Testimonials from '../Components/Testimonials';
 import FaqSection from '../Components/FaqSection';
 import Footer from '../Components/Footer';
@@ -49,7 +48,6 @@ const Home = () => {
         <Services onOpenConsultation={() => setModalOpen(true)} />
         <IndustrySolutions onOpenConsultation={() => setModalOpen(true)} />
         <WhyChooseUs onOpenConsultation={() => setModalOpen(true)} />
-        <OurWork onOpenConsultation={() => setModalOpen(true)} />
         <Testimonials onOpenConsultation={() => setModalOpen(true)} />
         <FaqSection onOpenConsultation={() => setModalOpen(true)} />
       </main>

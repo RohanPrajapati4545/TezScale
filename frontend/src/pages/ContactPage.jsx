@@ -173,6 +173,7 @@ const ContactPage = () => {
           <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
             <video
               ref={videoRef}
+              key={content?.media?.contactHeroVideo || "/page-hero-video.mp4"}
               autoPlay
               loop
               muted
@@ -182,7 +183,7 @@ const ContactPage = () => {
                 contentVisible ? 'opacity-75 sm:opacity-80' : 'opacity-100'
               }`}
             >
-              <source src="/page-hero-video.mp4" type="video/mp4" />
+              <source src={content?.media?.contactHeroVideo || "/page-hero-video.mp4"} type="video/mp4" />
               <source src="/services-hero-video.mp4" type="video/mp4" />
               <source src="/tezscale-hero-video-full.mp4" type="video/mp4" />
             </video>

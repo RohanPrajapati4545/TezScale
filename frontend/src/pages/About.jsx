@@ -292,6 +292,7 @@ const About = () => {
           <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
             <video
               ref={videoRef}
+              key={content?.media?.aboutHeroVideo || "/page-hero-video.mp4"}
               autoPlay
               loop
               muted
@@ -301,7 +302,7 @@ const About = () => {
                 contentVisible ? 'opacity-75 sm:opacity-80' : 'opacity-100'
               }`}
             >
-              <source src="/page-hero-video.mp4" type="video/mp4" />
+              <source src={content?.media?.aboutHeroVideo || "/page-hero-video.mp4"} type="video/mp4" />
               <source src="/services-hero-video.mp4" type="video/mp4" />
               <source src="/tezscale-hero-video-full.mp4" type="video/mp4" />
             </video>
@@ -502,7 +503,7 @@ const About = () => {
                 className="flex gap-6 py-4 px-4 sm:px-6 overflow-x-auto no-scrollbar [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] select-none"
               >
                 {/* 2 Sets of Cards for infinite scrolling */}
-                {[...growthArchitects, ...growthArchitects].map((member, idx) => (
+                {[...((content?.team && content.team.length > 0) ? content.team : growthArchitects), ...((content?.team && content.team.length > 0) ? content.team : growthArchitects)].map((member, idx) => (
                   <div
                     key={`ga-card-${idx}`}
                     className="w-[290px] sm:w-[330px] shrink-0 bg-white rounded-3xl border border-slate-200/90 hover:border-sky-400/60 overflow-hidden shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 flex flex-col justify-between group cursor-pointer"

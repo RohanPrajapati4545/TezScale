@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { 
   ChevronDown, 
   ArrowRight, 
+  Send,
   Menu, 
   X, 
   Code2, 
@@ -12,6 +13,7 @@ import {
   Infinity as InfinityIcon
 } from 'lucide-react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useContent } from '../context/ContentContext';
 import tezscaleLogo from '../assets/tezscale-logo.png';
 
 const servicesDropdownList = [
@@ -57,6 +59,8 @@ const Navbar = ({ onOpenConsultation }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [servicesDropdownOpen, setServicesDropdownOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const { content } = useContent();
+  const branding = content?.branding || {};
   const location = useLocation();
   const navigate = useNavigate();
   const dropdownTimeoutRef = useRef(null);
@@ -139,16 +143,20 @@ const Navbar = ({ onOpenConsultation }) => {
           {/* TezScale Logo */}
           <Link to="/" className="flex items-center gap-2.5 sm:gap-3 cursor-pointer group">
             <img
-              src={tezscaleLogo}
+              src={branding.logoUrl || tezscaleLogo}
               alt="TezScale Logo"
               className="h-10 sm:h-12 w-auto object-contain drop-shadow-[0_0_12px_rgba(0,163,224,0.35)] group-hover:scale-105 transition-transform duration-300"
             />
             <div className="flex flex-col justify-center text-left">
               <div className="text-xl sm:text-[27px] font-black tracking-tight leading-none uppercase text-white">
-                TEZ<span className="text-[#00A3E0]">SCALE</span>
+                {branding.agencyName ? (
+                  branding.agencyName
+                ) : (
+                  <>TEZ<span className="text-[#00A3E0]">SCALE</span></>
+                )}
               </div>
               <div className="text-[7.5px] sm:text-[8.5px] uppercase tracking-wider font-bold mt-1 text-slate-300 leading-none">
-                ACCELERATING DIGITAL GROWTH
+                {branding.tagline || 'ACCELERATING DIGITAL GROWTH'}
               </div>
             </div>
           </Link>
@@ -286,14 +294,14 @@ const Navbar = ({ onOpenConsultation }) => {
             </Link>
           </nav>
 
-          {/* Right Action Button (Matches reference image's outline pill) */}
+          {/* Right Action Button: Send Enquiry */}
           <div className="hidden md:flex items-center gap-3">
             <button
               onClick={onOpenConsultation}
-              className="px-5 py-2 rounded-full border border-white/25 hover:border-sky-400/80 bg-white/[0.05] hover:bg-white/[0.12] backdrop-blur-md text-white font-medium text-xs sm:text-sm transition-all duration-300 flex items-center gap-1.5 cursor-pointer hover:scale-[1.02] shadow-sm"
+              className="px-5 py-2 rounded-full border border-sky-400/50 hover:border-sky-300 bg-sky-500/15 hover:bg-sky-500/25 backdrop-blur-md text-white hover:text-sky-200 font-semibold text-xs sm:text-sm transition-all duration-300 flex items-center gap-2 cursor-pointer hover:scale-[1.02] shadow-sm"
             >
-              <span>Explore Services</span>
-              <ArrowRight className="w-3.5 h-3.5 text-slate-300" />
+              <Send className="w-3.5 h-3.5 text-sky-400" />
+              <span>Send Enquiry</span>
             </button>
           </div>
 
@@ -353,8 +361,8 @@ const Navbar = ({ onOpenConsultation }) => {
               }}
               className="w-full py-3 rounded-full bg-[#00A3E0] text-white font-bold text-sm shadow-md shadow-[#00A3E0]/20 flex items-center justify-center gap-2"
             >
-              <span>Get Free Strategy</span>
-              <ArrowRight className="w-4 h-4" />
+              <Send className="w-4 h-4" />
+              <span>Send Enquiry</span>
             </button>
           </div>
         </div>

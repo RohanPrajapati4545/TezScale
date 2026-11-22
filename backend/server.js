@@ -9,8 +9,10 @@ import connectDB from './config/db.js';
 import leadRoutes from './routes/leadRoutes.js';
 import contentRoutes from './routes/contentRoutes.js';
 import authRoutes from './routes/authRoutes.js';
+import uploadRoutes from './routes/uploadRoutes.js';
 import SiteContent from './models/SiteContent.js';
 import Admin from './models/Admin.js';
+import Lead from './models/Lead.js';
 import { defaultContent } from './controllers/contentController.js';
 
 dotenv.config();
@@ -39,6 +41,58 @@ const seedInitialData = async () => {
       });
       console.log('👤 Default Admin seeded: admin@gmail.com / admin@123');
     }
+
+    const leadCount = await Lead.countDocuments();
+    if (leadCount === 0) {
+      await Lead.create([
+        {
+          name: 'Dr. Priya Sharma',
+          whatsapp: '+91 98765 43210',
+          email: 'priya.sharma@citydental.in',
+          businessType: 'Doctor / Clinic',
+          serviceRequired: 'Meta Ads Management',
+          message: 'Need high-converting appointment booking funnel for local dental clinic.',
+          status: 'New',
+        },
+        {
+          name: 'Rohit Sharma',
+          whatsapp: '+91 98234 56789',
+          email: 'rohit@techvista.io',
+          businessType: 'Retail / E-commerce',
+          serviceRequired: 'Digital Marketing Support',
+          message: 'Want to 3x website traffic and Google Maps ranking.',
+          status: 'In Progress',
+        },
+        {
+          name: 'Rajesh Singhal',
+          whatsapp: '+91 99112 33445',
+          email: 'rajesh@apexskyline.com',
+          businessType: 'Real Estate',
+          serviceRequired: 'Meta Ads Management',
+          message: 'Looking for luxury property lead generation campaigns.',
+          status: 'Converted',
+        },
+        {
+          name: 'Ananya Verma',
+          whatsapp: '+91 97654 32109',
+          email: 'ananya@elegancestore.com',
+          businessType: 'Retail / E-commerce',
+          serviceRequired: 'Website Builder & Development',
+          message: 'Need ultra-fast modern e-commerce storefront with cart recovery.',
+          status: 'New',
+        },
+        {
+          name: 'Vikram Patel',
+          whatsapp: '+91 98989 12345',
+          email: 'vikram@patelengg.co.in',
+          businessType: 'Engineering',
+          serviceRequired: 'Digital Marketing Support',
+          message: 'B2B export buyer acquisition and technical SEO.',
+          status: 'In Progress',
+        },
+      ]);
+      console.log('📋 Default sample leads seeded successfully into MongoDB');
+    }
   } catch (err) {
     console.warn('Initial data seeding note:', err.message);
   }
@@ -58,14 +112,15 @@ app.use(
     allowedHeaders: ['Content-Type', 'Authorization'],
   })
 );
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.json({ limit: '100mb' }));
+app.use(express.urlencoded({ extended: true, limit: '100mb' }));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // API Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/leads', leadRoutes);
 app.use('/api/content', contentRoutes);
+app.use('/api/upload', uploadRoutes);
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {

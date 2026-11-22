@@ -1,6 +1,21 @@
-import React from 'react';
+import React, { useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { CheckCircle2, Play, ArrowRight, TrendingUp, Sparkles, Compass, Lightbulb, Zap, BarChart } from 'lucide-react';
+import { 
+  CheckCircle2, 
+  Play, 
+  Pause, 
+  Volume2, 
+  VolumeX, 
+  Maximize2, 
+  X, 
+  ArrowRight, 
+  TrendingUp, 
+  Sparkles, 
+  Compass, 
+  Lightbulb, 
+  Zap, 
+  BarChart 
+} from 'lucide-react';
 import { useContent } from '../context/ContentContext';
 import AnimatedContent from './AnimatedContent';
 
@@ -43,6 +58,30 @@ const WhyChooseUs = ({ onOpenConsultation }) => {
     'Long-Term Growth Partnerships',
   ];
 
+  const [isPlaying, setIsPlaying] = useState(true);
+  const [isMuted, setIsMuted] = useState(true);
+  const [videoModalOpen, setVideoModalOpen] = useState(false);
+  const videoRef = useRef(null);
+
+  const togglePlay = () => {
+    const video = videoRef.current;
+    if (!video) return;
+    if (video.paused) {
+      video.play().then(() => setIsPlaying(true)).catch(() => {});
+    } else {
+      video.pause();
+      setIsPlaying(false);
+    }
+  };
+
+  const toggleMute = (e) => {
+    e.stopPropagation();
+    const video = videoRef.current;
+    if (!video) return;
+    video.muted = !video.muted;
+    setIsMuted(video.muted);
+  };
+
   return (
     <section id="why-choose-us" className="py-24 bg-white overflow-hidden relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -62,32 +101,32 @@ const WhyChooseUs = ({ onOpenConsultation }) => {
             >
               <div className="relative w-full rounded-3xl overflow-hidden shadow-2xl border-4 border-white bg-slate-100">
                 <img
-                  src="/tezscale-founder.jpg"
+                  src={why.founderImage || "/tezscale-founder.jpg"}
                   alt="TezScale Digital Growth Specialist"
                   className="w-full h-80 sm:h-96 md:h-[420px] object-cover object-top hover:scale-105 transition-transform duration-500"
                   loading="lazy"
                   decoding="async"
                 />
 
-                {/* Stationary Badge 1: Your Growth Our Priority */}
+                {/* Stationary Badge 1 */}
                 <div className="absolute top-6 -right-3 bg-white/95 backdrop-blur-md px-4 py-2.5 rounded-xl shadow-lg border border-slate-100 flex items-center gap-2.5">
                   <div className="w-8 h-8 rounded-lg bg-[#e0f4ff] text-[#00A3E0] flex items-center justify-center font-bold">
                     <TrendingUp className="w-4 h-4" />
                   </div>
                   <div className="text-left">
-                    <div className="text-xs font-bold text-slate-800 leading-tight">Your Growth</div>
-                    <div className="text-[10px] text-slate-400 font-medium">Our Priority</div>
+                    <div className="text-xs font-bold text-slate-800 leading-tight">{why.badge1Title || 'Your Growth'}</div>
+                    <div className="text-[10px] text-slate-400 font-medium">{why.badge1Subtitle || 'Our Priority'}</div>
                   </div>
                 </div>
 
-                {/* Stationary Badge 2: +300% Traffic Growth */}
+                {/* Stationary Badge 2 */}
                 <div className="absolute bottom-6 -right-3 bg-white/95 backdrop-blur-md px-4 py-2.5 rounded-xl shadow-lg border border-slate-100 flex items-center gap-2.5">
                   <div className="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold">
                     <Sparkles className="w-4 h-4" />
                   </div>
                   <div className="text-left">
-                    <div className="text-xs font-extrabold text-slate-900 leading-tight">+300%</div>
-                    <div className="text-[10px] text-slate-400 font-medium">Traffic Growth</div>
+                    <div className="text-xs font-extrabold text-slate-900 leading-tight">{why.badge2Title || '+300%'}</div>
+                    <div className="text-[10px] text-slate-400 font-medium">{why.badge2Subtitle || 'Traffic Growth'}</div>
                   </div>
                 </div>
               </div>
@@ -128,44 +167,84 @@ const WhyChooseUs = ({ onOpenConsultation }) => {
                 ))}
               </div>
 
+              {/* Read Full Story Button (About TezScale button removed per user request) */}
               <div className="pt-2 flex flex-wrap items-center gap-4">
-                <button
-                  onClick={onOpenConsultation}
-                  className="btn-drone-primary"
-                >
-                  <span>{why.buttonText || 'SCHEDULE STRATEGY CALL'}</span>
-                  <ArrowRight className="w-4 h-4 ml-1" />
-                </button>
-
                 <Link
                   to="/about"
-                  className="btn-drone-secondary border border-slate-200 hover:border-[#00A3E0]"
+                  className="btn-drone-primary"
                 >
                   <span>READ FULL STORY</span>
                   <ArrowRight className="w-4 h-4 ml-1" />
                 </Link>
               </div>
 
-              {/* Boardroom Preview Photo */}
+              {/* Genuine Video Showcase (TezScale Agency HQ) */}
               <div className="pt-4">
-                <div className="relative rounded-3xl overflow-hidden shadow-lg border border-slate-200 group">
-                  <img
-                    src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=800&q=80"
-                    alt="TezScale Boardroom"
-                    className="w-full h-48 sm:h-56 object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                  
-                  <div className="absolute top-4 right-4 bg-white/95 backdrop-blur-md px-3.5 py-1 rounded-md text-xs font-black text-slate-900 shadow-sm uppercase">
-                    Tez<span className="text-[#00A3E0]">Scale</span> Agency HQ
+                <div className="relative rounded-3xl overflow-hidden shadow-xl border border-slate-200/90 bg-slate-950 group">
+                  <video
+                    ref={videoRef}
+                    key={why.hqVideoUrl || content?.media?.agencyHqVideo || "/page-hero-video.mp4"}
+                    autoPlay
+                    loop
+                    muted={isMuted}
+                    playsInline
+                    preload="auto"
+                    className="w-full h-52 sm:h-64 md:h-72 object-cover cursor-pointer transition-transform duration-500 group-hover:scale-[1.02]"
+                    onClick={togglePlay}
+                  >
+                    <source src={why.hqVideoUrl || content?.media?.agencyHqVideo || "/page-hero-video.mp4"} type="video/mp4" />
+                    <source src="/services-hero-video.mp4" type="video/mp4" />
+                    <source src="/tezscale-hero-video.mp4" type="video/mp4" />
+                  </video>
+
+                  {/* Gradient overlays */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-slate-950/30 pointer-events-none" />
+
+                  {/* Top HQ Badge */}
+                  <div className="absolute top-4 right-4 bg-slate-950/80 backdrop-blur-md px-3.5 py-1.5 rounded-full text-xs font-bold text-white shadow-md uppercase tracking-wider flex items-center gap-2 border border-white/20 select-none">
+                    <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                    <span>Tez<span className="text-[#00A3E0]">Scale</span> Agency HQ</span>
                   </div>
 
-                  <button
-                    onClick={onOpenConsultation}
-                    className="absolute inset-0 m-auto w-14 h-14 rounded-full bg-white/90 hover:bg-white text-[#00A3E0] shadow-xl flex items-center justify-center transition-transform hover:scale-110 cursor-pointer"
-                    aria-label="Play video"
-                  >
-                    <Play className="w-6 h-6 fill-current ml-1" />
-                  </button>
+                  {/* Center Play Overlay when Paused */}
+                  {!isPlaying && (
+                    <button
+                      onClick={togglePlay}
+                      className="absolute inset-0 m-auto w-16 h-16 rounded-full bg-[#00A3E0]/90 hover:bg-[#00A3E0] text-white shadow-2xl flex items-center justify-center transition-transform hover:scale-110 cursor-pointer border-2 border-white/40"
+                      aria-label="Play video"
+                    >
+                      <Play className="w-7 h-7 fill-current ml-1" />
+                    </button>
+                  )}
+
+                  {/* Bottom Interactive Controls Bar */}
+                  <div className="absolute bottom-3 inset-x-3 sm:inset-x-4 flex items-center justify-between text-white z-10">
+                    <div className="flex items-center gap-2">
+                      <button
+                        onClick={togglePlay}
+                        className="w-9 h-9 rounded-full bg-slate-950/70 hover:bg-slate-900 border border-white/20 flex items-center justify-center transition-all cursor-pointer text-white hover:scale-105"
+                        title={isPlaying ? "Pause" : "Play"}
+                      >
+                        {isPlaying ? <Pause className="w-4 h-4 fill-current" /> : <Play className="w-4 h-4 fill-current ml-0.5" />}
+                      </button>
+                      <button
+                        onClick={toggleMute}
+                        className="w-9 h-9 rounded-full bg-slate-950/70 hover:bg-slate-900 border border-white/20 flex items-center justify-center transition-all cursor-pointer text-white hover:scale-105"
+                        title={isMuted ? "Unmute" : "Mute"}
+                      >
+                        {isMuted ? <VolumeX className="w-4 h-4 text-slate-300" /> : <Volume2 className="w-4 h-4 text-emerald-400" />}
+                      </button>
+                    </div>
+
+                    <button
+                      onClick={() => setVideoModalOpen(true)}
+                      className="px-3.5 py-1.5 rounded-full bg-slate-950/70 hover:bg-slate-900 border border-white/20 flex items-center gap-1.5 text-xs font-semibold text-white transition-all cursor-pointer hover:scale-105"
+                      title="Watch in HD Fullscreen"
+                    >
+                      <Maximize2 className="w-3.5 h-3.5 text-sky-400" />
+                      <span className="hidden sm:inline">Watch HD</span>
+                    </button>
+                  </div>
                 </div>
               </div>
             </AnimatedContent>
@@ -228,6 +307,60 @@ const WhyChooseUs = ({ onOpenConsultation }) => {
         </div>
 
       </div>
+
+      {/* Interactive HD Video Modal for Agency HQ */}
+      {videoModalOpen && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/85 backdrop-blur-md p-4 anim-fade-in"
+          onClick={() => setVideoModalOpen(false)}
+        >
+          <div
+            className="relative w-full max-w-4xl bg-slate-900 rounded-2xl overflow-hidden shadow-2xl border border-white/10"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Close button */}
+            <button
+              onClick={() => setVideoModalOpen(false)}
+              className="absolute top-3 right-3 z-20 w-10 h-10 rounded-full bg-black/60 hover:bg-black/90 text-white flex items-center justify-center transition-all cursor-pointer border border-white/20"
+              aria-label="Close video"
+            >
+              <X className="w-5 h-5" />
+            </button>
+
+            {/* Video Player */}
+            <div className="aspect-video w-full bg-black flex items-center justify-center">
+              <video
+                autoPlay
+                controls
+                playsInline
+                className="w-full h-full object-contain"
+              >
+                <source src="/page-hero-video.mp4" type="video/mp4" />
+                <source src="/services-hero-video.mp4" type="video/mp4" />
+                <source src="/tezscale-hero-video.mp4" type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+            </div>
+
+            {/* Modal Footer Info */}
+            <div className="p-4 bg-slate-900 border-t border-slate-800 flex flex-wrap items-center justify-between gap-3 text-left">
+              <div>
+                <div className="text-white font-bold text-sm">TEZSCALE — Accelerating Digital Growth</div>
+                <div className="text-slate-400 text-xs mt-0.5">Behind the scenes at TezScale Agency HQ — engineered for high-converting B2B results.</div>
+              </div>
+              <button
+                onClick={() => {
+                  setVideoModalOpen(false);
+                  onOpenConsultation();
+                }}
+                className="px-5 py-2 rounded-full bg-[#00A3E0] hover:bg-[#008bc0] text-white text-xs font-bold transition-all shadow-md shadow-[#00A3E0]/30 cursor-pointer"
+              >
+                Schedule Strategy Call
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 };

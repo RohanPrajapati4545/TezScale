@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Phone, Mail, MapPin, Send, MessageCircle, Clock, Check } from 'lucide-react';
+import { Phone, Mail, MapPin, Send, MessageCircle, Clock, Check, Linkedin, Instagram, Youtube } from 'lucide-react';
 import { useContent } from '../context/ContentContext';
 import FloatingSpeedDial from './FloatingSpeedDial';
 import tezscaleLogo from '../assets/tezscale-logo.png';
@@ -45,16 +45,20 @@ const Footer = ({ onOpenConsultation }) => {
           <div className="lg:col-span-4 space-y-5">
             <div className="flex items-center gap-3">
               <img
-                src={tezscaleLogo}
+                src={content?.branding?.logoUrl || tezscaleLogo}
                 alt="TezScale Logo"
                 className="h-11 sm:h-12 w-auto object-contain drop-shadow-[0_0_12px_rgba(0,163,224,0.35)]"
               />
               <div className="flex flex-col justify-center text-left">
                 <div className="text-xl sm:text-[27px] font-black text-white tracking-tight uppercase leading-none">
-                  TEZ<span className="text-[#00A3E0]">SCALE</span>
+                  {content?.branding?.agencyName ? (
+                    content.branding.agencyName
+                  ) : (
+                    <>TEZ<span className="text-[#00A3E0]">SCALE</span></>
+                  )}
                 </div>
                 <div className="text-[7.5px] sm:text-[8.5px] uppercase tracking-wider text-slate-400 font-bold mt-1 leading-none">
-                  ACCELERATING DIGITAL GROWTH
+                  {content?.branding?.tagline || 'ACCELERATING DIGITAL GROWTH'}
                 </div>
               </div>
             </div>
@@ -63,19 +67,52 @@ const Footer = ({ onOpenConsultation }) => {
               We are actively providing services to digitally grow your business with us. Engineered for high-converting B2B lead generation.
             </p>
 
-            {/* Social Icons matching specification */}
+            {/* Social Icons: LinkedIn, Instagram, WhatsApp, YouTube */}
             <div className="flex items-center gap-3 pt-1">
-              <a href="https://linkedin.com" target="_blank" rel="noreferrer" className="w-9 h-9 rounded-md bg-slate-900 hover:bg-[#00A3E0] text-slate-300 hover:text-white flex items-center justify-center transition-colors text-xs font-bold border border-slate-800" aria-label="LinkedIn">
-                in
+              <a
+                href="https://www.linkedin.com/company/tezscale/posts/"
+                target="_blank"
+                rel="noreferrer"
+                className="w-9 h-9 rounded-md bg-slate-900 hover:bg-[#0077b5] text-slate-300 hover:text-white flex items-center justify-center transition-colors border border-slate-800 shadow-sm"
+                aria-label="LinkedIn"
+                title="LinkedIn"
+              >
+                <Linkedin className="w-4 h-4" />
               </a>
-              <a href="https://youtube.com" target="_blank" rel="noreferrer" className="w-9 h-9 rounded-md bg-slate-900 hover:bg-rose-600 text-slate-300 hover:text-white flex items-center justify-center transition-colors text-xs font-bold border border-slate-800" aria-label="YouTube">
-                ▶
+
+              <a
+                href="https://www.instagram.com/tezscale/"
+                target="_blank"
+                rel="noreferrer"
+                className="w-9 h-9 rounded-md bg-slate-900 hover:bg-gradient-to-tr hover:from-amber-500 hover:via-rose-500 hover:to-purple-600 text-slate-300 hover:text-white flex items-center justify-center transition-all border border-slate-800 shadow-sm"
+                aria-label="Instagram"
+                title="Instagram"
+              >
+                <Instagram className="w-4 h-4" />
               </a>
-              <a href="https://instagram.com" target="_blank" rel="noreferrer" className="w-9 h-9 rounded-md bg-slate-900 hover:bg-pink-600 text-slate-300 hover:text-white flex items-center justify-center transition-colors text-xs font-bold border border-slate-800" aria-label="Instagram">
-                📸
+
+              <a
+                href={whatsappUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="w-9 h-9 rounded-md bg-slate-900 hover:bg-emerald-600 text-slate-300 hover:text-white flex items-center justify-center transition-colors border border-slate-800 shadow-sm"
+                aria-label="WhatsApp"
+                title="WhatsApp"
+              >
+                <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+                </svg>
               </a>
-              <a href="https://x.com" target="_blank" rel="noreferrer" className="w-9 h-9 rounded-md bg-slate-900 hover:bg-[#00A3E0] text-slate-300 hover:text-white flex items-center justify-center transition-colors text-xs font-bold border border-slate-800" aria-label="X">
-                𝕏
+
+              <a
+                href="https://www.youtube.com/@tezscale"
+                target="_blank"
+                rel="noreferrer"
+                className="w-9 h-9 rounded-md bg-slate-900 hover:bg-[#ff0000] text-slate-300 hover:text-white flex items-center justify-center transition-colors border border-slate-800 shadow-sm"
+                aria-label="YouTube"
+                title="YouTube"
+              >
+                <Youtube className="w-4 h-4" />
               </a>
             </div>
           </div>
@@ -168,10 +205,6 @@ const Footer = ({ onOpenConsultation }) => {
             <a href="#home" className="hover:text-slate-400 transition-colors">Privacy Policy</a>
             <span>|</span>
             <a href="#home" className="hover:text-slate-400 transition-colors">Terms of Service</a>
-            <span>|</span>
-            <Link to="/backoffice" className="text-[#00A3E0] hover:text-[#38bdf8] font-semibold">
-              TezScale Backoffice
-            </Link>
           </div>
         </div>
 

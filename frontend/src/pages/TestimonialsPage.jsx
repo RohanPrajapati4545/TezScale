@@ -146,6 +146,7 @@ const TestimonialsPage = () => {
           <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
             <video
               ref={videoRef}
+              key={content?.media?.testimonialsHeroVideo || "/page-hero-video.mp4"}
               autoPlay
               loop
               muted
@@ -155,7 +156,7 @@ const TestimonialsPage = () => {
                 contentVisible ? 'opacity-75 sm:opacity-80' : 'opacity-100'
               }`}
             >
-              <source src="/page-hero-video.mp4" type="video/mp4" />
+              <source src={content?.media?.testimonialsHeroVideo || "/page-hero-video.mp4"} type="video/mp4" />
               <source src="/services-hero-video.mp4" type="video/mp4" />
               <source src="/tezscale-hero-video-full.mp4" type="video/mp4" />
             </video>
@@ -235,22 +236,24 @@ const TestimonialsPage = () => {
               threshold={0.12}
               className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 text-left"
             >
-              {clientReviews.map((item) => (
+              {((content?.testimonials && content.testimonials.length > 0) ? content.testimonials : clientReviews).map((item, idx) => (
                 <div
-                  key={item.id}
+                  key={item._id || item.id || idx}
                   className="bg-white rounded-3xl p-8 border border-slate-200/90 shadow-sm card-lift flex flex-col justify-between relative overflow-hidden"
                 >
                   <div className="space-y-4">
                     {/* Top Row: Stars + Quote Icon */}
                     <div className="flex items-center justify-between">
                       <div className="flex text-amber-400">
-                        {[...Array(item.rating)].map((_, i) => (
+                        {[...Array(item.rating || 5)].map((_, i) => (
                           <Star key={i} className="w-4 h-4 fill-current" />
                         ))}
                       </div>
-                      <span className="text-[11px] font-bold text-blue-700 bg-blue-50 px-2.5 py-1 rounded-full border border-blue-200/80">
-                        {item.highlight}
-                      </span>
+                      {item.highlight && (
+                        <span className="text-[11px] font-bold text-blue-700 bg-blue-50 px-2.5 py-1 rounded-full border border-blue-200/80">
+                          {item.highlight}
+                        </span>
+                      )}
                     </div>
 
                     {/* Review Quote */}
@@ -263,15 +266,18 @@ const TestimonialsPage = () => {
                   <div className="pt-6 mt-6 border-t border-slate-100 flex items-center gap-3.5">
                     <div className="w-11 h-11 rounded-full overflow-hidden border border-slate-200 bg-slate-100 flex-shrink-0">
                       <img
-                        src={item.avatar}
+                        src={item.avatar || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80'}
                         alt={item.name}
                         className="w-full h-full object-cover"
+                        onError={(e) => {
+                          e.currentTarget.style.display = 'none';
+                        }}
                       />
                     </div>
                     <div>
                       <div className="font-extrabold text-slate-900 text-sm">{item.name}</div>
                       <div className="text-[11px] text-slate-500 font-medium">{item.role}</div>
-                      <div className="text-[10px] text-blue-600 font-semibold">{item.sector}</div>
+                      {item.sector && <div className="text-[10px] text-blue-600 font-semibold">{item.sector}</div>}
                     </div>
                   </div>
                 </div>
