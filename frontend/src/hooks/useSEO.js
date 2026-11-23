@@ -34,7 +34,7 @@ export default function useSEO({ title, description, canonical, keywords }) {
     }
 
     if (canonical) {
-      const baseUrl = 'https://tez-scale-git-main-rohanprajjjjapati-4650.vercel.app';
+      const baseUrl = 'https://tez-scale-navy.vercel.app';
       const canonicalUrl = canonical.startsWith('http') ? canonical : `${baseUrl}${canonical}`;
       let linkCanonical = document.querySelector('link[rel="canonical"]');
       if (!linkCanonical) {
