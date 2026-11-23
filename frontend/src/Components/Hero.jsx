@@ -150,22 +150,32 @@ const Hero = ({ onOpenConsultation }) => {
         >
           {/* Eyebrow Pill Badge */}
           <div className="inline-flex items-center px-4 py-1.5 rounded-full bg-white/[0.08] hover:bg-white/[0.12] backdrop-blur-md border border-white/20 text-slate-200 text-xs sm:text-[13px] font-semibold transition-all shadow-sm mb-4 sm:mb-5 select-none">
-            <span>{heroData.badge || 'Welcome to TezScale'}</span>
+            <span>
+              {heroData.badge && !heroData.badge.includes('Grow Faster')
+                ? heroData.badge
+                : 'Welcome to TezScale'}
+            </span>
           </div>
 
           {/* 2-Line Centered Hero Headline */}
           <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-[54px] xl:text-[58px] font-black text-white tracking-tight leading-[1.18] sm:leading-[1.15] max-w-5xl mx-auto mb-4 sm:mb-5">
             <span className="block sm:inline">
-              {heroData.titleLine1 || 'Transform your Marketing Strategy'}
+              {heroData.titleLine1 && !heroData.titleLine1.includes('actively providing')
+                ? heroData.titleLine1
+                : 'Transform your Marketing Strategy'}
             </span>{' '}
             <span className="block text-transparent bg-clip-text bg-gradient-to-r from-sky-400 via-cyan-300 to-blue-400 sm:mt-1">
-              {heroData.titleLine2 || 'with the Power of TezScale'}
+              {heroData.titleLine2 && !heroData.titleLine2.includes('digitally grow')
+                ? heroData.titleLine2
+                : 'with the Power of TezScale'}
             </span>
           </h1>
 
           {/* Subtitle Description */}
           <p className="text-slate-200/90 text-xs sm:text-base md:text-lg max-w-2xl mx-auto font-normal leading-relaxed mb-6 sm:mb-8">
-            {heroData.description || 'Elevate your campaigns, maximize ROI, and accelerate predictable digital growth with our full-stack web, branding, and performance marketing solutions.'}
+            {heroData.description && !heroData.description.includes('B2B lead generation')
+              ? heroData.description
+              : 'Elevate your campaigns, maximize ROI, and accelerate predictable digital growth with our full-stack web, branding, and performance marketing solutions.'}
           </p>
         </div>
 
@@ -177,7 +187,11 @@ const Hero = ({ onOpenConsultation }) => {
             onClick={() => setVideoModalOpen(true)}
             className="px-6 sm:px-7 py-2.5 sm:py-3 rounded-full bg-white/[0.05] hover:bg-white/[0.12] backdrop-blur-md border border-white/25 hover:border-white/40 text-white font-medium text-xs sm:text-sm transition-all duration-300 flex items-center gap-2 cursor-pointer group shadow-sm hover:scale-[1.02]"
           >
-            <span>{heroData.primaryCta || 'What we do?'}</span>
+            <span>
+              {heroData.primaryCta && !heroData.primaryCta.includes('Consultation')
+                ? heroData.primaryCta
+                : 'What we do?'}
+            </span>
             <ArrowRight className="w-4 h-4 text-slate-300 group-hover:text-white group-hover:translate-x-1 transition-all" />
           </button>
 
@@ -188,7 +202,11 @@ const Hero = ({ onOpenConsultation }) => {
             className="px-6 sm:px-7 py-2.5 sm:py-3 rounded-full bg-gradient-to-r from-sky-400 via-cyan-300 to-sky-500 hover:from-sky-300 hover:via-cyan-200 hover:to-sky-400 text-slate-950 font-bold text-xs sm:text-sm transition-all duration-300 flex items-center gap-2 cursor-pointer shadow-lg shadow-sky-500/25 hover:shadow-sky-500/40 hover:scale-[1.02]"
           >
             <ArrowUpRight className="w-4 h-4 text-slate-950 stroke-[2.5]" />
-            <span>{heroData.secondaryCta || 'Explore Services'}</span>
+            <span>
+              {heroData.secondaryCta && !heroData.secondaryCta.includes('Video')
+                ? heroData.secondaryCta
+                : 'Explore Services'}
+            </span>
           </a>
         </div>
 

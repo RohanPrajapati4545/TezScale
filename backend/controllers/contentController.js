@@ -320,6 +320,9 @@ export const getContent = async (req, res) => {
     if (!content) {
       content = await SiteContent.create(defaultContent);
       console.log('🌱 Seeded TezScale specification content into MongoDB');
+    } else if (content.hero?.titleLine1?.includes('actively providing')) {
+      content.hero = defaultContent.hero;
+      await content.save();
     }
 
     cachedContent = content;

@@ -302,7 +302,7 @@ export const defaultSiteContent = {
 };
 
 // Key for fast offline & instant local persistence
-const STORAGE_KEY = 'tezscale_cached_content_v2';
+const STORAGE_KEY = 'tezscale_cached_content_v5';
 
 const getInitialContent = () => {
   if (typeof window === 'undefined') return defaultSiteContent;
@@ -310,6 +310,9 @@ const getInitialContent = () => {
     const saved = localStorage.getItem(STORAGE_KEY);
     if (saved) {
       const parsed = JSON.parse(saved);
+      if (parsed.hero?.titleLine1?.includes('actively providing')) {
+        parsed.hero = { ...defaultSiteContent.hero };
+      }
       return { ...defaultSiteContent, ...parsed };
     }
   } catch (e) {}
