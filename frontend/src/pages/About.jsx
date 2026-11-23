@@ -87,6 +87,8 @@ const growthArchitects = [
     name: 'Rohan Prajapati',
     role: 'Lead Full-Stack Web Developer',
     badge: 'Full-Stack Developer',
+    service: 'web-development',
+    serviceName: 'Website Builder & Development',
     image: '/rohan-prajapati.jpg',
     imageClass: 'object-cover object-center',
     bio: 'MERN Stack Developer with extensive expertise building microservices-based SaaS platforms (React.js, Node.js, Express.js, MongoDB, Docker, Socket.IO, WebRTC). Leading digital engineering at TezScale.',
@@ -100,21 +102,11 @@ const growthArchitects = [
     name: 'Aarav Singhania',
     role: 'Founder & Chief Growth Officer',
     badge: 'Growth Strategy',
+    service: 'digital-marketing',
+    serviceName: 'Digital Marketing Support (SEO)',
     image: '/tezscale-founder.jpg',
     imageClass: 'object-cover object-top',
     bio: 'Strategic advisor to 200+ high-growth B2B firms. Specializes in scalable inbound funnels, algorithmic media buying, and predictable revenue acceleration systems.',
-    social: {
-      linkedin: 'https://linkedin.com',
-    },
-  },
-  {
-    slug: 'neha-kulkarni',
-    name: 'Dr. Neha Kulkarni',
-    role: 'VP, Performance & Meta Ads',
-    badge: 'Paid Acquisition',
-    image: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=600&h=600&q=80',
-    imageClass: 'object-cover object-top',
-    bio: 'Ex-agency media director overseeing ₹15M+ in ad spend with an average ROAS of 4.2x across healthcare, dental clinics, and high-ticket real estate campaigns.',
     social: {
       linkedin: 'https://linkedin.com',
     },
@@ -124,37 +116,14 @@ const growthArchitects = [
     name: 'Rustam Rathore',
     role: 'AI/ML Engineer',
     badge: 'AI & Machine Learning',
+    service: 'web-development',
+    serviceName: 'Website Builder & Development',
     image: '/rustam-rathore.jpg',
     imageClass: 'object-cover object-center',
     bio: 'AI/ML specialist with deep expertise in Python, PyTorch, Scikit-learn, LangChain, and RAG pipelines. Architecting automated machine learning pipelines and generative AI solutions.',
     social: {
       github: 'https://github.com/Rustam-Rathore',
       linkedin: 'https://linkedin.com/in/rustam-rathore-9637162a7/',
-    },
-  },
-  {
-    slug: 'vikram-malhotra',
-    name: 'Vikram Malhotra',
-    role: 'Senior Cloud & DevOps Engineer',
-    badge: 'Cloud & DevOps',
-    image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=600&h=600&q=80',
-    imageClass: 'object-cover object-center',
-    bio: 'Specializes in high-availability cloud infrastructure, Docker containerization, zero-downtime CI/CD workflows, and high-concurrency microservices performance.',
-    social: {
-      github: 'https://github.com',
-      linkedin: 'https://linkedin.com',
-    },
-  },
-  {
-    slug: 'ananya-roy',
-    name: 'Ananya Roy',
-    role: 'Creative & Brand Identity Lead',
-    badge: 'Brand Kits & UI',
-    image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=600&h=600&q=80',
-    imageClass: 'object-cover object-top',
-    bio: 'Turns complex business values into iconic brand kits, high-CTR visual assets, scalable design systems, and high-converting marketing collateral.',
-    social: {
-      linkedin: 'https://linkedin.com',
     },
   },
 ];
@@ -168,12 +137,35 @@ const About = () => {
 
   const [modalOpen, setModalOpen] = useState(false);
   const [contentVisible, setContentVisible] = useState(true);
+  const [selectedService, setSelectedService] = useState('all');
   const videoRef = useRef(null);
   const teamScrollRef = useRef(null);
   const [isPaused, setIsPaused] = useState(false);
   const resumeTimerRef = useRef(null);
   const { content } = useContent();
   const whyUs = content?.whyChooseUs || {};
+
+  const servicesList = [
+    { id: 'all', label: 'All Growth Architects' },
+    { id: 'web-development', label: 'Website Builder & Development' },
+    { id: 'digital-marketing', label: 'Digital Marketing Support (SEO)' },
+    { id: 'graphic-design', label: 'Graphic Design & Brand Kits' },
+    { id: 'video-editing', label: 'Video Editing & Content' },
+  ];
+
+  const teamSource = (content?.team && content.team.length > 0) ? content.team : growthArchitects;
+
+  const filteredTeam = selectedService === 'all'
+    ? teamSource
+    : teamSource.filter((m) => {
+        if (m.service === selectedService) return true;
+        if (selectedService === 'web-development' && (m.badge?.toLowerCase().includes('developer') || m.badge?.toLowerCase().includes('ai'))) return true;
+        if (selectedService === 'digital-marketing' && (m.badge?.toLowerCase().includes('growth') || m.badge?.toLowerCase().includes('marketing') || m.badge?.toLowerCase().includes('seo'))) return true;
+        if (selectedService === 'graphic-design' && (m.badge?.toLowerCase().includes('design') || m.badge?.toLowerCase().includes('brand'))) return true;
+        return false;
+      });
+
+  const displayTeam = filteredTeam.length >= 3 ? [...filteredTeam, ...filteredTeam] : filteredTeam;
 
   // Sync content visibility with background video playback
   useEffect(() => {
@@ -464,6 +456,46 @@ const About = () => {
               </div>
             </div>
 
+            {/* Service Department Filter Pills */}
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-8 flex flex-wrap items-center gap-2 relative z-10">
+              {servicesList.map((svc) => {
+                const isSelected = selectedService === svc.id;
+                const count = svc.id === 'all'
+                  ? teamSource.length
+                  : teamSource.filter((m) => {
+                      if (m.service === svc.id) return true;
+                      if (svc.id === 'web-development' && (m.badge?.toLowerCase().includes('developer') || m.badge?.toLowerCase().includes('ai'))) return true;
+                      if (svc.id === 'digital-marketing' && (m.badge?.toLowerCase().includes('growth') || m.badge?.toLowerCase().includes('marketing') || m.badge?.toLowerCase().includes('seo'))) return true;
+                      if (svc.id === 'graphic-design' && (m.badge?.toLowerCase().includes('design') || m.badge?.toLowerCase().includes('brand'))) return true;
+                      return false;
+                    }).length;
+
+                if (svc.id !== 'all' && count === 0) return null;
+
+                return (
+                  <button
+                    key={svc.id}
+                    type="button"
+                    onClick={() => setSelectedService(svc.id)}
+                    className={`px-4 py-2 rounded-full text-xs sm:text-sm font-bold transition-all duration-200 cursor-pointer flex items-center gap-2 ${
+                      isSelected
+                        ? 'bg-[#00A3E0] text-white shadow-md shadow-[#00A3E0]/25 scale-102'
+                        : 'bg-white text-slate-600 hover:text-slate-900 border border-slate-200 hover:border-slate-300'
+                    }`}
+                  >
+                    <span>{svc.label}</span>
+                    <span
+                      className={`text-[11px] px-1.5 py-0.5 rounded-full font-bold ${
+                        isSelected ? 'bg-white/20 text-white' : 'bg-slate-100 text-slate-500'
+                      }`}
+                    >
+                      {count}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+
             {/* Carousel Track with Smooth Auto-Glide & Interactive Arrow Navigation */}
             <div className="relative w-full overflow-hidden group/carousel">
               {/* Left & Right Soft Edge Gradient Masks */}
@@ -502,8 +534,7 @@ const About = () => {
                 onTouchEnd={() => setIsPaused(false)}
                 className="flex gap-6 py-4 px-4 sm:px-6 overflow-x-auto no-scrollbar [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] select-none"
               >
-                {/* 2 Sets of Cards for infinite scrolling */}
-                {[...((content?.team && content.team.length > 0) ? content.team : growthArchitects), ...((content?.team && content.team.length > 0) ? content.team : growthArchitects)].map((member, idx) => (
+                {displayTeam.map((member, idx) => (
                   <div
                     key={`ga-card-${idx}`}
                     className="w-[290px] sm:w-[330px] shrink-0 bg-white rounded-3xl border border-slate-200/90 hover:border-sky-400/60 overflow-hidden shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 flex flex-col justify-between group cursor-pointer"
@@ -531,6 +562,11 @@ const About = () => {
                           </h3>
                         </Link>
                         <div className="text-xs font-bold text-[#00A3E0] mt-1 tracking-wide">{member.role}</div>
+                        {member.serviceName && (
+                          <div className="inline-block mt-1.5 text-[11px] font-semibold text-sky-800 bg-sky-50 px-2.5 py-0.5 rounded-md border border-sky-200/80">
+                            {member.serviceName}
+                          </div>
+                        )}
                         <p className="text-xs text-slate-600 mt-3 line-clamp-3 leading-relaxed min-h-[48px]">
                           {member.bio}
                         </p>

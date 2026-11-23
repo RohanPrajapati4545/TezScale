@@ -21,6 +21,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
+app.set('trust proxy', 1); // Enable trusting reverse proxy for accurate IP rate limiting on Render/Vercel
 const defaultPort = process.env.PORT || 5000;
 
 // Auto-seed database with default content and admin on startup

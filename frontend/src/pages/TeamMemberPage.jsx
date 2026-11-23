@@ -16,14 +16,21 @@ import Footer from '../Components/Footer';
 import ConsultationModal from '../Components/ConsultationModal';
 import AnimatedContent from '../Components/AnimatedContent';
 import { teamMembers, getTeamMemberBySlug } from '../data/teamData';
+import { useContent } from '../context/ContentContext';
 
 const TeamMemberPage = () => {
   const { memberSlug } = useParams();
   const navigate = useNavigate();
   const [modalOpen, setModalOpen] = useState(false);
   const videoRef = useRef(null);
+  const { content } = useContent();
 
-  const member = getTeamMemberBySlug(memberSlug);
+  const dynamicTeam = (content?.team && content.team.length > 0) ? content.team : teamMembers;
+  const dynamicMember = dynamicTeam.find((m) => m.slug === memberSlug || m.id === memberSlug);
+  const staticMember = teamMembers.find((m) => m.slug === memberSlug || m.id === memberSlug);
+  const member = dynamicMember 
+    ? (staticMember ? { ...staticMember, ...dynamicMember } : dynamicMember)
+    : (staticMember || getTeamMemberBySlug(memberSlug));
 
   useSEO({
     title: member ? `${member.name} - ${member.role} | TezScale Leadership` : 'Team Member | TezScale',
@@ -62,7 +69,7 @@ const TeamMemberPage = () => {
     );
   }
 
-  const otherMembers = teamMembers.filter((m) => m.slug !== member.slug);
+  const otherMembers = dynamicTeam.filter((m) => m.slug !== member.slug);
 
   return (
     <div className="min-h-screen flex flex-col bg-slate-50 text-slate-800 font-sans antialiased selection:bg-[#00A3E0] selection:text-white">

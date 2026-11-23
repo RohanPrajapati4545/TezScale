@@ -157,64 +157,37 @@ export const defaultSiteContent = {
   },
   testimonials: [
     {
+      id: 1,
       name: 'Dr. Priya Sharma',
-      role: 'Medical Director, City Dental Clinic',
+      role: 'Clinic Director, Apex Healthcare',
       sector: 'Healthcare & Clinics',
       rating: 5,
       avatar: 'https://images.unsplash.com/photo-1594824813589-9a25b1641ba5?auto=format&fit=crop&w=150&q=80',
       quote:
-        'TezScale completely transformed our online patient acquisition. Our local clinic appointments jumped 3x in just 90 days! Their automated WhatsApp booking flow eliminated patient drop-offs, and we now rank #1 on Google Maps.',
-      highlight: '3x Patient Bookings',
+        'TezScale completely transformed our online presence and local SEO. Their automated booking workflows brought us 3x more patient consultations in just 90 days!',
+      highlight: '3x Patient Consultations',
     },
     {
-      name: 'Rohit Sharma',
-      role: 'Founder & CEO, TechVista SaaS',
-      sector: 'Software & Technology',
-      rating: 5,
-      avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80',
-      quote:
-        'TezScale helped us 3x our qualified website traffic in just 3 months! Their engineering agility and full-funnel strategy are absolutely phenomenal. The fastest, most transparent team we have worked with.',
-      highlight: '3x Traffic Growth',
-    },
-    {
-      name: 'Rajesh Singhal',
-      role: 'Managing Partner, Apex Skyline Realty',
+      id: 2,
+      name: 'Rohit Verma',
+      role: 'Managing Broker, UrbanSpace Realty',
       sector: 'Real Estate & Properties',
       rating: 5,
       avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80',
       quote:
-        'Before partnering with TezScale, we wasted substantial budget on Meta ads with junk inquiries. TezScale built high-converting property showcase funnels with sub-2-minute lead notifications. We closed ₹4.2 Cr in property sales.',
-      highlight: '₹4.2 Cr Sales Closed',
+        'The lead quality from TezScale Meta Ads and CRM tracking has exceeded all our expectations. Our property closing velocity has more than doubled.',
+      highlight: '2x Property Closing',
     },
     {
-      name: 'Ananya Verma',
-      role: 'Co-founder, Luxe Retail & E-Commerce',
-      sector: 'Direct-to-Consumer Retail',
-      rating: 5,
-      avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=150&q=80',
-      quote:
-        'Our e-commerce store ROAS jumped from 1.6x to 4.1x within 60 days. The automated WhatsApp abandoned cart recovery recovered 38% of our dropped customers. TezScale is an indispensable growth partner.',
-      highlight: '4.1x Meta Ads ROAS',
-    },
-    {
+      id: 3,
       name: 'Vikram Patel',
-      role: 'Managing Director, Precision Engineering Export',
+      role: 'VP Operations, Apex Engineering',
       sector: 'Industrial Manufacturing B2B',
       rating: 5,
       avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=150&q=80',
       quote:
-        'As an industrial exporter, getting genuine B2B buyer inquiries online was our biggest bottleneck. TezScale designed our international technical catalog and optimized our digital footprint. We secured supply contracts across UAE.',
-      highlight: 'Global Export Contracts',
-    },
-    {
-      name: 'Siddharth Mehta',
-      role: 'Head of Growth, FinScale Technologies',
-      sector: 'Fintech Solutions',
-      rating: 5,
-      avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=150&q=80',
-      quote:
-        'Speed and execution precision set TezScale apart. They delivered our entire platform staging in 2 days as promised, and our customer acquisition cost dropped by 45% in month two.',
-      highlight: '-45% Cost Per Lead',
+        'As an industrial B2B exporter, getting genuine buyer inquiries online was our biggest bottleneck. TezScale optimized our global digital footprint and we secured multi-country supply contracts.',
+      highlight: 'Global B2B Contracts',
     },
   ],
   team: [
@@ -223,6 +196,8 @@ export const defaultSiteContent = {
       name: 'Rohan Prajapati',
       role: 'Lead Full-Stack Web Developer',
       badge: 'Full-Stack Developer',
+      service: 'web-development',
+      serviceName: 'Website Builder & Development',
       image: '/rohan-prajapati.jpg',
       bio: 'MERN Stack Developer with extensive expertise building microservices-based SaaS platforms (React.js, Node.js, Express.js, MongoDB, Docker, Socket.IO, WebRTC). Leading digital engineering at TezScale.',
       social: {
@@ -235,19 +210,10 @@ export const defaultSiteContent = {
       name: 'Aarav Singhania',
       role: 'Founder & Chief Growth Officer',
       badge: 'Growth Strategy',
+      service: 'digital-marketing',
+      serviceName: 'Digital Marketing Support (SEO)',
       image: '/tezscale-founder.jpg',
       bio: 'Strategic advisor to 200+ high-growth B2B firms. Specializes in scalable inbound funnels, algorithmic media buying, and predictable revenue acceleration systems.',
-      social: {
-        linkedin: 'https://linkedin.com',
-      },
-    },
-    {
-      slug: 'neha-kulkarni',
-      name: 'Dr. Neha Kulkarni',
-      role: 'VP, Performance & Meta Ads',
-      badge: 'Paid Acquisition',
-      image: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=600&h=600&q=80',
-      bio: 'Ex-agency media director overseeing ₹15M+ in ad spend with an average ROAS of 4.2x across healthcare, dental clinics, and high-ticket real estate campaigns.',
       social: {
         linkedin: 'https://linkedin.com',
       },
@@ -257,33 +223,13 @@ export const defaultSiteContent = {
       name: 'Rustam Rathore',
       role: 'AI/ML Engineer',
       badge: 'AI & Machine Learning',
+      service: 'web-development',
+      serviceName: 'Website Builder & Development',
       image: '/rustam-rathore.jpg',
       bio: 'AI/ML specialist with deep expertise in Python, PyTorch, Scikit-learn, LangChain, and RAG pipelines. Architecting automated machine learning pipelines and generative AI solutions.',
       social: {
         github: 'https://github.com/Rustam-Rathore',
         linkedin: 'https://linkedin.com/in/rustam-rathore-9637162a7/',
-      },
-    },
-    {
-      slug: 'vikram-malhotra',
-      name: 'Vikram Malhotra',
-      role: 'Senior Cloud & DevOps Engineer',
-      badge: 'Cloud & DevOps',
-      image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=600&h=600&q=80',
-      bio: 'Cloud architecture expert with 6+ years deploying scalable Kubernetes clusters, automated CI/CD pipelines, and zero-downtime microservices.',
-      social: {
-        linkedin: 'https://linkedin.com',
-      },
-    },
-    {
-      slug: 'priya-deshmukh',
-      name: 'Priya Deshmukh',
-      role: 'Head of UI/UX & Conversion Architecture',
-      badge: 'UI/UX Design',
-      image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=600&h=600&q=80',
-      bio: 'Conversion-focused visual designer specializing in brand identity systems, high-converting checkout flows, and accessible SaaS design systems.',
-      social: {
-        linkedin: 'https://linkedin.com',
       },
     },
   ],
@@ -302,7 +248,7 @@ export const defaultSiteContent = {
 };
 
 // Key for fast offline & instant local persistence
-const STORAGE_KEY = 'tezscale_cached_content_v5';
+const STORAGE_KEY = 'tezscale_cached_content_v6';
 
 const getInitialContent = () => {
   if (typeof window === 'undefined') return defaultSiteContent;
@@ -312,6 +258,14 @@ const getInitialContent = () => {
       const parsed = JSON.parse(saved);
       if (parsed.hero?.titleLine1?.includes('actively providing')) {
         parsed.hero = { ...defaultSiteContent.hero };
+      }
+      // Purge old dummy reviews
+      if (parsed.testimonials && parsed.testimonials.some(t => t.name === 'Rohit Sharma' || t.name === 'Rajesh Singhal')) {
+        parsed.testimonials = defaultSiteContent.testimonials;
+      }
+      // Purge old dummy team members
+      if (parsed.team && parsed.team.some(m => m.slug === 'neha-kulkarni' || m.slug === 'vikram-malhotra')) {
+        parsed.team = defaultSiteContent.team;
       }
       return { ...defaultSiteContent, ...parsed };
     }
@@ -323,6 +277,21 @@ export const ContentProvider = ({ children }) => {
   // Always immediately initialized - NEVER blocks UI with a full-screen spinner
   const [content, setContent] = useState(getInitialContent);
   const [loading, setLoading] = useState(false);
+
+  // Cross-tab live sync: when Admin saves changes in /backoffice tab,
+  // all other open tabs (About, Testimonials, Home) instantly update without refresh
+  useEffect(() => {
+    const handleStorageChange = (e) => {
+      if (e.key === STORAGE_KEY && e.newValue) {
+        try {
+          const freshData = JSON.parse(e.newValue);
+          setContent(freshData);
+        } catch (err) {}
+      }
+    };
+    window.addEventListener('storage', handleStorageChange);
+    return () => window.removeEventListener('storage', handleStorageChange);
+  }, []);
 
   // Background fetch (Stale-While-Revalidate)
   const fetchContent = useCallback(async () => {

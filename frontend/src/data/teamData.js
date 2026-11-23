@@ -7,6 +7,8 @@ export const teamMembers = [
     badge: 'Full-Stack Developer',
     image: '/rohan-prajapati.jpg',
     imageClass: 'object-cover object-center',
+    service: 'web-development',
+    serviceName: 'Website Builder & Development',
     location: 'Indore, India',
     experience: '1+ Years in Microservices SaaS & Full-Stack Development',
     linkedin: 'https://linkedin.com/in/rohan-prajapati-517128206/',
@@ -141,6 +143,8 @@ export const teamMembers = [
     badge: 'Growth Strategy',
     image: '/tezscale-founder.jpg',
     imageClass: 'object-cover object-top',
+    service: 'digital-marketing',
+    serviceName: 'Digital Marketing Support (SEO)',
     location: 'Mumbai, India',
     experience: '8+ Years in Digital Growth & Performance Marketing',
     linkedin: 'https://linkedin.com',
@@ -181,56 +185,13 @@ export const teamMembers = [
     projects: []
   },
   {
-    id: 'neha-kulkarni',
-    slug: 'neha-kulkarni',
-    name: 'Dr. Neha Kulkarni',
-    role: 'VP, Performance & Meta Ads',
-    badge: 'Paid Acquisition',
-    image: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=600&h=600&q=80',
-    imageClass: 'object-cover object-top',
-    location: 'Pune, India',
-    experience: '6+ Years in Algorithmic Ad Buying',
-    linkedin: 'https://linkedin.com',
-    bio: 'Ex-agency media director overseeing ₹15M+ in ad spend with an average ROAS of 4.2x across healthcare, medical clinic patient acquisition, and luxury real estate campaigns.',
-    technicalSkills: {
-      languagesFrontend: ['Creative Ad Testing', 'Dynamic Product Ads (DPA)', 'Landing Page Messaging'],
-      backendArchitecture: ['Meta Conversions API (CAPI)', 'Server-Side Tagging', 'Google Tag Manager'],
-      databasesCaching: ['Audience Segmentation', 'Lookalike Modeling', 'Custom Event Telemetry'],
-      authRealtime: ['Pixel Health Audits', 'Conversion Event Prioritization', 'Real-time ROAS Tracking'],
-      toolsDevops: ['Meta Ads Manager', 'Google Search Ads', 'Triple Whale', 'Hyros', 'Supermetrics']
-    },
-    professionalExperience: [
-      {
-        company: 'TezScale Digital Growth',
-        role: 'VP, Performance & Meta Ads',
-        duration: '2022 – Present',
-        description: 'Leading performance media buying squads and algorithmic campaign scaling.',
-        highlights: [
-          'Consistently achieved 4.2x ROAS across multi-crore ad campaigns.',
-          'Architected server-side Meta CAPI setups eliminating iOS14 attribution drop-offs.'
-        ]
-      }
-    ],
-    education: [
-      {
-        degree: 'M.Sc. in Data Analytics & Media Science',
-        institution: 'Symbiosis International University',
-        year: '2018',
-        score: 'First Class'
-      }
-    ],
-    certifications: [
-      'Meta Certified Performance Marketing Master',
-      'Google Search & Display Advertising Specialist'
-    ],
-    projects: []
-  },
-  {
     id: 'rustam-rathore',
     slug: 'rustam-rathore',
     name: 'Rustam Rathore',
     role: 'AI/ML Engineer',
     badge: 'AI & Machine Learning',
+    service: 'web-development',
+    serviceName: 'Website Builder & Development',
     image: '/rustam-rathore.jpg',
     imageClass: 'object-cover object-center',
     location: 'LIG Square, Indore (M.P), India',
@@ -299,96 +260,6 @@ export const teamMembers = [
         desc: 'Designed and developed a supervised machine learning pipeline to classify wine quality as Good or Bad. Applied feature engineering, compared multiple classification algorithms, improved model accuracy via hyperparameter tuning, and evaluated using Confusion Matrix, Precision, Recall, and F1-score.',
       }
     ]
-  },
-  {
-    id: 'vikram-malhotra',
-    slug: 'vikram-malhotra',
-    name: 'Vikram Malhotra',
-    role: 'Senior Cloud & DevOps Engineer',
-    badge: 'Cloud & DevOps',
-    image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=600&h=600&q=80',
-    imageClass: 'object-cover object-center',
-    location: 'Bengaluru, India',
-    experience: '7+ Years in Cloud Infrastructure',
-    linkedin: 'https://linkedin.com',
-    bio: 'Specializes in high-availability cloud infrastructure, Docker containerization, Kubernetes clusters, zero-downtime CI/CD workflows, and high-concurrency API performance.',
-    technicalSkills: {
-      languagesFrontend: ['Infrastructure as Code (IaC)', 'Shell Scripting', 'Monitoring Dashboards'],
-      backendArchitecture: ['Kubernetes', 'Docker Swarm', 'Nginx Reverse Proxy', 'Microservices Mesh'],
-      databasesCaching: ['Redis Clusters', 'PostgreSQL Read Replicas', 'MongoDB Sharding'],
-      authRealtime: ['SSL/TLS Encryption', 'WAF Protection', 'DDoS Mitigation', 'Zero Trust Security'],
-      toolsDevops: ['AWS', 'Google Cloud (GCP)', 'Docker', 'Terraform', 'GitHub Actions', 'Prometheus', 'Grafana']
-    },
-    professionalExperience: [
-      {
-        company: 'TezScale Digital Growth',
-        role: 'Senior Cloud & DevOps Engineer',
-        duration: '2023 – Present',
-        description: 'Managing enterprise client cloud hosting, 99.99% uptime SLAs, and automated deployment pipelines.',
-        highlights: [
-          'Maintained 99.98% uptime across all client production clusters.',
-          'Built automated CI/CD deployment pipelines cutting staging release times by 75%.'
-        ]
-      }
-    ],
-    education: [
-      {
-        degree: 'B.Tech in Information Technology',
-        institution: 'NIT Warangal',
-        year: '2017',
-        score: 'First Class'
-      }
-    ],
-    certifications: [
-      'AWS Certified Solutions Architect — Professional',
-      'Certified Kubernetes Administrator (CKA)'
-    ],
-    projects: []
-  },
-  {
-    id: 'ananya-roy',
-    slug: 'ananya-roy',
-    name: 'Ananya Roy',
-    role: 'Creative & Brand Identity Lead',
-    badge: 'Brand Kits & UI',
-    image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=600&h=600&q=80',
-    imageClass: 'object-cover object-top',
-    location: 'New Delhi, India',
-    experience: '5+ Years in Brand Architecture',
-    linkedin: 'https://linkedin.com',
-    bio: 'Turns complex business values into iconic brand kits, high-CTR visual assets, scalable Figma design systems, and high-converting marketing collateral.',
-    technicalSkills: {
-      languagesFrontend: ['Figma Design Systems', 'UI/UX Prototyping', 'Conversion-First Typography'],
-      backendArchitecture: ['Brand Guidelines', 'Vector Iconography Suites', 'Design Tokens'],
-      databasesCaching: ['Asset Libraries', 'Motion Graphics', 'Dynamic Ad Templates'],
-      authRealtime: ['Multi-Platform Color Calibrations', 'High-Contrast Accessibility (WCAG)'],
-      toolsDevops: ['Figma', 'Adobe Illustrator', 'Adobe Photoshop', 'After Effects', 'Spline 3D']
-    },
-    professionalExperience: [
-      {
-        company: 'TezScale Digital Growth',
-        role: 'Creative & Brand Identity Lead',
-        duration: '2022 – Present',
-        description: 'Overseeing creative brand identity, UI/UX design systems, and high-CTR advertising collateral.',
-        highlights: [
-          'Created over 120+ comprehensive corporate brand identity kits.',
-          'Boosted client ad click-through rates by an average 3.2x through conversion-tested creative frameworks.'
-        ]
-      }
-    ],
-    education: [
-      {
-        degree: 'B.Des in Communication Design',
-        institution: 'National Institute of Design (NID)',
-        year: '2019',
-        score: 'First Class'
-      }
-    ],
-    certifications: [
-      'Certified Professional UI/UX Designer',
-      'Design Systems Specialist — Figma'
-    ],
-    projects: []
   }
 ];
 
