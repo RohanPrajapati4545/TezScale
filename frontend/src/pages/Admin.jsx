@@ -1201,7 +1201,7 @@ const Admin = ({ onLogout }) => {
               <div className="flex flex-col text-left">
                 <div className="flex items-center gap-1.5">
                   <span className="font-black text-slate-900 tracking-tight text-lg uppercase leading-none">
-                    TEZ<span className="text-[#00A3E0]">SCALE</span>
+                    TEZ<span className="bg-gradient-to-r from-[#1578DE] via-[#11A8DD] to-[#1AC2CD] bg-clip-text text-transparent">SCALE</span>
                   </span>
                   <span className="text-[9px] font-black uppercase tracking-wider px-1.5 py-0.5 rounded-md bg-[#e0f4ff] text-[#007ba8] border border-[#00A3E0]/30 leading-none">
                     Admin

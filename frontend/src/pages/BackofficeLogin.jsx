@@ -227,8 +227,9 @@ const BackofficeLogin = ({ onLoginSuccess }) => {
               }}
             />
             <div className="text-left">
-              <span className="text-lg sm:text-xl font-black tracking-tight text-white flex items-center">
-                TEZ<span className="text-[#00A3E0]">SCALE</span>
+              <span className="text-lg sm:text-xl font-black tracking-tight uppercase flex items-center">
+                <span className="text-white">TEZ</span>
+                <span className="bg-gradient-to-r from-[#1578DE] via-[#11A8DD] to-[#1AC2CD] bg-clip-text text-transparent">SCALE</span>
               </span>
             </div>
           </Link>

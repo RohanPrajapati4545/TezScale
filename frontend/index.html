@@ -2,10 +2,20 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <!-- Favicon & Brand Icons (Google Search requires 48px+ square) -->
     <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48x48.png" />
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png" />
     <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192x192.png" />
-    <link rel="apple-touch-icon" href="/favicon-192x192.png" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <!-- Google Site Name & Web App Specifications -->
+    <meta name="application-name" content="TezScale" />
+    <meta name="apple-mobile-web-app-title" content="TezScale" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
     <!-- Primary SEO Metadata -->
@@ -51,12 +61,27 @@
       "@context": "https://schema.org",
       "@graph": [
         {
+          "@type": "WebSite",
+          "@id": "https://tez-scale-navy.vercel.app/#website",
+          "url": "https://tez-scale-navy.vercel.app/",
+          "name": "TezScale",
+          "alternateName": ["Tez Scale", "TezScale Agency", "TezScale Digital Growth", "TezScale Indore"],
+          "description": "TezScale accelerates predictable business growth with high-converting web development, viral reels, Meta Ads & local SEO.",
+          "publisher": { "@id": "https://tez-scale-navy.vercel.app/#organization" }
+        },
+        {
           "@type": "Organization",
           "@id": "https://tez-scale-navy.vercel.app/#organization",
           "name": "TezScale",
           "alternateName": "TezScale Digital Growth",
-          "url": "https://tez-scale-navy.vercel.app",
-          "logo": "https://tez-scale-navy.vercel.app/favicon-192x192.png",
+          "url": "https://tez-scale-navy.vercel.app/",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://tez-scale-navy.vercel.app/favicon-192x192.png",
+            "width": 192,
+            "height": 192
+          },
+          "image": "https://tez-scale-navy.vercel.app/tezscale-logo.png",
           "description": "TezScale is a performance-driven digital marketing, SEO, web development, and branding agency accelerating digital growth for modern businesses.",
           "email": "hello@tezscale.com",
           "telephone": "+919876543210",
@@ -74,19 +99,10 @@
           ]
         },
         {
-          "@type": "WebSite",
-          "@id": "https://tez-scale-navy.vercel.app/#website",
-          "url": "https://tez-scale-navy.vercel.app",
-          "name": "TezScale",
-          "alternateName": ["Tez Scale", "TezScale Indore", "TezScale Agency"],
-          "description": "Accelerating Digital Growth - High Converting Digital Marketing, SEO, Meta Ads & Web Development",
-          "publisher": { "@id": "https://tez-scale-navy.vercel.app/#organization" }
-        },
-        {
           "@type": "ProfessionalService",
           "@id": "https://tez-scale-navy.vercel.app/#service",
           "name": "TezScale Digital Growth Agency",
-          "url": "https://tez-scale-navy.vercel.app",
+          "url": "https://tez-scale-navy.vercel.app/",
           "telephone": "+919876543210",
           "priceRange": "$$",
           "image": "https://tez-scale-navy.vercel.app/hero-founder-visual.png",

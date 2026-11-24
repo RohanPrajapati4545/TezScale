@@ -2,6 +2,7 @@ import React, { Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { ContentProvider } from './context/ContentContext';
 import ScrollToTop from './Components/ScrollToTop';
+import RouteSEO from './Components/RouteSEO';
 import Home from './pages/Home';
 import './App.css';
 
@@ -27,6 +28,7 @@ function App() {
     <ContentProvider>
       <Router>
         <ScrollToTop />
+        <RouteSEO />
         <div className="App">
           <Suspense fallback={<PageFallback />}>
             <Routes>

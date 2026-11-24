@@ -5,6 +5,21 @@ import { useContent } from '../context/ContentContext';
 import FloatingSpeedDial from './FloatingSpeedDial';
 import tezscaleLogo from '../assets/tezscale-logo.png';
 
+const renderBrandName = (name) => {
+  const brand = name || 'TezScale';
+  if (brand.toUpperCase() === 'TEZSCALE') {
+    return (
+      <>
+        <span className="text-white">TEZ</span>
+        <span className="bg-gradient-to-r from-[#1578DE] via-[#11A8DD] to-[#1AC2CD] bg-clip-text text-transparent">
+          SCALE
+        </span>
+      </>
+    );
+  }
+  return brand;
+};
+
 const Footer = ({ onOpenConsultation }) => {
   const { content } = useContent();
   const contact = content?.contactInfo || {
@@ -50,12 +65,8 @@ const Footer = ({ onOpenConsultation }) => {
                 className="h-11 sm:h-12 w-auto object-contain drop-shadow-[0_0_12px_rgba(0,163,224,0.35)]"
               />
               <div className="flex flex-col justify-center text-left">
-                <div className="text-xl sm:text-[27px] font-black text-white tracking-tight uppercase leading-none">
-                  {content?.branding?.agencyName ? (
-                    content.branding.agencyName
-                  ) : (
-                    <>TEZ<span className="text-[#00A3E0]">SCALE</span></>
-                  )}
+                <div className="text-xl sm:text-[27px] font-black tracking-tight uppercase leading-none">
+                  {renderBrandName(content?.branding?.agencyName)}
                 </div>
                 <div className="text-[7.5px] sm:text-[8.5px] uppercase tracking-wider text-slate-400 font-bold mt-1 leading-none">
                   {content?.branding?.tagline || 'ACCELERATING DIGITAL GROWTH'}

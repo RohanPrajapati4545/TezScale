@@ -3,4 +3,10 @@ Allow: /
 Disallow: /backoffice
 Disallow: /admin
 
+User-agent: Googlebot-Image
+Allow: /
+Allow: /favicon.ico
+Allow: /*.png$
+Allow: /*.svg$
+
 Sitemap: https://tez-scale-navy.vercel.app/sitemap.xml
