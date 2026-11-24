@@ -61,13 +61,63 @@ const defaultCardColors = [
   'bg-cyan-600 text-white shadow-cyan-500/25',
 ];
 
+const defaultHomepageServices = [
+  {
+    title: 'Business Website Development',
+    desc: 'Fast, mobile-friendly websites built to turn visitors into phone calls and WhatsApp inquiries—ready for preview in 2 days.',
+    actionText: 'Explore Website Plans',
+    slug: 'web-development',
+    icon: 'Code',
+    badgeBg: 'bg-[#00A3E0] text-white shadow-[#00A3E0]/25'
+  },
+  {
+    title: 'Logo, Branding & Ad Design',
+    desc: 'Professional logos, social media posters, brochures, and high-converting ad creatives that make your business look trustworthy.',
+    actionText: 'See Design Packages',
+    slug: 'graphic-design',
+    icon: 'Palette',
+    badgeBg: 'bg-purple-600 text-white shadow-purple-500/25'
+  },
+  {
+    title: 'Local SEO & Google Maps Ranking',
+    desc: 'Rank in the Top 3 on Google Maps and Google Search so nearby customers find and call your business first.',
+    actionText: 'Boost Google Ranking',
+    slug: 'digital-marketing',
+    icon: 'Megaphone',
+    badgeBg: 'bg-emerald-500 text-white shadow-emerald-500/25'
+  },
+  {
+    title: 'Online Store (E-Commerce) Setup',
+    desc: 'Complete online stores with UPI/card payment gateways, shipping setup, and easy 1-step checkout to grow your product sales.',
+    actionText: 'Launch Online Store',
+    slug: 'ecommerce',
+    icon: 'ShoppingCart',
+    badgeBg: 'bg-amber-500 text-white shadow-amber-500/25'
+  },
+  {
+    title: 'Social Media Management',
+    desc: 'Consistent Instagram, Facebook, and LinkedIn posts and reels that build local brand trust and engage your customers.',
+    actionText: 'View Social Plans',
+    slug: 'social-media',
+    icon: 'Share2',
+    badgeBg: 'bg-indigo-600 text-white shadow-indigo-500/25'
+  },
+  {
+    title: 'Facebook & Instagram (Meta) Ads',
+    desc: 'Targeted ad campaigns that send ready-to-buy customer leads straight to your WhatsApp—with clear daily ROI tracking.',
+    actionText: 'Start Lead Ads',
+    slug: 'meta-ads',
+    icon: 'Infinity',
+    badgeBg: 'bg-cyan-600 text-white shadow-cyan-500/25'
+  }
+];
+
 const Services = ({ onOpenConsultation }) => {
   const { content } = useContent();
-  const servicesSection = content?.servicesSection || {};
-  const servicesList = content?.services || [];
+  const servicesList = defaultHomepageServices;
 
   return (
-    <section id="services" className="py-24 bg-white relative">
+    <section id="services" className="py-24 bg-white relative scroll-mt-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header with Eyebrow Tag */}
@@ -79,15 +129,14 @@ const Services = ({ onOpenConsultation }) => {
           threshold={0.15}
         >
           <div className="max-w-3xl mx-auto text-center space-y-3 mb-16">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-md bg-[#e0f4ff] border border-[#00A3E0]/30 text-[#007ba8] text-xs font-bold tracking-wide">
-              <span>{servicesSection.badge || 'Our Core Offerings'}</span>
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#e0f4ff] border border-[#00A3E0]/30 text-[#007ba8] font-sans font-semibold text-xs sm:text-[13px] leading-[1.20] shadow-2xs">
+              <span>Our Core Services</span>
             </div>
-            <h2 className="text-3xl sm:text-4xl lg:text-[42px] font-black text-slate-900 tracking-tight leading-tight">
-              Complete <span className="text-[#00A3E0]">Digital Marketing</span> Solutions
+            <h2 className="font-heading font-bold text-[24px] sm:text-[30px] md:text-[34px] text-slate-900 tracking-tight leading-[1.20] text-center">
+              Everything You Need to <span className="text-[#0EA5E9]">Grow Your Business Online</span>
             </h2>
-            <p className="text-slate-600 text-base leading-relaxed">
-              {servicesSection.description ||
-                'End-to-end services to help you build, grow and scale your business online with measurable ROI.'}
+            <p className="font-sans font-normal text-[15px] sm:text-[16px] text-[#475569] max-w-2xl mx-auto leading-[1.60]">
+              Simple, result-driven services designed to bring you more phone calls, WhatsApp inquiries, and online orders.
             </p>
           </div>
         </AnimatedContent>
@@ -104,13 +153,13 @@ const Services = ({ onOpenConsultation }) => {
         >
           {servicesList.map((service, idx) => {
             const iconBg = service.badgeBg || defaultCardColors[idx % defaultCardColors.length];
-            const slug = serviceSlugMap[service.title] || defaultSlugs[idx % defaultSlugs.length];
+            const slug = service.slug;
 
             return (
               <Link
-                key={service._id || idx}
+                key={idx}
                 to={`/services/${slug}`}
-                className="bg-white p-8 rounded-2xl border border-slate-200/90 shadow-2xs hover:border-[#00A3E0]/60 hover:shadow-md card-lift flex flex-col justify-between group relative overflow-hidden transition-all duration-300 cursor-pointer block"
+                className="bg-white p-7 sm:p-8 rounded-2xl border border-slate-200/90 shadow-2xs hover:border-[#00A3E0]/60 hover:shadow-md card-lift flex flex-col justify-between group relative overflow-hidden transition-all duration-300 cursor-pointer block"
               >
                 {/* Subtle top accent gradient line */}
                 <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#00A3E0] to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
@@ -119,21 +168,18 @@ const Services = ({ onOpenConsultation }) => {
                   <div className={`w-12 h-12 rounded-xl ${iconBg} flex items-center justify-center mb-6 shadow-md group-hover:scale-105 transition-transform duration-300`}>
                     {getServiceIcon(service.icon)}
                   </div>
-                  <h4 className="text-lg font-bold text-slate-900 mb-2 group-hover:text-[#00A3E0] transition-colors">
+                  <h3 className="font-heading font-semibold text-[18px] sm:text-[20px] leading-[1.30] text-slate-900 mb-2 group-hover:text-[#00A3E0] transition-colors">
                     {service.title}
-                  </h4>
-                  <p className="text-sm text-slate-500 leading-relaxed mb-6 font-normal">
+                  </h3>
+                  <p className="font-sans font-normal text-[15px] text-[#475569] leading-[1.60] mb-6">
                     {service.desc}
                   </p>
                 </div>
 
-                <div className="pt-3 border-t border-slate-100 flex items-center justify-between">
-                  <span className="inline-flex items-center gap-1.5 text-xs font-bold text-[#00A3E0] group-hover:text-[#008bc0] uppercase tracking-wider transition-all group-hover:gap-2.5">
-                    <span>View In-Depth Brief</span>
-                    <ArrowRight className="w-3.5 h-3.5 transition-transform" />
-                  </span>
-                  <span className="text-[10px] font-bold text-slate-400 group-hover:text-[#00A3E0] transition-colors">
-                    Read More &rarr;
+                {/* Single Clean Action Link (Right-side duplicate removed per blueprint) */}
+                <div className="pt-4 border-t border-slate-100 flex items-center justify-between">
+                  <span className="inline-flex items-center gap-1.5 font-sans font-semibold text-[14px] sm:text-[15px] text-[#0EA5E9] group-hover:text-[#0284C7] transition-all group-hover:gap-2">
+                    <span>View Details & Pricing →</span>
                   </span>
                 </div>
               </Link>

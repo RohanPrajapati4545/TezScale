@@ -155,8 +155,20 @@ const Navbar = ({ onOpenConsultation }) => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-18 sm:h-20">
           
-          {/* TezScale Logo */}
-          <Link to="/" className="flex items-center gap-2.5 sm:gap-3 cursor-pointer group">
+          {/* TezScale Logo & Brand Name: Click redirects to Home and scrolls smoothly to top */}
+          <Link
+            to="/"
+            onClick={(e) => {
+              setMobileMenuOpen(false);
+              if (location.pathname === '/') {
+                e.preventDefault();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                window.history.pushState(null, '', '/');
+              }
+            }}
+            aria-label="TezScale Home"
+            className="flex items-center gap-2.5 sm:gap-3 cursor-pointer group select-none"
+          >
             <img
               src={branding.logoUrl || tezscaleLogo}
               alt="TezScale Logo"
@@ -166,14 +178,14 @@ const Navbar = ({ onOpenConsultation }) => {
               <div className="text-xl sm:text-[27px] font-black tracking-tight leading-none uppercase">
                 {renderBrandName(branding.agencyName)}
               </div>
-              <div className="text-[7.5px] sm:text-[8.5px] uppercase tracking-wider font-bold mt-1 text-slate-300 leading-none">
-                {branding.tagline || 'ACCELERATING DIGITAL GROWTH'}
+              <div className="text-[7.5px] sm:text-[8.5px] uppercase tracking-wider font-bold mt-1 text-slate-300 leading-none group-hover:text-white transition-colors">
+                {branding.tagline && branding.tagline !== 'ACCELERATING DIGITAL GROWTH' ? branding.tagline : 'GROW YOUR BUSINESS ONLINE'}
               </div>
             </div>
           </Link>
 
           {/* Navigation Links: Dark on Home, Light on all other pages */}
-          <nav className="hidden md:flex items-center gap-7 lg:gap-8 text-[15.5px] lg:text-base font-bold tracking-normal">
+          <nav className="hidden md:flex items-center gap-7 lg:gap-8 text-[15px] font-semibold tracking-normal font-sans">
             
             {/* Home */}
             <Link
@@ -182,6 +194,17 @@ const Navbar = ({ onOpenConsultation }) => {
             >
               <span>Home</span>
               {isActive('/') && (
+                <span className={`absolute -bottom-1 left-0 right-0 h-[3px] rounded-full transition-all duration-300 ${getUnderlineClass()}`} />
+              )}
+            </Link>
+
+            {/* About Us */}
+            <Link
+              to="/about"
+              className={`relative py-1.5 transition-colors ${getNavLinkClass('/about')}`}
+            >
+              <span>About Us</span>
+              {isActive('/about') && (
                 <span className={`absolute -bottom-1 left-0 right-0 h-[3px] rounded-full transition-all duration-300 ${getUnderlineClass()}`} />
               )}
             </Link>
@@ -215,7 +238,7 @@ const Navbar = ({ onOpenConsultation }) => {
                   <div className="bg-white rounded-xl shadow-2xl border border-slate-100 p-4 text-left overflow-hidden text-slate-800">
                     <div className="px-3 py-2 border-b border-slate-100 flex items-center justify-between mb-2">
                       <span className="text-[11px] font-extrabold uppercase tracking-wider text-slate-400">
-                        Our Core Service Pillars
+                        Our Core Services
                       </span>
                       <span className="text-[10px] font-bold text-[#00A3E0] bg-[#e0f4ff] px-2 py-0.5 rounded-full">
                         6 Pillars
@@ -262,37 +285,34 @@ const Navbar = ({ onOpenConsultation }) => {
               )}
             </div>
 
-            {/* About */}
+            {/* How We Work */}
             <Link
-              to="/about"
-              className={`relative py-1.5 transition-colors ${getNavLinkClass('/about')}`}
+              to="/#how-we-work"
+              onClick={(e) => {
+                if (isHomePage) {
+                  e.preventDefault();
+                  const el = document.getElementById('how-we-work') || document.getElementById('why-choose-us');
+                  if (el) el.scrollIntoView({ behavior: 'smooth' });
+                }
+              }}
+              className="relative py-1.5 transition-colors cursor-pointer text-slate-200 hover:text-white"
             >
-              <span>About</span>
-              {isActive('/about') && (
-                <span className={`absolute -bottom-1 left-0 right-0 h-[3px] rounded-full transition-all duration-300 ${getUnderlineClass()}`} />
-              )}
+              <span>How We Work</span>
             </Link>
 
-            {/* Results (Portfolio) */}
+            {/* Industries */}
             <Link
-              to="/portfolio"
-              className={`relative py-1.5 transition-colors ${getNavLinkClass('/portfolio')}`}
+              to="/#industries"
+              onClick={(e) => {
+                if (isHomePage) {
+                  e.preventDefault();
+                  const el = document.getElementById('industries') || document.getElementById('industry-solutions');
+                  if (el) el.scrollIntoView({ behavior: 'smooth' });
+                }
+              }}
+              className="relative py-1.5 transition-colors cursor-pointer text-slate-200 hover:text-white"
             >
-              <span>Results</span>
-              {isActive('/portfolio') && (
-                <span className={`absolute -bottom-1 left-0 right-0 h-[3px] rounded-full transition-all duration-300 ${getUnderlineClass()}`} />
-              )}
-            </Link>
-
-            {/* Testimonials */}
-            <Link
-              to="/testimonials"
-              className={`relative py-1.5 transition-colors ${getNavLinkClass('/testimonials')}`}
-            >
-              <span>Testimonials</span>
-              {isActive('/testimonials') && (
-                <span className={`absolute -bottom-1 left-0 right-0 h-[3px] rounded-full transition-all duration-300 ${getUnderlineClass()}`} />
-              )}
+              <span>Industries</span>
             </Link>
 
             {/* FAQs: Works from ANY page, scrolls to Home FAQs */}
@@ -305,14 +325,14 @@ const Navbar = ({ onOpenConsultation }) => {
             </Link>
           </nav>
 
-          {/* Right Action Button: Send Enquiry */}
+          {/* Right Action Button: Get Free Audit */}
           <div className="hidden md:flex items-center gap-3">
             <button
               onClick={onOpenConsultation}
-              className="px-5 py-2 rounded-full border border-sky-400/50 hover:border-sky-300 bg-sky-500/15 hover:bg-sky-500/25 backdrop-blur-md text-white hover:text-sky-200 font-semibold text-xs sm:text-sm transition-all duration-300 flex items-center gap-2 cursor-pointer hover:scale-[1.02] shadow-sm"
+              className="px-5 py-2.5 min-h-[44px] rounded-full border border-sky-400/50 hover:border-sky-300 bg-sky-500/15 hover:bg-sky-500/25 backdrop-blur-md text-white hover:text-sky-200 font-semibold text-xs sm:text-[15px] transition-all duration-300 flex items-center gap-2 cursor-pointer hover:scale-[1.02] shadow-sm font-sans"
             >
               <Send className="w-3.5 h-3.5 text-sky-400" />
-              <span>Send Enquiry</span>
+              <span>Get Free Audit</span>
             </button>
           </div>
 
@@ -335,22 +355,27 @@ const Navbar = ({ onOpenConsultation }) => {
         <div className="md:hidden border-b px-4 pt-3 pb-6 space-y-1.5 text-left shadow-xl anim-slow-slide border-slate-800 bg-slate-950/98 backdrop-blur-xl">
           {[
             { name: 'Home', path: '/' },
+            { name: 'About Us', path: '/about' },
             { name: 'Services', path: '/services' },
-            { name: 'About', path: '/about' },
-            { name: 'Results', path: '/portfolio' },
-            { name: 'Testimonials', path: '/testimonials' },
+            { name: 'How We Work', path: '/#how-we-work' },
+            { name: 'Industries', path: '/#industries' },
             { name: 'FAQs', path: '/#faq' },
           ].map((item) => {
-            const active = item.path === '/#faq' ? false : isActive(item.path);
+            const active = item.path === '/#faq' || item.path.startsWith('/#') ? false : isActive(item.path);
             return (
               <Link
                 key={item.path}
                 to={item.path}
                 onClick={(e) => {
+                  setMobileMenuOpen(false);
                   if (item.path === '/#faq') {
                     scrollToFaq(e);
-                  } else {
-                    setMobileMenuOpen(false);
+                  } else if (item.path === '/#how-we-work') {
+                    const el = document.getElementById('how-we-work') || document.getElementById('why-choose-us');
+                    if (el) el.scrollIntoView({ behavior: 'smooth' });
+                  } else if (item.path === '/#industries') {
+                    const el = document.getElementById('industries') || document.getElementById('industry-solutions');
+                    if (el) el.scrollIntoView({ behavior: 'smooth' });
                   }
                 }}
                 className={`block px-3.5 py-2.5 rounded-lg text-sm font-semibold transition-colors ${
@@ -370,10 +395,10 @@ const Navbar = ({ onOpenConsultation }) => {
                 setMobileMenuOpen(false);
                 onOpenConsultation();
               }}
-              className="w-full py-3 rounded-full bg-[#00A3E0] text-white font-bold text-sm shadow-md shadow-[#00A3E0]/20 flex items-center justify-center gap-2"
+              className="w-full py-3 min-h-[44px] rounded-full bg-[#00A3E0] text-white font-bold text-sm shadow-md shadow-[#00A3E0]/20 flex items-center justify-center gap-2 cursor-pointer font-sans"
             >
               <Send className="w-4 h-4" />
-              <span>Send Enquiry</span>
+              <span>Get Free Audit</span>
             </button>
           </div>
         </div>

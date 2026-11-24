@@ -334,9 +334,18 @@ const Admin = ({ onLogout }) => {
         ? content.testimonials
         : defaultSiteContent.testimonials,
     team:
-      content?.team && content.team.length > 0
+      (content?.team && content.team.length > 0)
         ? content.team
-        : defaultSiteContent.team,
+        : (() => {
+            try {
+              const raw = localStorage.getItem('tezscale_custom_team');
+              if (raw) {
+                const parsed = JSON.parse(raw);
+                if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+              }
+            } catch (e) {}
+            return defaultSiteContent.team;
+          })(),
   }));
 
   const [saveStatus, setSaveStatus] = useState({ show: false, message: '', type: 'success' });
@@ -568,46 +577,121 @@ const Admin = ({ onLogout }) => {
       mode: 'create',
       index: null,
       data: {
-        slug: `architect-${Date.now()}`,
+        slug: '',
         name: '',
         role: 'Senior Growth Architect',
-        badge: 'Full-Stack Developer',
+        badge: 'Growth Specialist',
+        service: 'web-development',
+        serviceName: 'Website Builder & Development',
+        location: 'Indore, India',
+        experience: '2+ Years in Digital Growth',
+        phone: '',
+        whatsapp: '',
+        email: '',
         image: '',
         bio: '',
-        social: { linkedin: '', github: '' },
+        linkedin: '',
+        github: '',
+        social: { linkedin: '', github: '', whatsapp: '', email: '' },
       },
     });
   };
 
   const openEditMemberModal = (idx) => {
-    const item = formData.team[idx];
+    const item = formData.team?.[idx] || {};
     setMemberModal({
       open: true,
       mode: 'edit',
       index: idx,
       data: {
-        ...item,
+        slug: item.slug || '',
+        name: item.name || '',
+        role: item.role || '',
+        badge: item.badge || '',
+        service: item.service || 'web-development',
+        serviceName: item.serviceName || 'Website Builder & Development',
+        location: item.location || '',
+        experience: item.experience || '',
+        phone: item.phone || item.whatsapp || item.social?.whatsapp || '',
+        whatsapp: item.whatsapp || item.social?.whatsapp || '',
+        email: item.email || item.social?.email || '',
+        linkedin: item.linkedin || item.social?.linkedin || '',
+        github: item.github || item.social?.github || '',
+        image: item.image || '',
+        bio: item.bio || '',
         social: { ...(item.social || {}) },
       },
     });
   };
 
   const handleSaveMemberModal = async () => {
-    if (!memberModal.data.name.trim()) {
+    if (!memberModal.data.name?.trim()) {
       alert('Please enter member name');
       return;
     }
     setSavingMember(true);
     try {
       const currentList = [...(formData.team || [])];
+
+      // Dynamic URL slug generation & sanitization
+      let cleanSlug = (memberModal.data.slug && memberModal.data.slug.trim())
+        ? memberModal.data.slug.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')
+        : memberModal.data.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+
+      if (!cleanSlug) cleanSlug = `member-${Date.now()}`;
+
+      // WhatsApp URL formatting
+      let rawPhone = (memberModal.data.whatsapp || memberModal.data.phone || memberModal.data.social?.whatsapp || '').trim();
+      let formattedWhatsapp = '';
+      if (rawPhone) {
+        if (rawPhone.startsWith('http://') || rawPhone.startsWith('https://')) {
+          formattedWhatsapp = rawPhone;
+        } else {
+          const digits = rawPhone.replace(/[^0-9]/g, '');
+          const phoneNum = digits.length === 10 ? `91${digits}` : digits;
+          formattedWhatsapp = `https://wa.me/${phoneNum}?text=${encodeURIComponent(`Hi ${memberModal.data.name}, I want to connect with you regarding TezScale services.`)}`;
+        }
+      }
+
+      const email = (memberModal.data.email || memberModal.data.social?.email || '').trim();
+      const linkedin = (memberModal.data.linkedin || memberModal.data.social?.linkedin || '').trim();
+      const github = (memberModal.data.github || memberModal.data.social?.github || '').trim();
+
+      const serviceMap = {
+        'web-development': 'Website Builder & Development',
+        'digital-marketing': 'Digital Marketing Support (SEO)',
+        'graphic-design': 'Graphic Design & Brand Kits',
+        'social-media': 'Social Media Strategy & Reels',
+        'meta-ads': 'Meta Ads Management (FB & IG)',
+        'video-editing': 'Video Editing & Content',
+      };
+      const service = memberModal.data.service || 'web-development';
+      const serviceName = memberModal.data.serviceName || serviceMap[service] || 'Digital Marketing & Growth';
+
       const memberToSave = {
         ...memberModal.data,
-        slug:
-          memberModal.data.slug ||
-          memberModal.data.name
-            .toLowerCase()
-            .replace(/[^a-z0-9]+/g, '-')
-            .replace(/(^-|-$)/g, ''),
+        id: cleanSlug,
+        slug: cleanSlug,
+        name: memberModal.data.name.trim(),
+        role: memberModal.data.role.trim() || 'Growth Architect',
+        badge: memberModal.data.badge.trim() || 'Core Team',
+        service: service,
+        serviceName: serviceName,
+        location: (memberModal.data.location || '').trim() || 'Indore, India',
+        experience: (memberModal.data.experience || '').trim() || 'Growth Specialist at TezScale',
+        phone: rawPhone,
+        whatsapp: formattedWhatsapp,
+        email: email,
+        linkedin: linkedin,
+        github: github,
+        image: memberModal.data.image || '',
+        bio: (memberModal.data.bio || '').trim(),
+        social: {
+          whatsapp: formattedWhatsapp,
+          email: email,
+          linkedin: linkedin,
+          github: github,
+        },
       };
 
       if (memberModal.mode === 'create') {
@@ -616,9 +700,12 @@ const Admin = ({ onLogout }) => {
         currentList[memberModal.index] = memberToSave;
       }
       const updated = { ...formData, team: currentList };
+      try {
+        localStorage.setItem('tezscale_custom_team', JSON.stringify(currentList));
+      } catch (e) {}
       setFormData(updated);
       await updateContent(updated);
-      setSaveStatus({ show: true, type: 'success', message: 'Team member saved to database!' });
+      setSaveStatus({ show: true, type: 'success', message: 'Team member saved to database & live across site!' });
       setTimeout(() => setSaveStatus({ show: false, type: '', text: '' }), 3000);
       setMemberModal({ ...memberModal, open: false });
     } catch (err) {
@@ -630,16 +717,21 @@ const Admin = ({ onLogout }) => {
   };
 
   const handleDeleteMember = async (idx) => {
-    if (!window.confirm('Are you sure you want to delete this team member?')) return;
+    const member = formData.team?.[idx];
+    if (!window.confirm(`Are you sure you want to delete ${member?.name || 'this team member'}?`)) return;
     try {
       const updated = (formData.team || []).filter((_, i) => i !== idx);
+      try {
+        localStorage.setItem('tezscale_custom_team', JSON.stringify(updated));
+      } catch (e) {}
       const updatedFormData = { ...formData, team: updated };
       setFormData(updatedFormData);
       await updateContent(updatedFormData);
-      setSaveStatus({ show: true, type: 'success', message: 'Member deleted from database' });
+      setSaveStatus({ show: true, type: 'success', message: 'Member deleted from database & site.' });
       setTimeout(() => setSaveStatus({ show: false, type: '', text: '' }), 3000);
     } catch (err) {
       console.error('Failed to delete member:', err);
+      setSaveStatus({ show: true, type: 'error', message: 'Failed to delete member.' });
     }
   };
 
@@ -980,9 +1072,9 @@ const Admin = ({ onLogout }) => {
       {/* ========================================================= */}
       {memberModal.open && (
         <div className="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-xs flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
-          <div className="bg-white rounded-3xl border border-slate-200/90 shadow-2xl max-w-xl w-full overflow-hidden text-left my-auto animate-in fade-in zoom-in-95 duration-200">
+          <div className="bg-white rounded-3xl border border-slate-200/90 shadow-2xl max-w-2xl w-full overflow-hidden text-left my-auto animate-in fade-in zoom-in-95 duration-200">
             {/* Modal Header */}
-            <div className="p-6 border-b border-slate-100 flex items-center justify-between">
+            <div className="p-6 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-2xl bg-[#e0f4ff] text-[#00A3E0] flex items-center justify-center font-bold">
                   <UserCheck className="w-5 h-5" />
@@ -992,7 +1084,7 @@ const Admin = ({ onLogout }) => {
                     {memberModal.mode === 'edit' ? 'Edit Growth Architect' : 'Add New Growth Architect'}
                   </h3>
                   <p className="text-xs text-slate-500">
-                    Configure team member profile, portrait photo, role badge and social links.
+                    Configure profile, dynamic URL slug, WhatsApp, email, portrait photo and credentials.
                   </p>
                 </div>
               </div>
@@ -1005,25 +1097,59 @@ const Admin = ({ onLogout }) => {
             </div>
 
             {/* Modal Body */}
-            <div className="p-6 space-y-4 max-h-[65vh] overflow-y-auto">
-              <div>
-                <label className="block text-xs font-bold text-slate-700 uppercase mb-1">
-                  Full Name <span className="text-rose-500">*</span>
-                </label>
-                <input
-                  type="text"
-                  placeholder="e.g. Rohan Prajapati"
-                  value={memberModal.data.name}
-                  onChange={(e) =>
-                    setMemberModal({
-                      ...memberModal,
-                      data: { ...memberModal.data, name: e.target.value },
-                    })
-                  }
-                  className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold focus:ring-2 focus:ring-[#00A3E0] focus:outline-none"
-                />
+            <div className="p-6 space-y-4 max-h-[72vh] overflow-y-auto">
+              {/* Row 1: Name and Dynamic URL Slug */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-xs font-bold text-slate-700 uppercase mb-1">
+                    Full Name <span className="text-rose-500">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="e.g. Shubham Karma"
+                    value={memberModal.data.name}
+                    onChange={(e) => {
+                      const newName = e.target.value;
+                      const autoSlug = newName.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+                      setMemberModal({
+                        ...memberModal,
+                        data: {
+                          ...memberModal.data,
+                          name: newName,
+                          slug: memberModal.mode === 'create' ? autoSlug : memberModal.data.slug,
+                        },
+                      });
+                    }}
+                    className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold focus:ring-2 focus:ring-[#00A3E0] focus:outline-none"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold text-slate-700 uppercase mb-1">
+                    Dynamic URL Slug <span className="text-slate-400 font-normal">(/team/slug)</span>
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="e.g. shubham-karma"
+                    value={memberModal.data.slug}
+                    onChange={(e) =>
+                      setMemberModal({
+                        ...memberModal,
+                        data: {
+                          ...memberModal.data,
+                          slug: e.target.value.toLowerCase().replace(/[^a-z0-9-_]/g, ''),
+                        },
+                      })
+                    }
+                    className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-mono font-bold text-[#007ba8] focus:ring-2 focus:ring-[#00A3E0] focus:outline-none"
+                  />
+                  <p className="text-[10px] text-slate-400 mt-1 truncate">
+                    Live URL: <span className="text-[#00A3E0] font-semibold">/team/{memberModal.data.slug || 'url-slug'}</span>
+                  </p>
+                </div>
               </div>
 
+              {/* Row 2: Role Title and Card Badge */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
                   <label className="block text-xs font-bold text-slate-700 uppercase mb-1">
@@ -1031,7 +1157,7 @@ const Admin = ({ onLogout }) => {
                   </label>
                   <input
                     type="text"
-                    placeholder="e.g. Lead Full-Stack Web Developer"
+                    placeholder="e.g. International Logistics & B2B Specialist"
                     value={memberModal.data.role}
                     onChange={(e) =>
                       setMemberModal({
@@ -1049,7 +1175,7 @@ const Admin = ({ onLogout }) => {
                   </label>
                   <input
                     type="text"
-                    placeholder="e.g. Full-Stack Developer"
+                    placeholder="e.g. International Logistics"
                     value={memberModal.data.badge}
                     onChange={(e) =>
                       setMemberModal({
@@ -1062,7 +1188,137 @@ const Admin = ({ onLogout }) => {
                 </div>
               </div>
 
-              {/* Clean Local File Picker for Profile Photo (NO URL box) */}
+              {/* Row 3: Department / Service Category */}
+              <div>
+                <label className="block text-xs font-bold text-slate-700 uppercase mb-1">
+                  Department / Service Category
+                </label>
+                <select
+                  value={memberModal.data.service || 'digital-marketing'}
+                  onChange={(e) => {
+                    const svc = e.target.value;
+                    const labels = {
+                      'web-development': 'Website Builder & Development',
+                      'digital-marketing': 'Digital Marketing Support (SEO)',
+                      'graphic-design': 'Graphic Design & Brand Kits',
+                      'social-media': 'Social Media Strategy & Reels',
+                      'meta-ads': 'Meta Ads Management (FB & IG)',
+                      'video-editing': 'Video Editing & Content',
+                    };
+                    setMemberModal({
+                      ...memberModal,
+                      data: {
+                        ...memberModal.data,
+                        service: svc,
+                        serviceName: labels[svc] || 'Growth Architecture',
+                      },
+                    });
+                  }}
+                  className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold focus:ring-2 focus:ring-[#00A3E0] focus:outline-none cursor-pointer"
+                >
+                  <option value="web-development">Website Builder & Development</option>
+                  <option value="digital-marketing">Digital Marketing Support (SEO) / B2B Growth</option>
+                  <option value="graphic-design">Graphic Design & Brand Kits</option>
+                  <option value="social-media">Social Media Strategy & Reels</option>
+                  <option value="meta-ads">Meta Ads Management (FB & IG)</option>
+                  <option value="video-editing">Video Editing & Production</option>
+                </select>
+              </div>
+
+              {/* Row 4: Location & Experience */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-xs font-bold text-slate-700 uppercase mb-1">
+                    Location
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="e.g. Indore, Madhya Pradesh, India"
+                    value={memberModal.data.location || ''}
+                    onChange={(e) =>
+                      setMemberModal({
+                        ...memberModal,
+                        data: { ...memberModal.data, location: e.target.value },
+                      })
+                    }
+                    className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:ring-2 focus:ring-[#00A3E0] focus:outline-none"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold text-slate-700 uppercase mb-1">
+                    Experience / Specialization
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="e.g. 3+ Years in International Logistics"
+                    value={memberModal.data.experience || ''}
+                    onChange={(e) =>
+                      setMemberModal({
+                        ...memberModal,
+                        data: { ...memberModal.data, experience: e.target.value },
+                      })
+                    }
+                    className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:ring-2 focus:ring-[#00A3E0] focus:outline-none"
+                  />
+                </div>
+              </div>
+
+              {/* Row 5: Direct WhatsApp & Email */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 bg-sky-50/50 p-3.5 rounded-2xl border border-sky-100">
+                <div>
+                  <label className="block text-xs font-bold text-slate-700 uppercase mb-1 flex items-center gap-1.5">
+                    <span className="w-2 h-2 rounded-full bg-emerald-500" />
+                    <span>WhatsApp Number / URL</span>
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="e.g. +91 62627 78128 or 6262778128"
+                    value={memberModal.data.phone || memberModal.data.whatsapp || memberModal.data.social?.whatsapp || ''}
+                    onChange={(e) =>
+                      setMemberModal({
+                        ...memberModal,
+                        data: {
+                          ...memberModal.data,
+                          phone: e.target.value,
+                          whatsapp: e.target.value,
+                        },
+                      })
+                    }
+                    className="w-full p-2.5 bg-white border border-slate-200 rounded-xl text-xs font-semibold focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+                  />
+                  <p className="text-[10px] text-slate-400 mt-1">
+                    Enables 1-click direct WhatsApp chat button on their profile and cards.
+                  </p>
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold text-slate-700 uppercase mb-1 flex items-center gap-1.5">
+                    <span className="w-2 h-2 rounded-full bg-sky-500" />
+                    <span>Email Address</span>
+                  </label>
+                  <input
+                    type="email"
+                    placeholder="e.g. Shubhamvkarma143@gmail.com"
+                    value={memberModal.data.email || memberModal.data.social?.email || ''}
+                    onChange={(e) =>
+                      setMemberModal({
+                        ...memberModal,
+                        data: {
+                          ...memberModal.data,
+                          email: e.target.value,
+                        },
+                      })
+                    }
+                    className="w-full p-2.5 bg-white border border-slate-200 rounded-xl text-xs font-semibold focus:ring-2 focus:ring-[#00A3E0] focus:outline-none"
+                  />
+                  <p className="text-[10px] text-slate-400 mt-1">
+                    Enables direct mailto: link for prospective client inquiries.
+                  </p>
+                </div>
+              </div>
+
+              {/* Row 6: Portrait Profile Photo */}
               <div>
                 <MediaUploadField
                   type="image"
@@ -1074,10 +1330,11 @@ const Admin = ({ onLogout }) => {
                       data: { ...memberModal.data, image: newPhoto },
                     })
                   }
-                  helperText="Upload a sharp vertical portrait photo from your computer"
+                  helperText="Upload a sharp vertical portrait photo from your computer (auto-saved to CDN)"
                 />
               </div>
 
+              {/* Row 7: LinkedIn & GitHub */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
                   <label className="block text-xs font-bold text-slate-700 uppercase mb-1">
@@ -1086,12 +1343,13 @@ const Admin = ({ onLogout }) => {
                   <input
                     type="text"
                     placeholder="https://linkedin.com/in/..."
-                    value={memberModal.data.social?.linkedin || ''}
+                    value={memberModal.data.linkedin || memberModal.data.social?.linkedin || ''}
                     onChange={(e) =>
                       setMemberModal({
                         ...memberModal,
                         data: {
                           ...memberModal.data,
+                          linkedin: e.target.value,
                           social: { ...(memberModal.data.social || {}), linkedin: e.target.value },
                         },
                       })
@@ -1107,12 +1365,13 @@ const Admin = ({ onLogout }) => {
                   <input
                     type="text"
                     placeholder="https://github.com/..."
-                    value={memberModal.data.social?.github || ''}
+                    value={memberModal.data.github || memberModal.data.social?.github || ''}
                     onChange={(e) =>
                       setMemberModal({
                         ...memberModal,
                         data: {
                           ...memberModal.data,
+                          github: e.target.value,
                           social: { ...(memberModal.data.social || {}), github: e.target.value },
                         },
                       })
@@ -1122,13 +1381,14 @@ const Admin = ({ onLogout }) => {
                 </div>
               </div>
 
+              {/* Row 8: Bio Description */}
               <div>
                 <label className="block text-xs font-bold text-slate-700 uppercase mb-1">
                   Bio / Profile Description
                 </label>
                 <textarea
                   rows="3"
-                  placeholder="Enter architect background, stack specialization and experience..."
+                  placeholder="Enter architect background, stack specialization, track record and experience..."
                   value={memberModal.data.bio}
                   onChange={(e) =>
                     setMemberModal({
@@ -1154,19 +1414,10 @@ const Admin = ({ onLogout }) => {
                 type="button"
                 disabled={savingMember}
                 onClick={handleSaveMemberModal}
-                className="px-5 py-2 rounded-xl bg-[#00A3E0] hover:bg-[#008bc0] text-white text-xs font-bold flex items-center gap-1.5 shadow-md shadow-[#00A3E0]/20 cursor-pointer disabled:opacity-60"
+                className="px-5 py-2 rounded-xl bg-[#00A3E0] hover:bg-[#008bc0] text-white text-xs font-bold shadow-md shadow-[#00A3E0]/20 flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
               >
-                {savingMember ? (
-                  <>
-                    <Loader2 className="w-4 h-4 animate-spin text-white" />
-                    <span>Saving to Database...</span>
-                  </>
-                ) : (
-                  <>
-                    <Check className="w-4 h-4" />
-                    <span>{memberModal.mode === 'edit' ? 'Save Changes' : 'Add Member'}</span>
-                  </>
-                )}
+                {savingMember && <Loader2 className="w-3.5 h-3.5 animate-spin" />}
+                <span>{savingMember ? 'Saving...' : memberModal.mode === 'edit' ? 'Update Member' : 'Add Member'}</span>
               </button>
             </div>
           </div>
@@ -2543,16 +2794,9 @@ const Admin = ({ onLogout }) => {
                               <Edit2 className="w-3.5 h-3.5" />
                             </button>
                             <button
-                              onClick={async () => {
-                                if (window.confirm(`Are you sure you want to remove ${member.name}?`)) {
-                                  const updated = formData.team.filter((_, i) => i !== idx);
-                                  const newFormData = { ...formData, team: updated };
-                                  setFormData(newFormData);
-                                  await updateContent(newFormData);
-                                }
-                              }}
+                              onClick={() => handleDeleteMember(idx)}
                               className="p-1.5 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-colors cursor-pointer"
-                              title="Remove Member"
+                              title="Delete Member"
                             >
                               <Trash2 className="w-3.5 h-3.5" />
                             </button>
@@ -2578,13 +2822,38 @@ const Admin = ({ onLogout }) => {
                           </div>
                         </div>
 
-                        <p className="text-xs text-slate-500 line-clamp-3 bg-slate-50 p-2.5 rounded-xl border border-slate-100 leading-relaxed">
+                        {/* Location and Experience pill previews */}
+                        {(member.location || member.experience) && (
+                          <div className="flex flex-wrap items-center gap-1.5 text-[10px] text-slate-500 font-medium">
+                            {member.location && (
+                              <span className="bg-slate-100 px-2 py-0.5 rounded-md truncate max-w-[140px]">
+                                📍 {member.location}
+                              </span>
+                            )}
+                            {member.experience && (
+                              <span className="bg-slate-100 px-2 py-0.5 rounded-md truncate max-w-[140px]">
+                                💼 {member.experience}
+                              </span>
+                            )}
+                          </div>
+                        )}
+
+                        <p className="text-xs text-slate-500 line-clamp-2 bg-slate-50 p-2.5 rounded-xl border border-slate-100 leading-relaxed">
                           {member.bio}
                         </p>
                       </div>
 
                       <div className="pt-2 flex items-center justify-between border-t border-slate-100 text-[11px]">
-                        <span className="text-slate-400 truncate">slug: /{member.slug}</span>
+                        <Link
+                          to={`/team/${member.slug}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-[#00A3E0] hover:underline font-mono truncate max-w-[170px] flex items-center gap-1"
+                          title={`Open live page: /team/${member.slug}`}
+                        >
+                          <span>/team/{member.slug}</span>
+                          <ExternalLink className="w-3 h-3 shrink-0" />
+                        </Link>
                         <button
                           onClick={() => openEditMemberModal(idx)}
                           className="font-bold text-[#00A3E0] hover:text-[#008bc0] cursor-pointer flex items-center gap-1 shrink-0"

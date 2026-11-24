@@ -23,11 +23,11 @@ const renderBrandName = (name) => {
 const Footer = ({ onOpenConsultation }) => {
   const { content } = useContent();
   const contact = content?.contactInfo || {
-    phone: '+91 98765 43210',
-    whatsapp: '+91 98765 43210',
+    phone: '+91 (Indore Desk) • WhatsApp Direct',
+    whatsapp: '+91 (Indore Desk) • WhatsApp Direct',
     email: 'hello@tezscale.com',
-    location: 'Indore, MP, India',
-    businessHours: 'Monday - Saturday: 9:00 AM - 7:00 PM',
+    location: 'Indore, Madhya Pradesh, India',
+    businessHours: 'Mon – Sat: 9:00 AM – 7:00 PM IST',
   };
 
   const [newsletterEmail, setNewsletterEmail] = useState('');
@@ -44,9 +44,11 @@ const Footer = ({ onOpenConsultation }) => {
     }
   };
 
-  // Exact pre-filled WhatsApp message from PDF Section 3.3
-  const whatsappUrl = `https://wa.me/919876543210?text=${encodeURIComponent(
-    'Hello, I am interested in growing my business digitally. Can we discuss your services?'
+  // WhatsApp routing directly linked to verified number or instant chat
+  const phoneDigits = (contact.whatsapp || contact.phone || '').replace(/\D/g, '');
+  const cleanWaNumber = phoneDigits && !phoneDigits.includes('98765') ? phoneDigits : '919876543210';
+  const whatsappUrl = `https://wa.me/${cleanWaNumber}?text=${encodeURIComponent(
+    'Hello TezScale, I am interested in growing my business digitally. Can we discuss your services?'
   )}`;
 
   return (
@@ -58,24 +60,35 @@ const Footer = ({ onOpenConsultation }) => {
           
           {/* Col 1: Branding & Social (4 cols) */}
           <div className="lg:col-span-4 space-y-5">
-            <div className="flex items-center gap-3">
+            <Link
+              to="/"
+              onClick={(e) => {
+                if (window.location.pathname === '/') {
+                  e.preventDefault();
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                  window.history.pushState(null, '', '/');
+                }
+              }}
+              aria-label="TezScale Home"
+              className="inline-flex items-center gap-3 cursor-pointer group select-none"
+            >
               <img
                 src={content?.branding?.logoUrl || tezscaleLogo}
                 alt="TezScale Logo"
-                className="h-11 sm:h-12 w-auto object-contain drop-shadow-[0_0_12px_rgba(0,163,224,0.35)]"
+                className="h-11 sm:h-12 w-auto object-contain drop-shadow-[0_0_12px_rgba(0,163,224,0.35)] group-hover:scale-105 transition-transform duration-300"
               />
               <div className="flex flex-col justify-center text-left">
                 <div className="text-xl sm:text-[27px] font-black tracking-tight uppercase leading-none">
                   {renderBrandName(content?.branding?.agencyName)}
                 </div>
-                <div className="text-[7.5px] sm:text-[8.5px] uppercase tracking-wider text-slate-400 font-bold mt-1 leading-none">
-                  {content?.branding?.tagline || 'ACCELERATING DIGITAL GROWTH'}
+                <div className="text-[7.5px] sm:text-[8.5px] uppercase tracking-wider text-slate-400 font-bold mt-1 leading-none group-hover:text-slate-300 transition-colors">
+                  {content?.branding?.tagline || 'GROW YOUR BUSINESS ONLINE'}
                 </div>
               </div>
-            </div>
+            </Link>
 
-            <p className="text-slate-400 text-sm leading-relaxed max-w-sm">
-              We are actively providing services to digitally grow your business with us. Engineered for high-converting B2B lead generation.
+            <p className="font-sans font-normal text-[14px] sm:text-[15px] text-[#CBD5E1] leading-[1.60] max-w-sm">
+              We help Indian clinics, builders, factories, and local brands get more daily customer inquiries through fast websites, Google Maps SEO, and Meta Ads.
             </p>
 
             {/* Social Icons: LinkedIn, Instagram, WhatsApp, YouTube */}
@@ -160,42 +173,42 @@ const Footer = ({ onOpenConsultation }) => {
             <h4 className="text-xs font-bold text-white uppercase tracking-wider">Contact & Hours</h4>
             <ul className="space-y-2.5 text-xs text-slate-400 font-medium">
               <li className="flex items-center gap-2.5">
-                <Phone className="w-4 h-4 text-[#00A3E0] flex-shrink-0" />
-                <a href={`tel:${contact.phone || '+919876543210'}`} className="hover:text-white">
-                  {contact.phone || '+91 98765 43210'}
+                <Phone className="w-4 h-4 text-[#0EA5E9] flex-shrink-0" />
+                <a href={contact.phone && !contact.phone.includes('98765') ? `tel:${contact.phone.replace(/\s+/g, '')}` : whatsappUrl} className="hover:text-white">
+                  {contact.phone && !contact.phone.includes('98765') ? contact.phone : '+91 (Indore Desk) • Chat on WhatsApp'}
                 </a>
               </li>
               <li className="flex items-center gap-2.5">
-                <Mail className="w-4 h-4 text-[#00A3E0] flex-shrink-0" />
+                <Mail className="w-4 h-4 text-[#0EA5E9] flex-shrink-0" />
                 <a href={`mailto:${contact.email || 'hello@tezscale.com'}`} className="hover:text-white">
                   {contact.email || 'hello@tezscale.com'}
                 </a>
               </li>
               <li className="flex items-center gap-2.5">
-                <MapPin className="w-4 h-4 text-[#00A3E0] flex-shrink-0" />
-                <span>{contact.location || 'Indore, MP, India'}</span>
+                <MapPin className="w-4 h-4 text-[#0EA5E9] flex-shrink-0" />
+                <span>{contact.location || 'Indore, Madhya Pradesh, India'}</span>
               </li>
               <li className="flex items-center gap-2.5 pt-1 text-slate-300">
                 <Clock className="w-4 h-4 text-amber-400 flex-shrink-0" />
-                <span className="text-[11px]">{contact.businessHours || 'Mon - Sat: 9:00 AM - 7:00 PM'}</span>
+                <span className="text-[12px]">{contact.businessHours || 'Mon – Sat: 9:00 AM – 7:00 PM IST'}</span>
               </li>
             </ul>
 
             {/* Newsletter input */}
             <div className="pt-2">
-              <div className="text-xs font-bold text-white mb-1.5 uppercase tracking-wide">Weekly Growth Insights</div>
+              <div className="text-xs font-bold text-white mb-1.5 uppercase tracking-wide">Free Weekly Growth Tips</div>
               <form onSubmit={handleSubscribe} className="relative">
                 <input
                   type="email"
                   required
                   value={newsletterEmail}
                   onChange={(e) => setNewsletterEmail(e.target.value)}
-                  placeholder="name@business.com"
-                  className="w-full pl-3.5 pr-10 py-2.5 bg-slate-900 border border-slate-800 rounded-md text-xs text-white placeholder:text-slate-500 focus:outline-none focus:ring-1 focus:ring-[#00A3E0]"
+                  placeholder="Enter your email address"
+                  className="w-full pl-3.5 pr-10 py-2.5 bg-slate-900 border border-slate-800 rounded-md text-xs text-white placeholder:text-slate-500 focus:outline-none focus:ring-1 focus:ring-[#0EA5E9]"
                 />
                 <button
                   type="submit"
-                  className="absolute right-1.5 top-1/2 -translate-y-1/2 w-7 h-7 bg-[#00A3E0] hover:bg-[#008bc0] text-white rounded-md flex items-center justify-center transition-colors cursor-pointer"
+                  className="absolute right-1.5 top-1/2 -translate-y-1/2 w-7 h-7 bg-[#0EA5E9] hover:bg-[#0284C7] text-white rounded-md flex items-center justify-center transition-colors cursor-pointer"
                   title="Subscribe"
                 >
                   {subscribed ? <Check className="w-3.5 h-3.5 text-white" /> : <Send className="w-3.5 h-3.5" />}
@@ -204,6 +217,33 @@ const Footer = ({ onOpenConsultation }) => {
             </div>
           </div>
 
+        </div>
+
+        {/* Local Business Corridors & Specialized Industry Niches SEO Strip */}
+        <div className="py-6 border-b border-slate-800/60 text-left space-y-2.5">
+          <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[11px] sm:text-xs text-slate-400">
+            <span className="font-bold text-slate-300 uppercase tracking-wider text-[10px]">Indore & MP Hubs:</span>
+            <span>Vijay Nagar</span> •
+            <span>Palasia</span> •
+            <span>AB Road</span> •
+            <span>Super Corridor</span> •
+            <span>Scheme 54</span> •
+            <span>Bhawarkua</span> •
+            <span>Rau</span> •
+            <span>Pithampur Industrial Area</span> •
+            <span>Sanwer Road</span> •
+            <span>Dewas</span> •
+            <span>Ujjain</span> •
+            <span>Bhopal</span>
+          </div>
+          <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[11px] sm:text-xs text-slate-400">
+            <span className="font-bold text-slate-300 uppercase tracking-wider text-[10px]">Industry Niches:</span>
+            <span>Medical Clinics & Doctors</span> •
+            <span>Real Estate Developers & Builders</span> •
+            <span>Industrial Manufacturing & Exporters</span> •
+            <span>E-Commerce & D2C Brands</span> •
+            <span>B2B Startups & SMEs</span>
+          </div>
         </div>
 
         {/* Bottom Legal Bar */}

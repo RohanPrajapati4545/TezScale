@@ -7,9 +7,14 @@ export const createLead = async (req, res) => {
   try {
     const name = (req.body.name || '').trim();
     const whatsapp = (req.body.whatsapp || req.body.phone || req.body.phoneNumber || '').trim();
-    const email = (req.body.email || '').trim().toLowerCase();
+    let email = (req.body.email || '').trim().toLowerCase();
     const message = (req.body.message || req.body.projectBrief || '').trim().slice(0, 500);
     const website = (req.body.website || req.body.company || '').trim();
+
+    if (!email) {
+      const digits = (whatsapp || '').replace(/\D/g, '');
+      email = digits ? `${digits}@whatsapp.tezscale.com` : `lead-${Date.now()}@tezscale.com`;
+    }
 
     // Normalize serviceRequired to valid enum
     const validServices = [
@@ -27,7 +32,17 @@ export const createLead = async (req, res) => {
     }
 
     // Normalize businessType to valid enum
-    const validBusinessTypes = ['Doctor / Clinic', 'Real Estate', 'Engineering', 'Retail / E-commerce', 'Other'];
+    const validBusinessTypes = [
+      'Doctor / Clinic',
+      'Real Estate',
+      'Real Estate / Builder',
+      'Engineering',
+      'Factory / B2B',
+      'Retail / E-commerce',
+      'Shop / Online Store',
+      'Other',
+      'Other Service',
+    ];
     let businessType = req.body.businessType || 'Other';
     if (!validBusinessTypes.includes(businessType)) {
       businessType = 'Other';
@@ -39,10 +54,6 @@ export const createLead = async (req, res) => {
 
     if (!whatsapp || whatsapp.length < 7) {
       return res.status(400).json({ success: false, message: 'Valid phone / WhatsApp number is required' });
-    }
-
-    if (!email || !email.includes('@')) {
-      return res.status(400).json({ success: false, message: 'Valid email address is required' });
     }
 
     const newLead = await Lead.create({

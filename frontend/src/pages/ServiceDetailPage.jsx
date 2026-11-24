@@ -106,18 +106,18 @@ const easyCostPackages = [
     name: 'Starter Launchpad',
     badge: 'Easy Cost • Pocket Friendly',
     tagline: 'Best for Doctors, Clinics, Local Businesses & Startups',
-    subtitle: 'Transparent, Low-Cost One-Time Investment — Zero Recurring Agency Retainers',
+    subtitle: 'Transparent Pricing from ₹14,999 • GST Invoice Available • Zero Hidden Fees',
     delivery: '⚡ 2-Day Staging Delivery',
     popular: false,
     features: [
-      'Modern High-Speed Single-Page Architecture (React + Vite)',
-      '100% Mobile, Tablet & Desktop Responsive Layout',
-      '0.8s Ultra-Fast Load Speed with 95+ Google PageSpeed Guarantee',
-      'Instant Encrypted WhatsApp Lead Routing with 1-Tap Trigger',
-      'Contact & Patient/Client Inquiry Forms with Validation',
-      'Interactive Google Maps Embed & Local Search Schema',
+      'Opens in Under 1 Second Even on Mobile Data (Fast 1-Second Loading)',
+      '100% Mobile-Friendly & responsive layout tested across all smartphones',
+      '1-Click WhatsApp Chat Button for Instant Customer Inquiries',
+      'Google SEO Ready with local business schema & instant Google indexing',
+      'Contact & Patient/Client Inquiry Forms with direct WhatsApp alerts',
+      'Interactive Google Maps embed & local business profile link',
       'Free SSL Certificate & 1-Year DNS Setup Assistance',
-      '100% Full Code Ownership with Zero Vendor Lock-In'
+      '100% Full Code Ownership with zero vendor lock-in'
     ],
     cta: 'Get Starter Website'
   },
@@ -172,34 +172,34 @@ const ServiceDetailPage = () => {
   // Laser-targeted SEO keyword configuration per service slug
   const seoConfig = {
     'web-development': {
-      title: 'Affordable Web Development in Indore | Easy Cost Website Maker | TezScale',
-      description: 'Get high-speed, modern websites made in Indore at an easy, pocket-friendly cost. 2-day staging draft, 98+ PageSpeed, mobile-friendly design, and direct developer access.',
-      keywords: 'web development company in Indore, affordable web development Indore, easy cost website design Indore, low cost website maker Indore, cheap and best website development Indore, custom website builder Indore, doctor clinic website Indore, real estate website design Indore, 2-day website delivery, freelance web developer Indore, TezScale'
+      title: 'Fast Website Development in Indore | 2-Day Live Draft — TezScale',
+      description: 'Fast website development in Indore with 2-day live staging & 5-6 day launch. 0.8s load speed, 98+ PageSpeed, mobile-first design, WhatsApp lead button & affordable packages.',
+      keywords: 'fast website design agency in Indore, 2 day website development service India, high speed website developer in Indore, mobile first web design company in India, click to WhatsApp ads agency India, website development cost in Indore, business website design charges in India, affordable website development agency in Indore, small business website package with WhatsApp button India, website development company in Indore, low cost website maker Indore, website developer in Vijay Nagar Indore, website design company in Rau Indore, TezScale'
     },
     'social-media': {
-      title: 'Viral Reels Making & Social Media Marketing Agency in Indore | TezScale',
-      description: 'Supercharge your brand with viral Instagram reels making, short-form video shooting & editing, and complete social media handling in Indore.',
-      keywords: 'reels making agency in Indore, viral reels making Indore, Instagram reels video production Indore, short video editing services Indore, social media marketing agency Indore, Instagram growth agency Indore, business reels creation, TezScale reels'
+      title: 'Social Media & Reels Marketing Agency in Indore — TezScale',
+      description: 'Viral Instagram reels production & social media marketing agency in Indore. High-converting short-form video shooting, editing, content strategy & community growth.',
+      keywords: 'social media marketing agency in Indore, Instagram reel ads for retail and D2C brands Indore, viral reels making Indore, Instagram growth agency in Vijay Nagar Indore, short video editing agency Indore, B2B marketing agency Indore, TezScale'
     },
     'digital-marketing': {
-      title: 'Digital Marketing & Local SEO in Indore | Rank Top 3 on Google Maps | TezScale',
-      description: 'Indore\'s premier digital marketing and local SEO agency. We rank your clinic, firm, or business in the Top 3 on Google Maps and drive high-intent organic calls.',
-      keywords: 'digital marketing agency in Indore, best digital marketing company Indore, local SEO services Indore, Google Maps ranking Indore, Google My Business optimization Indore, lead generation Indore, performance marketing agency Indore, TezScale'
+      title: 'Local SEO & Google Maps Top 3 Agency in Indore — TezScale',
+      description: 'Dominate Google Maps Top 3 rankings in Indore. Local SEO, Google Business Profile optimization, transactional keyword ranking & organic lead generation.',
+      keywords: 'SEO agency in Indore, best SEO company in Indore, local SEO services in Indore, Google Maps Top 3 ranking agency Indore, Google Business Profile optimization service Indore, Google Maps SEO expert in Indore, local business listing optimization Indore, local SEO monthly packages in India, best SEO agency in Madhya Pradesh, SEO company in Vijay Nagar Indore, Google My Business ranking cost in Indore, TezScale'
     },
     'meta-ads': {
-      title: 'Meta Ads & Paid Lead Generation Agency in Indore | FB & IG Ads | TezScale',
-      description: 'High-ROI Meta advertising (Facebook & Instagram ads) engineered for qualified leads, minimum cost-per-acquisition, and 3.8x+ ROAS in Indore and India.',
-      keywords: 'Meta ads agency Indore, Facebook ads management Indore, Instagram paid ads Indore, lead generation agency Indore, performance marketing Indore, TezScale'
+      title: 'Meta Ads & WhatsApp Lead Generation Agency Indore — TezScale',
+      description: 'High-ROAS Meta advertising agency in Indore. Facebook, Instagram & Click-to-WhatsApp lead funnels engineered for qualified B2B & local leads with measurable ROI.',
+      keywords: 'Meta ads agency in Indore, Facebook and Instagram ads agency in Indore, click to WhatsApp ads agency India, WhatsApp lead generation funnel agency India, Instagram ads agency in Vijay Nagar Indore, Meta ads specialist in Indore, Meta ads management charges in India, Facebook lead generation package for small business India, performance marketing agency in Indore, TezScale'
     },
     'ecommerce': {
-      title: 'E-Commerce Website Development & Scaling Services in Indore | TezScale',
-      description: 'Build high-converting online stores with fast UPI checkouts, WhatsApp abandoned cart recovery, and product catalog scaling in Indore.',
-      keywords: 'ecommerce website development Indore, online store builder Indore, Shopify developer Indore, ecommerce marketing agency Indore, TezScale'
+      title: 'E-Commerce Website Development & Scaling in Indore — TezScale',
+      description: 'E-commerce website development & Shopify store scaling in Indore. 1-step checkout, UPI payment gateways, automated WhatsApp abandoned cart recovery & Meta Ads.',
+      keywords: 'ecommerce website development company in Indore, Shopify store development agency in Indore, ecommerce website development cost in India, Shopify store setup charges in India, ecommerce marketing agency for D2C brands India, fast 1-step checkout ecommerce website India, UPI payment gateway integration website developer India, abandoned cart WhatsApp recovery setup India, TezScale'
     },
     'graphic-design': {
-      title: 'Graphic Design & Brand Identity Kits in Indore | TezScale',
-      description: 'Creative brand identity, logo design, marketing brochures, and high-CTR social media ad creatives crafted for maximum engagement in Indore.',
-      keywords: 'graphic design company in Indore, logo designer in Indore, branding agency Indore, social media banner design Indore, ad creatives designer, TezScale'
+      title: 'Logo, Brand Kit & Ad Creative Design in Indore — TezScale',
+      description: 'Professional graphic design & brand kit agency in Indore. High-converting ad creatives, 3D visual identities, logos, brochures & complete visual branding packages.',
+      keywords: 'graphic design and branding agency in Indore, logo and brand kit designer in Indore, ad creatives designer, marketing brochures Indore, brand identity designer Vijay Nagar Indore, TezScale'
     }
   };
 

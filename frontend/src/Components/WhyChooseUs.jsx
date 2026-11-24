@@ -22,26 +22,30 @@ import AnimatedContent from './AnimatedContent';
 const steps = [
   {
     step: '01',
-    title: 'Discovery & Audit',
-    desc: 'Deep-dive analysis of your current online assets, competitor gaps, and conversion bottlenecks.',
+    title: 'Free Audit & Growth Plan',
+    desc: 'We review your current website, Google Maps profile, and top local competitors to find where you are losing leads.',
+    milestone: 'Day 1 • Free Audit',
     icon: <Compass className="w-5 h-5 text-blue-600" />,
   },
   {
     step: '02',
-    title: 'Custom Architecture',
-    desc: 'Engineering specialized SEO, Meta Ad funnels, and zero-leakage WhatsApp lead capture systems.',
+    title: 'Website & Ad Setup',
+    desc: 'We build your mobile-ready website, ad posters, and WhatsApp lead form in 48 hours.',
+    milestone: 'Day 2 • Live Demo Ready',
     icon: <Lightbulb className="w-5 h-5 text-purple-600" />,
   },
   {
     step: '03',
-    title: 'Agile Launch',
-    desc: 'Deploying high-speed responsive web pages, conversion creatives, and analytics pixel tracking.',
+    title: 'Review & Go Live',
+    desc: 'Check your working draft on your phone. Once you approve, we connect your domain and launch everything live.',
+    milestone: 'Days 3–5 • Go Live',
     icon: <Zap className="w-5 h-5 text-amber-500" />,
   },
   {
     step: '04',
-    title: 'Scale & Multiply ROI',
-    desc: 'Continuous budget optimization, transparent weekly reporting, and scaling your client acquisition.',
+    title: 'Daily Leads & Scaling',
+    desc: 'New customer inquiries arrive on your WhatsApp in under 2 minutes while we optimize your ads and SEO every week.',
+    milestone: 'Ongoing • Weekly Growth',
     icon: <BarChart className="w-5 h-5 text-emerald-500" />,
   },
 ];
@@ -253,21 +257,23 @@ const WhyChooseUs = ({ onOpenConsultation }) => {
 
         </div>
 
-        {/* 4-Step Progressive Journey Timeline (Drone Style) */}
-        <div className="pt-16 border-t border-slate-100">
+        {/* 4-Step Progressive Journey Timeline (How We Work) */}
+        <div id="how-we-work" className="pt-16 border-t border-slate-100 scroll-mt-24">
           <AnimatedContent
             distance={40}
             direction="vertical"
             duration={0.7}
             threshold={0.15}
-            className="text-center max-w-2xl mx-auto space-y-2 mb-12"
+            className="text-center max-w-2xl mx-auto space-y-3 mb-12"
           >
-            <div className="text-xs font-bold text-[#00A3E0] uppercase tracking-wider">Our Proven Approach</div>
-            <h3 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
-              From Inquiry to Predictable Growth
-            </h3>
-            <p className="text-xs sm:text-sm text-slate-500">
-              The 4-stage systematic engine behind every successful TezScale client campaign.
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#e0f4ff] border border-[#00A3E0]/30 text-[#007ba8] font-sans font-semibold text-xs sm:text-[13px] leading-[1.20] shadow-2xs">
+              <span>Simple 4-Step Process</span>
+            </div>
+            <h2 className="font-heading font-bold text-[24px] sm:text-[30px] md:text-[34px] text-slate-900 tracking-tight leading-[1.20] text-center">
+              From Idea to Live Customers in <span className="text-[#0EA5E9]">5–6 Days</span>
+            </h2>
+            <p className="font-sans font-normal text-[15px] sm:text-[16px] text-[#475569] leading-[1.60] max-w-xl mx-auto">
+              No confusing delays or endless meetings. Review your live website draft in 48 hours and start receiving inquiries within a week.
             </p>
           </AnimatedContent>
 
@@ -283,23 +289,29 @@ const WhyChooseUs = ({ onOpenConsultation }) => {
             {steps.map((st, idx) => (
               <div
                 key={idx}
-                className="bg-slate-50/70 p-6 rounded-2xl border border-slate-200/80 card-lift flex flex-col justify-between relative group hover:bg-white hover:border-[#00A3E0]/40"
+                className="bg-slate-50/70 p-6 rounded-2xl border border-slate-200/80 card-lift flex flex-col justify-between relative group hover:bg-white hover:border-[#00A3E0]/40 transition-all duration-300"
               >
                 <div>
                   <div className="flex items-center justify-between mb-4">
-                    <span className="text-3xl font-black text-slate-300 group-hover:text-[#00A3E0] transition-colors">
+                    <span className="text-3xl font-black text-slate-300 group-hover:text-[#00A3E0] transition-colors font-heading">
                       {st.step}
                     </span>
                     <div className="w-10 h-10 rounded-xl bg-white shadow-xs border border-slate-100 flex items-center justify-center">
                       {st.icon}
                     </div>
                   </div>
-                  <h4 className="text-base font-bold text-slate-900 mb-1.5 group-hover:text-blue-600 transition-colors">
+                  <h3 className="font-heading font-semibold text-[18px] sm:text-[20px] leading-[1.30] text-slate-900 mb-2 group-hover:text-[#00A3E0] transition-colors">
                     {st.title}
-                  </h4>
-                  <p className="text-xs text-slate-500 leading-relaxed">
+                  </h3>
+                  <p className="font-sans font-normal text-[15px] text-[#475569] leading-[1.60] mb-5">
                     {st.desc}
                   </p>
+                </div>
+
+                {/* Clear Timeline Milestone Badge (Replaces "Phase Complete ✓") */}
+                <div className="pt-3 border-t border-slate-200/60 flex items-center gap-1.5 text-xs font-semibold text-[#007ba8] bg-[#e0f4ff]/60 px-2.5 py-1.5 rounded-lg">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#00A3E0]" />
+                  <span>{st.milestone}</span>
                 </div>
               </div>
             ))}

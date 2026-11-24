@@ -4,24 +4,44 @@ import AnimatedContent from './AnimatedContent';
 
 const faqs = [
   {
-    q: 'How fast can TezScale deploy our website or ad campaigns?',
-    a: 'Per our accelerated project schedule, a fully functional draft on staging is deployed within 2 days. Final revisions, domain DNS configuration, and live launch are completed within 5-6 business days.',
+    q: 'How fast can TezScale build and launch our business website?',
+    a: 'Under TezScale\'s accelerated delivery model, you receive a 100% live functional draft on staging within 2 days. Final client revisions, WhatsApp routing setup, custom domain DNS, and production launch are completed within 5 to 6 business days.',
   },
   {
-    q: 'How does the automated WhatsApp lead routing operate?',
-    a: 'Every inquiry submitted through the website triggers an instant lead notification to your team, and routes the prospective client directly into an encrypted WhatsApp chat with pre-filled context.',
+    q: 'How much does a business website cost in Indore and India in 2026?',
+    a: 'In 2026, professional high-speed business websites in India range from ₹8,000 to ₹35,000 depending on scope. TezScale offers pocket-friendly, easy-cost packages with 0.8s load speed, 1-tap WhatsApp lead buttons, free SSL, and zero recurring vendor lock-in fees.',
   },
   {
-    q: 'Which industries does TezScale specialize in?',
-    a: 'Our core practice areas are Medical Clinics & Doctors, Real Estate Brokerages, Engineering & Manufacturing Exporters, and High-Growth Retail / E-commerce brands.',
+    q: 'How to rank a business in Google Maps Top 3 in Indore?',
+    a: 'Ranking in Indore\'s Google Maps Top 3 local pack requires: (1) 100% completed Google Business Profile (GBP) with local primary categories, (2) Local geo-targeted citations across Vijay Nagar, Palasia, and AB Road, (3) High-frequency 5-star customer reviews with keyword responses, and (4) Structured LocalBusiness schema markup on your website.',
   },
   {
-    q: 'How are campaign performance and ROI measured?',
-    a: 'We provide transparent, real-time dashboards tracking Customer Acquisition Cost (CAC), Return On Ad Spend (ROAS), organic keyword rankings, and confirmed consultation bookings.',
+    q: 'How to generate B2B leads on WhatsApp using Meta ads?',
+    a: 'We configure precision Click-to-WhatsApp Meta Ad funnels (Facebook & Instagram) linked with Conversions API. When a qualified prospect taps your ad, it opens a pre-filled encrypted WhatsApp chat directly on your phone with zero landing page bounce drop-off.',
   },
   {
-    q: 'Do you offer ongoing website maintenance and support?',
-    a: 'Yes! We provide structured Annual Maintenance Contracts (AMC) covering 24/7 uptime monitoring, security patches, routine backups, and ongoing conversion rate optimization.',
+    q: 'Which 4 core Indian industries does TezScale specialize in?',
+    a: 'TezScale engineers specialized growth funnels for: (1) Medical Clinics & Doctors (patient appointments & Google Business Profile Maps ranking), (2) Real Estate Developers & Brokers (Meta ads for verified site visits), (3) Industrial Manufacturing Exporters in Sanwer Road & Pithampur (B2B product catalogs & RFQs), and (4) E-Commerce & Retail Brands (1-step checkout & WhatsApp cart recovery).',
+  },
+  {
+    q: 'Why does website loading speed matter for Indian mobile users?',
+    a: 'Over 82% of Indian buyers browse on mobile 4G/5G connections. Every 1-second delay in page load drops conversion rates by 20%. TezScale builds lightweight, high-speed mobile websites achieving 0.8s load speeds even on mobile data with 98+ Google PageSpeed scores.',
+  },
+  {
+    q: 'What is Generative Engine Optimization (GEO) & how does TezScale optimize for AI Overviews?',
+    a: 'Generative Engine Optimization (GEO) is the next generation of SEO designed to get your brand recommended inside Google AI Overviews, Perplexity, and ChatGPT. TezScale implements authoritative FAQ schemas, structured JSON-LD entity graphs, and direct conversational answer blocks.',
+  },
+  {
+    q: 'How can manufacturers and exporters in Pithampur & Sanwer Road get global B2B inquiries?',
+    a: 'We engineer structured technical product catalog websites optimized for international search queries, paired with Google Search ads and automated RFP/RFQ WhatsApp pipelines to capture overseas buyers and OEM purchase managers.',
+  },
+  {
+    q: 'How do patient lead generation Meta ads work for medical clinics in Indore?',
+    a: 'We run hyper-local geo-targeted Meta campaigns within a 5-10 km radius of your clinic in Vijay Nagar, Palasia, or South Tukoganj. Ads highlight doctor credentials and offer 1-tap WhatsApp consultation scheduling, generating predictable patient appointments.',
+  },
+  {
+    q: 'How are campaign performance and ROI measured at TezScale?',
+    a: 'We provide transparent, real-time ROI dashboards tracking Cost Per Lead (CPL), Return On Ad Spend (ROAS), Google Maps Top 3 keyword positions, and confirmed consultation bookings with weekly reporting.',
   },
 ];
 

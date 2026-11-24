@@ -27,6 +27,8 @@ import {
   Globe,
   Github,
   Linkedin,
+  MessageSquare,
+  Mail,
   Code2
 } from 'lucide-react';
 import { useContent } from '../context/ContentContext';
@@ -90,25 +92,37 @@ const growthArchitects = [
     badge: 'Full-Stack Developer',
     service: 'web-development',
     serviceName: 'Website Builder & Development',
+    location: 'Indore, India',
+    experience: '1+ Years in Microservices SaaS & Full-Stack Development',
     image: '/rohan-prajapati.jpg',
     imageClass: 'object-cover object-center',
     bio: 'MERN Stack Developer with extensive expertise building microservices-based SaaS platforms (React.js, Node.js, Express.js, MongoDB, Docker, Socket.IO, WebRTC). Leading digital engineering at TezScale.',
+    whatsapp: 'https://wa.me/916262778128?text=Hi%20Rohan,%20I%20want%20to%20connect%20with%20you%20regarding%20TezScale%20services.',
+    email: 'rohanprajapati4545@gmail.com',
     social: {
       github: 'https://github.com/RohanPrajapati4545',
       linkedin: 'https://linkedin.com/in/rohan-prajapati-517128206/',
+      whatsapp: 'https://wa.me/916262778128?text=Hi%20Rohan,%20I%20want%20to%20connect%20with%20you%20regarding%20TezScale%20services.',
+      email: 'rohanprajapati4545@gmail.com',
     },
   },
   {
-    slug: 'aarav-singhania',
-    name: 'Aarav Singhania',
-    role: 'Founder & Chief Growth Officer',
-    badge: 'Growth Strategy',
+    slug: 'shubham-karma',
+    name: 'Shubham Karma',
+    role: 'International Logistics & B2B Trade Specialist',
+    badge: 'International Logistics',
     service: 'digital-marketing',
-    serviceName: 'Digital Marketing Support (SEO)',
-    image: '/tezscale-founder.jpg',
-    imageClass: 'object-cover object-top',
-    bio: 'Strategic advisor to 200+ high-growth B2B firms. Specializes in scalable inbound funnels, algorithmic media buying, and predictable revenue acceleration systems.',
+    serviceName: 'International Logistics & B2B Trade',
+    location: 'Indore, Madhya Pradesh, India',
+    experience: '3+ Years in International Logistics, Export Compliance & Supply Chain',
+    image: '/shubham-karma.jpg',
+    imageClass: 'object-cover object-center',
+    bio: 'Results-driven international business and trade logistics specialist with proven track record in end-to-end global supply chains, customs compliance, and export documentation. Specialized in US freight logistics, duty tariff optimization, Athena ASN management, and accelerating international B2B trade pipelines.',
+    whatsapp: 'https://wa.me/916262778128?text=Hi%20Shubham,%20I%20want%20to%20connect%20with%20you%20regarding%20TezScale%20services.',
+    email: 'Shubhamvkarma143@gmail.com',
     social: {
+      whatsapp: 'https://wa.me/916262778128?text=Hi%20Shubham,%20I%20want%20to%20connect%20with%20you%20regarding%20TezScale%20services.',
+      email: 'Shubhamvkarma143@gmail.com',
       linkedin: 'https://linkedin.com',
     },
   },
@@ -119,12 +133,18 @@ const growthArchitects = [
     badge: 'AI & Machine Learning',
     service: 'web-development',
     serviceName: 'Website Builder & Development',
+    location: 'LIG Square, Indore (M.P), India',
+    experience: 'Machine Learning, Deep Learning & Generative AI',
     image: '/rustam-rathore.jpg',
     imageClass: 'object-cover object-center',
     bio: 'AI/ML specialist with deep expertise in Python, PyTorch, Scikit-learn, LangChain, and RAG pipelines. Architecting automated machine learning pipelines and generative AI solutions.',
+    whatsapp: 'https://wa.me/916262778128?text=Hi%20Rustam,%20I%20want%20to%20connect%20with%20you%20regarding%20TezScale%20services.',
+    email: 'rustamrathore@gmail.com',
     social: {
       github: 'https://github.com/Rustam-Rathore',
       linkedin: 'https://linkedin.com/in/rustam-rathore-9637162a7/',
+      whatsapp: 'https://wa.me/916262778128?text=Hi%20Rustam,%20I%20want%20to%20connect%20with%20you%20regarding%20TezScale%20services.',
+      email: 'rustamrathore@gmail.com',
     },
   },
 ];
@@ -151,20 +171,47 @@ const About = () => {
     { id: 'web-development', label: 'Website Builder & Development' },
     { id: 'digital-marketing', label: 'Digital Marketing Support (SEO)' },
     { id: 'graphic-design', label: 'Graphic Design & Brand Kits' },
+    { id: 'social-media', label: 'Social Media Strategy & Reels' },
+    { id: 'meta-ads', label: 'Meta Ads Management (FB & IG)' },
     { id: 'video-editing', label: 'Video Editing & Content' },
   ];
 
-  const teamSource = (content?.team && content.team.length > 0) ? content.team : growthArchitects;
+  const teamSource = (content?.team && content.team.length > 0)
+    ? content.team
+    : (() => {
+        try {
+          const raw = localStorage.getItem('tezscale_custom_team');
+          if (raw) {
+            const parsed = JSON.parse(raw);
+            if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+          }
+        } catch (e) {}
+        return growthArchitects;
+      })();
+
+  const matchesService = (member, svcId) => {
+    if (svcId === 'all') return true;
+    if (member.service === svcId) return true;
+    const badge = (member.badge || '').toLowerCase();
+    const role = (member.role || '').toLowerCase();
+    if (svcId === 'web-development' && (
+      badge.includes('developer') || badge.includes('ai') || badge.includes('qa') || badge.includes('tester') || badge.includes('engineer') ||
+      role.includes('developer') || role.includes('tester') || role.includes('engineer') || role.includes('ai')
+    )) return true;
+    if (svcId === 'digital-marketing' && (
+      badge.includes('growth') || badge.includes('marketing') || badge.includes('seo') || badge.includes('logistics') ||
+      role.includes('growth') || role.includes('marketing') || role.includes('seo') || role.includes('logistics')
+    )) return true;
+    if (svcId === 'graphic-design' && (badge.includes('design') || badge.includes('brand') || role.includes('design'))) return true;
+    if (svcId === 'social-media' && (badge.includes('social') || badge.includes('reels') || role.includes('social'))) return true;
+    if (svcId === 'meta-ads' && (badge.includes('ads') || badge.includes('meta') || role.includes('ads'))) return true;
+    if (svcId === 'video-editing' && (badge.includes('video') || badge.includes('editor') || role.includes('video'))) return true;
+    return false;
+  };
 
   const filteredTeam = selectedService === 'all'
     ? teamSource
-    : teamSource.filter((m) => {
-        if (m.service === selectedService) return true;
-        if (selectedService === 'web-development' && (m.badge?.toLowerCase().includes('developer') || m.badge?.toLowerCase().includes('ai'))) return true;
-        if (selectedService === 'digital-marketing' && (m.badge?.toLowerCase().includes('growth') || m.badge?.toLowerCase().includes('marketing') || m.badge?.toLowerCase().includes('seo'))) return true;
-        if (selectedService === 'graphic-design' && (m.badge?.toLowerCase().includes('design') || m.badge?.toLowerCase().includes('brand'))) return true;
-        return false;
-      });
+    : teamSource.filter((m) => matchesService(m, selectedService));
 
   const displayTeam = filteredTeam.length >= 3 ? [...filteredTeam, ...filteredTeam] : filteredTeam;
 
@@ -344,7 +391,7 @@ const About = () => {
                 onClick={() => setModalOpen(true)}
                 className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 text-white px-8 py-4 rounded-full font-bold text-sm shadow-xl shadow-blue-500/25 transition-all hover:scale-105 cursor-pointer"
               >
-                <span>Partner with TezScale</span>
+                <span>Send Project Enquiry</span>
                 <ArrowRight className="w-4 h-4" />
               </button>
               <Link
@@ -463,13 +510,7 @@ const About = () => {
                 const isSelected = selectedService === svc.id;
                 const count = svc.id === 'all'
                   ? teamSource.length
-                  : teamSource.filter((m) => {
-                      if (m.service === svc.id) return true;
-                      if (svc.id === 'web-development' && (m.badge?.toLowerCase().includes('developer') || m.badge?.toLowerCase().includes('ai'))) return true;
-                      if (svc.id === 'digital-marketing' && (m.badge?.toLowerCase().includes('growth') || m.badge?.toLowerCase().includes('marketing') || m.badge?.toLowerCase().includes('seo'))) return true;
-                      if (svc.id === 'graphic-design' && (m.badge?.toLowerCase().includes('design') || m.badge?.toLowerCase().includes('brand'))) return true;
-                      return false;
-                    }).length;
+                  : teamSource.filter((m) => matchesService(m, svc.id)).length;
 
                 if (svc.id !== 'all' && count === 0) return null;
 
@@ -542,7 +583,7 @@ const About = () => {
                   >
                     <div>
                       {/* Image Container with Proper Portrait Height & Framing */}
-                      <Link to={`/team/${member.slug}`} className="block h-72 sm:h-80 w-full overflow-hidden bg-slate-100 relative cursor-pointer">
+                      <Link to={`/team/${member.slug || member.id}`} className="block h-72 sm:h-80 w-full overflow-hidden bg-slate-100 relative cursor-pointer">
                         <img
                           src={resolveMediaUrl(member.image, 'https://res.cloudinary.com/qwpdsvyf/image/upload/v1795431573/tezscale_assets/rohan-prajapati.jpg')}
                           alt={`${member.name} - ${member.role} at TezScale`}
@@ -560,7 +601,7 @@ const About = () => {
 
                       {/* Content Body */}
                       <div className="p-5 sm:p-6 text-left">
-                        <Link to={`/team/${member.slug}`} className="block group/title">
+                        <Link to={`/team/${member.slug || member.id}`} className="block group/title">
                           <h3 className="font-black text-slate-900 text-lg group-hover/title:text-[#00A3E0] transition-colors leading-snug">
                             {member.name}
                           </h3>
@@ -575,11 +616,33 @@ const About = () => {
                           {member.bio}
                         </p>
 
-                        {/* Social Icons Strip (Only GitHub & LinkedIn - Email & Phone Removed) */}
+                        {/* Social & Contact Icons Strip */}
                         <div className="flex items-center gap-2 mt-4 pt-3.5 border-t border-slate-100 min-h-[44px]">
-                          {member.social?.github && (
+                          {(member.whatsapp || member.social?.whatsapp) && (
                             <a
-                              href={member.social.github}
+                              href={member.whatsapp || member.social?.whatsapp}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              aria-label="Chat on WhatsApp"
+                              className="w-8 h-8 rounded-xl bg-emerald-50 hover:bg-emerald-600 hover:text-white text-emerald-600 flex items-center justify-center transition-colors shadow-2xs"
+                              title="Chat on WhatsApp"
+                            >
+                              <MessageSquare className="w-4 h-4" />
+                            </a>
+                          )}
+                          {(member.email || member.social?.email) && (
+                            <a
+                              href={`mailto:${member.email || member.social?.email}`}
+                              aria-label="Send Email"
+                              className="w-8 h-8 rounded-xl bg-sky-50 hover:bg-sky-600 hover:text-white text-sky-600 flex items-center justify-center transition-colors shadow-2xs"
+                              title={`Email: ${member.email || member.social?.email}`}
+                            >
+                              <Mail className="w-4 h-4" />
+                            </a>
+                          )}
+                          {(member.github || member.social?.github) && (
+                            <a
+                              href={member.github || member.social?.github}
                               target="_blank"
                               rel="noopener noreferrer"
                               aria-label="GitHub Profile"
@@ -588,9 +651,9 @@ const About = () => {
                               <Github className="w-4 h-4" />
                             </a>
                           )}
-                          {member.social?.linkedin && (
+                          {(member.linkedin || member.social?.linkedin) && (
                             <a
-                              href={member.social.linkedin}
+                              href={member.linkedin || member.social?.linkedin}
                               target="_blank"
                               rel="noopener noreferrer"
                               aria-label="LinkedIn Profile"
@@ -701,7 +764,7 @@ const About = () => {
                     onClick={() => setModalOpen(true)}
                     className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-7 py-3 rounded-full text-sm font-bold shadow-lg shadow-blue-600/30 transition-all hover:scale-102 cursor-pointer"
                   >
-                    <span>Partner with TezScale</span>
+                    <span>Send Project Enquiry</span>
                     <ArrowRight className="w-4 h-4" />
                   </button>
                 </div>

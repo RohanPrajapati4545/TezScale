@@ -11,8 +11,17 @@ export const teamMembers = [
     serviceName: 'Website Builder & Development',
     location: 'Indore, India',
     experience: '1+ Years in Microservices SaaS & Full-Stack Development',
+    phone: '+916262778128',
+    whatsapp: 'https://wa.me/916262778128?text=Hi%20Rohan,%20I%20want%20to%20connect%20with%20you%20regarding%20TezScale%20services.',
+    email: 'rohanprajapati4545@gmail.com',
     linkedin: 'https://linkedin.com/in/rohan-prajapati-517128206/',
     github: 'https://github.com/RohanPrajapati4545',
+    social: {
+      github: 'https://github.com/RohanPrajapati4545',
+      linkedin: 'https://linkedin.com/in/rohan-prajapati-517128206/',
+      whatsapp: 'https://wa.me/916262778128?text=Hi%20Rohan,%20I%20want%20to%20connect%20with%20you%20regarding%20TezScale%20services.',
+      email: 'rohanprajapati4545@gmail.com',
+    },
     bio: 'MERN Stack Developer with 1 year of hands-on experience in SaaS product development and full-stack web applications. Extensive experience building microservices-based SaaS platforms using React.js, Node.js, Express.js, and MongoDB, with Docker containerization, REST API integration, WebSockets, and WebRTC. Skilled in backend architecture, responsive UIs, secure authentication systems, and real-time communications.',
     technicalSkills: {
       languagesFrontend: ['JavaScript (ES6+)', 'React.js', 'Redux Toolkit', 'Context API', 'Tailwind CSS', 'Bootstrap 5', 'HTML5/CSS3'],
@@ -136,53 +145,122 @@ export const teamMembers = [
     ]
   },
   {
-    id: 'aarav-singhania',
-    slug: 'aarav-singhania',
-    name: 'Aarav Singhania',
-    role: 'Founder & Chief Growth Officer',
-    badge: 'Growth Strategy',
-    image: '/tezscale-founder.jpg',
-    imageClass: 'object-cover object-top',
+    id: 'shubham-karma',
+    slug: 'shubham-karma',
+    name: 'Shubham Karma',
+    role: 'International Logistics & B2B Trade Specialist',
+    badge: 'International Logistics',
+    image: '/shubham-karma.jpg',
+    imageClass: 'object-cover object-center',
     service: 'digital-marketing',
-    serviceName: 'Digital Marketing Support (SEO)',
-    location: 'Mumbai, India',
-    experience: '8+ Years in Digital Growth & Performance Marketing',
+    serviceName: 'International Logistics & B2B Trade',
+    location: 'Indore, Madhya Pradesh, India',
+    experience: '3+ Years in International Logistics, Export Compliance & Supply Chain',
+    phone: '+916262778128',
+    whatsapp: 'https://wa.me/916262778128?text=Hi%20Shubham,%20I%20want%20to%20connect%20with%20you%20regarding%20TezScale%20services.',
+    email: 'Shubhamvkarma143@gmail.com',
     linkedin: 'https://linkedin.com',
-    bio: 'Strategic advisor to 200+ high-growth B2B firms. Specializes in scalable inbound funnels, algorithmic media buying, and predictable revenue acceleration systems.',
+    social: {
+      whatsapp: 'https://wa.me/916262778128?text=Hi%20Shubham,%20I%20want%20to%20connect%20with%20you%20regarding%20TezScale%20services.',
+      email: 'Shubhamvkarma143@gmail.com',
+      linkedin: 'https://linkedin.com',
+    },
+    bio: 'Results-driven international business and trade logistics specialist with proven track record in end-to-end global supply chains, customs compliance, and export documentation. Specialized in US freight logistics, duty tariff optimization, Athena ASN management, and accelerating international B2B trade pipelines.',
     technicalSkills: {
-      languagesFrontend: ['Growth Funnel Architecture', 'Conversion Rate Optimization (CRO)', 'Landing Page UI Strategy'],
-      backendArchitecture: ['Full-Funnel Tracking', 'Attribution Modeling', 'Predictable Inbound Architectures'],
-      databasesCaching: ['Customer Data Platforms (CDP)', 'CRM Integrations', 'Analytics Pipelines'],
-      authRealtime: ['Multi-Touch Attribution', 'Marketing Automation', 'WhatsApp CRM Triggers'],
-      toolsDevops: ['Google Ads Manager', 'Meta Ads Manager', 'Google Analytics 4', 'Looker Studio', 'HubSpot']
+      languagesFrontend: ['International Logistics Operations', 'Export Documentation & Compliance', 'Freight Forwarding & Brokerage', 'Customs Clearance'],
+      backendArchitecture: ['Athena System ASN Management', 'Carrier & Trucking Operations', 'Supply Chain Routing', 'Multi-Location USA Deliveries'],
+      databasesCaching: ['SAP FICO', 'Duty Tariffs & HS Code Analytics', 'Total Landed Cost Modeling', 'Cost Optimization'],
+      authRealtime: ['Cross-Border Trade Regulations', 'Proof of Delivery (POD) Tracking', 'Vendor Compliance Audits', 'OEM Exporter Liaison'],
+      toolsDevops: ['Athena Liaison System', 'SAP FICO', 'Digital Marketing Tools', 'AI Trade Automation', 'MS Excel (Advanced)', 'Customs Portals']
     },
     professionalExperience: [
       {
-        company: 'TezScale Digital Growth',
-        role: 'Founder & Chief Growth Officer',
-        duration: '2021 – Present',
-        description: 'Leading client growth strategy, omnichannel ad buying, and high-velocity digital customer acquisition.',
+        company: 'Ankit LLC',
+        role: 'International Logistics Specialist',
+        duration: 'September 2025 – Present',
+        location: 'United States (Remote)',
+        description: 'Wholesale exporter company managing high-volume international trade operations and multi-location deliveries across the USA.',
         highlights: [
-          'Scaled over 500+ client funnels across Healthcare, Real Estate, and SaaS verticals.',
-          'Managed upwards of ₹50M+ in targeted advertising budgets with sustained average 3.8x ROAS.',
-          'Pioneered instant WhatsApp CRM integration reducing customer lead response times to under 2 minutes.'
+          'Managed end-to-end international logistics operations with strict adherence to international trade and customs compliance.',
+          'Coordinated closely with U.S. customs brokers and trucking partners to ensure timely customs clearance and on-time delivery.',
+          'Analyzed duty tariffs, HS codes, and total landed cost for shipments across multiple global jurisdictions.',
+          'Submitted and managed Advance Shipping Notices (ASN) for multiple vendors in accordance with customer requirements.',
+          'Optimized freight transportation costs across carriers while maintaining top-tier delivery timelines.'
+        ]
+      },
+      {
+        company: 'Hi Tech Metal Forming',
+        role: 'Foreign Trade Officer',
+        duration: 'April 2024 – September 2025',
+        location: 'Indore, M.P.',
+        description: 'OEM exporter focusing on industrial metal forming exports and international shipments.',
+        highlights: [
+          'Ensured full regulatory compliance with international trade and export protocols.',
+          'Processed and validated ASNs in the Athena system for seamless order fulfillment.',
+          'Audited vessel shipment documents, commercial invoices, and post-clearance settlements.',
+          'Liaised with forwarders, customs brokers, and international buyers to guarantee accurate delivery timelines.'
+        ]
+      },
+      {
+        company: 'Viraje Cargo Care Pvt Ltd',
+        role: 'Import & Export Operations and Marketing',
+        duration: 'January 2023 – March 2024',
+        location: 'Indore, M.P.',
+        description: 'Leading freight forwarding company coordinating international multimodal logistics.',
+        highlights: [
+          'Managed customs brokerage and clearance across ocean, air, rail, and road transportation modes.',
+          'Advised B2B clients on export-import best practices, tariff benefits, and cost-effective shipping corridors.',
+          'Monitored cargo packing, warehouse loading, and end-to-end transport execution.'
+        ]
+      },
+      {
+        company: 'Shankh Shipping Logistics',
+        role: 'Marketing Executive (Trainee)',
+        duration: 'September 2022 – December 2022',
+        location: 'Indore, M.P.',
+        description: 'Customs broker and shipping agency.',
+        highlights: [
+          'Maintained international trade records and verified regulatory eligibility documentation.',
+          'Assisted senior brokers in customs post-clearance audits and trade settlements.'
         ]
       }
     ],
     education: [
       {
-        degree: 'MBA in Marketing Strategy & Digital Business',
-        institution: 'NMIMS, Mumbai',
-        year: '2019',
-        score: 'Distinction'
+        degree: 'MBA in Foreign Trade',
+        institution: 'School of Commerce, DAVV University, Indore',
+        year: 'August 2019 – June 2024',
+        score: 'Master’s Degree'
       }
     ],
     certifications: [
-      'Google Certified Professional Media Buyer',
-      'Meta Certified Media Planning Specialist',
-      'HubSpot Inbound Marketing Master'
+      'Digital Marketing : LearnVern',
+      'Import Export Management : IIFT - Delhi',
+      'SAP FICO Consultant : Wincom Technology - Indore'
     ],
-    projects: []
+    projects: [
+      {
+        title: 'Global Export Revenue Optimization',
+        category: 'Trade Strategy & Revenue Growth',
+        badge: 'Trade Optimization',
+        tech: ['Tariff Analytics', 'HS Code Strategy', 'Landed Cost Optimization'],
+        desc: 'Implemented innovative trade and duty tariff strategies that increased export revenues by 10% within a targeted operational period.',
+      },
+      {
+        title: 'Athena Automated ASN & Customs Pipeline',
+        category: 'Supply Chain Automation',
+        badge: 'Enterprise Logistics',
+        tech: ['Athena System', 'EDI / ASN Validation', 'Compliance Auditing'],
+        desc: 'Streamlined export-import documentation and validation workflows, reducing clearance delays and ensuring 100% adherence to customs regulations.',
+      },
+      {
+        title: 'International Market Entry & Carrier Network',
+        category: 'Market Expansion',
+        badge: 'Global Expansion',
+        tech: ['Cross-Border Logistics', 'Carrier Negotiation', 'Multimodal Freight'],
+        desc: 'Facilitated expansion into new international markets, negotiating multimodal carrier routes and establishing dependable vendor logistics channels.',
+      }
+    ]
   },
   {
     id: 'rustam-rathore',
@@ -196,8 +274,17 @@ export const teamMembers = [
     imageClass: 'object-cover object-center',
     location: 'LIG Square, Indore (M.P), India',
     experience: 'Machine Learning, Deep Learning & Generative AI',
+    phone: '+916262778128',
+    whatsapp: 'https://wa.me/916262778128?text=Hi%20Rustam,%20I%20want%20to%20connect%20with%20you%20regarding%20TezScale%20services.',
+    email: 'rustamrathore@gmail.com',
     linkedin: 'https://linkedin.com/in/rustam-rathore-9637162a7/',
     github: 'https://github.com/Rustam-Rathore',
+    social: {
+      github: 'https://github.com/Rustam-Rathore',
+      linkedin: 'https://linkedin.com/in/rustam-rathore-9637162a7/',
+      whatsapp: 'https://wa.me/916262778128?text=Hi%20Rustam,%20I%20want%20to%20connect%20with%20you%20regarding%20TezScale%20services.',
+      email: 'rustamrathore@gmail.com',
+    },
     bio: 'AI/ML enthusiast with a strong foundation in Python, Machine Learning, Deep Learning, Data Science, and Generative AI. Skilled in RAG pipelines, LangChain, Transformers, and predictive ML systems with a practical approach to understanding complex business challenges and developing effective AI solutions.',
     technicalSkills: {
       languagesFrontend: ['Python', 'HTML5', 'CSS3', 'JavaScript (Basic)', 'React.js (Basic)'],
@@ -264,5 +351,5 @@ export const teamMembers = [
 ];
 
 export const getTeamMemberBySlug = (slug) => {
-  return teamMembers.find((m) => m.slug === slug || m.id === slug) || teamMembers[0];
+  return teamMembers.find((m) => m.slug === slug || m.id === slug) || null;
 };

@@ -155,7 +155,7 @@ export const defaultContent = {
   testimonials: [
     {
       name: 'Dr. Priya Sharma',
-      role: 'Clinic Director, Apex Healthcare',
+      role: 'Clinic Director, Apex Healthcare (Vijay Nagar, Indore)',
       sector: 'Healthcare & Clinics',
       rating: 5,
       avatar: 'https://res.cloudinary.com/qwpdsvyf/image/upload/v1795439200/tezscale_assets/client-priya.jpg',
@@ -165,7 +165,7 @@ export const defaultContent = {
     },
     {
       name: 'Rohit Verma',
-      role: 'Managing Broker, UrbanSpace Realty',
+      role: 'Managing Broker, UrbanSpace Realty (AB Road & Super Corridor, Indore)',
       sector: 'Real Estate & Properties',
       rating: 5,
       avatar: 'https://res.cloudinary.com/qwpdsvyf/image/upload/v1795439200/tezscale_assets/client-rohit.jpg',
@@ -175,7 +175,7 @@ export const defaultContent = {
     },
     {
       name: 'Vikram Patel',
-      role: 'VP Operations, Apex Engineering',
+      role: 'VP Operations, Apex Engineering (Pithampur Industrial Area)',
       sector: 'Industrial Manufacturing B2B',
       rating: 5,
       avatar: 'https://res.cloudinary.com/qwpdsvyf/image/upload/v1795439201/tezscale_assets/client-vikram.jpg',
@@ -192,23 +192,37 @@ export const defaultContent = {
       badge: 'Full-Stack Developer',
       service: 'web-development',
       serviceName: 'Website Builder & Development',
+      location: 'Indore, India',
+      experience: '1+ Years in Microservices SaaS & Full-Stack Development',
+      phone: '+916262778128',
+      whatsapp: 'https://wa.me/916262778128?text=Hi%20Rohan,%20I%20want%20to%20connect%20with%20you%20regarding%20TezScale%20services.',
+      email: 'rohanprajapati4545@gmail.com',
       image: 'https://res.cloudinary.com/qwpdsvyf/image/upload/v1795431573/tezscale_assets/rohan-prajapati.jpg',
       bio: 'MERN Stack Developer with extensive expertise building microservices-based SaaS platforms (React.js, Node.js, Express.js, MongoDB, Docker, Socket.IO, WebRTC). Leading digital engineering at TezScale.',
       social: {
         github: 'https://github.com/RohanPrajapati4545',
         linkedin: 'https://linkedin.com/in/rohan-prajapati-517128206/',
+        whatsapp: 'https://wa.me/916262778128?text=Hi%20Rohan,%20I%20want%20to%20connect%20with%20you%20regarding%20TezScale%20services.',
+        email: 'rohanprajapati4545@gmail.com',
       },
     },
     {
-      slug: 'aarav-singhania',
-      name: 'Aarav Singhania',
-      role: 'Founder & Chief Growth Officer',
-      badge: 'Growth Strategy',
+      slug: 'shubham-karma',
+      name: 'Shubham Karma',
+      role: 'International Logistics & B2B Trade Specialist',
+      badge: 'International Logistics',
       service: 'digital-marketing',
-      serviceName: 'Digital Marketing Support (SEO)',
-      image: 'https://res.cloudinary.com/qwpdsvyf/image/upload/v1795431565/tezscale_assets/tezscale-founder.jpg',
-      bio: 'Strategic advisor to 200+ high-growth B2B firms. Specializes in scalable inbound funnels, algorithmic media buying, and predictable revenue acceleration systems.',
+      serviceName: 'International Logistics & B2B Trade',
+      location: 'Indore, Madhya Pradesh, India',
+      experience: '3+ Years in International Logistics, Export Compliance & Supply Chain',
+      phone: '+916262778128',
+      whatsapp: 'https://wa.me/916262778128?text=Hi%20Shubham,%20I%20want%20to%20connect%20with%20you%20regarding%20TezScale%20services.',
+      email: 'Shubhamvkarma143@gmail.com',
+      image: '/shubham-karma.jpg',
+      bio: 'Results-driven international business and trade logistics specialist with proven track record in end-to-end global supply chains, customs compliance, and export documentation. Specialized in US freight logistics, duty tariff optimization, Athena ASN management, and accelerating international B2B trade pipelines.',
       social: {
+        whatsapp: 'https://wa.me/916262778128?text=Hi%20Shubham,%20I%20want%20to%20connect%20with%20you%20regarding%20TezScale%20services.',
+        email: 'Shubhamvkarma143@gmail.com',
         linkedin: 'https://linkedin.com',
       },
     },
@@ -219,11 +233,18 @@ export const defaultContent = {
       badge: 'AI & Machine Learning',
       service: 'web-development',
       serviceName: 'Website Builder & Development',
+      location: 'LIG Square, Indore (M.P), India',
+      experience: 'Machine Learning, Deep Learning & Generative AI',
+      phone: '+916262778128',
+      whatsapp: 'https://wa.me/916262778128?text=Hi%20Rustam,%20I%20want%20to%20connect%20with%20you%20regarding%20TezScale%20services.',
+      email: 'rustamrathore@gmail.com',
       image: 'https://res.cloudinary.com/qwpdsvyf/image/upload/v1795431575/tezscale_assets/rustam-rathore.jpg',
       bio: 'AI/ML specialist with deep expertise in Python, PyTorch, Scikit-learn, LangChain, and RAG pipelines. Architecting automated machine learning pipelines and generative AI solutions.',
       social: {
         github: 'https://github.com/Rustam-Rathore',
         linkedin: 'https://linkedin.com/in/rustam-rathore-9637162a7/',
+        whatsapp: 'https://wa.me/916262778128?text=Hi%20Rustam,%20I%20want%20to%20connect%20with%20you%20regarding%20TezScale%20services.',
+        email: 'rustamrathore@gmail.com',
       },
     },
   ],
@@ -270,10 +291,6 @@ export const getContent = async (req, res) => {
         needsSave = true;
       }
       if (!content.team || content.team.length === 0) {
-        content.team = defaultContent.team;
-        needsSave = true;
-      } else if (content.team.some(m => m.slug === 'neha-kulkarni' || m.slug === 'vikram-malhotra' || m.slug === 'priya-deshmukh' || m.slug === 'ananya-roy')) {
-        // Strip dummy members from database
         content.team = defaultContent.team;
         needsSave = true;
       }

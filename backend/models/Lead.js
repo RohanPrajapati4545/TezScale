@@ -15,13 +15,23 @@ const leadSchema = new mongoose.Schema(
     },
     email: {
       type: String,
-      required: [true, 'Email Address is required'],
       trim: true,
       lowercase: true,
+      default: '',
     },
     businessType: {
       type: String,
-      enum: ['Doctor / Clinic', 'Real Estate', 'Engineering', 'Retail / E-commerce', 'Other'],
+      enum: [
+        'Doctor / Clinic',
+        'Real Estate',
+        'Real Estate / Builder',
+        'Engineering',
+        'Factory / B2B',
+        'Retail / E-commerce',
+        'Shop / Online Store',
+        'Other',
+        'Other Service',
+      ],
       default: 'Other',
     },
     serviceRequired: {

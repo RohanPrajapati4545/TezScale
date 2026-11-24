@@ -9,7 +9,9 @@ import {
   Linkedin,
   MapPin,
   Briefcase,
-  Code2
+  Code2,
+  MessageSquare,
+  Mail
 } from 'lucide-react';
 import Navbar from '../Components/Navbar';
 import Footer from '../Components/Footer';
@@ -26,17 +28,39 @@ const TeamMemberPage = () => {
   const videoRef = useRef(null);
   const { content } = useContent();
 
-  const dynamicTeam = (content?.team && content.team.length > 0) ? content.team : teamMembers;
-  const dynamicMember = dynamicTeam.find((m) => m.slug === memberSlug || m.id === memberSlug);
-  const staticMember = teamMembers.find((m) => m.slug === memberSlug || m.id === memberSlug);
+  const dynamicTeam = (content?.team && content.team.length > 0)
+    ? content.team
+    : (() => {
+        try {
+          const raw = localStorage.getItem('tezscale_custom_team');
+          if (raw) {
+            const parsed = JSON.parse(raw);
+            if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+          }
+        } catch (e) {}
+        return teamMembers;
+      })();
+  const cleanParam = (memberSlug || '').toLowerCase().trim();
+  const dynamicMember = dynamicTeam.find(
+    (m) =>
+      m.slug?.toLowerCase() === cleanParam ||
+      m.id?.toLowerCase() === cleanParam ||
+      m.name?.toLowerCase().replace(/[^a-z0-9]+/g, '-') === cleanParam
+  );
+  const staticMember = teamMembers.find(
+    (m) =>
+      m.slug?.toLowerCase() === cleanParam ||
+      m.id?.toLowerCase() === cleanParam ||
+      m.name?.toLowerCase().replace(/[^a-z0-9]+/g, '-') === cleanParam
+  );
   const member = dynamicMember 
     ? (staticMember ? { ...staticMember, ...dynamicMember } : dynamicMember)
     : (staticMember || getTeamMemberBySlug(memberSlug));
 
   useSEO({
     title: member ? `${member.name} - ${member.role} | TezScale Leadership` : 'Team Member | TezScale',
-    description: member ? `${member.name} (${member.role}) at TezScale. ${member.bio.slice(0, 150)}` : 'TezScale leadership profile.',
-    canonical: member ? `/team/${member.slug}` : '/about'
+    description: member ? `${member.name} (${member.role}) at TezScale. ${member.bio?.slice(0, 150) || ''}` : 'TezScale leadership profile.',
+    canonical: member ? `/team/${member.slug || member.id}` : '/about'
   });
 
   useEffect(() => {
@@ -79,7 +103,7 @@ const TeamMemberPage = () => {
       <main className="flex-1">
         {/* Profile Hero Header with Live Background Video (Transparent Content Container for 100% Clear Video Visibility) */}
         <section className="relative pt-24 sm:pt-28 pb-16 bg-[#070913] text-white border-b border-slate-800 overflow-hidden min-h-[70vh] flex flex-col justify-center">
-          {/* Background Video - High Opacity, Clear & Crisp */}
+          {/* Background Video with Dark Atmospheric Overlays for Crisp Text Legibility */}
           <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
             <video
               ref={videoRef}
@@ -88,14 +112,14 @@ const TeamMemberPage = () => {
               muted
               playsInline
               preload="auto"
-              className="w-full h-full object-cover object-center opacity-90 sm:opacity-95"
+              className="w-full h-full object-cover object-center opacity-55 sm:opacity-65"
             >
               <source src="/page-hero-video.mp4" type="video/mp4" />
               <source src="/services-hero-video.mp4" type="video/mp4" />
             </video>
-            {/* Subtle Vignette Gradient - Keeps Background Video Fully Clear & Visible */}
-            <div className="absolute inset-0 bg-gradient-to-b from-[#070913]/60 via-transparent to-[#070913]/80 pointer-events-none" />
-            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-sky-500/10 via-transparent to-transparent pointer-events-none" />
+            {/* Dark Gradient Overlay for Maximum Readability */}
+            <div className="absolute inset-0 bg-gradient-to-b from-[#070913]/90 via-[#070913]/70 to-[#070913]/95 pointer-events-none" />
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-sky-950/30 via-[#070913]/60 to-[#070913]/90 pointer-events-none" />
           </div>
 
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
@@ -143,26 +167,52 @@ const TeamMemberPage = () => {
                     </div>
                   </div>
 
-                  <div className="flex flex-wrap items-center gap-4 text-xs sm:text-sm text-slate-200">
-                    <div className="flex items-center gap-1.5 bg-slate-950/70 backdrop-blur-md px-3.5 py-1.5 rounded-xl border border-white/15 shadow-sm">
-                      <MapPin className="w-4 h-4 text-sky-400" />
-                      <span>{member.location}</span>
+                  {(member.location || member.experience) && (
+                    <div className="flex flex-wrap items-center gap-4 text-xs sm:text-sm text-slate-200">
+                      {member.location && (
+                        <div className="flex items-center gap-1.5 bg-slate-950/70 backdrop-blur-md px-3.5 py-1.5 rounded-xl border border-white/15 shadow-sm">
+                          <MapPin className="w-4 h-4 text-sky-400" />
+                          <span>{member.location}</span>
+                        </div>
+                      )}
+                      {member.experience && (
+                        <div className="flex items-center gap-1.5 bg-slate-950/70 backdrop-blur-md px-3.5 py-1.5 rounded-xl border border-white/15 shadow-sm">
+                          <Briefcase className="w-4 h-4 text-sky-400" />
+                          <span>{member.experience}</span>
+                        </div>
+                      )}
                     </div>
-                    <div className="flex items-center gap-1.5 bg-slate-950/70 backdrop-blur-md px-3.5 py-1.5 rounded-xl border border-white/15 shadow-sm">
-                      <Briefcase className="w-4 h-4 text-sky-400" />
-                      <span>{member.experience}</span>
-                    </div>
-                  </div>
+                  )}
 
                   <p className="text-slate-100 text-sm sm:text-base leading-relaxed font-normal max-w-2xl bg-slate-950/40 backdrop-blur-md p-4 rounded-2xl border border-white/10 shadow-lg">
                     {member.bio}
                   </p>
 
-                  {/* Portfolio & Social Links (Only LinkedIn & GitHub) */}
+                  {/* Portfolio, Contact & Social Links */}
                   <div className="pt-2 flex flex-wrap items-center gap-3">
-                    {member.linkedin && (
+                    {(member.whatsapp || member.social?.whatsapp) && (
                       <a
-                        href={member.linkedin}
+                        href={member.whatsapp || member.social?.whatsapp}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white border border-emerald-400/40 text-xs font-semibold backdrop-blur-md transition-all shadow-md"
+                      >
+                        <MessageSquare className="w-4 h-4 text-emerald-100" />
+                        <span>Chat on WhatsApp</span>
+                      </a>
+                    )}
+                    {(member.email || member.social?.email) && (
+                      <a
+                        href={`mailto:${member.email || member.social?.email}`}
+                        className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-slate-950/70 hover:bg-[#00A3E0] hover:text-white border border-white/15 text-slate-200 text-xs font-semibold backdrop-blur-md transition-all shadow-md"
+                      >
+                        <Mail className="w-4 h-4 text-sky-400 group-hover:text-white" />
+                        <span>{member.email || member.social?.email}</span>
+                      </a>
+                    )}
+                    {(member.linkedin || member.social?.linkedin) && (
+                      <a
+                        href={member.linkedin || member.social?.linkedin}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-slate-950/70 hover:bg-[#00A3E0] hover:text-white border border-white/15 text-slate-200 text-xs font-semibold backdrop-blur-md transition-all shadow-md"
@@ -171,9 +221,9 @@ const TeamMemberPage = () => {
                         <span>LinkedIn Profile</span>
                       </a>
                     )}
-                    {member.github && (
+                    {(member.github || member.social?.github) && (
                       <a
-                        href={member.github}
+                        href={member.github || member.social?.github}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-slate-950/70 hover:bg-slate-900 hover:text-white border border-white/15 text-slate-200 text-xs font-semibold backdrop-blur-md transition-all shadow-md"
@@ -184,7 +234,7 @@ const TeamMemberPage = () => {
                     )}
                   </div>
 
-                  <div className="pt-2">
+                  <div className="pt-2 flex flex-wrap items-center gap-3">
                     <button
                       onClick={() => setModalOpen(true)}
                       className="inline-flex items-center gap-2 bg-[#00A3E0] hover:bg-[#008bc0] text-white px-8 py-3.5 rounded-full text-xs sm:text-sm font-bold shadow-xl shadow-[#00A3E0]/40 transition-all duration-300 hover:scale-[1.02] cursor-pointer"
@@ -192,6 +242,17 @@ const TeamMemberPage = () => {
                       <span>Connect for Consultation</span>
                       <ArrowRight className="w-4 h-4" />
                     </button>
+                    {(member.whatsapp || member.social?.whatsapp) && (
+                      <a
+                        href={member.whatsapp || member.social?.whatsapp}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-white px-7 py-3.5 rounded-full text-xs sm:text-sm font-bold shadow-xl shadow-emerald-500/25 transition-all duration-300 hover:scale-[1.02] cursor-pointer"
+                      >
+                        <MessageSquare className="w-4 h-4 text-white" />
+                        <span>WhatsApp Direct</span>
+                      </a>
+                    )}
                   </div>
                 </div>
 
@@ -199,6 +260,76 @@ const TeamMemberPage = () => {
             </div>
           </div>
         </section>
+
+        {/* Core Domain Expertise & Direct Channels (Shown when projects array is empty) */}
+        {(!member.projects || member.projects.length === 0) && (
+          <section className="py-16 sm:py-20 bg-white border-b border-slate-200">
+            <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+              <div className="bg-gradient-to-br from-slate-50 via-white to-sky-50/40 rounded-3xl border border-slate-200 p-8 sm:p-12 shadow-sm text-left space-y-8">
+                <div className="space-y-3">
+                  <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-100 text-blue-700 text-xs font-bold uppercase tracking-wider">
+                    <Code2 className="w-3.5 h-3.5 text-blue-600" />
+                    <span>Domain Specialization</span>
+                  </div>
+                  <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+                    {member.serviceName || member.role}
+                  </h2>
+                  <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
+                    {member.bio}
+                  </p>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 pt-2">
+                  {member.location && (
+                    <div className="p-4 rounded-2xl bg-white border border-slate-200/80 shadow-2xs space-y-1">
+                      <div className="text-[11px] font-bold text-slate-400 uppercase">Operational Base</div>
+                      <div className="text-sm font-bold text-slate-900 flex items-center gap-1.5">
+                        <MapPin className="w-4 h-4 text-[#00A3E0]" />
+                        <span>{member.location}</span>
+                      </div>
+                    </div>
+                  )}
+                  {member.experience && (
+                    <div className="p-4 rounded-2xl bg-white border border-slate-200/80 shadow-2xs space-y-1">
+                      <div className="text-[11px] font-bold text-slate-400 uppercase">Experience Depth</div>
+                      <div className="text-sm font-bold text-slate-900 flex items-center gap-1.5">
+                        <Briefcase className="w-4 h-4 text-[#00A3E0]" />
+                        <span>{member.experience}</span>
+                      </div>
+                    </div>
+                  )}
+                  {(member.whatsapp || member.social?.whatsapp) && (
+                    <div className="p-4 rounded-2xl bg-emerald-50/60 border border-emerald-200/60 shadow-2xs space-y-1">
+                      <div className="text-[11px] font-bold text-emerald-600 uppercase">Direct WhatsApp</div>
+                      <a
+                        href={member.whatsapp || member.social?.whatsapp}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-sm font-bold text-emerald-700 hover:text-emerald-800 flex items-center gap-1.5 underline"
+                      >
+                        <MessageSquare className="w-4 h-4 text-emerald-600" />
+                        <span>Instant Message</span>
+                      </a>
+                    </div>
+                  )}
+                </div>
+
+                <div className="pt-4 border-t border-slate-200 flex flex-wrap items-center justify-between gap-4">
+                  <div className="text-xs text-slate-500">
+                    Ready to collaborate with <strong className="text-slate-800">{member.name}</strong> on your growth roadmap?
+                  </div>
+                  <button
+                    onClick={() => setModalOpen(true)}
+                    className="inline-flex items-center gap-2 bg-[#00A3E0] hover:bg-[#008bc0] text-white px-6 py-3 rounded-full text-xs font-bold shadow-md shadow-[#00A3E0]/25 transition-all cursor-pointer"
+                  >
+                    <span>Book Strategy Session</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </button>
+                </div>
+              </div>
+            </div>
+          </section>
+        )}
 
         {/* Live Projects & Production SaaS Architectures Section */}
         {member.projects && member.projects.length > 0 && (
@@ -318,7 +449,7 @@ const TeamMemberPage = () => {
                     {otherMembers.map((m, idx) => (
                       <Link
                         key={`other-set1-${idx}`}
-                        to={`/team/${m.slug}`}
+                        to={`/team/${m.slug || m.id}`}
                         className="w-[280px] sm:w-[320px] shrink-0 bg-white rounded-3xl border border-slate-200/90 overflow-hidden shadow-xs hover:shadow-xl hover:-translate-y-2 transition-all duration-300 flex flex-col justify-between group cursor-pointer"
                       >
                         <div>
@@ -368,7 +499,7 @@ const TeamMemberPage = () => {
                     {otherMembers.map((m, idx) => (
                       <Link
                         key={`other-set2-${idx}`}
-                        to={`/team/${m.slug}`}
+                        to={`/team/${m.slug || m.id}`}
                         tabIndex={-1}
                         className="w-[280px] sm:w-[320px] shrink-0 bg-white rounded-3xl border border-slate-200/90 overflow-hidden shadow-xs hover:shadow-xl hover:-translate-y-2 transition-all duration-300 flex flex-col justify-between group cursor-pointer"
                       >
