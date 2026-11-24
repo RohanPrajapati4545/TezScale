@@ -75,13 +75,15 @@ const Footer = ({ onOpenConsultation }) => {
               <img
                 src={content?.branding?.logoUrl || tezscaleLogo}
                 alt="TezScale Logo"
+                width="160"
+                height="48"
                 className="h-11 sm:h-12 w-auto object-contain drop-shadow-[0_0_12px_rgba(0,163,224,0.35)] group-hover:scale-105 transition-transform duration-300"
               />
               <div className="flex flex-col justify-center text-left">
                 <div className="text-xl sm:text-[27px] font-black tracking-tight uppercase leading-none">
                   {renderBrandName(content?.branding?.agencyName)}
                 </div>
-                <div className="text-[7.5px] sm:text-[8.5px] uppercase tracking-wider text-slate-400 font-bold mt-1 leading-none group-hover:text-slate-300 transition-colors">
+                <div className="text-[7.5px] sm:text-[8.5px] uppercase tracking-wider text-slate-300 font-bold mt-1 leading-none group-hover:text-white transition-colors">
                   {content?.branding?.tagline || 'GROW YOUR BUSINESS ONLINE'}
                 </div>
               </div>
@@ -143,8 +145,8 @@ const Footer = ({ onOpenConsultation }) => {
 
           {/* Col 2: Quick Links (2 cols) */}
           <div className="lg:col-span-2 space-y-4">
-            <h4 className="text-xs font-bold text-white uppercase tracking-wider">Quick Links</h4>
-            <ul className="space-y-2.5 text-xs text-slate-400 font-medium uppercase tracking-wide">
+            <h3 className="text-xs font-bold text-white uppercase tracking-wider">Quick Links</h3>
+            <ul className="space-y-2.5 text-xs text-slate-300 font-medium uppercase tracking-wide">
               <li><Link to="/" className="hover:text-[#00A3E0] transition-colors">Home</Link></li>
               <li><Link to="/about" className="hover:text-[#00A3E0] transition-colors">About Us</Link></li>
               <li><Link to="/services" className="hover:text-[#00A3E0] transition-colors">Services</Link></li>
@@ -157,8 +159,8 @@ const Footer = ({ onOpenConsultation }) => {
 
           {/* Col 3: Core 6 Services (3 cols) */}
           <div className="lg:col-span-3 space-y-4">
-            <h4 className="text-xs font-bold text-white uppercase tracking-wider">Our Core Pillars</h4>
-            <ul className="space-y-2.5 text-xs text-slate-400 font-medium">
+            <h3 className="text-xs font-bold text-white uppercase tracking-wider">Our Core Pillars</h3>
+            <ul className="space-y-2.5 text-xs text-slate-300 font-medium">
               <li><Link to="/services/web-development" className="hover:text-[#00A3E0] transition-colors">Website Builder & Dev</Link></li>
               <li><Link to="/services/graphic-design" className="hover:text-[#00A3E0] transition-colors">Graphic Design & Brand Kits</Link></li>
               <li><Link to="/services/digital-marketing" className="hover:text-[#00A3E0] transition-colors">Digital Marketing Support (SEO)</Link></li>
@@ -170,8 +172,8 @@ const Footer = ({ onOpenConsultation }) => {
 
           {/* Col 4: Contact & Operating Hours (3 cols) */}
           <div className="lg:col-span-3 space-y-4">
-            <h4 className="text-xs font-bold text-white uppercase tracking-wider">Contact & Hours</h4>
-            <ul className="space-y-2.5 text-xs text-slate-400 font-medium">
+            <h3 className="text-xs font-bold text-white uppercase tracking-wider">Contact & Hours</h3>
+            <ul className="space-y-2.5 text-xs text-slate-300 font-medium">
               <li className="flex items-center gap-2.5">
                 <Phone className="w-4 h-4 text-[#0EA5E9] flex-shrink-0" />
                 <a href={contact.phone && !contact.phone.includes('98765') ? `tel:${contact.phone.replace(/\s+/g, '')}` : whatsappUrl} className="hover:text-white">
@@ -227,8 +229,8 @@ const Footer = ({ onOpenConsultation }) => {
 
         {/* Local Business Corridors & Specialized Industry Niches SEO Strip */}
         <div className="py-6 border-b border-slate-800/60 text-left space-y-2.5">
-          <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[11px] sm:text-xs text-slate-400">
-            <span className="font-bold text-slate-300 uppercase tracking-wider text-[10px]">Indore & MP Hubs:</span>
+          <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[11px] sm:text-xs text-slate-300">
+            <span className="font-bold text-slate-200 uppercase tracking-wider text-[10px]">Indore & MP Hubs:</span>
             <span>Vijay Nagar</span> •
             <span>Palasia</span> •
             <span>AB Road</span> •
@@ -242,8 +244,8 @@ const Footer = ({ onOpenConsultation }) => {
             <span>Ujjain</span> •
             <span>Bhopal</span>
           </div>
-          <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[11px] sm:text-xs text-slate-400">
-            <span className="font-bold text-slate-300 uppercase tracking-wider text-[10px]">Industry Niches:</span>
+          <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[11px] sm:text-xs text-slate-300">
+            <span className="font-bold text-slate-200 uppercase tracking-wider text-[10px]">Industry Niches:</span>
             <span>Medical Clinics & Doctors</span> •
             <span>Real Estate Developers & Builders</span> •
             <span>Industrial Manufacturing & Exporters</span> •
@@ -253,15 +255,15 @@ const Footer = ({ onOpenConsultation }) => {
         </div>
 
         {/* Bottom Legal Bar */}
-        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500 font-medium">
+        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-300 font-medium">
           <div>
             © {new Date().getFullYear()} TezScale. All rights reserved.
           </div>
 
           <div className="flex items-center gap-6">
-            <a href="#home" className="hover:text-slate-400 transition-colors">Privacy Policy</a>
+            <a href="#home" className="hover:text-white transition-colors">Privacy Policy</a>
             <span>|</span>
-            <a href="#home" className="hover:text-slate-400 transition-colors">Terms of Service</a>
+            <a href="#home" className="hover:text-white transition-colors">Terms of Service</a>
           </div>
         </div>
 

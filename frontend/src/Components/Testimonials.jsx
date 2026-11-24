@@ -72,7 +72,7 @@ const Testimonials = () => {
           threshold={0.15}
         >
           <div className="text-left mb-12 space-y-2.5">
-            <div className="inline-flex items-center px-3.5 py-1.5 rounded-full bg-[#e0f4ff] border border-[#00A3E0]/30 text-[#007ba8] text-xs font-bold tracking-wide shadow-2xs">
+            <div className="inline-flex items-center px-3.5 py-1.5 rounded-full bg-[#e0f4ff] border border-[#00A3E0]/30 text-[#006287] text-xs font-bold tracking-wide shadow-2xs">
               {testimonialsSection.badge || 'Client Endorsements'}
             </div>
             <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
@@ -139,7 +139,7 @@ const Testimonials = () => {
                     <div className="text-xs font-semibold text-slate-800 line-clamp-1">
                       {testi.role}
                     </div>
-                    <div className="text-[11px] text-slate-400 font-medium truncate">
+                    <div className="text-[11px] text-slate-600 font-medium truncate">
                       {testi.sector}
                     </div>
                     <div className="text-amber-500 text-xs mt-1 tracking-wider">
@@ -149,18 +149,18 @@ const Testimonials = () => {
                 </div>
 
                 {/* Quote Text */}
-                <blockquote className="text-xs sm:text-[13px] text-slate-600 italic bg-slate-50 p-3.5 sm:p-4 rounded-2xl border border-slate-100 leading-relaxed font-normal">
+                <blockquote className="text-xs sm:text-[13px] text-slate-700 italic bg-slate-50 p-3.5 sm:p-4 rounded-2xl border border-slate-100 leading-relaxed font-normal">
                   "{testi.quote}"
                 </blockquote>
               </div>
 
               {/* Bottom Row: Verified Client */}
               <div className="pt-3 flex items-center justify-between border-t border-slate-100 text-[11px]">
-                <div className="flex items-center gap-1.5 text-slate-400 font-medium">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500 shrink-0" />
+                <div className="flex items-center gap-1.5 text-slate-600 font-semibold">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
                   <span>Verified Client</span>
                 </div>
-                <span className="text-[10px] text-slate-400 font-medium">
+                <span className="text-[10px] text-slate-600 font-medium">
                   TezScale Partner
                 </span>
               </div>

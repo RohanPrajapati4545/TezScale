@@ -206,7 +206,7 @@ const IndustrySolutions = ({ onOpenConsultation }) => {
                   ))}
                 </div>
 
-                <div className="text-[11px] text-slate-400 pt-1 text-center italic">
+                <div className="text-[11px] text-slate-300 pt-1 text-center italic">
                   *Verified client outcomes across Q1-Q3 deployments
                 </div>
               </div>
@@ -216,10 +216,10 @@ const IndustrySolutions = ({ onOpenConsultation }) => {
         </AnimatedContent>
 
         {/* Semantic HTML Block for Google SEO crawling of all 4 verticals */}
-        <div className="sr-only" aria-hidden="true">
+        <div className="sr-only">
           {verticals.map((v) => (
             <article key={v.id}>
-              <h3>{v.badge}</h3>
+              <p className="font-bold">{v.badge}</p>
               <p>{v.description}</p>
               <ul>
                 {v.features.map((f, i) => (

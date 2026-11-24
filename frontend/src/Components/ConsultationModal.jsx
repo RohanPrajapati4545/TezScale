@@ -156,10 +156,10 @@ const ConsultationModal = ({ isOpen, onClose }) => {
         {/* Header: Clean & Compact */}
         <div className="px-5 sm:px-6 py-4 border-b border-slate-800 flex items-start justify-between shrink-0 bg-slate-900/90">
           <div className="text-left pr-4">
-            <h3 id="modal-growth-heading" className="font-heading font-semibold text-[18px] sm:text-[20px] text-white tracking-tight leading-[1.30] flex items-center gap-2">
+            <h2 id="modal-growth-heading" className="font-heading font-semibold text-[18px] sm:text-[20px] text-white tracking-tight leading-[1.30] flex items-center gap-2">
               <span>Get Your Free Website & Growth Plan</span>
               <span className="w-2 h-2 rounded-full bg-[#0EA5E9] animate-pulse" />
-            </h3>
+            </h2>
             <p className="font-sans font-normal text-[13px] sm:text-[14px] text-slate-400 mt-1 leading-relaxed">
               Share your details below. Our Indore specialist will message you on WhatsApp within 15 minutes.
             </p>
@@ -180,7 +180,7 @@ const ConsultationModal = ({ isOpen, onClose }) => {
               <div className="w-14 h-14 rounded-2xl bg-emerald-500/20 border border-emerald-500/40 text-emerald-400 flex items-center justify-center mx-auto shadow-lg shadow-emerald-500/20">
                 <CheckCircle2 className="w-8 h-8" />
               </div>
-              <h4 className="font-heading font-bold text-xl text-white">Inquiry Received!</h4>
+              <h3 className="font-heading font-bold text-xl text-white">Inquiry Received!</h3>
               <p className="font-sans text-sm text-slate-300 max-w-sm mx-auto leading-relaxed">
                 Thank you, <span className="text-white font-bold">{formData.name}</span>! Our Indore specialist will message you on WhatsApp within <span className="text-emerald-400 font-bold">15 minutes</span>.
               </p>

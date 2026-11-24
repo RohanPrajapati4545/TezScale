@@ -172,6 +172,8 @@ const Navbar = ({ onOpenConsultation }) => {
             <img
               src={branding.logoUrl || tezscaleLogo}
               alt="TezScale Logo"
+              width="160"
+              height="48"
               className="h-10 sm:h-12 w-auto object-contain drop-shadow-[0_0_12px_rgba(0,163,224,0.35)] group-hover:scale-105 transition-transform duration-300"
             />
             <div className="flex flex-col justify-center text-left">

@@ -357,7 +357,8 @@ const About = () => {
               loop
               muted
               playsInline
-              preload="auto"
+              preload="metadata"
+              aria-hidden="true"
               className={`w-full h-full object-contain md:object-cover portrait:object-contain landscape:object-cover object-center portrait:scale-100 landscape:scale-120 md:scale-120 portrait:-translate-y-6 sm:portrait:-translate-y-8 landscape:-translate-y-10 lg:landscape:-translate-y-16 portrait:[mask-image:linear-gradient(to_bottom,transparent_0%,black_10%,black_90%,transparent_100%)] landscape:[mask-image:none] transition-opacity duration-700 ease-in-out ${
                 contentVisible ? 'opacity-75 sm:opacity-80' : 'opacity-100'
               }`}
@@ -365,6 +366,7 @@ const About = () => {
               <source src={content?.media?.aboutHeroVideo || "/page-hero-video.mp4"} type="video/mp4" />
               <source src="/services-hero-video.mp4" type="video/mp4" />
               <source src="/tezscale-hero-video-full.mp4" type="video/mp4" />
+              <track kind="captions" src="data:text/vtt;charset=utf-8,WEBVTT" label="English" default />
             </video>
             {/* Soft atmospheric gradient overlays - completely fades out when content hides for full real video visibility */}
             <div

@@ -119,7 +119,7 @@ const WhyChooseUs = ({ onOpenConsultation }) => {
                   </div>
                   <div className="text-left">
                     <div className="text-xs font-bold text-slate-800 leading-tight">{why.badge1Title || 'Your Growth'}</div>
-                    <div className="text-[10px] text-slate-400 font-medium">{why.badge1Subtitle || 'Our Priority'}</div>
+                    <div className="text-[10px] text-slate-600 font-medium">{why.badge1Subtitle || 'Our Priority'}</div>
                   </div>
                 </div>
 
@@ -130,7 +130,7 @@ const WhyChooseUs = ({ onOpenConsultation }) => {
                   </div>
                   <div className="text-left">
                     <div className="text-xs font-extrabold text-slate-900 leading-tight">{why.badge2Title || '+300%'}</div>
-                    <div className="text-[10px] text-slate-400 font-medium">{why.badge2Subtitle || 'Traffic Growth'}</div>
+                    <div className="text-[10px] text-slate-600 font-medium">{why.badge2Subtitle || 'Traffic Growth'}</div>
                   </div>
                 </div>
               </div>
@@ -192,13 +192,15 @@ const WhyChooseUs = ({ onOpenConsultation }) => {
                     loop
                     muted={isMuted}
                     playsInline
-                    preload="auto"
+                    preload="metadata"
+                    aria-label="TezScale Agency HQ Video"
                     className="w-full h-52 sm:h-64 md:h-72 object-cover cursor-pointer transition-transform duration-500 group-hover:scale-[1.02]"
                     onClick={togglePlay}
                   >
                     <source src={why.hqVideoUrl || content?.media?.agencyHqVideo || "/page-hero-video.mp4"} type="video/mp4" />
                     <source src="/services-hero-video.mp4" type="video/mp4" />
                     <source src="/tezscale-hero-video.mp4" type="video/mp4" />
+                    <track kind="captions" src="data:text/vtt;charset=utf-8,WEBVTT" label="English" default />
                   </video>
 
                   {/* Gradient overlays */}
@@ -293,7 +295,7 @@ const WhyChooseUs = ({ onOpenConsultation }) => {
               >
                 <div>
                   <div className="flex items-center justify-between mb-4">
-                    <span className="text-3xl font-black text-slate-300 group-hover:text-[#00A3E0] transition-colors font-heading">
+                    <span aria-hidden="true" className="text-3xl font-black text-slate-300 group-hover:text-[#00A3E0] transition-colors font-heading select-none">
                       {st.step}
                     </span>
                     <div className="w-10 h-10 rounded-xl bg-white shadow-xs border border-slate-100 flex items-center justify-center">
@@ -309,7 +311,7 @@ const WhyChooseUs = ({ onOpenConsultation }) => {
                 </div>
 
                 {/* Clear Timeline Milestone Badge (Replaces "Phase Complete ✓") */}
-                <div className="pt-3 border-t border-slate-200/60 flex items-center gap-1.5 text-xs font-semibold text-[#007ba8] bg-[#e0f4ff]/60 px-2.5 py-1.5 rounded-lg">
+                <div className="pt-3 border-t border-slate-200/60 flex items-center gap-1.5 text-xs font-semibold text-[#006287] bg-[#e0f4ff]/60 px-2.5 py-1.5 rounded-lg">
                   <span className="w-1.5 h-1.5 rounded-full bg-[#00A3E0]" />
                   <span>{st.milestone}</span>
                 </div>

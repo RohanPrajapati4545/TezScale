@@ -103,12 +103,14 @@ const Hero = ({ onOpenConsultation }) => {
           loop
           muted
           playsInline
-          preload="auto"
+          preload="metadata"
+          aria-hidden="true"
           className={`w-full h-full object-cover object-center transform -translate-y-6 sm:-translate-y-8 md:-translate-y-10 lg:-translate-y-12 scale-105 sm:scale-108 transition-opacity duration-700 ease-in-out ${contentVisible ? 'opacity-70 sm:opacity-80' : 'opacity-100'
             }`}
         >
           <source src={heroData.backgroundVideo || mediaData.homeHeroVideo || "/tezscale-hero-video.mp4"} type="video/mp4" />
           <source src="/tezscale-hero-video-full.mp4" type="video/mp4" />
+          <track kind="captions" src="data:text/vtt;charset=utf-8,WEBVTT" label="English" default />
         </video>
 
         {/* Soft atmospheric gradient overlays - keep dark backdrop on mobile so text is always 100% readable */}
