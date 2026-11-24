@@ -382,7 +382,7 @@ const ContactPage = () => {
                             name="name"
                             value={formData.name}
                             onChange={handleChange}
-                            placeholder="e.g. Dr. Priya Sharma"
+                            placeholder="e.g. Rohan Prajapati"
                             className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-xs font-medium focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none transition-all duration-300"
                           />
                         </div>
@@ -397,7 +397,7 @@ const ContactPage = () => {
                             name="email"
                             value={formData.email}
                             onChange={handleChange}
-                            placeholder="priya@clinic.com"
+                            placeholder="rohan@business.com"
                             className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-xs font-medium focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none transition-all duration-300"
                           />
                         </div>

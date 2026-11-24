@@ -639,7 +639,7 @@ const ServiceDetailPage = () => {
                           name="name"
                           value={formData.name}
                           onChange={handleChange}
-                          placeholder="e.g. Dr. Aryan Mehta"
+                          placeholder="e.g. Rohan Prajapati"
                           className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-xs font-medium focus:ring-1 focus:ring-[#00A3E0] focus:border-[#00A3E0] focus:outline-none transition-all"
                         />
                       </div>
@@ -670,7 +670,7 @@ const ServiceDetailPage = () => {
                           name="email"
                           value={formData.email}
                           onChange={handleChange}
-                          placeholder="aryan@clinic.com"
+                          placeholder="rohan@business.com"
                           className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-xs font-medium focus:ring-1 focus:ring-[#00A3E0] focus:border-[#00A3E0] focus:outline-none transition-all"
                         />
                       </div>

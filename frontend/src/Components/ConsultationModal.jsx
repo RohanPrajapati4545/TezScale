@@ -209,7 +209,7 @@ const ConsultationModal = ({ isOpen, onClose }) => {
                     required
                     value={formData.name}
                     onChange={handleChange}
-                    placeholder="e.g., Rajesh Sharma"
+                    placeholder="e.g., Rohan Prajapati"
                     className="w-full pl-9 pr-3.5 py-2.5 bg-slate-800/80 hover:bg-slate-800 border border-slate-700 rounded-xl font-sans text-sm text-white placeholder:text-slate-400 font-medium focus:ring-1 focus:ring-[#0EA5E9] focus:border-[#0EA5E9] focus:outline-none transition-all"
                   />
                 </div>
