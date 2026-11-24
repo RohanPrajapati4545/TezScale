@@ -1,0 +1,66 @@
+{
+  "$schema": "https://agenticresourcediscovery.org/schemas/v0.91/schema.json",
+  "@context": "https://agenticresourcediscovery.org/schemas/v0.91/context.json",
+  "name": "TezScale Agentic Resource Discovery Catalog",
+  "description": "Agentic Resource Discovery (ARD) catalog of machine-readable endpoints, tools, and services for TezScale Digital Growth Agency.",
+  "publisher": {
+    "name": "TezScale",
+    "url": "https://tez-scale-navy.vercel.app/",
+    "contact": "hello@tezscale.com"
+  },
+  "entries": [
+    {
+      "@type": "AgenticResource",
+      "identifier": "urn:air:tezscale:tools:lead-consultation-intake",
+      "displayName": "TezScale Lead & Strategy Consultation Intake API",
+      "type": "openapi",
+      "description": "Submits business growth inquiry or requests free 15-minute digital roadmap. Triggers instant WhatsApp routing within 2 minutes.",
+      "url": "https://tezscale.onrender.com/api/leads",
+      "representativeQueries": [
+        "Book a free website consultation with TezScale",
+        "Request local SEO audit for clinic in Indore",
+        "Get pricing for business website development in India",
+        "Hire Meta ads agency for real estate lead generation"
+      ]
+    },
+    {
+      "@type": "AgenticResource",
+      "identifier": "urn:air:tezscale:tools:llms-context-summary",
+      "displayName": "TezScale LLM Machine Summary",
+      "type": "llms-txt",
+      "description": "Structured plain text markdown summary of TezScale core services, leadership architects, and 2-day delivery model following llmstxt.org specification.",
+      "url": "https://tez-scale-navy.vercel.app/llms.txt",
+      "representativeQueries": [
+        "What services does TezScale offer?",
+        "Who is the founder of TezScale?",
+        "What is TezScale's website turnaround delivery time?",
+        "TezScale contact details and phone number"
+      ]
+    },
+    {
+      "@type": "AgenticResource",
+      "identifier": "urn:air:tezscale:tools:llms-extended-kb",
+      "displayName": "TezScale Full Knowledge Base & Agent Directory",
+      "type": "llms-txt",
+      "description": "Extended plain text documentation including complete service deliverables, FAQ database, tech stack, and industry roadmaps.",
+      "url": "https://tez-scale-navy.vercel.app/llms-full.txt",
+      "representativeQueries": [
+        "What is included in TezScale website development package?",
+        "How does TezScale rank businesses in Google Maps Top 3?",
+        "What are TezScale digital marketing deliverables?"
+      ]
+    },
+    {
+      "@type": "AgenticResource",
+      "identifier": "urn:air:tezscale:tools:whatsapp-direct-consult",
+      "displayName": "TezScale WhatsApp Direct Consultation",
+      "type": "messaging",
+      "description": "Direct encrypted communication channel with TezScale growth architects on WhatsApp for instant project scoping.",
+      "url": "https://wa.me/916262778128",
+      "representativeQueries": [
+        "Chat with TezScale growth specialist on WhatsApp",
+        "Message TezScale Indore office directly"
+      ]
+    }
+  ]
+}

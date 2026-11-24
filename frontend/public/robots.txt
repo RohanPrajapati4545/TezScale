@@ -2,6 +2,7 @@ User-agent: *
 Allow: /
 Allow: /llms.txt
 Allow: /llms-full.txt
+Allow: /.well-known/ard.json
 Disallow: /backoffice
 Disallow: /admin
 
@@ -9,21 +10,25 @@ User-agent: Googlebot
 Allow: /
 Allow: /llms.txt
 Allow: /llms-full.txt
+Allow: /.well-known/ard.json
 
 User-agent: Google-Extended
 Allow: /
 Allow: /llms.txt
 Allow: /llms-full.txt
+Allow: /.well-known/ard.json
 
 User-agent: GPTBot
 Allow: /
 Allow: /llms.txt
 Allow: /llms-full.txt
+Allow: /.well-known/ard.json
 
 User-agent: ClaudeBot
 Allow: /
 Allow: /llms.txt
 Allow: /llms-full.txt
+Allow: /.well-known/ard.json
 
 User-agent: Googlebot-Image
 Allow: /
@@ -33,4 +38,5 @@ Allow: /*.svg$
 Allow: /*.jpg$
 Allow: /*.jpeg$
 
+Agentmap: https://tez-scale-navy.vercel.app/.well-known/ard.json
 Sitemap: https://tez-scale-navy.vercel.app/sitemap.xml
