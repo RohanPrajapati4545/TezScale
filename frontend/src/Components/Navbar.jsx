@@ -169,13 +169,16 @@ const Navbar = ({ onOpenConsultation }) => {
             aria-label="TezScale Home"
             className="flex items-center gap-2.5 sm:gap-3 cursor-pointer group select-none"
           >
-            <img
-              src={branding.logoUrl || tezscaleLogo}
-              alt="TezScale Logo"
-              width="160"
-              height="48"
-              className="h-10 sm:h-12 w-auto object-contain drop-shadow-[0_0_12px_rgba(0,163,224,0.35)] group-hover:scale-105 transition-transform duration-300"
-            />
+            <picture>
+              <source srcSet="/tezscale-logo.webp" type="image/webp" />
+              <img
+                src={branding.logoUrl || tezscaleLogo}
+                alt="TezScale Logo"
+                width="160"
+                height="48"
+                className="h-10 sm:h-12 w-auto object-contain drop-shadow-[0_0_12px_rgba(0,163,224,0.35)] group-hover:scale-105 transition-transform duration-300"
+              />
+            </picture>
             <div className="flex flex-col justify-center text-left">
               <div className="text-xl sm:text-[27px] font-black tracking-tight leading-none uppercase">
                 {renderBrandName(branding.agencyName)}
@@ -342,8 +345,8 @@ const Navbar = ({ onOpenConsultation }) => {
           <div className="flex md:hidden items-center gap-2">
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 rounded-lg focus:outline-none transition-colors text-white hover:text-sky-300 hover:bg-white/10"
-              aria-label="Toggle menu"
+              className="min-w-[48px] min-h-[48px] p-2.5 rounded-lg focus:outline-none transition-colors text-white hover:text-sky-300 hover:bg-white/10 flex items-center justify-center cursor-pointer"
+              aria-label="Toggle navigation menu"
             >
               {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>

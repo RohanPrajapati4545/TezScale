@@ -103,7 +103,8 @@ const Hero = ({ onOpenConsultation }) => {
           loop
           muted
           playsInline
-          preload="metadata"
+          preload="none"
+          poster="/hero-founder-visual.webp"
           aria-hidden="true"
           className={`w-full h-full object-cover object-center transform -translate-y-6 sm:-translate-y-8 md:-translate-y-10 lg:-translate-y-12 scale-105 sm:scale-108 transition-opacity duration-700 ease-in-out ${contentVisible ? 'opacity-70 sm:opacity-80' : 'opacity-100'
             }`}
@@ -176,7 +177,7 @@ const Hero = ({ onOpenConsultation }) => {
           {/* Primary CTA Button: Book Free 15-Min Strategy Call → */}
           <button
             onClick={onOpenConsultation}
-            className="px-6 sm:px-7 py-3 min-h-[44px] rounded-full bg-gradient-to-r from-sky-400 via-cyan-300 to-sky-500 hover:from-sky-300 hover:via-cyan-200 hover:to-sky-400 text-slate-950 font-sans font-semibold text-[15px] transition-all duration-300 flex items-center gap-2 cursor-pointer shadow-lg shadow-sky-500/25 hover:shadow-sky-500/40 hover:scale-[1.02]"
+            className="px-6 sm:px-7 py-3.5 min-h-[48px] rounded-full bg-gradient-to-r from-sky-400 via-cyan-300 to-sky-500 hover:from-sky-300 hover:via-cyan-200 hover:to-sky-400 text-slate-950 font-sans font-semibold text-[15px] transition-all duration-300 flex items-center gap-2 cursor-pointer shadow-lg shadow-sky-500/25 hover:shadow-sky-500/40 hover:scale-[1.02]"
           >
             <span>Book Free 15-Min Strategy Call</span>
             <ArrowRight className="w-4 h-4 text-slate-950 stroke-[2.5]" />
@@ -187,7 +188,7 @@ const Hero = ({ onOpenConsultation }) => {
             href="https://wa.me/919876543210?text=Hi%20TezScale%20team,%20I%20want%20to%20get%20more%20customer%20inquiries%20for%20my%20business."
             target="_blank"
             rel="noopener noreferrer"
-            className="px-6 sm:px-7 py-3 min-h-[44px] rounded-full bg-white/[0.08] hover:bg-white/[0.15] backdrop-blur-md border border-white/25 hover:border-white/40 text-white font-sans font-semibold text-[15px] transition-all duration-300 flex items-center gap-2 cursor-pointer shadow-sm hover:scale-[1.02]"
+            className="px-6 sm:px-7 py-3.5 min-h-[48px] rounded-full bg-white/[0.08] hover:bg-white/[0.15] backdrop-blur-md border border-white/25 hover:border-white/40 text-white font-sans font-semibold text-[15px] transition-all duration-300 flex items-center gap-2 cursor-pointer shadow-sm hover:scale-[1.02]"
           >
             <MessageSquare className="w-4 h-4 text-emerald-400" />
             <span>Chat on WhatsApp</span>

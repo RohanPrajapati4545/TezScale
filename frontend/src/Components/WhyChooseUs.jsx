@@ -105,8 +105,20 @@ const WhyChooseUs = ({ onOpenConsultation }) => {
             >
               <div className="relative w-full rounded-3xl overflow-hidden shadow-2xl border-4 border-white bg-slate-100">
                 <img
-                  src={why.founderImage || "/tezscale-founder.jpg"}
-                  alt="TezScale Digital Growth Specialist"
+                  src={
+                    why.founderImage &&
+                    !why.founderImage.includes('tezscale-founder') &&
+                    !why.founderImage.includes('res.cloudinary.com/qwpdsvyf')
+                      ? why.founderImage
+                      : '/shubham-karma.webp'
+                  }
+                  onError={(e) => {
+                    e.currentTarget.onerror = null;
+                    e.currentTarget.src = '/shubham-karma.jpg';
+                  }}
+                  alt="Shubham Karma - Founder & Digital Growth Specialist at TezScale"
+                  width="600"
+                  height="600"
                   className="w-full h-80 sm:h-96 md:h-[420px] object-cover object-top hover:scale-105 transition-transform duration-500"
                   loading="lazy"
                   decoding="async"

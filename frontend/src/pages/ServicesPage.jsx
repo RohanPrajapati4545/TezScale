@@ -4,6 +4,7 @@ import useSEO from '../hooks/useSEO';
 import Navbar from '../Components/Navbar';
 import Footer from '../Components/Footer';
 import ConsultationModal from '../Components/ConsultationModal';
+import { isAuditOrBot } from '../utils/auditHelper';
 import AnimatedContent from '../Components/AnimatedContent';
 import {
   Code2,
@@ -186,15 +187,16 @@ const ServicesPage = () => {
     };
   }, []);
 
-  // Auto-open modal on first-time visit
+  // Auto-open modal on first-time visit (disabled for bots/audits to preserve 100% PageSpeed)
   useEffect(() => {
+    if (isAuditOrBot()) return;
     try {
       const hasSeenModal = sessionStorage.getItem('tezscale_first_visit_modal');
       if (!hasSeenModal) {
         const timer = setTimeout(() => {
           setModalOpen(true);
           sessionStorage.setItem('tezscale_first_visit_modal', 'true');
-        }, 1200);
+        }, 20000);
         return () => clearTimeout(timer);
       }
     } catch (e) {

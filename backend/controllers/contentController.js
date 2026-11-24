@@ -89,7 +89,7 @@ export const defaultContent = {
     title: 'Your Growth, Our Mission',
     description:
       'We combine creativity, technology and data-driven strategies to deliver measurable results. Tailored specifically for Medical Clinics, Real Estate Brokers, Engineering Firms, and Ambitious Entrepreneurs.',
-    founderImage: '/tezscale-founder.jpg',
+    founderImage: '/shubham-karma.webp',
     badge1Title: 'Your Growth',
     badge1Subtitle: 'Our Priority',
     badge2Title: '+300%',
