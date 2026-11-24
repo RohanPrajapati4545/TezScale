@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ChevronLeft, ChevronRight, Quote, Send, ArrowRight } from 'lucide-react';
 import { useContent } from '../context/ContentContext';
+import { resolveMediaUrl } from '../api/apiClient';
 import AnimatedContent from './AnimatedContent';
 
 const Testimonials = ({ onOpenConsultation }) => {
@@ -89,17 +90,23 @@ const Testimonials = ({ onOpenConsultation }) => {
 
             <div className="pt-8 flex items-center justify-between border-t border-slate-100 mt-6">
               <div className="flex items-center gap-3.5">
-                <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-[#00A3E0] shadow-2xs bg-[#e0f4ff]">
-                  <img
-                    src={current.avatar || 'https://images.unsplash.com/photo-1594824813589-9a25b1641ba5?auto=format&fit=crop&w=150&q=75'}
-                    alt={current.name}
-                    loading="lazy"
-                    decoding="async"
-                    className="w-full h-full object-cover"
-                    onError={(e) => {
-                      e.currentTarget.style.display = 'none';
-                    }}
-                  />
+                <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-[#00A3E0] shadow-2xs bg-[#e0f4ff] flex items-center justify-center">
+                  {current.avatar ? (
+                    <img
+                      src={resolveMediaUrl(current.avatar)}
+                      alt={current.name}
+                      loading="lazy"
+                      decoding="async"
+                      className="w-full h-full object-cover"
+                      onError={(e) => {
+                        e.currentTarget.style.display = 'none';
+                      }}
+                    />
+                  ) : (
+                    <span className="font-extrabold text-[#00A3E0] text-sm">
+                      {current.name ? current.name[0] : 'U'}
+                    </span>
+                  )}
                 </div>
                 <div>
                   <div className="font-extrabold text-slate-900 text-base">{current.name}</div>

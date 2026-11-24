@@ -4,20 +4,20 @@ export const defaultContent = {
   agencyName: 'TezScale',
   agencyTagline: 'Accelerating Digital Growth',
   branding: {
-    logoUrl: '/tezscale-logo.png',
-    faviconUrl: '/tezscale-logo.png',
+    logoUrl: 'https://res.cloudinary.com/qwpdsvyf/image/upload/v1795431529/tezscale_assets/tezscale-logo.png',
+    faviconUrl: 'https://res.cloudinary.com/qwpdsvyf/image/upload/v1795431529/tezscale_assets/tezscale-logo.png',
     agencyName: 'TezScale',
     tagline: 'ACCELERATING DIGITAL GROWTH',
   },
   media: {
-    homeHeroVideo: '/tezscale-hero-video.mp4',
+    homeHeroVideo: 'https://res.cloudinary.com/qwpdsvyf/video/upload/v1795431532/tezscale_assets/tezscale-hero-video.mp4',
     homeHeroBgImage: '',
-    servicesHeroVideo: '/services-hero-video.mp4',
-    aboutHeroVideo: '/page-hero-video.mp4',
-    testimonialsHeroVideo: '/page-hero-video.mp4',
-    portfolioHeroVideo: '/page-hero-video.mp4',
-    contactHeroVideo: '/page-hero-video.mp4',
-    agencyHqVideo: '/page-hero-video.mp4',
+    servicesHeroVideo: 'https://res.cloudinary.com/qwpdsvyf/video/upload/v1795431561/tezscale_assets/services-hero-video.mp4',
+    aboutHeroVideo: 'https://res.cloudinary.com/qwpdsvyf/video/upload/v1795431546/tezscale_assets/page-hero-video.mp4',
+    testimonialsHeroVideo: 'https://res.cloudinary.com/qwpdsvyf/video/upload/v1795431546/tezscale_assets/page-hero-video.mp4',
+    portfolioHeroVideo: 'https://res.cloudinary.com/qwpdsvyf/video/upload/v1795431546/tezscale_assets/page-hero-video.mp4',
+    contactHeroVideo: 'https://res.cloudinary.com/qwpdsvyf/video/upload/v1795431546/tezscale_assets/page-hero-video.mp4',
+    agencyHqVideo: 'https://res.cloudinary.com/qwpdsvyf/video/upload/v1795431546/tezscale_assets/page-hero-video.mp4',
   },
   hero: {
     badge: 'Welcome to TezScale',
@@ -33,9 +33,9 @@ export const defaultContent = {
     stat2Label: 'Avg ROAS Growth',
     stat3Value: '4.9/5',
     stat3Label: 'Client Rating',
-    backgroundVideo: '/tezscale-hero-video.mp4',
+    backgroundVideo: 'https://res.cloudinary.com/qwpdsvyf/video/upload/v1795431532/tezscale_assets/tezscale-hero-video.mp4',
     backgroundImage: '',
-    modalVideo: '/tezscale-hero-video.mp4',
+    modalVideo: 'https://res.cloudinary.com/qwpdsvyf/video/upload/v1795431532/tezscale_assets/tezscale-hero-video.mp4',
   },
   trustBar: {
     sectors: ['Healthcare (Clinics)', 'Real Estate', 'Engineering & Manufacturing'],
@@ -158,7 +158,7 @@ export const defaultContent = {
       role: 'Clinic Director, Apex Healthcare',
       sector: 'Healthcare & Clinics',
       rating: 5,
-      avatar: 'https://images.unsplash.com/photo-1594824813589-9a25b1641ba5?auto=format&fit=crop&w=150&q=80',
+      avatar: 'https://res.cloudinary.com/qwpdsvyf/image/upload/v1795439200/tezscale_assets/client-priya.jpg',
       quote:
         'TezScale completely transformed our online presence and local SEO. Their automated booking workflows brought us 3x more patient consultations in just 90 days!',
       highlight: '3x Patient Consultations',
@@ -168,7 +168,7 @@ export const defaultContent = {
       role: 'Managing Broker, UrbanSpace Realty',
       sector: 'Real Estate & Properties',
       rating: 5,
-      avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80',
+      avatar: 'https://res.cloudinary.com/qwpdsvyf/image/upload/v1795439200/tezscale_assets/client-rohit.jpg',
       quote:
         'The lead quality from TezScale Meta Ads and CRM tracking has exceeded all our expectations. Our property closing velocity has more than doubled.',
       highlight: '2x Property Closing',
@@ -178,7 +178,7 @@ export const defaultContent = {
       role: 'VP Operations, Apex Engineering',
       sector: 'Industrial Manufacturing B2B',
       rating: 5,
-      avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=150&q=80',
+      avatar: 'https://res.cloudinary.com/qwpdsvyf/image/upload/v1795439201/tezscale_assets/client-vikram.jpg',
       quote:
         'As an industrial B2B exporter, getting genuine buyer inquiries online was our biggest bottleneck. TezScale optimized our global digital footprint and we secured multi-country supply contracts.',
       highlight: 'Global B2B Contracts',
@@ -192,7 +192,7 @@ export const defaultContent = {
       badge: 'Full-Stack Developer',
       service: 'web-development',
       serviceName: 'Website Builder & Development',
-      image: '/rohan-prajapati.jpg',
+      image: 'https://res.cloudinary.com/qwpdsvyf/image/upload/v1795431573/tezscale_assets/rohan-prajapati.jpg',
       bio: 'MERN Stack Developer with extensive expertise building microservices-based SaaS platforms (React.js, Node.js, Express.js, MongoDB, Docker, Socket.IO, WebRTC). Leading digital engineering at TezScale.',
       social: {
         github: 'https://github.com/RohanPrajapati4545',
@@ -206,7 +206,7 @@ export const defaultContent = {
       badge: 'Growth Strategy',
       service: 'digital-marketing',
       serviceName: 'Digital Marketing Support (SEO)',
-      image: '/tezscale-founder.jpg',
+      image: 'https://res.cloudinary.com/qwpdsvyf/image/upload/v1795431565/tezscale_assets/tezscale-founder.jpg',
       bio: 'Strategic advisor to 200+ high-growth B2B firms. Specializes in scalable inbound funnels, algorithmic media buying, and predictable revenue acceleration systems.',
       social: {
         linkedin: 'https://linkedin.com',
@@ -219,7 +219,7 @@ export const defaultContent = {
       badge: 'AI & Machine Learning',
       service: 'web-development',
       serviceName: 'Website Builder & Development',
-      image: '/rustam-rathore.jpg',
+      image: 'https://res.cloudinary.com/qwpdsvyf/image/upload/v1795431575/tezscale_assets/rustam-rathore.jpg',
       bio: 'AI/ML specialist with deep expertise in Python, PyTorch, Scikit-learn, LangChain, and RAG pipelines. Architecting automated machine learning pipelines and generative AI solutions.',
       social: {
         github: 'https://github.com/Rustam-Rathore',
@@ -310,22 +310,26 @@ export const getContent = async (req, res) => {
 export const updateContent = async (req, res) => {
   try {
     let content = await SiteContent.findOne();
+    const updates = req.body;
+
     if (!content) {
-      content = new SiteContent(defaultContent);
+      content = await SiteContent.create({ ...defaultContent, ...updates });
+    } else {
+      content = await SiteContent.findByIdAndUpdate(
+        content._id,
+        { $set: updates },
+        { new: true, runValidators: false }
+      );
     }
 
-    const updates = req.body;
-    Object.keys(updates).forEach((key) => {
-      content[key] = updates[key];
-    });
-
-    await content.save();
     cachedContent = content;
     lastCacheTime = Date.now();
 
+    console.log('✅ SiteContent updated in MongoDB Atlas successfully');
+
     res.status(200).json({
       success: true,
-      message: 'Site content updated successfully!',
+      message: 'Site content updated successfully in database!',
       data: content,
     });
   } catch (error) {

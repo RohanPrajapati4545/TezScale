@@ -17,6 +17,7 @@ import ConsultationModal from '../Components/ConsultationModal';
 import AnimatedContent from '../Components/AnimatedContent';
 import { teamMembers, getTeamMemberBySlug } from '../data/teamData';
 import { useContent } from '../context/ContentContext';
+import { resolveMediaUrl } from '../api/apiClient';
 
 const TeamMemberPage = () => {
   const { memberSlug } = useParams();
@@ -117,9 +118,12 @@ const TeamMemberPage = () => {
                 <div className="lg:col-span-4 flex flex-col items-center text-center">
                   <div className="relative group w-48 h-48 sm:w-60 sm:h-60 rounded-3xl overflow-hidden border-2 border-sky-400/60 shadow-2xl bg-slate-950/60 backdrop-blur-md p-1.5">
                     <img
-                      src={member.image}
+                      src={resolveMediaUrl(member.image, 'https://res.cloudinary.com/qwpdsvyf/image/upload/v1795431573/tezscale_assets/rohan-prajapati.jpg')}
                       alt={`${member.name} - ${member.role} at TezScale`}
                       className={`w-full h-full ${member.imageClass || 'object-cover object-center'} rounded-2xl group-hover:scale-105 transition-transform duration-500`}
+                      onError={(e) => {
+                        e.currentTarget.src = 'https://res.cloudinary.com/qwpdsvyf/image/upload/v1795431573/tezscale_assets/rohan-prajapati.jpg';
+                      }}
                     />
                     <div className="absolute inset-0 rounded-2xl bg-gradient-to-t from-slate-950/50 via-transparent to-transparent pointer-events-none" />
                   </div>
@@ -321,9 +325,12 @@ const TeamMemberPage = () => {
                           {/* Image Container with Proper Portrait Height & Framing */}
                           <div className="h-72 sm:h-80 w-full overflow-hidden bg-slate-100 relative">
                             <img
-                              src={m.image}
+                              src={resolveMediaUrl(m.image, 'https://res.cloudinary.com/qwpdsvyf/image/upload/v1795431573/tezscale_assets/rohan-prajapati.jpg')}
                               alt={m.name}
                               className={`w-full h-full ${m.imageClass || 'object-cover object-center'} group-hover:scale-104 transition-transform duration-500`}
+                              onError={(e) => {
+                                e.currentTarget.src = 'https://res.cloudinary.com/qwpdsvyf/image/upload/v1795431573/tezscale_assets/rohan-prajapati.jpg';
+                              }}
                             />
                             <div className="absolute inset-0 bg-gradient-to-t from-slate-950/40 via-transparent to-transparent pointer-events-none" />
                             <span className="absolute top-3.5 right-3.5 text-[10px] font-bold text-white bg-slate-900/85 backdrop-blur-md border border-white/20 px-2.5 py-1 rounded-md shadow-xs">
@@ -369,9 +376,12 @@ const TeamMemberPage = () => {
                           {/* Image Container with Proper Portrait Height & Framing */}
                           <div className="h-72 sm:h-80 w-full overflow-hidden bg-slate-100 relative">
                             <img
-                              src={m.image}
+                              src={resolveMediaUrl(m.image, 'https://res.cloudinary.com/qwpdsvyf/image/upload/v1795431573/tezscale_assets/rohan-prajapati.jpg')}
                               alt={m.name}
                               className={`w-full h-full ${m.imageClass || 'object-cover object-center'} group-hover:scale-104 transition-transform duration-500`}
+                              onError={(e) => {
+                                e.currentTarget.src = 'https://res.cloudinary.com/qwpdsvyf/image/upload/v1795431573/tezscale_assets/rohan-prajapati.jpg';
+                              }}
                             />
                             <div className="absolute inset-0 bg-gradient-to-t from-slate-950/40 via-transparent to-transparent pointer-events-none" />
                             <span className="absolute top-3.5 right-3.5 text-[10px] font-bold text-white bg-slate-900/85 backdrop-blur-md border border-white/20 px-2.5 py-1 rounded-md shadow-xs">

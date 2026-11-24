@@ -16,6 +16,7 @@ import {
   Send
 } from 'lucide-react';
 import { useContent } from '../context/ContentContext';
+import { resolveMediaUrl } from '../api/apiClient';
 
 const clientReviews = [
   {
@@ -231,15 +232,21 @@ const TestimonialsPage = () => {
 
                   {/* Client Info Footer */}
                   <div className="pt-6 mt-6 border-t border-slate-100 flex items-center gap-3.5">
-                    <div className="w-11 h-11 rounded-full overflow-hidden border border-slate-200 bg-slate-100 flex-shrink-0">
-                      <img
-                        src={item.avatar || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80'}
-                        alt={item.name}
-                        className="w-full h-full object-cover"
-                        onError={(e) => {
-                          e.currentTarget.style.display = 'none';
-                        }}
-                      />
+                    <div className="w-11 h-11 rounded-full overflow-hidden border border-slate-200 bg-[#e0f4ff] flex items-center justify-center flex-shrink-0">
+                      {item.avatar ? (
+                        <img
+                          src={resolveMediaUrl(item.avatar)}
+                          alt={item.name}
+                          className="w-full h-full object-cover"
+                          onError={(e) => {
+                            e.currentTarget.style.display = 'none';
+                          }}
+                        />
+                      ) : (
+                        <span className="font-extrabold text-[#00A3E0] text-sm">
+                          {item.name ? item.name[0] : 'U'}
+                        </span>
+                      )}
                     </div>
                     <div>
                       <div className="font-extrabold text-slate-900 text-sm">{item.name}</div>

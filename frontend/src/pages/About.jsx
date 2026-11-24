@@ -30,6 +30,7 @@ import {
   Code2
 } from 'lucide-react';
 import { useContent } from '../context/ContentContext';
+import { resolveMediaUrl } from '../api/apiClient';
 
 const steps = [
   {
@@ -543,10 +544,13 @@ const About = () => {
                       {/* Image Container with Proper Portrait Height & Framing */}
                       <Link to={`/team/${member.slug}`} className="block h-72 sm:h-80 w-full overflow-hidden bg-slate-100 relative cursor-pointer">
                         <img
-                          src={member.image}
+                          src={resolveMediaUrl(member.image, 'https://res.cloudinary.com/qwpdsvyf/image/upload/v1795431573/tezscale_assets/rohan-prajapati.jpg')}
                           alt={`${member.name} - ${member.role} at TezScale`}
                           loading="lazy"
                           className={`w-full h-full ${member.imageClass || 'object-cover object-center'} group-hover:scale-104 transition-transform duration-700 ease-out`}
+                          onError={(e) => {
+                            e.currentTarget.src = 'https://res.cloudinary.com/qwpdsvyf/image/upload/v1795431573/tezscale_assets/rohan-prajapati.jpg';
+                          }}
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-slate-950/40 via-transparent to-transparent pointer-events-none" />
                         <span className="absolute top-3.5 right-3.5 text-[11px] font-bold text-white bg-slate-900/85 backdrop-blur-md border border-white/20 px-3 py-1 rounded-full shadow-md">

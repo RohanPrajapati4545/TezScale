@@ -54,11 +54,12 @@ import {
   ChevronDown,
 } from 'lucide-react';
 import { useContent, defaultSiteContent } from '../context/ContentContext';
-import apiFetch from '../api/apiClient';
+import apiFetch, { resolveMediaUrl } from '../api/apiClient';
 
 /**
  * Clean & Simple Media Upload Component (NO URL input box)
  * Simple UI: Just upload image/video directly from device with live preview & replace/remove actions.
+ * Uploads directly to Cloudinary and updates state with permanent secure URL.
  */
 const MediaUploadField = ({
   label,
@@ -68,54 +69,86 @@ const MediaUploadField = ({
   helperText,
 }) => {
   const [uploading, setUploading] = useState(false);
+  const [localPreview, setLocalPreview] = useState('');
   const fileInputRef = useRef(null);
+
+  const triggerPicker = (e) => {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+      fileInputRef.current.click();
+    }
+  };
 
   const handleFileChange = async (e) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
+    // Reset input value immediately so re-selecting the same file works
+    e.target.value = '';
+
+    // 1. Instant 0ms Local Preview for immediate visual feedback
+    try {
+      const objUrl = URL.createObjectURL(file);
+      setLocalPreview(objUrl);
+    } catch (objErr) {}
+
     setUploading(true);
 
-    // 1. Attempt to upload to backend /api/upload
     try {
-      const formData = new FormData();
-      formData.append('file', file);
+      const uploadFormData = new FormData();
+      uploadFormData.append('file', file);
 
+      // Direct upload to backend which streams to Cloudinary (180s timeout for large videos)
       const res = await apiFetch('/upload', {
         method: 'POST',
-        body: formData,
+        body: uploadFormData,
+        timeout: 180000,
       });
 
       if (res.ok) {
         const data = await res.json();
         if (data.url) {
           onChange(data.url);
-          setUploading(false);
+          setLocalPreview('');
           return;
         }
       }
+      throw new Error('Upload returned invalid response');
     } catch (err) {
-      console.warn('Backend upload skipped, using local file reader:', err);
-    }
-
-    // 2. Resilient Fallback: Read as Local Data URL
-    try {
-      const reader = new FileReader();
-      reader.onload = () => {
-        if (reader.result) {
-          onChange(reader.result);
+      console.warn('Backend/Cloudinary upload note:', err);
+      // Small image fallback (< 2MB)
+      if (type === 'image' && file.size < 2 * 1024 * 1024) {
+        try {
+          const reader = new FileReader();
+          reader.onload = () => {
+            if (reader.result) {
+              onChange(reader.result);
+              setLocalPreview('');
+            }
+          };
+          reader.readAsDataURL(file);
+        } catch (readerErr) {
+          setLocalPreview('');
+          alert('Could not read image file.');
         }
-        setUploading(false);
-      };
-      reader.onerror = () => {
-        setUploading(false);
-      };
-      reader.readAsDataURL(file);
-    } catch (err) {
-      console.error('File reading failed:', err);
+      } else {
+        setLocalPreview('');
+        alert(`Upload notice: ${err.message || 'Please check network connection'}`);
+      }
+    } finally {
       setUploading(false);
+      if (fileInputRef.current) {
+        fileInputRef.current.value = '';
+      }
     }
   };
+
+  const displaySrc = localPreview || resolveMediaUrl(value);
+  const hasMedia = Boolean(localPreview || value);
 
   return (
     <div className="space-y-1.5 text-left">
@@ -134,29 +167,41 @@ const MediaUploadField = ({
         className="hidden"
       />
 
-      {value ? (
+      {hasMedia ? (
         /* When media is already uploaded / selected */
         <div className="flex items-center gap-3 p-2.5 bg-slate-50 border border-slate-200/90 rounded-2xl hover:border-[#00A3E0]/40 transition-all">
           {/* Media Preview */}
           {type === 'image' ? (
-            <div className="w-12 h-12 rounded-xl overflow-hidden border border-slate-200 bg-slate-900 shrink-0 shadow-2xs">
+            <div className="w-12 h-12 rounded-xl overflow-hidden border border-slate-200 bg-slate-100 shrink-0 shadow-2xs relative">
               <img
-                src={value}
+                src={displaySrc}
                 alt="Uploaded Preview"
                 className="w-full h-full object-cover"
-                onError={(e) => (e.currentTarget.style.display = 'none')}
+                onError={(e) => {
+                  e.currentTarget.style.display = 'none';
+                }}
               />
+              {uploading && (
+                <div className="absolute inset-0 bg-slate-950/60 backdrop-blur-[1px] flex items-center justify-center">
+                  <Loader2 className="w-4 h-4 text-sky-400 animate-spin" />
+                </div>
+              )}
             </div>
           ) : (
             <div className="relative w-14 h-12 rounded-xl overflow-hidden border border-slate-200 bg-slate-950 shrink-0 shadow-2xs">
               <video
-                src={value}
+                key={displaySrc}
+                src={displaySrc}
                 className="w-full h-full object-cover"
                 muted
                 playsInline
               />
-              <div className="absolute inset-0 bg-slate-950/40 flex items-center justify-center">
-                <Film className="w-4 h-4 text-white" />
+              <div className="absolute inset-0 bg-slate-950/40 flex items-center justify-center pointer-events-none">
+                {uploading ? (
+                  <Loader2 className="w-4 h-4 text-sky-400 animate-spin" />
+                ) : (
+                  <Film className="w-4 h-4 text-white" />
+                )}
               </div>
             </div>
           )}
@@ -164,10 +209,18 @@ const MediaUploadField = ({
           {/* Status Label */}
           <div className="flex-1 min-w-0">
             <div className="text-xs font-bold text-slate-900 flex items-center gap-1.5">
-              <span className="w-2 h-2 rounded-full bg-emerald-500 shrink-0" />
-              <span className="truncate">{type === 'video' ? 'Video File Attached' : 'Photo Attached'}</span>
+              <span className={`w-2 h-2 rounded-full shrink-0 ${uploading ? 'bg-amber-400 animate-pulse' : 'bg-emerald-500'}`} />
+              <span className="truncate">
+                {uploading
+                  ? 'Uploading to Cloudinary...'
+                  : type === 'video'
+                    ? 'Video File Attached'
+                    : 'Photo Attached'}
+              </span>
             </div>
-            <div className="text-[10px] text-slate-400 font-medium">Ready & synced live</div>
+            <div className="text-[10px] text-slate-400 font-medium truncate">
+              {uploading ? 'Streaming to Cloudinary CDN...' : 'Ready & synced live in Cloudinary'}
+            </div>
           </div>
 
           {/* Action Buttons: Replace & Delete */}
@@ -175,14 +228,26 @@ const MediaUploadField = ({
             <button
               type="button"
               disabled={uploading}
-              onClick={() => fileInputRef.current?.click()}
-              className="px-3 py-1.5 bg-white hover:bg-slate-100 text-[#007ba8] border border-slate-200 rounded-xl text-xs font-bold transition-all cursor-pointer shadow-2xs"
+              onClick={triggerPicker}
+              className="px-3 py-1.5 bg-white hover:bg-slate-100 text-[#007ba8] border border-slate-200 rounded-xl text-xs font-bold transition-all cursor-pointer shadow-2xs flex items-center gap-1.5 disabled:opacity-60"
             >
-              {uploading ? 'Processing...' : 'Replace'}
+              {uploading ? (
+                <span className="inline-flex items-center gap-1">
+                  <Loader2 className="w-3 h-3 animate-spin text-[#00A3E0]" />
+                  <span>Uploading...</span>
+                </span>
+              ) : (
+                'Replace'
+              )}
             </button>
             <button
               type="button"
-              onClick={() => onChange('')}
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                setLocalPreview('');
+                onChange('');
+              }}
               className="p-1.5 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-xl transition-all cursor-pointer"
               title="Remove File"
             >
@@ -195,15 +260,15 @@ const MediaUploadField = ({
         <button
           type="button"
           disabled={uploading}
-          onClick={() => fileInputRef.current?.click()}
-          className="w-full py-3.5 px-4 rounded-2xl border-2 border-dashed border-slate-200 hover:border-[#00A3E0] bg-slate-50/60 hover:bg-[#e0f4ff]/30 flex items-center justify-center gap-2 text-xs font-bold text-slate-600 hover:text-[#007ba8] transition-all cursor-pointer group shadow-2xs"
+          onClick={triggerPicker}
+          className="w-full py-3.5 px-4 rounded-2xl border-2 border-dashed border-slate-200 hover:border-[#00A3E0] bg-slate-50/60 hover:bg-[#e0f4ff]/30 flex items-center justify-center gap-2 text-xs font-bold text-slate-600 hover:text-[#007ba8] transition-all cursor-pointer group shadow-2xs disabled:opacity-60"
         >
           {uploading ? (
             <Loader2 className="w-4 h-4 animate-spin text-[#00A3E0]" />
           ) : (
             <UploadCloud className="w-4 h-4 text-slate-400 group-hover:text-[#00A3E0] transition-colors" />
           )}
-          <span>{uploading ? 'Uploading file...' : `Upload ${type === 'video' ? 'Video' : 'Photo'} from Device`}</span>
+          <span>{uploading ? 'Uploading to Cloudinary...' : `Upload ${type === 'video' ? 'Video' : 'Photo'} from Device`}</span>
         </button>
       )}
 
@@ -308,17 +373,8 @@ const Admin = ({ onLogout }) => {
     },
   });
 
-  const [serviceModal, setServiceModal] = useState({
-    open: false,
-    mode: 'create', // 'create' | 'edit'
-    index: null,
-    data: {
-      title: '',
-      desc: '',
-      icon: 'BarChart2',
-      badgeBg: 'bg-[#00A3E0] text-white',
-    },
-  });
+  const [savingMember, setSavingMember] = useState(false);
+  const [savingReview, setSavingReview] = useState(false);
 
   // Sync formData when content loads
   useEffect(() => {
@@ -340,14 +396,14 @@ const Admin = ({ onLogout }) => {
           content?.testimonials && content.testimonials.length > 0
             ? content.testimonials
             : prev?.testimonials && prev.testimonials.length > 0
-            ? prev.testimonials
-            : defaultSiteContent.testimonials,
+              ? prev.testimonials
+              : defaultSiteContent.testimonials,
         team:
           content?.team && content.team.length > 0
             ? content.team
             : prev?.team && prev.team.length > 0
-            ? prev.team
-            : defaultSiteContent.team,
+              ? prev.team
+              : defaultSiteContent.team,
       }));
     }
   }, [content]);
@@ -464,19 +520,45 @@ const Admin = ({ onLogout }) => {
     });
   };
 
-  const handleSaveReviewModal = () => {
+  const handleSaveReviewModal = async () => {
     if (!reviewModal.data.name.trim()) {
       alert('Please enter client name');
       return;
     }
-    const currentList = [...(formData.testimonials || [])];
-    if (reviewModal.mode === 'create') {
-      currentList.unshift(reviewModal.data);
-    } else if (reviewModal.index !== null) {
-      currentList[reviewModal.index] = reviewModal.data;
+    setSavingReview(true);
+    try {
+      const currentList = [...(formData.testimonials || [])];
+      if (reviewModal.mode === 'create') {
+        currentList.unshift(reviewModal.data);
+      } else if (reviewModal.index !== null) {
+        currentList[reviewModal.index] = reviewModal.data;
+      }
+      const updated = { ...formData, testimonials: currentList };
+      setFormData(updated);
+      await updateContent(updated);
+      setSaveStatus({ show: true, type: 'success', message: 'Client review saved to database!' });
+      setTimeout(() => setSaveStatus({ show: false, type: '', text: '' }), 3000);
+      setReviewModal({ ...reviewModal, open: false });
+    } catch (err) {
+      console.error('Failed to save review:', err);
+      setSaveStatus({ show: true, type: 'error', message: 'Failed to persist review.' });
+    } finally {
+      setSavingReview(false);
     }
-    setFormData({ ...formData, testimonials: currentList });
-    setReviewModal({ ...reviewModal, open: false });
+  };
+
+  const handleDeleteReview = async (idx) => {
+    if (!window.confirm('Are you sure you want to delete this client review?')) return;
+    try {
+      const updated = (formData.testimonials || []).filter((_, i) => i !== idx);
+      const updatedFormData = { ...formData, testimonials: updated };
+      setFormData(updatedFormData);
+      await updateContent(updatedFormData);
+      setSaveStatus({ show: true, type: 'success', message: 'Review deleted from database' });
+      setTimeout(() => setSaveStatus({ show: false, type: '', text: '' }), 3000);
+    } catch (err) {
+      console.error('Failed to delete review:', err);
+    }
   };
 
   // Modal Handlers for Team Members
@@ -510,59 +592,55 @@ const Admin = ({ onLogout }) => {
     });
   };
 
-  const handleSaveMemberModal = () => {
+  const handleSaveMemberModal = async () => {
     if (!memberModal.data.name.trim()) {
       alert('Please enter member name');
       return;
     }
-    const currentList = [...(formData.team || [])];
-    if (memberModal.mode === 'create') {
-      currentList.push(memberModal.data);
-    } else if (memberModal.index !== null) {
-      currentList[memberModal.index] = memberModal.data;
+    setSavingMember(true);
+    try {
+      const currentList = [...(formData.team || [])];
+      const memberToSave = {
+        ...memberModal.data,
+        slug:
+          memberModal.data.slug ||
+          memberModal.data.name
+            .toLowerCase()
+            .replace(/[^a-z0-9]+/g, '-')
+            .replace(/(^-|-$)/g, ''),
+      };
+
+      if (memberModal.mode === 'create') {
+        currentList.push(memberToSave);
+      } else if (memberModal.index !== null) {
+        currentList[memberModal.index] = memberToSave;
+      }
+      const updated = { ...formData, team: currentList };
+      setFormData(updated);
+      await updateContent(updated);
+      setSaveStatus({ show: true, type: 'success', message: 'Team member saved to database!' });
+      setTimeout(() => setSaveStatus({ show: false, type: '', text: '' }), 3000);
+      setMemberModal({ ...memberModal, open: false });
+    } catch (err) {
+      console.error('Failed to save team member:', err);
+      setSaveStatus({ show: true, type: 'error', message: 'Failed to persist team member.' });
+    } finally {
+      setSavingMember(false);
     }
-    setFormData({ ...formData, team: currentList });
-    setMemberModal({ ...memberModal, open: false });
   };
 
-  // Modal Handlers for Services
-  const openCreateServiceModal = () => {
-    setServiceModal({
-      open: true,
-      mode: 'create',
-      index: null,
-      data: {
-        title: '',
-        desc: '',
-        icon: 'BarChart2',
-        badgeBg: 'bg-[#00A3E0] text-white',
-      },
-    });
-  };
-
-  const openEditServiceModal = (idx) => {
-    const item = formData.services[idx];
-    setServiceModal({
-      open: true,
-      mode: 'edit',
-      index: idx,
-      data: { ...item },
-    });
-  };
-
-  const handleSaveServiceModal = () => {
-    if (!serviceModal.data.title.trim()) {
-      alert('Please enter service title');
-      return;
+  const handleDeleteMember = async (idx) => {
+    if (!window.confirm('Are you sure you want to delete this team member?')) return;
+    try {
+      const updated = (formData.team || []).filter((_, i) => i !== idx);
+      const updatedFormData = { ...formData, team: updated };
+      setFormData(updatedFormData);
+      await updateContent(updatedFormData);
+      setSaveStatus({ show: true, type: 'success', message: 'Member deleted from database' });
+      setTimeout(() => setSaveStatus({ show: false, type: '', text: '' }), 3000);
+    } catch (err) {
+      console.error('Failed to delete member:', err);
     }
-    const currentList = [...(formData.services || [])];
-    if (serviceModal.mode === 'create') {
-      currentList.push(serviceModal.data);
-    } else if (serviceModal.index !== null) {
-      currentList[serviceModal.index] = serviceModal.data;
-    }
-    setFormData({ ...formData, services: currentList });
-    setServiceModal({ ...serviceModal, open: false });
   };
 
   // Filtered leads
@@ -679,11 +757,10 @@ const Admin = ({ onLogout }) => {
       {/* Toast Alert */}
       {saveStatus.show && (
         <div
-          className={`fixed bottom-6 right-6 z-50 px-5 py-3.5 rounded-xl shadow-2xl flex items-center gap-3 text-sm font-semibold transition-all duration-500 anim-slow-slide ${
-            saveStatus.type === 'success'
-              ? 'bg-emerald-600 text-white shadow-emerald-600/30'
-              : 'bg-rose-600 text-white shadow-rose-600/30'
-          }`}
+          className={`fixed bottom-6 right-6 z-50 px-5 py-3.5 rounded-xl shadow-2xl flex items-center gap-3 text-sm font-semibold transition-all duration-500 anim-slow-slide ${saveStatus.type === 'success'
+            ? 'bg-emerald-600 text-white shadow-emerald-600/30'
+            : 'bg-rose-600 text-white shadow-rose-600/30'
+            }`}
         >
           {saveStatus.type === 'success' ? (
             <Check className="w-5 h-5" />
@@ -877,11 +954,21 @@ const Admin = ({ onLogout }) => {
               </button>
               <button
                 type="button"
+                disabled={savingReview}
                 onClick={handleSaveReviewModal}
-                className="px-5 py-2 rounded-xl bg-[#00A3E0] hover:bg-[#008bc0] text-white text-xs font-bold flex items-center gap-1.5 shadow-md shadow-[#00A3E0]/20 cursor-pointer"
+                className="px-5 py-2 rounded-xl bg-[#00A3E0] hover:bg-[#008bc0] text-white text-xs font-bold flex items-center gap-1.5 shadow-md shadow-[#00A3E0]/20 cursor-pointer disabled:opacity-60"
               >
-                <Check className="w-4 h-4" />
-                <span>{reviewModal.mode === 'edit' ? 'Save Changes' : 'Create Review'}</span>
+                {savingReview ? (
+                  <>
+                    <Loader2 className="w-4 h-4 animate-spin text-white" />
+                    <span>Saving to Database...</span>
+                  </>
+                ) : (
+                  <>
+                    <Check className="w-4 h-4" />
+                    <span>{reviewModal.mode === 'edit' ? 'Save Changes' : 'Create Review'}</span>
+                  </>
+                )}
               </button>
             </div>
           </div>
@@ -1065,125 +1152,21 @@ const Admin = ({ onLogout }) => {
               </button>
               <button
                 type="button"
+                disabled={savingMember}
                 onClick={handleSaveMemberModal}
-                className="px-5 py-2 rounded-xl bg-[#00A3E0] hover:bg-[#008bc0] text-white text-xs font-bold flex items-center gap-1.5 shadow-md shadow-[#00A3E0]/20 cursor-pointer"
+                className="px-5 py-2 rounded-xl bg-[#00A3E0] hover:bg-[#008bc0] text-white text-xs font-bold flex items-center gap-1.5 shadow-md shadow-[#00A3E0]/20 cursor-pointer disabled:opacity-60"
               >
-                <Check className="w-4 h-4" />
-                <span>{memberModal.mode === 'edit' ? 'Save Changes' : 'Add Member'}</span>
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* ========================================================= */}
-      {/* MODAL 3: ADD / EDIT SERVICE OFFERING */}
-      {/* ========================================================= */}
-      {serviceModal.open && (
-        <div className="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-xs flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
-          <div className="bg-white rounded-3xl border border-slate-200/90 shadow-2xl max-w-xl w-full overflow-hidden text-left my-auto animate-in fade-in zoom-in-95 duration-200">
-            {/* Modal Header */}
-            <div className="p-6 border-b border-slate-100 flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-2xl bg-purple-50 text-purple-600 flex items-center justify-center font-bold">
-                  <Layers className="w-5 h-5" />
-                </div>
-                <div>
-                  <h3 className="text-lg font-black text-slate-900">
-                    {serviceModal.mode === 'edit' ? 'Edit Service Offering' : 'Create New Service Offering'}
-                  </h3>
-                  <p className="text-xs text-slate-500">
-                    Add or update full-stack services, descriptions, and category icons.
-                  </p>
-                </div>
-              </div>
-              <button
-                onClick={() => setServiceModal({ ...serviceModal, open: false })}
-                className="w-8 h-8 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-500 flex items-center justify-center cursor-pointer transition-colors"
-              >
-                <X className="w-4 h-4" />
-              </button>
-            </div>
-
-            {/* Modal Body */}
-            <div className="p-6 space-y-4 max-h-[65vh] overflow-y-auto">
-              <div>
-                <label className="block text-xs font-bold text-slate-700 uppercase mb-1">
-                  Service Title <span className="text-rose-500">*</span>
-                </label>
-                <input
-                  type="text"
-                  placeholder="e.g. Website Builder & Development"
-                  value={serviceModal.data.title}
-                  onChange={(e) =>
-                    setServiceModal({
-                      ...serviceModal,
-                      data: { ...serviceModal.data, title: e.target.value },
-                    })
-                  }
-                  className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold focus:ring-2 focus:ring-[#00A3E0] focus:outline-none"
-                />
-              </div>
-
-              <div>
-                <label className="block text-xs font-bold text-slate-700 uppercase mb-1">
-                  Category Icon
-                </label>
-                <select
-                  value={serviceModal.data.icon}
-                  onChange={(e) =>
-                    setServiceModal({
-                      ...serviceModal,
-                      data: { ...serviceModal.data, icon: e.target.value },
-                    })
-                  }
-                  className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold cursor-pointer"
-                >
-                  <option value="Code">Code (Web Development)</option>
-                  <option value="Palette">Palette (Graphic Design & Brand Kits)</option>
-                  <option value="Megaphone">Megaphone (Digital Marketing & SEO)</option>
-                  <option value="ShoppingCart">ShoppingCart (E-Commerce Enablement)</option>
-                  <option value="Share2">Share2 (Social Media Strategy & Reels)</option>
-                  <option value="Infinity">Infinity (Meta Ads Management FB & IG)</option>
-                  <option value="BarChart2">BarChart2 (SEO Analytics)</option>
-                </select>
-              </div>
-
-              <div>
-                <label className="block text-xs font-bold text-slate-700 uppercase mb-1">
-                  Service Description <span className="text-rose-500">*</span>
-                </label>
-                <textarea
-                  rows="3"
-                  placeholder="Explain offering deliverables, frameworks, and value propositions..."
-                  value={serviceModal.data.desc}
-                  onChange={(e) =>
-                    setServiceModal({
-                      ...serviceModal,
-                      data: { ...serviceModal.data, desc: e.target.value },
-                    })
-                  }
-                  className="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:ring-2 focus:ring-[#00A3E0] focus:outline-none leading-relaxed"
-                />
-              </div>
-            </div>
-
-            {/* Modal Footer */}
-            <div className="p-5 border-t border-slate-100 bg-slate-50/50 flex items-center justify-end gap-3">
-              <button
-                type="button"
-                onClick={() => setServiceModal({ ...serviceModal, open: false })}
-                className="px-4 py-2 rounded-xl border border-slate-200 text-xs font-bold text-slate-600 hover:bg-slate-100 cursor-pointer"
-              >
-                Cancel
-              </button>
-              <button
-                type="button"
-                onClick={handleSaveServiceModal}
-                className="px-5 py-2 rounded-xl bg-[#00A3E0] hover:bg-[#008bc0] text-white text-xs font-bold flex items-center gap-1.5 shadow-md shadow-[#00A3E0]/20 cursor-pointer"
-              >
-                <Check className="w-4 h-4" />
-                <span>{serviceModal.mode === 'edit' ? 'Save Changes' : 'Create Service'}</span>
+                {savingMember ? (
+                  <>
+                    <Loader2 className="w-4 h-4 animate-spin text-white" />
+                    <span>Saving to Database...</span>
+                  </>
+                ) : (
+                  <>
+                    <Check className="w-4 h-4" />
+                    <span>{memberModal.mode === 'edit' ? 'Save Changes' : 'Add Member'}</span>
+                  </>
+                )}
               </button>
             </div>
           </div>
@@ -1194,9 +1177,8 @@ const Admin = ({ onLogout }) => {
       {/* LEFT SIDEBAR: FIXED, LOCKS IN PLACE, ONLY TABS SCROLL */}
       {/* ========================================================= */}
       <aside
-        className={`h-screen shrink-0 bg-white border-r border-slate-200/90 flex flex-col justify-between z-40 transition-all duration-300 ease-in-out fixed lg:relative ${
-          sidebarCollapsed ? 'w-20' : 'w-64'
-        } ${mobileMenuOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}`}
+        className={`h-screen shrink-0 bg-white border-r border-slate-200/90 flex flex-col justify-between z-40 transition-all duration-300 ease-in-out fixed lg:relative ${sidebarCollapsed ? 'w-20' : 'w-64'
+          } ${mobileMenuOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}`}
       >
         {/* Real Brand Header (Fixed Top of Sidebar) */}
         <div className="h-18 px-4 flex items-center justify-between border-b border-slate-100 shrink-0">
@@ -1274,30 +1256,27 @@ const Admin = ({ onLogout }) => {
                       setMobileMenuOpen(false);
                     }}
                     title={sidebarCollapsed ? item.label : undefined}
-                    className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-bold transition-all duration-200 cursor-pointer ${
-                      isActive
-                        ? 'bg-[#e0f4ff] text-[#007ba8] shadow-xs border-l-4 border-[#00A3E0]'
-                        : 'text-slate-600 hover:bg-slate-100/80 hover:text-slate-900'
-                    } ${sidebarCollapsed ? 'justify-center px-0' : ''}`}
+                    className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-bold transition-all duration-200 cursor-pointer ${isActive
+                      ? 'bg-[#e0f4ff] text-[#007ba8] shadow-xs border-l-4 border-[#00A3E0]'
+                      : 'text-slate-600 hover:bg-slate-100/80 hover:text-slate-900'
+                      } ${sidebarCollapsed ? 'justify-center px-0' : ''}`}
                   >
                     <div className="flex items-center gap-3">
                       <Icon
-                        className={`w-4 h-4 shrink-0 ${
-                          isActive ? 'text-[#00A3E0]' : 'text-slate-500'
-                        }`}
+                        className={`w-4 h-4 shrink-0 ${isActive ? 'text-[#00A3E0]' : 'text-slate-500'
+                          }`}
                       />
                       {!sidebarCollapsed && <span>{item.label}</span>}
                     </div>
 
                     {!sidebarCollapsed && item.badge !== undefined && item.badge > 0 && (
                       <span
-                        className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
-                          item.id === 'leads'
-                            ? 'bg-rose-500 text-white'
-                            : isActive
+                        className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${item.id === 'leads'
+                          ? 'bg-rose-500 text-white'
+                          : isActive
                             ? 'bg-[#00A3E0] text-white'
                             : 'bg-slate-200 text-slate-700'
-                        }`}
+                          }`}
                       >
                         {item.badge}
                       </span>
@@ -1312,9 +1291,8 @@ const Admin = ({ onLogout }) => {
         {/* Sidebar Bottom Profile (Fixed Bottom of Sidebar) */}
         <div className="p-3 border-t border-slate-100 bg-slate-50/50 shrink-0">
           <div
-            className={`flex items-center gap-3 p-2 rounded-xl bg-white border border-slate-200/80 shadow-2xs ${
-              sidebarCollapsed ? 'justify-center p-1' : ''
-            }`}
+            className={`flex items-center gap-3 p-2 rounded-xl bg-white border border-slate-200/80 shadow-2xs ${sidebarCollapsed ? 'justify-center p-1' : ''
+              }`}
           >
             <div className="w-9 h-9 rounded-full bg-gradient-to-tr from-slate-800 to-slate-900 text-white font-black text-xs flex items-center justify-center shrink-0 shadow-2xs border border-white">
               RP
@@ -1383,9 +1361,8 @@ const Admin = ({ onLogout }) => {
             <div className="relative">
               <button
                 onClick={() => setNotificationsOpen(!notificationsOpen)}
-                className={`relative p-2 rounded-xl transition-colors cursor-pointer ${
-                  notificationsOpen ? 'bg-slate-100 text-[#00A3E0]' : 'text-slate-500 hover:bg-slate-100'
-                }`}
+                className={`relative p-2 rounded-xl transition-colors cursor-pointer ${notificationsOpen ? 'bg-slate-100 text-[#00A3E0]' : 'text-slate-500 hover:bg-slate-100'
+                  }`}
                 title="Notifications"
               >
                 <Bell className="w-4 h-4" />
@@ -1428,16 +1405,14 @@ const Admin = ({ onLogout }) => {
                         <div
                           key={item.id}
                           onClick={() => handleNotificationClick(item)}
-                          className={`p-3.5 hover:bg-slate-50 flex items-start gap-3 transition-colors cursor-pointer ${
-                            item.unread ? 'bg-[#e0f4ff]/20' : ''
-                          }`}
+                          className={`p-3.5 hover:bg-slate-50 flex items-start gap-3 transition-colors cursor-pointer ${item.unread ? 'bg-[#e0f4ff]/20' : ''
+                            }`}
                         >
                           <div
-                            className={`w-8 h-8 rounded-xl flex items-center justify-center shrink-0 mt-0.5 ${
-                              item.type === 'lead'
-                                ? 'bg-blue-50 text-[#00A3E0]'
-                                : 'bg-emerald-50 text-emerald-600'
-                            }`}
+                            className={`w-8 h-8 rounded-xl flex items-center justify-center shrink-0 mt-0.5 ${item.type === 'lead'
+                              ? 'bg-blue-50 text-[#00A3E0]'
+                              : 'bg-emerald-50 text-emerald-600'
+                              }`}
                           >
                             {item.type === 'lead' ? <Users className="w-4 h-4" /> : <Sparkles className="w-4 h-4" />}
                           </div>
@@ -1570,31 +1545,28 @@ const Admin = ({ onLogout }) => {
                       <div className="flex items-center gap-6 text-xs font-extrabold">
                         <button
                           onClick={() => setChartMetric('impressions')}
-                          className={`pb-1 transition-all cursor-pointer ${
-                            chartMetric === 'impressions'
-                              ? 'text-slate-900 border-b-2 border-slate-900 font-black'
-                              : 'text-slate-400 hover:text-slate-600'
-                          }`}
+                          className={`pb-1 transition-all cursor-pointer ${chartMetric === 'impressions'
+                            ? 'text-slate-900 border-b-2 border-slate-900 font-black'
+                            : 'text-slate-400 hover:text-slate-600'
+                            }`}
                         >
                           Impressions
                         </button>
                         <button
                           onClick={() => setChartMetric('clicks')}
-                          className={`pb-1 transition-all cursor-pointer ${
-                            chartMetric === 'clicks'
-                              ? 'text-slate-900 border-b-2 border-slate-900 font-black'
-                              : 'text-slate-400 hover:text-slate-600'
-                          }`}
+                          className={`pb-1 transition-all cursor-pointer ${chartMetric === 'clicks'
+                            ? 'text-slate-900 border-b-2 border-slate-900 font-black'
+                            : 'text-slate-400 hover:text-slate-600'
+                            }`}
                         >
                           Clicks
                         </button>
                         <button
                           onClick={() => setChartMetric('leads')}
-                          className={`pb-1 transition-all cursor-pointer ${
-                            chartMetric === 'leads'
-                              ? 'text-[#00A3E0] border-b-2 border-[#00A3E0] font-black'
-                              : 'text-slate-400 hover:text-slate-600'
-                          }`}
+                          className={`pb-1 transition-all cursor-pointer ${chartMetric === 'leads'
+                            ? 'text-[#00A3E0] border-b-2 border-[#00A3E0] font-black'
+                            : 'text-slate-400 hover:text-slate-600'
+                            }`}
                         >
                           Inquiries (Leads)
                         </button>
@@ -1799,13 +1771,12 @@ const Admin = ({ onLogout }) => {
                             <td className="py-3 px-4 text-slate-500">{lead.businessType || 'Healthcare B2B'}</td>
                             <td className="py-3 px-4">
                               <span
-                                className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${
-                                  lead.status === 'New'
-                                    ? 'bg-blue-50 text-[#007ba8]'
-                                    : lead.status === 'Converted'
+                                className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${lead.status === 'New'
+                                  ? 'bg-blue-50 text-[#007ba8]'
+                                  : lead.status === 'Converted'
                                     ? 'bg-emerald-50 text-emerald-700'
                                     : 'bg-slate-100 text-slate-700'
-                                }`}
+                                  }`}
                               >
                                 {lead.status || 'New'}
                               </span>
@@ -1980,17 +1951,16 @@ const Admin = ({ onLogout }) => {
                                 <select
                                   value={lead.status || 'New'}
                                   onChange={(e) => handleLeadStatusChange(lead._id, e.target.value)}
-                                  className={`text-xs font-bold px-2.5 py-1 rounded-lg border cursor-pointer focus:outline-none ${
-                                    lead.status === 'New'
-                                      ? 'bg-blue-50 text-blue-700 border-blue-200'
-                                      : lead.status === 'In Progress'
+                                  className={`text-xs font-bold px-2.5 py-1 rounded-lg border cursor-pointer focus:outline-none ${lead.status === 'New'
+                                    ? 'bg-blue-50 text-blue-700 border-blue-200'
+                                    : lead.status === 'In Progress'
                                       ? 'bg-amber-50 text-amber-700 border-amber-200'
                                       : lead.status === 'Converted'
-                                      ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
-                                      : lead.status === 'Contacted'
-                                      ? 'bg-purple-50 text-purple-700 border-purple-200'
-                                      : 'bg-slate-100 text-slate-700 border-slate-300'
-                                  }`}
+                                        ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
+                                        : lead.status === 'Contacted'
+                                          ? 'bg-purple-50 text-purple-700 border-purple-200'
+                                          : 'bg-slate-100 text-slate-700 border-slate-300'
+                                    }`}
                                 >
                                   <option value="New">New</option>
                                   <option value="Contacted">Contacted</option>
@@ -2035,17 +2005,19 @@ const Admin = ({ onLogout }) => {
                   </div>
                   <div className="flex items-center gap-2">
                     <button
-                      onClick={() => {
-                        setFormData({
+                      onClick={async () => {
+                        const updated = {
                           ...formData,
                           testimonials: defaultSiteContent.testimonials,
-                        });
+                        };
+                        setFormData(updated);
+                        await updateContent(updated);
                       }}
                       className="inline-flex items-center gap-1.5 px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs rounded-xl cursor-pointer"
-                      title="Reload default 6 high-converting testimonials"
+                      title="Reload default 3 verified testimonials"
                     >
                       <RotateCcw className="w-3.5 h-3.5" />
-                      <span>Restore 6 Defaults</span>
+                      <span>Restore 3 Defaults</span>
                     </button>
 
                     <button
@@ -2168,9 +2140,13 @@ const Admin = ({ onLogout }) => {
                               <Edit2 className="w-3.5 h-3.5" />
                             </button>
                             <button
-                              onClick={() => {
-                                const updated = formData.testimonials.filter((_, i) => i !== idx);
-                                setFormData({ ...formData, testimonials: updated });
+                              onClick={async () => {
+                                if (window.confirm('Are you sure you want to delete this review?')) {
+                                  const updated = formData.testimonials.filter((_, i) => i !== idx);
+                                  const newFormData = { ...formData, testimonials: updated };
+                                  setFormData(newFormData);
+                                  await updateContent(newFormData);
+                                }
                               }}
                               className="p-1.5 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-colors cursor-pointer"
                               title="Remove Review"
@@ -2181,15 +2157,21 @@ const Admin = ({ onLogout }) => {
                         </div>
 
                         <div className="flex items-start gap-3">
-                          <div className="w-12 h-12 rounded-xl overflow-hidden border border-slate-200 shrink-0 bg-slate-900 p-0.5 shadow-2xs">
-                            <img
-                              src={testi.avatar || 'https://images.unsplash.com/photo-1594824813589-9a25b1641ba5?auto=format&fit=crop&w=150&q=80'}
-                              alt={testi.name}
-                              className="w-full h-full object-cover rounded-lg"
-                              onError={(e) => {
-                                e.currentTarget.src = 'https://images.unsplash.com/photo-1594824813589-9a25b1641ba5?auto=format&fit=crop&w=150&q=80';
-                              }}
-                            />
+                          <div className="w-12 h-12 rounded-xl overflow-hidden border border-slate-200 shrink-0 bg-[#e0f4ff] p-0.5 shadow-2xs">
+                            {testi.avatar ? (
+                              <img
+                                src={resolveMediaUrl(testi.avatar)}
+                                alt={testi.name}
+                                className="w-full h-full object-cover rounded-lg"
+                                onError={(e) => {
+                                  e.currentTarget.style.display = 'none';
+                                }}
+                              />
+                            ) : (
+                              <div className="w-full h-full rounded-lg bg-gradient-to-br from-[#00A3E0] to-blue-600 flex items-center justify-center text-white font-bold text-sm">
+                                {testi.name ? testi.name[0] : 'U'}
+                              </div>
+                            )}
                           </div>
                           <div className="flex-1 min-w-0">
                             <div className="text-xs font-semibold text-slate-700">{testi.role}</div>
@@ -2341,14 +2323,16 @@ const Admin = ({ onLogout }) => {
                       type="video"
                       label="Home Background Video"
                       value={formData?.hero?.backgroundVideo || ''}
-                      onChange={(newVideo) =>
-                        setFormData({
+                      onChange={(newVideo) => {
+                        const updated = {
                           ...formData,
                           hero: { ...formData.hero, backgroundVideo: newVideo },
                           media: { ...formData.media, homeHeroVideo: newVideo },
-                        })
-                      }
-                      helperText="Supports local .mp4, .webm files up to 100MB"
+                        };
+                        setFormData(updated);
+                        updateContent(updated);
+                      }}
+                      helperText="Supports local .mp4, .webm files up to 100MB (Uploaded to Cloudinary)"
                     />
                   </div>
 
@@ -2358,13 +2342,15 @@ const Admin = ({ onLogout }) => {
                       type="image"
                       label="Home Background Poster Photo"
                       value={formData?.hero?.backgroundImage || ''}
-                      onChange={(newImg) =>
-                        setFormData({
+                      onChange={(newImg) => {
+                        const updated = {
                           ...formData,
                           hero: { ...formData.hero, backgroundImage: newImg },
                           media: { ...formData.media, homeHeroBgImage: newImg },
-                        })
-                      }
+                        };
+                        setFormData(updated);
+                        updateContent(updated);
+                      }}
                       helperText="Fallback background photo shown behind or before video loads"
                     />
                   </div>
@@ -2375,12 +2361,14 @@ const Admin = ({ onLogout }) => {
                       type="video"
                       label="Hero Modal Video (Watch Showreel)"
                       value={formData?.hero?.modalVideo || ''}
-                      onChange={(newModal) =>
-                        setFormData({
+                      onChange={(newModal) => {
+                        const updated = {
                           ...formData,
                           hero: { ...formData.hero, modalVideo: newModal },
-                        })
-                      }
+                        };
+                        setFormData(updated);
+                        updateContent(updated);
+                      }}
                       helperText="Video played when user clicks the Watch/Play button"
                     />
                   </div>
@@ -2482,230 +2470,6 @@ const Admin = ({ onLogout }) => {
             )}
 
             {/* ========================================================= */}
-            {/* TAB: WHY CHOOSE US & HQ */}
-            {/* ========================================================= */}
-            {activeTab === 'why' && (
-              <div className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-6 text-left">
-                <div className="flex items-center justify-between pb-4 border-b border-slate-100">
-                  <div>
-                    <h2 className="text-2xl font-black text-slate-900 flex items-center gap-2">
-                      <ShieldCheck className="w-6 h-6 text-[#00A3E0]" />
-                      <span>Why Choose TezScale & HQ Video Showcase</span>
-                    </h2>
-                    <p className="text-xs text-slate-500 mt-1">
-                      Upload founder photo, HQ video from your device, and configure 2 floating cards and bullet points.
-                    </p>
-                  </div>
-                  <button
-                    onClick={handleSaveContent}
-                    disabled={isSaving}
-                    className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#00A3E0] hover:bg-[#008bc0] text-white font-bold text-xs rounded-xl shadow-md shadow-[#00A3E0]/20 transition-all cursor-pointer"
-                  >
-                    <Save className="w-4 h-4" />
-                    <span>{isSaving ? 'Saving...' : 'Save Changes'}</span>
-                  </button>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <label className="block text-xs font-bold text-slate-700 uppercase mb-1">Section Badge</label>
-                    <input
-                      type="text"
-                      value={formData?.whyChooseUs?.badge || ''}
-                      placeholder="Why Choose TezScale"
-                      onChange={(e) =>
-                        setFormData({
-                          ...formData,
-                          whyChooseUs: { ...formData.whyChooseUs, badge: e.target.value },
-                        })
-                      }
-                      className="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-xs font-bold text-slate-700 uppercase mb-1">Section Title</label>
-                    <input
-                      type="text"
-                      value={formData?.whyChooseUs?.title || ''}
-                      placeholder="Your Growth, Our Mission"
-                      onChange={(e) =>
-                        setFormData({
-                          ...formData,
-                          whyChooseUs: { ...formData.whyChooseUs, title: e.target.value },
-                        })
-                      }
-                      className="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold text-slate-900"
-                    />
-                  </div>
-
-                  <div className="md:col-span-2">
-                    <label className="block text-xs font-bold text-slate-700 uppercase mb-1">Mission Description</label>
-                    <textarea
-                      rows="3"
-                      value={formData?.whyChooseUs?.description || ''}
-                      onChange={(e) =>
-                        setFormData({
-                          ...formData,
-                          whyChooseUs: { ...formData.whyChooseUs, description: e.target.value },
-                        })
-                      }
-                      className="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs leading-relaxed"
-                    />
-                  </div>
-
-                  {/* Clean Local Image Upload for Founder Photo (NO URL box) */}
-                  <div>
-                    <MediaUploadField
-                      type="image"
-                      label="Founder Photo"
-                      value={formData?.whyChooseUs?.founderImage || ''}
-                      onChange={(newFounder) =>
-                        setFormData({
-                          ...formData,
-                          whyChooseUs: { ...formData.whyChooseUs, founderImage: newFounder },
-                        })
-                      }
-                      helperText="Featured on the left visual card"
-                    />
-                  </div>
-
-                  {/* Clean Local Video Upload for Agency HQ Tour (NO URL box) */}
-                  <div>
-                    <MediaUploadField
-                      type="video"
-                      label="Agency HQ Tour Video"
-                      value={formData?.whyChooseUs?.hqVideoUrl || ''}
-                      onChange={(newHqVideo) =>
-                        setFormData({
-                          ...formData,
-                          whyChooseUs: { ...formData.whyChooseUs, hqVideoUrl: newHqVideo },
-                          media: { ...formData.media, agencyHqVideo: newHqVideo },
-                        })
-                      }
-                      helperText="Genuine showcase video played directly inside the section"
-                    />
-                  </div>
-
-                  {/* Floating Badge 1 */}
-                  <div className="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-2">
-                    <span className="text-[11px] font-bold text-slate-500 uppercase block">Floating Card 1 (Top Right)</span>
-                    <input
-                      type="text"
-                      placeholder="Title (e.g. Your Growth)"
-                      value={formData?.whyChooseUs?.badge1Title || ''}
-                      onChange={(e) =>
-                        setFormData({
-                          ...formData,
-                          whyChooseUs: { ...formData.whyChooseUs, badge1Title: e.target.value },
-                        })
-                      }
-                      className="w-full p-2 bg-white border border-slate-200 rounded-lg text-xs font-bold"
-                    />
-                    <input
-                      type="text"
-                      placeholder="Subtitle (e.g. Our Priority)"
-                      value={formData?.whyChooseUs?.badge1Subtitle || ''}
-                      onChange={(e) =>
-                        setFormData({
-                          ...formData,
-                          whyChooseUs: { ...formData.whyChooseUs, badge1Subtitle: e.target.value },
-                        })
-                      }
-                      className="w-full p-2 bg-white border border-slate-200 rounded-lg text-xs"
-                    />
-                  </div>
-
-                  {/* Floating Badge 2 */}
-                  <div className="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-2">
-                    <span className="text-[11px] font-bold text-slate-500 uppercase block">Floating Card 2 (Bottom Right)</span>
-                    <input
-                      type="text"
-                      placeholder="Title (e.g. +300%)"
-                      value={formData?.whyChooseUs?.badge2Title || ''}
-                      onChange={(e) =>
-                        setFormData({
-                          ...formData,
-                          whyChooseUs: { ...formData.whyChooseUs, badge2Title: e.target.value },
-                        })
-                      }
-                      className="w-full p-2 bg-white border border-slate-200 rounded-lg text-xs font-bold text-emerald-600"
-                    />
-                    <input
-                      type="text"
-                      placeholder="Subtitle (e.g. Traffic Growth)"
-                      value={formData?.whyChooseUs?.badge2Subtitle || ''}
-                      onChange={(e) =>
-                        setFormData({
-                          ...formData,
-                          whyChooseUs: { ...formData.whyChooseUs, badge2Subtitle: e.target.value },
-                        })
-                      }
-                      className="w-full p-2 bg-white border border-slate-200 rounded-lg text-xs"
-                    />
-                  </div>
-                </div>
-
-                {/* Checkmark Points */}
-                <div className="pt-6 border-t border-slate-100">
-                  <div className="flex items-center justify-between mb-3">
-                    <h4 className="text-xs font-extrabold text-slate-900 uppercase tracking-wider">Key Feature Bullet Points</h4>
-                    <button
-                      onClick={() => {
-                        const currentPoints = formData?.whyChooseUs?.points || [];
-                        setFormData({
-                          ...formData,
-                          whyChooseUs: {
-                            ...formData.whyChooseUs,
-                            points: [...currentPoints, 'New TezScale Advantage Point'],
-                          },
-                        });
-                      }}
-                      className="inline-flex items-center gap-1 px-3 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs rounded-lg cursor-pointer"
-                    >
-                      <Plus className="w-3.5 h-3.5" />
-                      <span>Add Point</span>
-                    </button>
-                  </div>
-
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    {(formData?.whyChooseUs?.points || []).map((point, pIdx) => (
-                      <div key={pIdx} className="flex items-center gap-2 p-2 bg-slate-50 border border-slate-200 rounded-xl">
-                        <CheckCircle2 className="w-4 h-4 text-[#00A3E0] shrink-0" />
-                        <input
-                          type="text"
-                          value={point}
-                          onChange={(e) => {
-                            const updated = [...(formData.whyChooseUs.points || [])];
-                            updated[pIdx] = e.target.value;
-                            setFormData({
-                              ...formData,
-                              whyChooseUs: { ...formData.whyChooseUs, points: updated },
-                            });
-                          }}
-                          className="flex-1 p-1 bg-white border border-slate-200 rounded-lg text-xs font-medium"
-                        />
-                        <button
-                          onClick={() => {
-                            const updated = (formData.whyChooseUs.points || []).filter((_, i) => i !== pIdx);
-                            setFormData({
-                              ...formData,
-                              whyChooseUs: { ...formData.whyChooseUs, points: updated },
-                            });
-                          }}
-                          className="p-1 text-slate-400 hover:text-rose-600 rounded cursor-pointer"
-                          title="Delete Point"
-                        >
-                          <Trash2 className="w-3.5 h-3.5" />
-                        </button>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {/* ========================================================= */}
             {/* TAB: TEAM MEMBERS */}
             {/* ========================================================= */}
             {activeTab === 'team' && (
@@ -2722,17 +2486,19 @@ const Admin = ({ onLogout }) => {
                   </div>
                   <div className="flex items-center gap-2">
                     <button
-                      onClick={() => {
-                        setFormData({
+                      onClick={async () => {
+                        const updated = {
                           ...formData,
                           team: defaultSiteContent.team,
-                        });
+                        };
+                        setFormData(updated);
+                        await updateContent(updated);
                       }}
                       className="inline-flex items-center gap-1.5 px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs rounded-xl cursor-pointer"
-                      title="Restore 6 default core architects"
+                      title="Restore default core architects"
                     >
                       <RotateCcw className="w-3.5 h-3.5" />
-                      <span>Restore 6 Defaults</span>
+                      <span>Restore Defaults</span>
                     </button>
 
                     <button
@@ -2777,9 +2543,13 @@ const Admin = ({ onLogout }) => {
                               <Edit2 className="w-3.5 h-3.5" />
                             </button>
                             <button
-                              onClick={() => {
-                                const updated = formData.team.filter((_, i) => i !== idx);
-                                setFormData({ ...formData, team: updated });
+                              onClick={async () => {
+                                if (window.confirm(`Are you sure you want to remove ${member.name}?`)) {
+                                  const updated = formData.team.filter((_, i) => i !== idx);
+                                  const newFormData = { ...formData, team: updated };
+                                  setFormData(newFormData);
+                                  await updateContent(newFormData);
+                                }
                               }}
                               className="p-1.5 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-colors cursor-pointer"
                               title="Remove Member"
@@ -2790,13 +2560,13 @@ const Admin = ({ onLogout }) => {
                         </div>
 
                         <div className="flex items-start gap-3">
-                          <div className="w-14 h-14 rounded-2xl overflow-hidden border border-slate-200 shrink-0 bg-slate-900 shadow-2xs">
+                          <div className="w-14 h-14 rounded-2xl overflow-hidden border border-slate-200 shrink-0 bg-slate-100 shadow-2xs">
                             <img
-                              src={member.image || '/rohan-prajapati.jpg'}
+                              src={resolveMediaUrl(member.image, 'https://res.cloudinary.com/qwpdsvyf/image/upload/v1795431573/tezscale_assets/rohan-prajapati.jpg')}
                               alt={member.name}
                               className="w-full h-full object-cover"
                               onError={(e) => {
-                                e.currentTarget.src = '/rohan-prajapati.jpg';
+                                e.currentTarget.src = 'https://res.cloudinary.com/qwpdsvyf/image/upload/v1795431573/tezscale_assets/rohan-prajapati.jpg';
                               }}
                             />
                           </div>
@@ -2825,616 +2595,6 @@ const Admin = ({ onLogout }) => {
                       </div>
                     </div>
                   ))}
-                </div>
-              </div>
-            )}
-
-            {/* ========================================================= */}
-            {/* TAB: PAGE VIDEOS & MEDIA */}
-            {/* ========================================================= */}
-            {activeTab === 'media' && (
-              <div className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-6 text-left">
-                <div className="flex items-center justify-between pb-4 border-b border-slate-100">
-                  <div>
-                    <h2 className="text-2xl font-black text-slate-900 flex items-center gap-2">
-                      <Film className="w-6 h-6 text-[#00A3E0]" />
-                      <span>All Page Hero Videos & Media Assets</span>
-                    </h2>
-                    <p className="text-xs text-slate-500 mt-1">
-                      Directly upload local video files and background posters from your device for every page.
-                    </p>
-                  </div>
-                  <button
-                    onClick={handleSaveContent}
-                    disabled={isSaving}
-                    className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#00A3E0] hover:bg-[#008bc0] text-white font-bold text-xs rounded-xl shadow-md shadow-[#00A3E0]/20 transition-all cursor-pointer"
-                  >
-                    <Save className="w-4 h-4" />
-                    <span>{isSaving ? 'Saving...' : 'Save Changes'}</span>
-                  </button>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {/* Home Background Video (Clean Upload, NO URL box) */}
-                  <div className="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-2">
-                    <MediaUploadField
-                      type="video"
-                      label="Home Page Background Video"
-                      value={formData?.media?.homeHeroVideo || ''}
-                      onChange={(newVid) =>
-                        setFormData({
-                          ...formData,
-                          media: { ...formData.media, homeHeroVideo: newVid },
-                          hero: { ...formData.hero, backgroundVideo: newVid },
-                        })
-                      }
-                      helperText="Background video playing seamlessly on Home Hero"
-                    />
-                  </div>
-
-                  {/* Home Hero BG Poster Image (Clean Upload, NO URL box) */}
-                  <div className="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-2">
-                    <MediaUploadField
-                      type="image"
-                      label="Home Hero Background Poster Image"
-                      value={formData?.media?.homeHeroBgImage || ''}
-                      onChange={(newImg) =>
-                        setFormData({
-                          ...formData,
-                          media: { ...formData.media, homeHeroBgImage: newImg },
-                          hero: { ...formData.hero, backgroundImage: newImg },
-                        })
-                      }
-                      helperText="Poster image displayed behind home video"
-                    />
-                  </div>
-
-                  {/* Services Page Hero Video (Clean Upload, NO URL box) */}
-                  <div className="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-2">
-                    <MediaUploadField
-                      type="video"
-                      label="Services Page Hero Video"
-                      value={formData?.media?.servicesHeroVideo || ''}
-                      onChange={(newVid) =>
-                        setFormData({
-                          ...formData,
-                          media: { ...formData.media, servicesHeroVideo: newVid },
-                        })
-                      }
-                      helperText="Top hero video on Services page"
-                    />
-                  </div>
-
-                  {/* About Page Hero Video (Clean Upload, NO URL box) */}
-                  <div className="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-2">
-                    <MediaUploadField
-                      type="video"
-                      label="About Page Hero Video"
-                      value={formData?.media?.aboutHeroVideo || ''}
-                      onChange={(newVid) =>
-                        setFormData({
-                          ...formData,
-                          media: { ...formData.media, aboutHeroVideo: newVid },
-                        })
-                      }
-                      helperText="Top hero video on About page"
-                    />
-                  </div>
-
-                  {/* Testimonials Page Hero Video (Clean Upload, NO URL box) */}
-                  <div className="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-2">
-                    <MediaUploadField
-                      type="video"
-                      label="Testimonials Page Hero Video"
-                      value={formData?.media?.testimonialsHeroVideo || ''}
-                      onChange={(newVid) =>
-                        setFormData({
-                          ...formData,
-                          media: { ...formData.media, testimonialsHeroVideo: newVid },
-                        })
-                      }
-                      helperText="Top hero video on Testimonials page"
-                    />
-                  </div>
-
-                  {/* Portfolio Page Hero Video (Clean Upload, NO URL box) */}
-                  <div className="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-2">
-                    <MediaUploadField
-                      type="video"
-                      label="Portfolio Page Hero Video"
-                      value={formData?.media?.portfolioHeroVideo || ''}
-                      onChange={(newVid) =>
-                        setFormData({
-                          ...formData,
-                          media: { ...formData.media, portfolioHeroVideo: newVid },
-                        })
-                      }
-                      helperText="Top hero video on Portfolio page"
-                    />
-                  </div>
-
-                  {/* Contact Page Hero Video (Clean Upload, NO URL box) */}
-                  <div className="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-2">
-                    <MediaUploadField
-                      type="video"
-                      label="Contact Page Hero Video"
-                      value={formData?.media?.contactHeroVideo || ''}
-                      onChange={(newVid) =>
-                        setFormData({
-                          ...formData,
-                          media: { ...formData.media, contactHeroVideo: newVid },
-                        })
-                      }
-                      helperText="Top hero video on Contact page"
-                    />
-                  </div>
-
-                  {/* Agency HQ Video (Clean Upload, NO URL box) */}
-                  <div className="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-2">
-                    <MediaUploadField
-                      type="video"
-                      label="Agency HQ Tour Video (Why Choose Us)"
-                      value={formData?.media?.agencyHqVideo || ''}
-                      onChange={(newVid) =>
-                        setFormData({
-                          ...formData,
-                          media: { ...formData.media, agencyHqVideo: newVid },
-                          whyChooseUs: { ...formData.whyChooseUs, hqVideoUrl: newVid },
-                        })
-                      }
-                      helperText="HQ tour video shown in Why Choose Us section"
-                    />
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {/* ========================================================= */}
-            {/* TAB: BRANDING & LOGOS */}
-            {/* ========================================================= */}
-            {activeTab === 'branding' && (
-              <div className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-6 text-left">
-                <div className="flex items-center justify-between pb-4 border-b border-slate-100">
-                  <div>
-                    <h2 className="text-2xl font-black text-slate-900 flex items-center gap-2">
-                      <Palette className="w-6 h-6 text-[#00A3E0]" />
-                      <span>Branding, Logos & Favicon</span>
-                    </h2>
-                    <p className="text-xs text-slate-500 mt-1">
-                      Update official agency name, tagline, navbar/footer logos, and browser tab favicon from local files.
-                    </p>
-                  </div>
-                  <button
-                    onClick={handleSaveContent}
-                    disabled={isSaving}
-                    className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#00A3E0] hover:bg-[#008bc0] text-white font-bold text-xs rounded-xl shadow-md shadow-[#00A3E0]/20 transition-all cursor-pointer"
-                  >
-                    <Save className="w-4 h-4" />
-                    <span>{isSaving ? 'Saving...' : 'Save Changes'}</span>
-                  </button>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <label className="block text-xs font-bold text-slate-700 uppercase mb-1">
-                      Agency Brand Name
-                    </label>
-                    <input
-                      type="text"
-                      value={formData?.branding?.agencyName || ''}
-                      placeholder="TezScale"
-                      onChange={(e) =>
-                        setFormData({
-                          ...formData,
-                          branding: { ...formData.branding, agencyName: e.target.value },
-                        })
-                      }
-                      className="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-xs font-bold text-slate-700 uppercase mb-1">
-                      Brand Tagline
-                    </label>
-                    <input
-                      type="text"
-                      value={formData?.branding?.tagline || ''}
-                      placeholder="ACCELERATING DIGITAL GROWTH"
-                      onChange={(e) =>
-                        setFormData({
-                          ...formData,
-                          branding: { ...formData.branding, tagline: e.target.value },
-                        })
-                      }
-                      className="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold"
-                    />
-                  </div>
-
-                  {/* Clean Local Image Upload for Logo (NO URL box) */}
-                  <div>
-                    <MediaUploadField
-                      type="image"
-                      label="Navbar & Footer Logo"
-                      value={formData?.branding?.logoUrl || ''}
-                      onChange={(newLogo) =>
-                        setFormData({
-                          ...formData,
-                          branding: { ...formData.branding, logoUrl: newLogo },
-                        })
-                      }
-                      helperText="Official agency logo mark"
-                    />
-                  </div>
-
-                  {/* Clean Local Image Upload for Favicon (NO URL box) */}
-                  <div>
-                    <MediaUploadField
-                      type="image"
-                      label="Browser Tab Favicon"
-                      value={formData?.branding?.faviconUrl || ''}
-                      onChange={(newFavicon) =>
-                        setFormData({
-                          ...formData,
-                          branding: { ...formData.branding, faviconUrl: newFavicon },
-                        })
-                      }
-                      helperText="Small square icon rendered in the browser tab"
-                    />
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {/* ========================================================= */}
-            {/* TAB: SERVICES */}
-            {/* ========================================================= */}
-            {activeTab === 'services' && (
-              <div className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-6 text-left">
-                <div className="flex items-center justify-between pb-4 border-b border-slate-100">
-                  <div>
-                    <h2 className="text-2xl font-black text-slate-900">Services & Solutions</h2>
-                    <p className="text-xs text-slate-500 mt-1">Add, edit, or remove services offered by your agency.</p>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <button
-                      onClick={openCreateServiceModal}
-                      className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-[#00A3E0] hover:bg-[#008bc0] text-white font-bold text-xs rounded-xl shadow-md shadow-[#00A3E0]/20 cursor-pointer"
-                    >
-                      <Plus className="w-4 h-4" />
-                      <span>+ Add Service (Modal)</span>
-                    </button>
-
-                    <button
-                      onClick={handleSaveContent}
-                      disabled={isSaving}
-                      className="inline-flex items-center gap-2 px-5 py-2 bg-[#007ba8] hover:bg-[#006a92] text-white font-bold text-xs rounded-xl shadow-md transition-all cursor-pointer"
-                    >
-                      <Save className="w-4 h-4" />
-                      <span>Save</span>
-                    </button>
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pb-6 border-b border-slate-100">
-                  <div>
-                    <label className="block text-xs font-bold text-slate-700 uppercase mb-1">Section Badge</label>
-                    <input
-                      type="text"
-                      value={formData?.servicesSection?.badge || ''}
-                      onChange={(e) =>
-                        setFormData({
-                          ...formData,
-                          servicesSection: { ...formData.servicesSection, badge: e.target.value },
-                        })
-                      }
-                      className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-xs font-bold text-slate-700 uppercase mb-1">Section Title</label>
-                    <input
-                      type="text"
-                      value={formData?.servicesSection?.title || ''}
-                      onChange={(e) =>
-                        setFormData({
-                          ...formData,
-                          servicesSection: { ...formData.servicesSection, title: e.target.value },
-                        })
-                      }
-                      className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold"
-                    />
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {formData?.services?.map((serv, index) => (
-                    <div key={index} className="p-4 rounded-2xl border border-slate-200 bg-slate-50/50 space-y-3 relative flex flex-col justify-between">
-                      <div className="space-y-2">
-                        <div className="flex items-center justify-between">
-                          <span className="text-xs font-bold text-slate-400 uppercase">Service #{index + 1}</span>
-                          <div className="flex items-center gap-1">
-                            <button
-                              onClick={() => openEditServiceModal(index)}
-                              className="p-1 text-slate-400 hover:text-[#00A3E0] hover:bg-slate-100 rounded-md cursor-pointer"
-                              title="Edit in Modal"
-                            >
-                              <Edit2 className="w-3.5 h-3.5" />
-                            </button>
-                            <button
-                              onClick={() => {
-                                const updated = formData.services.filter((_, i) => i !== index);
-                                setFormData({ ...formData, services: updated });
-                              }}
-                              className="text-slate-400 hover:text-rose-600 p-1 rounded-md cursor-pointer"
-                              title="Remove Service"
-                            >
-                              <Trash2 className="w-3.5 h-3.5" />
-                            </button>
-                          </div>
-                        </div>
-
-                        <div className="text-sm font-bold text-slate-900">{serv.title}</div>
-                        <p className="text-xs text-slate-600 leading-relaxed">{serv.desc}</p>
-                      </div>
-
-                      <div className="pt-2 border-t border-slate-200/60 flex items-center justify-between text-[11px]">
-                        <span className="text-slate-400 font-mono">icon: {serv.icon}</span>
-                        <button
-                          onClick={() => openEditServiceModal(index)}
-                          className="font-bold text-[#00A3E0] hover:text-[#008bc0] cursor-pointer flex items-center gap-1"
-                        >
-                          <span>Edit</span>
-                          <Edit2 className="w-3 h-3" />
-                        </button>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* ========================================================= */}
-            {/* TAB: OUR WORK & METRICS */}
-            {/* ========================================================= */}
-            {activeTab === 'work' && (
-              <div className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-6 text-left">
-                <div className="flex items-center justify-between pb-4 border-b border-slate-100">
-                  <div>
-                    <h2 className="text-2xl font-black text-slate-900">Our Work & Company Stats</h2>
-                    <p className="text-xs text-slate-500 mt-1">Edit the 3 milestone metrics and case study projects.</p>
-                  </div>
-                  <button
-                    onClick={handleSaveContent}
-                    disabled={isSaving}
-                    className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#00A3E0] hover:bg-[#008bc0] text-white font-bold text-xs rounded-xl shadow-md shadow-[#00A3E0]/20 transition-all cursor-pointer"
-                  >
-                    <Save className="w-4 h-4" />
-                    <span>Save Changes</span>
-                  </button>
-                </div>
-
-                <div>
-                  <h4 className="text-xs font-extrabold text-slate-900 mb-3 uppercase tracking-wider">Key Metrics</h4>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div className="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-2">
-                      <span className="text-[11px] font-bold text-slate-400">Stat 1</span>
-                      <input
-                        type="text"
-                        value={formData?.metrics?.stat1Value || ''}
-                        placeholder="250%"
-                        onChange={(e) =>
-                          setFormData({
-                            ...formData,
-                            metrics: { ...formData.metrics, stat1Value: e.target.value },
-                          })
-                        }
-                        className="w-full p-2 bg-white border border-slate-200 rounded-lg text-base font-bold"
-                      />
-                      <input
-                        type="text"
-                        value={formData?.metrics?.stat1Label || ''}
-                        placeholder="Average Growth"
-                        onChange={(e) =>
-                          setFormData({
-                            ...formData,
-                            metrics: { ...formData.metrics, stat1Label: e.target.value },
-                          })
-                        }
-                        className="w-full p-2 bg-white border border-slate-200 rounded-lg text-xs"
-                      />
-                    </div>
-
-                    <div className="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-2">
-                      <span className="text-[11px] font-bold text-slate-400">Stat 2</span>
-                      <input
-                        type="text"
-                        value={formData?.metrics?.stat2Value || ''}
-                        placeholder="500+"
-                        onChange={(e) =>
-                          setFormData({
-                            ...formData,
-                            metrics: { ...formData.metrics, stat2Value: e.target.value },
-                          })
-                        }
-                        className="w-full p-2 bg-white border border-slate-200 rounded-lg text-base font-bold"
-                      />
-                      <input
-                        type="text"
-                        value={formData?.metrics?.stat2Label || ''}
-                        placeholder="Happy Clients"
-                        onChange={(e) =>
-                          setFormData({
-                            ...formData,
-                            metrics: { ...formData.metrics, stat2Label: e.target.value },
-                          })
-                        }
-                        className="w-full p-2 bg-white border border-slate-200 rounded-lg text-xs"
-                      />
-                    </div>
-
-                    <div className="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-2">
-                      <span className="text-[11px] font-bold text-slate-400">Stat 3</span>
-                      <input
-                        type="text"
-                        value={formData?.metrics?.stat3Value || ''}
-                        placeholder="5+ Years"
-                        onChange={(e) =>
-                          setFormData({
-                            ...formData,
-                            metrics: { ...formData.metrics, stat3Value: e.target.value },
-                          })
-                        }
-                        className="w-full p-2 bg-white border border-slate-200 rounded-lg text-base font-bold"
-                      />
-                      <input
-                        type="text"
-                        value={formData?.metrics?.stat3Label || ''}
-                        placeholder="Industry Experience"
-                        onChange={(e) =>
-                          setFormData({
-                            ...formData,
-                            metrics: { ...formData.metrics, stat3Label: e.target.value },
-                          })
-                        }
-                        className="w-full p-2 bg-white border border-slate-200 rounded-lg text-xs"
-                      />
-                    </div>
-                  </div>
-                </div>
-
-                <div className="pt-4 border-t border-slate-100">
-                  <h4 className="text-xs font-extrabold text-slate-900 mb-3 uppercase tracking-wider">Case Studies Portfolio</h4>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    {formData?.caseStudies?.map((study, idx) => (
-                      <div key={idx} className="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-3">
-                        <span className="text-xs font-bold text-slate-400">Project #{idx + 1}</span>
-                        <div>
-                          <label className="text-xs font-bold text-slate-600 block mb-0.5">Title</label>
-                          <input
-                            type="text"
-                            value={study.title}
-                            onChange={(e) => {
-                              const updated = [...formData.caseStudies];
-                              updated[idx].title = e.target.value;
-                              setFormData({ ...formData, caseStudies: updated });
-                            }}
-                            className="w-full p-2 bg-white border border-slate-200 rounded-lg text-xs font-semibold"
-                          />
-                        </div>
-                        <div>
-                          <label className="text-xs font-bold text-slate-600 block mb-0.5">Subtitle</label>
-                          <input
-                            type="text"
-                            value={study.subtitle}
-                            onChange={(e) => {
-                              const updated = [...formData.caseStudies];
-                              updated[idx].subtitle = e.target.value;
-                              setFormData({ ...formData, caseStudies: updated });
-                            }}
-                            className="w-full p-2 bg-white border border-slate-200 rounded-lg text-xs"
-                          />
-                        </div>
-                        <div>
-                          <label className="text-xs font-bold text-slate-600 block mb-0.5">Badge</label>
-                          <input
-                            type="text"
-                            value={study.badge}
-                            onChange={(e) => {
-                              const updated = [...formData.caseStudies];
-                              updated[idx].badge = e.target.value;
-                              setFormData({ ...formData, caseStudies: updated });
-                            }}
-                            className="w-full p-2 bg-white border border-slate-200 rounded-lg text-xs font-bold text-emerald-700"
-                          />
-                        </div>
-
-                        {/* Clean Local Image Upload for Case Study (NO URL box) */}
-                        <div>
-                          <MediaUploadField
-                            type="image"
-                            label="Project Thumbnail Photo"
-                            value={study.image || ''}
-                            onChange={(newImg) => {
-                              const updated = [...formData.caseStudies];
-                              updated[idx].image = newImg;
-                              setFormData({ ...formData, caseStudies: updated });
-                            }}
-                          />
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {/* ========================================================= */}
-            {/* TAB: CTA BANNER */}
-            {/* ========================================================= */}
-            {activeTab === 'banner' && (
-              <div className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-6 text-left">
-                <div className="flex items-center justify-between pb-4 border-b border-slate-100">
-                  <div>
-                    <h2 className="text-2xl font-black text-slate-900">Bottom CTA Banner</h2>
-                    <p className="text-xs text-slate-500 mt-1">Edit the large blue banner shown above the footer.</p>
-                  </div>
-                  <button
-                    onClick={handleSaveContent}
-                    disabled={isSaving}
-                    className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#00A3E0] hover:bg-[#008bc0] text-white font-bold text-xs rounded-xl shadow-md shadow-[#00A3E0]/20 transition-all cursor-pointer"
-                  >
-                    <Save className="w-4 h-4" />
-                    <span>Save Changes</span>
-                  </button>
-                </div>
-
-                <div className="space-y-4">
-                  <div>
-                    <label className="block text-xs font-bold text-slate-700 uppercase mb-1">Banner Title</label>
-                    <input
-                      type="text"
-                      value={formData?.ctaBanner?.title || ''}
-                      onChange={(e) =>
-                        setFormData({
-                          ...formData,
-                          ctaBanner: { ...formData.ctaBanner, title: e.target.value },
-                        })
-                      }
-                      className="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold focus:ring-2 focus:ring-[#00A3E0] focus:outline-none"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-xs font-bold text-slate-700 uppercase mb-1">Banner Subtitle</label>
-                    <input
-                      type="text"
-                      value={formData?.ctaBanner?.subtitle || ''}
-                      onChange={(e) =>
-                        setFormData({
-                          ...formData,
-                          ctaBanner: { ...formData.ctaBanner, subtitle: e.target.value },
-                        })
-                      }
-                      className="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium focus:ring-2 focus:ring-[#00A3E0] focus:outline-none"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-xs font-bold text-slate-700 uppercase mb-1">Button Text</label>
-                    <input
-                      type="text"
-                      value={formData?.ctaBanner?.buttonText || ''}
-                      onChange={(e) =>
-                        setFormData({
-                          ...formData,
-                          ctaBanner: { ...formData.ctaBanner, buttonText: e.target.value },
-                        })
-                      }
-                      className="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold focus:ring-2 focus:ring-[#00A3E0] focus:outline-none"
-                    />
-                  </div>
                 </div>
               </div>
             )}

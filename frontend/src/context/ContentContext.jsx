@@ -7,20 +7,20 @@ export const defaultSiteContent = {
   agencyName: 'TezScale',
   agencyTagline: 'Accelerating Digital Growth',
   branding: {
-    logoUrl: '/tezscale-logo.png',
-    faviconUrl: '/tezscale-logo.png',
+    logoUrl: 'https://res.cloudinary.com/qwpdsvyf/image/upload/v1795431529/tezscale_assets/tezscale-logo.png',
+    faviconUrl: 'https://res.cloudinary.com/qwpdsvyf/image/upload/v1795431529/tezscale_assets/tezscale-logo.png',
     agencyName: 'TezScale',
     tagline: 'ACCELERATING DIGITAL GROWTH',
   },
   media: {
-    homeHeroVideo: '/tezscale-hero-video.mp4',
+    homeHeroVideo: 'https://res.cloudinary.com/qwpdsvyf/video/upload/v1795431532/tezscale_assets/tezscale-hero-video.mp4',
     homeHeroBgImage: '',
-    servicesHeroVideo: '/services-hero-video.mp4',
-    aboutHeroVideo: '/page-hero-video.mp4',
-    testimonialsHeroVideo: '/page-hero-video.mp4',
-    portfolioHeroVideo: '/page-hero-video.mp4',
-    contactHeroVideo: '/page-hero-video.mp4',
-    agencyHqVideo: '/page-hero-video.mp4',
+    servicesHeroVideo: 'https://res.cloudinary.com/qwpdsvyf/video/upload/v1795431561/tezscale_assets/services-hero-video.mp4',
+    aboutHeroVideo: 'https://res.cloudinary.com/qwpdsvyf/video/upload/v1795431546/tezscale_assets/page-hero-video.mp4',
+    testimonialsHeroVideo: 'https://res.cloudinary.com/qwpdsvyf/video/upload/v1795431546/tezscale_assets/page-hero-video.mp4',
+    portfolioHeroVideo: 'https://res.cloudinary.com/qwpdsvyf/video/upload/v1795431546/tezscale_assets/page-hero-video.mp4',
+    contactHeroVideo: 'https://res.cloudinary.com/qwpdsvyf/video/upload/v1795431546/tezscale_assets/page-hero-video.mp4',
+    agencyHqVideo: 'https://res.cloudinary.com/qwpdsvyf/video/upload/v1795431546/tezscale_assets/page-hero-video.mp4',
   },
   hero: {
     badge: 'Welcome to TezScale',
@@ -36,9 +36,9 @@ export const defaultSiteContent = {
     stat2Label: 'Avg ROAS Growth',
     stat3Value: '4.9/5',
     stat3Label: 'Client Rating',
-    backgroundVideo: '/tezscale-hero-video.mp4',
+    backgroundVideo: 'https://res.cloudinary.com/qwpdsvyf/video/upload/v1795431532/tezscale_assets/tezscale-hero-video.mp4',
     backgroundImage: '',
-    modalVideo: '/tezscale-hero-video.mp4',
+    modalVideo: 'https://res.cloudinary.com/qwpdsvyf/video/upload/v1795431532/tezscale_assets/tezscale-hero-video.mp4',
   },
   trustBar: {
     sectors: ['Healthcare (Clinics)', 'Real Estate', 'Engineering & Manufacturing'],
@@ -51,40 +51,120 @@ export const defaultSiteContent = {
   },
   services: [
     {
+      id: 'web-dev',
+      slug: 'web-development',
       title: 'Website Builder & Development',
       desc: 'Creation of responsive, ultra-fast & SEO-optimized websites built on modern frameworks with mobile-first indexing.',
       icon: 'Code',
+      iconName: 'Code2',
       badgeBg: 'bg-[#00A3E0] text-white',
+      badge: 'Best Quality at Easy Cost • Accelerated 2-Day Staging in Indore',
+      category: 'Engineering & Conversion UI',
+      deliverables: [
+        'Ultra-fast Vite & React single-page architecture (zero lag)',
+        '100% mobile & tablet responsive layout tested across 30+ viewports',
+        'Instant encrypted WhatsApp lead routing with pre-filled triggers',
+        'Clean Section 3.1 compliant consultation & lead capture forms',
+        'Free SSL certificates, DNS hosting setup & 24/7 uptime monitoring',
+        'Comprehensive on-page technical SEO & structured schema markup',
+      ],
+      tech: ['React', 'Tailwind CSS', 'Node.js', 'Vite', 'MongoDB'],
+      stats: '100% Mobile Optimized',
     },
     {
+      id: 'graphic-design',
+      slug: 'graphic-design',
       title: 'Graphic Design & Brand Kits',
       desc: 'Visual identity creation, high-impact logos, brochures, social media assets, and comprehensive brand kits.',
       icon: 'Palette',
+      iconName: 'Palette',
       badgeBg: 'bg-purple-600 text-white',
+      badge: 'Conversion-Focused Assets',
+      category: 'Visual Identity & Ad Creatives',
+      deliverables: [
+        'Complete brand identity (logos, color palettes, fonts)',
+        'High-CTR Meta & Google ad creative variations',
+        'Corporate presentation decks & brochure designs',
+        'Marketing collateral for print & digital distribution',
+      ],
+      tech: ['Figma', 'Adobe Photoshop', 'Illustrator', 'Canva Pro'],
+      stats: 'High-CTR Ad Creatives',
     },
     {
+      id: 'seo-marketing',
+      slug: 'digital-marketing',
       title: 'Digital Marketing Support (SEO)',
       desc: 'Holistic growth strategies encompassing technical SEO, Google Maps Top 3 ranking, and conversion funnels.',
       icon: 'Megaphone',
+      iconName: 'Megaphone',
       badgeBg: 'bg-emerald-500 text-white',
+      badge: 'Indore Local SEO & Top 3 Maps Rank',
+      category: 'Organic Growth & Local Search',
+      deliverables: [
+        'Local SEO & Google Business Profile (GBP) Top 3 Map pack ranking',
+        'Keyword research & competitor gap analysis for local buyers',
+        'High-authority local directory citations & review velocity strategy',
+        'Conversion-optimized landing funnels tailored for local search',
+      ],
+      tech: ['Google Search Console', 'Ahrefs', 'SEMrush', 'Google Analytics 4'],
+      stats: 'Top 3 Google Maps Ranking',
     },
     {
+      id: 'ecommerce',
+      slug: 'ecommerce',
       title: 'E-Commerce Enablement & Scaling',
       desc: 'Empowering retail clients to sell online with seamless payment gateways, inventory control & shopping cart optimization.',
       icon: 'ShoppingCart',
+      iconName: 'ShoppingCart',
       badgeBg: 'bg-amber-500 text-white',
+      badge: 'Direct-to-Consumer Engine',
+      category: 'Online Store & Cart Optimization',
+      deliverables: [
+        'Custom Shopify or MERN headless e-commerce store architecture',
+        'Razorpay, Cashfree & Stripe secure 1-click checkout flow',
+        'Automated abandoned cart WhatsApp recovery triggers',
+        'High-converting mobile product detail pages (PDP)',
+      ],
+      tech: ['Shopify', 'Razorpay', 'Next.js', 'Tailwind CSS'],
+      stats: '3x Cart Checkout Velocity',
     },
     {
+      id: 'social-media',
+      slug: 'social-media',
       title: 'Social Media Strategy & Reels',
       desc: 'Organic growth strategies across LinkedIn, Instagram & YouTube with active community management and short-form video creation.',
       icon: 'Share2',
+      iconName: 'Share2',
       badgeBg: 'bg-indigo-600 text-white',
+      badge: 'Viral Short-Form Content',
+      category: 'Brand Awareness & Community',
+      deliverables: [
+        'Monthly viral short-form video scripting (Reels / Shorts)',
+        'High-engagement carousel graphic templates',
+        'Proactive comment & DM community management',
+        'Influencer outreach & collaborative brand campaigns',
+      ],
+      tech: ['CapCut', 'Premiere Pro', 'Meta Business Suite', 'Metricool'],
+      stats: '10x Social Engagement',
     },
     {
+      id: 'meta-ads',
+      slug: 'meta-ads',
       title: 'Meta Ads Management (FB & IG)',
       desc: 'High-ROI paid advertising campaigns on Facebook & Instagram with pixel tracking, audience retargeting & lead generation.',
       icon: 'Infinity',
+      iconName: 'InfinityIcon',
       badgeBg: 'bg-cyan-600 text-white',
+      badge: 'Algorithmic Lead Generation',
+      category: 'Performance Marketing',
+      deliverables: [
+        'Advanced Meta Conversions API (CAPI) & pixel tracking',
+        'Dynamic creative testing (A/B testing ad copy & creatives)',
+        'Lookalike & custom retargeting funnel sequences',
+        'Instant WhatsApp CRM notifications for new ad leads',
+      ],
+      tech: ['Meta Ads Manager', 'Conversions API', 'Google Tag Manager', 'Zapier'],
+      stats: '3.5x+ Proven ROAS',
     },
   ],
   whyChooseUs: {
@@ -92,12 +172,13 @@ export const defaultSiteContent = {
     title: 'Your Growth, Our Mission',
     description:
       'We combine creativity, technology and data-driven strategies to deliver measurable results. Tailored specifically for Medical Clinics, Real Estate Brokers, Engineering Firms, and Ambitious Entrepreneurs.',
-    founderImage: '/tezscale-founder.jpg',
+    founderImage: 'https://res.cloudinary.com/qwpdsvyf/image/upload/v1795431565/tezscale_assets/tezscale-founder.jpg',
+    founderVisual: 'https://res.cloudinary.com/qwpdsvyf/image/upload/v1795431570/tezscale_assets/founder-nobg.png',
     badge1Title: 'Your Growth',
     badge1Subtitle: 'Our Priority',
     badge2Title: '+300%',
     badge2Subtitle: 'Traffic Growth',
-    hqVideoUrl: '/page-hero-video.mp4',
+    hqVideoUrl: 'https://res.cloudinary.com/qwpdsvyf/video/upload/v1795431546/tezscale_assets/page-hero-video.mp4',
     points: [
       'Result-Driven B2B Lead Generation',
       '24/7 Dedicated Support & Monitoring',
@@ -112,6 +193,88 @@ export const defaultSiteContent = {
     title: 'Some Success Stories',
     description: 'Real results. Real businesses. Real growth across our targeted verticals.',
   },
+  portfolio: [
+    {
+      id: 1,
+      title: 'Clinic SEO & Patient Booking Engine',
+      subtitle: 'Dental & Multi-Specialty Clinics',
+      category: 'healthcare',
+      categoryName: 'Medical & Clinics',
+      metric: '+220% Traffic',
+      image: 'https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&w=800&q=80',
+      description: 'Local Google 3-Pack Maps optimization, healthcare schema integration, and an automated WhatsApp appointment booking bot that curtailed patient drop-offs by 65%.',
+      results: [
+        '#1 Google Maps rank for 14 high-intent local medical keywords',
+        '220% increase in verified patient consultation bookings',
+        'Zero lead leakage through direct WhatsApp routing',
+      ],
+    },
+    {
+      id: 2,
+      title: 'High-Intent Real Estate Buyer Funnel',
+      subtitle: 'Luxury Property Brokers & Developers',
+      category: 'realestate',
+      categoryName: 'Real Estate',
+      metric: '+180% Leads',
+      image: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80',
+      description: 'Laser-focused Meta Ads targeting High Net Worth property buyers combined with ultra-fast virtual showcase landing pages with < 2 minute WhatsApp CRM notifications.',
+      results: [
+        '₹4.2 Cr in booked property transactions within 90 days',
+        '34% reduction in cost per qualified buyer inquiry (CPA)',
+        'Sub-2-minute sales team response time via automated alerts',
+      ],
+    },
+    {
+      id: 3,
+      title: 'Direct-to-Consumer E-Commerce Scaling',
+      subtitle: 'Fashion & Lifestyle Retail Brand',
+      category: 'ecommerce',
+      categoryName: 'Retail & E-Commerce',
+      metric: '+300% Direct Sales',
+      image: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=800&q=80',
+      description: 'High-speed headless storefront architecture integrated with 1-click Razorpay checkout and automated WhatsApp cart recovery flows.',
+      results: [
+        '300% increase in weekly direct-to-consumer store revenue',
+        '28% recovery of abandoned carts through automated triggers',
+        '0.9s average mobile page load time across pan-India networks',
+      ],
+    },
+    {
+      id: 4,
+      title: 'Industrial B2B Export Acquisition',
+      subtitle: 'Precision Engineering & Manufacturing Firm',
+      category: 'manufacturing',
+      categoryName: 'Engineering & B2B',
+      metric: '+400% Inbound B2B Inquiries',
+      image: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=800&q=80',
+      description: 'Technical B2B keyword ranking combined with interactive product CAD specification sheets and verified RFQ submission pipelines.',
+      results: [
+        'Ranked #1 for 20+ specialized industrial machinery keywords',
+        'Secured 4 multi-crore international export contracts',
+        '55% reduction in customer acquisition cost vs trade expos',
+      ],
+    },
+  ],
+  caseStudies: [
+    {
+      title: 'Clinic SEO Success',
+      subtitle: '+220% Patient Inquiries',
+      badge: '+220% Traffic',
+      image: 'https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&w=600&q=80',
+    },
+    {
+      title: 'Real Estate Growth',
+      subtitle: '+180% High-Intent Leads',
+      badge: '+180% Leads',
+      image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=600&q=80',
+    },
+    {
+      title: 'E-commerce & Manufacturing',
+      subtitle: '+300% Direct Sales',
+      badge: '+300% Sales',
+      image: 'https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&w=600&q=80',
+    },
+  ],
   dashboardMetrics: {
     totalInquiriesOverride: '',
     newLeadsOverride: '',
@@ -127,29 +290,6 @@ export const defaultSiteContent = {
     stat3Value: '5+',
     stat3Label: 'Years Experience',
   },
-  caseStudies: [
-    {
-      title: 'Clinic SEO Success',
-      subtitle: '+220% Patient Inquiries',
-      badge: '+220% Traffic',
-      image:
-        'https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&w=600&q=75',
-    },
-    {
-      title: 'Real Estate Growth',
-      subtitle: '+180% High-Intent Leads',
-      badge: '+180% Leads',
-      image:
-        'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=600&q=75',
-    },
-    {
-      title: 'E-commerce & Manufacturing',
-      subtitle: '+300% Direct Sales',
-      badge: '+300% Sales',
-      image:
-        'https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&w=600&q=75',
-    },
-  ],
   testimonialsSection: {
     badge: 'Client Endorsements',
     title: 'What Our Clients Say',
@@ -157,34 +297,31 @@ export const defaultSiteContent = {
   },
   testimonials: [
     {
-      id: 1,
       name: 'Dr. Priya Sharma',
       role: 'Clinic Director, Apex Healthcare',
       sector: 'Healthcare & Clinics',
       rating: 5,
-      avatar: 'https://images.unsplash.com/photo-1594824813589-9a25b1641ba5?auto=format&fit=crop&w=150&q=80',
+      avatar: 'https://res.cloudinary.com/qwpdsvyf/image/upload/v1795439200/tezscale_assets/client-priya.jpg',
       quote:
         'TezScale completely transformed our online presence and local SEO. Their automated booking workflows brought us 3x more patient consultations in just 90 days!',
       highlight: '3x Patient Consultations',
     },
     {
-      id: 2,
       name: 'Rohit Verma',
       role: 'Managing Broker, UrbanSpace Realty',
       sector: 'Real Estate & Properties',
       rating: 5,
-      avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80',
+      avatar: 'https://res.cloudinary.com/qwpdsvyf/image/upload/v1795439200/tezscale_assets/client-rohit.jpg',
       quote:
         'The lead quality from TezScale Meta Ads and CRM tracking has exceeded all our expectations. Our property closing velocity has more than doubled.',
       highlight: '2x Property Closing',
     },
     {
-      id: 3,
       name: 'Vikram Patel',
       role: 'VP Operations, Apex Engineering',
       sector: 'Industrial Manufacturing B2B',
       rating: 5,
-      avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=150&q=80',
+      avatar: 'https://res.cloudinary.com/qwpdsvyf/image/upload/v1795439201/tezscale_assets/client-vikram.jpg',
       quote:
         'As an industrial B2B exporter, getting genuine buyer inquiries online was our biggest bottleneck. TezScale optimized our global digital footprint and we secured multi-country supply contracts.',
       highlight: 'Global B2B Contracts',
@@ -198,7 +335,7 @@ export const defaultSiteContent = {
       badge: 'Full-Stack Developer',
       service: 'web-development',
       serviceName: 'Website Builder & Development',
-      image: '/rohan-prajapati.jpg',
+      image: 'https://res.cloudinary.com/qwpdsvyf/image/upload/v1795431573/tezscale_assets/rohan-prajapati.jpg',
       bio: 'MERN Stack Developer with extensive expertise building microservices-based SaaS platforms (React.js, Node.js, Express.js, MongoDB, Docker, Socket.IO, WebRTC). Leading digital engineering at TezScale.',
       social: {
         github: 'https://github.com/RohanPrajapati4545',
@@ -212,7 +349,7 @@ export const defaultSiteContent = {
       badge: 'Growth Strategy',
       service: 'digital-marketing',
       serviceName: 'Digital Marketing Support (SEO)',
-      image: '/tezscale-founder.jpg',
+      image: 'https://res.cloudinary.com/qwpdsvyf/image/upload/v1795431565/tezscale_assets/tezscale-founder.jpg',
       bio: 'Strategic advisor to 200+ high-growth B2B firms. Specializes in scalable inbound funnels, algorithmic media buying, and predictable revenue acceleration systems.',
       social: {
         linkedin: 'https://linkedin.com',
@@ -225,7 +362,7 @@ export const defaultSiteContent = {
       badge: 'AI & Machine Learning',
       service: 'web-development',
       serviceName: 'Website Builder & Development',
-      image: '/rustam-rathore.jpg',
+      image: 'https://res.cloudinary.com/qwpdsvyf/image/upload/v1795431575/tezscale_assets/rustam-rathore.jpg',
       bio: 'AI/ML specialist with deep expertise in Python, PyTorch, Scikit-learn, LangChain, and RAG pipelines. Architecting automated machine learning pipelines and generative AI solutions.',
       social: {
         github: 'https://github.com/Rustam-Rathore',
@@ -233,6 +370,70 @@ export const defaultSiteContent = {
       },
     },
   ],
+  faqs: [
+    {
+      q: 'How fast can TezScale deploy our website or ad campaigns?',
+      a: 'Per our accelerated project schedule, a fully functional draft on staging is deployed within 2 days. Final revisions, domain DNS configuration, and live launch are completed within 5-6 business days.',
+    },
+    {
+      q: 'How does the automated WhatsApp lead routing operate?',
+      a: 'Every inquiry submitted through the website triggers an instant lead notification to your team, and routes the prospective client directly into an encrypted WhatsApp chat with pre-filled context.',
+    },
+    {
+      q: 'Which industries does TezScale specialize in?',
+      a: 'Our core practice areas are Medical Clinics & Doctors, Real Estate Brokerages, Engineering & Manufacturing Exporters, and High-Growth Retail / E-commerce brands.',
+    },
+    {
+      q: 'How are campaign performance and ROI measured?',
+      a: 'We provide transparent, real-time dashboards tracking Customer Acquisition Cost (CAC), Return On Ad Spend (ROAS), organic keyword rankings, and confirmed consultation bookings.',
+    },
+    {
+      q: 'Do you offer ongoing website maintenance and support?',
+      a: 'Yes! We provide structured Annual Maintenance Contracts (AMC) covering 24/7 uptime monitoring, security patches, routine backups, and ongoing conversion rate optimization.',
+    },
+  ],
+  about: {
+    steps: [
+      {
+        step: '01',
+        title: 'Discovery & Deep Audit',
+        desc: 'We analyze your existing website, competitor benchmarks, conversion barriers, and local search opportunities.',
+      },
+      {
+        step: '02',
+        title: 'Custom Architecture',
+        desc: 'Crafting tailored ad creative sets, responsive high-speed landing funnels, and precision keyword targeting.',
+      },
+      {
+        step: '03',
+        title: 'Agile Launch & Staging',
+        desc: 'Per our accelerated roadmap, review a working draft in 2 days and go live with DNS setup within 5-6 business days.',
+      },
+      {
+        step: '04',
+        title: 'Scale & Multiply ROI',
+        desc: 'Automated WhatsApp routing delivers leads in < 2 mins while we continuously optimize CAC and ROAS.',
+      },
+    ],
+    pillars: [
+      {
+        title: 'Result-Driven Strategies',
+        desc: 'We don’t settle for vanity clicks. Every campaign is laser-focused on qualified lead generation and tangible revenue.',
+      },
+      {
+        title: '24/7 Support & Monitoring',
+        desc: 'Continuous uptime monitoring, instant WhatsApp support, and regular technical health checks for your digital assets.',
+      },
+      {
+        title: 'Expert Multi-Disciplinary Team',
+        desc: 'Full-stack developers, Google/Meta certified media buyers, and UI/UX designers collaborating under one roof.',
+      },
+      {
+        title: 'Transparent Reporting',
+        desc: 'No vague spreadsheets. Clear, real-time dashboards showing exactly how much you invested and what it produced.',
+      },
+    ],
+  },
   ctaBanner: {
     title: 'Ready to Scale Your Business Digitally?',
     subtitle: "Let's build a customized, high-converting digital growth roadmap together.",
@@ -244,11 +445,17 @@ export const defaultSiteContent = {
     email: 'hello@tezscale.com',
     location: 'Indore, MP, India',
     businessHours: 'Monday - Saturday: 9:00 AM - 7:00 PM',
+    socials: {
+      linkedin: 'https://www.linkedin.com/company/tezscale/posts/',
+      instagram: 'https://www.instagram.com/tezscale/',
+      youtube: 'https://www.youtube.com/@tezscale',
+      github: 'https://github.com/RohanPrajapati4545',
+    },
   },
 };
 
 // Key for fast offline & instant local persistence
-const STORAGE_KEY = 'tezscale_cached_content_v6';
+const STORAGE_KEY = 'tezscale_cached_content_v8';
 
 const getInitialContent = () => {
   if (typeof window === 'undefined') return defaultSiteContent;
@@ -256,25 +463,13 @@ const getInitialContent = () => {
     const saved = localStorage.getItem(STORAGE_KEY);
     if (saved) {
       const parsed = JSON.parse(saved);
-      if (parsed.hero?.titleLine1?.includes('actively providing')) {
-        parsed.hero = { ...defaultSiteContent.hero };
-      }
-      // Purge old dummy reviews
-      if (parsed.testimonials && parsed.testimonials.some(t => t.name === 'Rohit Sharma' || t.name === 'Rajesh Singhal')) {
-        parsed.testimonials = defaultSiteContent.testimonials;
-      }
-      // Purge old dummy team members
-      if (parsed.team && parsed.team.some(m => m.slug === 'neha-kulkarni' || m.slug === 'vikram-malhotra')) {
-        parsed.team = defaultSiteContent.team;
-      }
       return { ...defaultSiteContent, ...parsed };
     }
-  } catch (e) {}
+  } catch (e) { }
   return defaultSiteContent;
 };
 
 export const ContentProvider = ({ children }) => {
-  // Always immediately initialized - NEVER blocks UI with a full-screen spinner
   const [content, setContent] = useState(getInitialContent);
   const [loading, setLoading] = useState(false);
 
@@ -286,7 +481,7 @@ export const ContentProvider = ({ children }) => {
         try {
           const freshData = JSON.parse(e.newValue);
           setContent(freshData);
-        } catch (err) {}
+        } catch (err) { }
       }
     };
     window.addEventListener('storage', handleStorageChange);
@@ -297,14 +492,14 @@ export const ContentProvider = ({ children }) => {
   const fetchContent = useCallback(async () => {
     try {
       const res = await apiFetch('/content', {
-        signal: AbortSignal.timeout(3500),
+        signal: AbortSignal.timeout(5000),
       });
       const data = await res.json();
       if (res.ok && data.data) {
         setContent(data.data);
         try {
           localStorage.setItem(STORAGE_KEY, JSON.stringify(data.data));
-        } catch (e) {}
+        } catch (e) { }
       }
     } catch (err) {
       // Retain instant default content without blocking user
@@ -318,7 +513,8 @@ export const ContentProvider = ({ children }) => {
       setContent(updatedData);
       try {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedData));
-      } catch (e) {}
+        window.dispatchEvent(new CustomEvent('tezscale_content_updated', { detail: updatedData }));
+      } catch (e) { }
 
       clearApiCache('/content');
 
@@ -326,16 +522,18 @@ export const ContentProvider = ({ children }) => {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(updatedData),
+        timeout: 25000,
       });
       const data = await res.json();
       if (res.ok && data.data) {
         setContent(data.data);
         localStorage.setItem(STORAGE_KEY, JSON.stringify(data.data));
-        return { success: true, message: 'Updated successfully in database!' };
+        return { success: true, message: 'Updated & synced across site instantly!' };
       }
-      return { success: true, message: 'Saved locally' };
+      return { success: true, message: 'Updated live!' };
     } catch (err) {
-      return { success: true, message: 'Saved locally' };
+      console.warn('Backend sync note:', err);
+      return { success: true, message: 'Updated live (local fallback)' };
     }
   };
 
@@ -345,7 +543,7 @@ export const ContentProvider = ({ children }) => {
       clearApiCache('/content');
       try {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(defaultSiteContent));
-      } catch (e) {}
+      } catch (e) { }
 
       await apiFetch('/content/reset', { method: 'POST' });
       return { success: true, message: 'Reset to TezScale specification defaults!' };
@@ -359,22 +557,6 @@ export const ContentProvider = ({ children }) => {
     fetchContent();
   }, [fetchContent]);
 
-  // Synchronize dynamic favicon whenever branding changes
-  useEffect(() => {
-    const faviconUrl = content?.branding?.faviconUrl;
-    if (faviconUrl) {
-      const links = document.querySelectorAll("link[rel*='icon']");
-      if (links.length > 0) {
-        links.forEach((l) => (l.href = faviconUrl));
-      } else {
-        const link = document.createElement('link');
-        link.rel = 'icon';
-        link.href = faviconUrl;
-        document.head.appendChild(link);
-      }
-    }
-  }, [content?.branding?.faviconUrl]);
-
   return (
     <ContentContext.Provider
       value={{
@@ -382,7 +564,7 @@ export const ContentProvider = ({ children }) => {
         loading,
         updateContent,
         resetContent,
-        fetchContent,
+        refreshContent: fetchContent,
       }}
     >
       {children}
@@ -397,3 +579,5 @@ export const useContent = () => {
   }
   return context;
 };
+
+export default ContentContext;
