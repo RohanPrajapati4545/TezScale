@@ -209,17 +209,17 @@ export const defaultContent = {
     {
       slug: 'shubham-karma',
       name: 'Shubham Karma',
-      role: 'International Logistics & B2B Trade Specialist',
-      badge: 'International Logistics',
+      role: 'Founder & Growth Strategist',
+      badge: 'Founder & Growth Strategist',
       service: 'digital-marketing',
-      serviceName: 'International Logistics & B2B Trade',
+      serviceName: 'Digital Marketing Support (SEO)',
       location: 'Indore, Madhya Pradesh, India',
-      experience: '3+ Years in International Logistics, Export Compliance & Supply Chain',
+      experience: 'Founder at TezScale | 3+ Years in Global Trade & Digital Growth',
       phone: '+916262778128',
       whatsapp: 'https://wa.me/916262778128?text=Hi%20Shubham,%20I%20want%20to%20connect%20with%20you%20regarding%20TezScale%20services.',
       email: 'Shubhamvkarma143@gmail.com',
       image: '/shubham-karma.jpg',
-      bio: 'Results-driven international business and trade logistics specialist with proven track record in end-to-end global supply chains, customs compliance, and export documentation. Specialized in US freight logistics, duty tariff optimization, Athena ASN management, and accelerating international B2B trade pipelines.',
+      bio: 'Founder of TezScale with proven expertise in international business expansion, digital marketing funnels, and trade logistics. Leading strategic growth, client revenue acceleration, and scalable digital operations at TezScale.',
       social: {
         whatsapp: 'https://wa.me/916262778128?text=Hi%20Shubham,%20I%20want%20to%20connect%20with%20you%20regarding%20TezScale%20services.',
         email: 'Shubhamvkarma143@gmail.com',
@@ -245,6 +245,26 @@ export const defaultContent = {
         linkedin: 'https://linkedin.com/in/rustam-rathore-9637162a7/',
         whatsapp: 'https://wa.me/916262778128?text=Hi%20Rustam,%20I%20want%20to%20connect%20with%20you%20regarding%20TezScale%20services.',
         email: 'rustamrathore@gmail.com',
+      },
+    },
+    {
+      slug: 'jaydeep-patel',
+      name: 'Jaydeep Patel',
+      role: 'QA tester',
+      badge: 'QA tester',
+      service: 'web-development',
+      serviceName: 'Website Builder & Development',
+      location: 'Indore, India',
+      experience: '1+ year experience in Quality Assurance & Testing',
+      phone: '+916262778128',
+      whatsapp: 'https://wa.me/916262778128?text=Hi%20Jaydeep,%20I%20want%20to%20connect%20with%20you%20regarding%20TezScale%20services.',
+      email: 'jaydeeppatel@gmail.com',
+      image: '/jaydeep-patel.jpg',
+      bio: 'Tests software applications, websites, and mobile apps before release to find bugs, verify functionality, and ensure a smooth user experience across platforms.',
+      social: {
+        whatsapp: 'https://wa.me/916262778128?text=Hi%20Jaydeep,%20I%20want%20to%20connect%20with%20you%20regarding%20TezScale%20services.',
+        email: 'jaydeeppatel@gmail.com',
+        linkedin: 'https://linkedin.com',
       },
     },
   ],
@@ -292,6 +312,15 @@ export const getContent = async (req, res) => {
       }
       if (!content.team || content.team.length === 0) {
         content.team = defaultContent.team;
+        needsSave = true;
+      } else if (content.team.some(m => m.slug === 'asdfasdfsdf' || m.id === 'asdfasdfsdf' || m.name?.toLowerCase().includes('asdf'))) {
+        // Replace placeholder asdfasdfsdf with Founder Shubham Karma
+        content.team = content.team.map(m => {
+          if (m.slug === 'asdfasdfsdf' || m.id === 'asdfasdfsdf' || m.name?.toLowerCase().includes('asdf')) {
+            return defaultContent.team.find(t => t.slug === 'shubham-karma');
+          }
+          return m;
+        });
         needsSave = true;
       }
       if (content.testimonials && content.testimonials.some(t => t.name === 'Rohit Sharma' || t.name === 'Rajesh Singhal' || t.name === 'Ananya Verma')) {

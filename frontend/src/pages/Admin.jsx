@@ -342,8 +342,8 @@ const Admin = ({ onLogout }) => {
             } catch (e) {}
             return defaultSiteContent.testimonials;
           })(),
-    team:
-      (content?.team && content.team.length > 0)
+    team: (() => {
+      const rawList = (content?.team && content.team.length > 0)
         ? content.team
         : (() => {
             try {
@@ -354,7 +354,29 @@ const Admin = ({ onLogout }) => {
               }
             } catch (e) {}
             return defaultSiteContent.team;
-          })(),
+          })();
+      const founder = defaultSiteContent.team.find((m) => m.slug === 'shubham-karma');
+      let foundFounder = false;
+      const sanitized = (rawList || []).map((m) => {
+        if (
+          m.slug === 'asdfasdfsdf' ||
+          m.id === 'asdfasdfsdf' ||
+          m.name?.toLowerCase().includes('asdf') ||
+          m.role?.toLowerCase().includes('asdf')
+        ) {
+          foundFounder = true;
+          return founder || m;
+        }
+        if (m.slug === 'shubham-karma') {
+          foundFounder = true;
+        }
+        return m;
+      });
+      if (!foundFounder && founder) {
+        sanitized.push(founder);
+      }
+      return sanitized;
+    })(),
   }));
 
   const [saveStatus, setSaveStatus] = useState({ show: false, message: '', type: 'success' });

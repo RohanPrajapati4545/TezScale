@@ -40,7 +40,10 @@ const TeamMemberPage = () => {
         } catch (e) {}
         return teamMembers;
       })();
-  const cleanParam = (memberSlug || '').toLowerCase().trim();
+  let cleanParam = (memberSlug || '').toLowerCase().trim();
+  if (cleanParam === 'asdfasdfsdf' || cleanParam.includes('asdf')) {
+    cleanParam = 'shubham-karma';
+  }
   const dynamicMember = dynamicTeam.find(
     (m) =>
       m.slug?.toLowerCase() === cleanParam ||

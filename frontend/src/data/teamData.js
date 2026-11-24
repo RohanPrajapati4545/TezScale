@@ -148,14 +148,14 @@ export const teamMembers = [
     id: 'shubham-karma',
     slug: 'shubham-karma',
     name: 'Shubham Karma',
-    role: 'International Logistics & B2B Trade Specialist',
-    badge: 'International Logistics',
+    role: 'Founder & Growth Strategist',
+    badge: 'Founder & Growth Strategist',
     image: '/shubham-karma.jpg',
     imageClass: 'object-cover object-center',
     service: 'digital-marketing',
-    serviceName: 'International Logistics & B2B Trade',
+    serviceName: 'Digital Marketing Support (SEO)',
     location: 'Indore, Madhya Pradesh, India',
-    experience: '3+ Years in International Logistics, Export Compliance & Supply Chain',
+    experience: 'Founder at TezScale | 3+ Years in Global Trade & Digital Growth',
     phone: '+916262778128',
     whatsapp: 'https://wa.me/916262778128?text=Hi%20Shubham,%20I%20want%20to%20connect%20with%20you%20regarding%20TezScale%20services.',
     email: 'Shubhamvkarma143@gmail.com',
@@ -165,13 +165,13 @@ export const teamMembers = [
       email: 'Shubhamvkarma143@gmail.com',
       linkedin: 'https://linkedin.com',
     },
-    bio: 'Results-driven international business and trade logistics specialist with proven track record in end-to-end global supply chains, customs compliance, and export documentation. Specialized in US freight logistics, duty tariff optimization, Athena ASN management, and accelerating international B2B trade pipelines.',
+    bio: 'Founder of TezScale with proven expertise in international business expansion, digital marketing funnels, and trade logistics. Leading strategic growth, client revenue acceleration, and scalable digital operations at TezScale.',
     technicalSkills: {
-      languagesFrontend: ['International Logistics Operations', 'Export Documentation & Compliance', 'Freight Forwarding & Brokerage', 'Customs Clearance'],
-      backendArchitecture: ['Athena System ASN Management', 'Carrier & Trucking Operations', 'Supply Chain Routing', 'Multi-Location USA Deliveries'],
-      databasesCaching: ['SAP FICO', 'Duty Tariffs & HS Code Analytics', 'Total Landed Cost Modeling', 'Cost Optimization'],
-      authRealtime: ['Cross-Border Trade Regulations', 'Proof of Delivery (POD) Tracking', 'Vendor Compliance Audits', 'OEM Exporter Liaison'],
-      toolsDevops: ['Athena Liaison System', 'SAP FICO', 'Digital Marketing Tools', 'AI Trade Automation', 'MS Excel (Advanced)', 'Customs Portals']
+      languagesFrontend: ['Digital Marketing Strategy', 'B2B Growth Funnels', 'Export-Import Logistics', 'Customs Compliance'],
+      backendArchitecture: ['Athena System & EDI', 'Supply Chain Operations', 'Cross-Border Trade Routing', 'Landed Cost Analytics'],
+      databasesCaching: ['SAP FICO', 'Tariff & Duty Analytics', 'Cost Optimization', 'Revenue Operations'],
+      authRealtime: ['Trade Regulations', 'Carrier & Broker Negotiations', 'Vendor Audits', 'International Logistics'],
+      toolsDevops: ['Athena Liaison System', 'SAP FICO', 'Digital Marketing Tools', 'AI Trade Automation', 'MS Excel (Advanced)']
     },
     professionalExperience: [
       {
@@ -211,17 +211,6 @@ export const teamMembers = [
           'Managed customs brokerage and clearance across ocean, air, rail, and road transportation modes.',
           'Advised B2B clients on export-import best practices, tariff benefits, and cost-effective shipping corridors.',
           'Monitored cargo packing, warehouse loading, and end-to-end transport execution.'
-        ]
-      },
-      {
-        company: 'Shankh Shipping Logistics',
-        role: 'Marketing Executive (Trainee)',
-        duration: 'September 2022 – December 2022',
-        location: 'Indore, M.P.',
-        description: 'Customs broker and shipping agency.',
-        highlights: [
-          'Maintained international trade records and verified regulatory eligibility documentation.',
-          'Assisted senior brokers in customs post-clearance audits and trade settlements.'
         ]
       }
     ],
@@ -347,9 +336,78 @@ export const teamMembers = [
         desc: 'Designed and developed a supervised machine learning pipeline to classify wine quality as Good or Bad. Applied feature engineering, compared multiple classification algorithms, improved model accuracy via hyperparameter tuning, and evaluated using Confusion Matrix, Precision, Recall, and F1-score.',
       }
     ]
+  },
+  {
+    id: 'jaydeep-patel',
+    slug: 'jaydeep-patel',
+    name: 'Jaydeep Patel',
+    role: 'QA tester',
+    badge: 'QA tester',
+    service: 'web-development',
+    serviceName: 'Website Builder & Development',
+    image: '/jaydeep-patel.jpg',
+    imageClass: 'object-cover object-center',
+    location: 'Indore, India',
+    experience: '1+ year experience in Quality Assurance & Testing',
+    phone: '+916262778128',
+    whatsapp: 'https://wa.me/916262778128?text=Hi%20Jaydeep,%20I%20want%20to%20connect%20with%20you%20regarding%20TezScale%20services.',
+    email: 'jaydeeppatel@gmail.com',
+    linkedin: 'https://linkedin.com',
+    social: {
+      whatsapp: 'https://wa.me/916262778128?text=Hi%20Jaydeep,%20I%20want%20to%20connect%20with%20you%20regarding%20TezScale%20services.',
+      email: 'jaydeeppatel@gmail.com',
+      linkedin: 'https://linkedin.com',
+    },
+    bio: 'Tests software applications, websites, and mobile apps before release to find bugs, verify functionality, and ensure a smooth user experience across platforms.',
+    technicalSkills: {
+      languagesFrontend: ['Manual Testing', 'Functional Testing', 'UI/UX Responsiveness', 'Cross-Browser Verification'],
+      backendArchitecture: ['API Testing', 'Postman', 'Regression Testing', 'Bug Life Cycle Tracking'],
+      databasesCaching: ['SQL Queries', 'Data Integrity Audits'],
+      authRealtime: ['Integration Testing', 'Performance Benchmarks', 'Test Case Documentation'],
+      toolsDevops: ['Jira', 'Postman', 'Chrome DevTools', 'Git', 'GitHub']
+    },
+    professionalExperience: [
+      {
+        company: 'TezScale QA Labs',
+        role: 'QA Tester',
+        duration: '2025 – Present',
+        location: 'Indore, India',
+        description: 'Executing functional, smoke, and regression test suites across client production websites, web apps, and lead funnels.',
+        highlights: [
+          'Authored comprehensive test scenarios covering mobile responsiveness and cross-browser compatibility.',
+          'Validated REST API payloads and authentication flows using Postman.',
+          'Streamlined bug tracking and verification workflows, reducing production issue turnaround times.'
+        ]
+      }
+    ],
+    education: [
+      {
+        degree: 'Bachelor of Computer Applications / Technology',
+        institution: 'Indore, India',
+        year: '2024',
+        score: 'Graduate'
+      }
+    ],
+    certifications: [
+      'Software Testing & Quality Assurance Fundamentals',
+      'API Testing with Postman'
+    ],
+    projects: [
+      {
+        name: 'End-to-End SaaS Quality Assurance Suite',
+        category: 'Quality Engineering',
+        badge: 'QA & Testing',
+        tech: ['Manual Testing', 'API Verification', 'Cross-Browser Testing'],
+        desc: 'Comprehensive functional and responsive testing protocol ensuring flawless user flows, appointment forms, and checkout performance.'
+      }
+    ]
   }
 ];
 
 export const getTeamMemberBySlug = (slug) => {
-  return teamMembers.find((m) => m.slug === slug || m.id === slug) || null;
+  const clean = (slug || '').toLowerCase().trim();
+  if (clean === 'asdfasdfsdf' || clean.includes('asdf')) {
+    return teamMembers.find((m) => m.slug === 'shubham-karma');
+  }
+  return teamMembers.find((m) => m.slug === clean || m.id === clean) || null;
 };
