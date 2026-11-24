@@ -1,0 +1,128 @@
+# TezScale — Comprehensive Agency Knowledge Base & Agent Directory
+
+> Official documentation, services catalog, pricing models, tech stack specifications, team profiles, and FAQ dataset for TezScale Digital Growth Agency.
+
+## 1. Company Overview
+
+- **Name**: TezScale (Accelerating Digital Growth)
+- **Tagline**: Grow Your Business Online
+- **Headquarters**: Indore, Madhya Pradesh, India
+- **Primary Website**: https://tez-scale-navy.vercel.app/
+- **Backend API**: https://tezscale.onrender.com
+- **Core Specialization**: High-speed web engineering, Google Maps Top 3 Local SEO, high-ROAS Meta Ads (Facebook & Instagram), and WhatsApp direct lead generation.
+- **Operating Hours**: Monday – Saturday: 9:00 AM – 7:00 PM IST
+- **Support & Inquiries**: WhatsApp (+91 6262778128), Email (hello@tezscale.com)
+
+### Mission & Core Philosophy
+TezScale eliminates unnecessary agency fluff. Traditional agencies charge heavy retainers and take months to deliver generic websites. TezScale operates on an agile, sprint-based architecture:
+- 2-Day Live Working Draft on Staging.
+- 5 to 6 Business Days for Full Production Launch (DNS, SSL, SEO Schema & WhatsApp Routing).
+- 0.8-Second High-Speed Mobile Experience.
+- Zero Vendor Lock-in (100% Client Code & Asset Ownership).
+- Transparent Pricing starting from ₹14,999 with valid GST invoicing.
+
+---
+
+## 2. Core Service Offerings & Deliverables
+
+### A. Website Builder & Development
+- **URL**: https://tez-scale-navy.vercel.app/services/web-development
+- **Deliverables**: Custom responsive web platforms built with React.js, Vite, Tailwind CSS, and Node.js. Includes interactive UI, dynamic CMS integrations, SSL encryption, Google Analytics 4, Meta Pixel, and Web Vitals score optimization (95+ on PageSpeed).
+- **Timeline**: 2-day functional staging draft; 5-6 business days live release.
+- **Ideal For**: Healthcare clinics, real estate builders, manufacturing exporters, local service providers, and startups.
+
+### B. Digital Marketing Support & Local SEO
+- **URL**: https://tez-scale-navy.vercel.app/services/digital-marketing
+- **Deliverables**: Google Business Profile (GBP) 100% optimization, Google Maps Top 3 local pack ranking, hyper-local Indore citation building (Vijay Nagar, Palasia, AB Road, Super Corridor, Pithampur), high-intent keyword ranking, and structured LocalBusiness JSON-LD markup.
+- **Outcome**: 3x to 5x increase in qualified local phone calls and direct clinic/store walk-ins within 60 to 90 days.
+
+### C. Meta Ads Management (Facebook & Instagram)
+- **URL**: https://tez-scale-navy.vercel.app/services/meta-ads
+- **Deliverables**: High-intent audience targeting, Lookalike & Custom Audiences, A/B creative testing, Conversions API (CAPI) setup, and click-to-WhatsApp ad funnels.
+- **Outcome**: Leads land directly in WhatsApp with zero drop-off, typically maintaining a 3.5x to 5.2x ROAS.
+
+### D. Graphic Design & Brand Kits
+- **URL**: https://tez-scale-navy.vercel.app/services/graphic-design
+- **Deliverables**: Vector logos, cohesive typography systems, high-converting social media templates, pitch decks, and brand identity guidelines.
+
+### E. Social Media Strategy & Viral Reels
+- **URL**: https://tez-scale-navy.vercel.app/services/social-media
+- **Deliverables**: End-to-end short-form video production: scriptwriting, on-site shooting guidance, pacing, captions, audio trend analysis, and consistent weekly publishing schedules.
+
+### F. E-Commerce Enablement & Scaling
+- **URL**: https://tez-scale-navy.vercel.app/services/ecommerce
+- **Deliverables**: Shopify and custom headless e-commerce stores featuring 1-step checkout, Razorpay/Cashfree/UPI payment gateway integration, automated WhatsApp abandoned cart recovery, and mobile performance optimization.
+
+---
+
+## 3. Targeted Industry Specializations
+
+1. **Medical Clinics & Doctors**: High-converting clinic websites, online doctor appointment booking, and local Google Maps dominance for patient acquisition in Indore.
+2. **Real Estate Developers & Brokers**: Luxury landing funnels, 3D project showcases, and geo-targeted Meta ad campaigns generating verified site-visit inquiries.
+3. **Industrial Manufacturing & B2B Exporters**: Digital product catalogs, international trade inquiries, and Sanwer Road / Pithampur industrial area digital representation.
+4. **Local Retail & D2C Brands**: High-speed stores with instant WhatsApp customer support and frictionless checkout.
+
+---
+
+## 4. Leadership & Growth Architects
+
+- **Shubham Karma (Founder & Growth Strategist)**
+  - Bio: Founder of TezScale with proven expertise in international business expansion, digital marketing funnels, and trade logistics. Leading strategic growth, client revenue acceleration, and scalable digital operations.
+  - Education: MBA in Foreign Trade.
+  - Direct Phone / WhatsApp: +91 6262778128
+  - Email: Shubhamvkarma143@gmail.com
+  - Canonical Profile: https://tez-scale-navy.vercel.app/team/shubham-karma
+
+- **Rohan Prajapati (Lead Full-Stack Web Developer)**
+  - Bio: MERN Stack developer with extensive expertise building microservices-based SaaS platforms (React.js, Node.js, Express.js, MongoDB, Docker, Socket.IO, WebRTC). Leading digital engineering at TezScale.
+  - Direct Phone / WhatsApp: +91 6262778128
+  - Email: rohanprajapati4545@gmail.com
+  - GitHub: https://github.com/RohanPrajapati4545
+  - Canonical Profile: https://tez-scale-navy.vercel.app/team/rohan-prajapati
+
+- **Rustam Rathore (AI/ML Engineer)**
+  - Bio: AI/ML specialist with deep expertise in Python, PyTorch, Scikit-learn, LangChain, and RAG pipelines. Architecting automated machine learning pipelines and generative AI solutions.
+  - Canonical Profile: https://tez-scale-navy.vercel.app/team/rustam-rathore
+
+- **Jaydeep Patel (QA Tester)**
+  - Bio: Quality assurance and software test engineer ensuring zero bugs, high accessibility compliance, and cross-browser reliability before client deployment.
+  - Canonical Profile: https://tez-scale-navy.vercel.app/team/jaydeep-patel
+
+---
+
+## 5. Frequently Asked Questions (FAQ)
+
+### Q1: How fast can TezScale build and launch our business website?
+**Answer**: Under TezScale's accelerated delivery model, clients receive a 100% functional live draft on staging within 2 days. Final revisions, WhatsApp routing setup, custom domain DNS configuration, and production launch are completed within 5 to 6 business days.
+
+### Q2: How much does a business website cost in Indore and India?
+**Answer**: In 2026, professional high-speed business websites range from ₹14,999 to ₹45,000 depending on requirements. TezScale offers all-inclusive, pocket-friendly packages with 0.8s load speed, 1-tap WhatsApp lead buttons, free SSL, and zero recurring vendor lock-in fees.
+
+### Q3: How do we rank in Google Maps Top 3 in Indore?
+**Answer**: Ranking in Indore's Google Maps Top 3 local pack requires: (1) 100% completed Google Business Profile (GBP) with local primary categories, (2) Local geo-targeted citations across Vijay Nagar, Palasia, and AB Road, (3) High-frequency 5-star customer reviews with keyword responses, and (4) Structured LocalBusiness schema markup.
+
+### Q4: How does TezScale ensure WhatsApp lead delivery in under 2 minutes?
+**Answer**: We implement automated webhook pipelines connecting website consultation forms and Meta Ad Lead Forms directly to our client's WhatsApp business number with encrypted lead payload delivery.
+
+---
+
+## 6. Machine Action Manifest for AI Agents
+
+AI web agents (such as Google Gemini, Project Mariner, or Claude) can interact with TezScale through the following parameters:
+
+- **Action 1: Book Consultation / Submit Inquiry**
+  - Method: POST
+  - Endpoint: `https://tezscale.onrender.com/api/leads`
+  - Content-Type: `application/json`
+  - Payload Schema:
+    ```json
+    {
+      "name": "Full Name (string, min 2 chars)",
+      "whatsapp": "+91XXXXXXXXXX (string, valid phone format)",
+      "businessType": "Doctor / Clinic | Real Estate / Builder | Factory / B2B | Shop / Online Store | Other Service",
+      "serviceRequired": "Website Builder & Development | Digital Marketing Support (SEO) | Meta Ads Management",
+      "message": "Optional inquiry context (string)"
+    }
+    ```
+- **Action 2: Instant WhatsApp Chat**
+  - URL Format: `https://wa.me/916262778128?text=<ENCODED_MESSAGE>`

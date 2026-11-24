@@ -135,6 +135,9 @@ const ConsultationModal = ({ isOpen, onClose }) => {
 
   return (
     <div
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="modal-growth-heading"
       onClick={(e) => {
         if (e.target === e.currentTarget) handleSmoothClose();
       }}
@@ -153,7 +156,7 @@ const ConsultationModal = ({ isOpen, onClose }) => {
         {/* Header: Clean & Compact */}
         <div className="px-5 sm:px-6 py-4 border-b border-slate-800 flex items-start justify-between shrink-0 bg-slate-900/90">
           <div className="text-left pr-4">
-            <h3 className="font-heading font-semibold text-[18px] sm:text-[20px] text-white tracking-tight leading-[1.30] flex items-center gap-2">
+            <h3 id="modal-growth-heading" className="font-heading font-semibold text-[18px] sm:text-[20px] text-white tracking-tight leading-[1.30] flex items-center gap-2">
               <span>Get Your Free Website & Growth Plan</span>
               <span className="w-2 h-2 rounded-full bg-[#0EA5E9] animate-pulse" />
             </h3>
@@ -193,12 +196,14 @@ const ConsultationModal = ({ isOpen, onClose }) => {
 
               {/* Field 1: Full Name */}
               <div>
-                <label className="block font-sans font-semibold text-[13px] text-slate-200 mb-1.5">
+                <label htmlFor="modal-name" className="block font-sans font-semibold text-[13px] text-slate-200 mb-1.5">
                   Your Full Name <span className="text-[#0EA5E9]">*</span>
                 </label>
                 <div className="relative">
                   <User className="w-4 h-4 text-sky-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
                   <input
+                    id="modal-name"
+                    aria-label="Your Full Name"
                     type="text"
                     name="name"
                     required
@@ -212,7 +217,7 @@ const ConsultationModal = ({ isOpen, onClose }) => {
 
               {/* Field 2: WhatsApp Number */}
               <div>
-                <label className="block font-sans font-semibold text-[13px] text-slate-200 mb-1.5">
+                <label htmlFor="modal-phone-input" className="block font-sans font-semibold text-[13px] text-slate-200 mb-1.5">
                   WhatsApp Number <span className="text-[#0EA5E9]">*</span>
                 </label>
                 <PhoneInput
@@ -228,12 +233,14 @@ const ConsultationModal = ({ isOpen, onClose }) => {
 
               {/* Field 3: Your Business Type */}
               <div>
-                <label className="block font-sans font-semibold text-[13px] text-slate-200 mb-1.5">
+                <label htmlFor="modal-business-type" className="block font-sans font-semibold text-[13px] text-slate-200 mb-1.5">
                   Your Business Type <span className="text-[#0EA5E9]">*</span>
                 </label>
                 <div className="relative">
                   <Briefcase className="w-4 h-4 text-sky-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
                   <select
+                    id="modal-business-type"
+                    aria-label="Your Business Type"
                     name="businessType"
                     value={formData.businessType}
                     onChange={handleChange}
@@ -251,8 +258,10 @@ const ConsultationModal = ({ isOpen, onClose }) => {
 
               {/* Consent Checkbox */}
               <div className="pt-1">
-                <label className="flex items-start gap-2.5 cursor-pointer select-none">
+                <label htmlFor="modal-consent" className="flex items-start gap-2.5 cursor-pointer select-none">
                   <input
+                    id="modal-consent"
+                    aria-label="I agree to receive my free audit and updates on WhatsApp"
                     type="checkbox"
                     checked={consent}
                     onChange={(e) => setConsent(e.target.checked)}

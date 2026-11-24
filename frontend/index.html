@@ -30,6 +30,12 @@
     <link rel="canonical" href="https://tez-scale-navy.vercel.app/" />
     <meta name="theme-color" content="#00A3E0" />
 
+    <!-- AI Agent & Agentic Browsing Standards (llmstxt.org) -->
+    <link rel="alternate" type="text/markdown" href="/llms.txt" title="TezScale LLM Summary" />
+    <link rel="alternate" type="text/markdown" href="/llms-full.txt" title="TezScale Complete Knowledge Base" />
+    <meta name="ai-agent" content="enabled" />
+    <meta name="agentic-web" content="supported" />
+
     <!-- Open Graph / Facebook / WhatsApp Preview -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://tez-scale-navy.vercel.app/" />
@@ -68,7 +74,12 @@
           "name": "TezScale",
           "alternateName": ["Tez Scale", "TezScale Agency", "TezScale Digital Growth", "TezScale Indore"],
           "description": "TezScale accelerates predictable business growth with high-converting web development, viral reels, Meta Ads & local SEO.",
-          "publisher": { "@id": "https://tez-scale-navy.vercel.app/#organization" }
+          "publisher": { "@id": "https://tez-scale-navy.vercel.app/#organization" },
+          "potentialAction": {
+            "@type": "SearchAction",
+            "target": "https://tez-scale-navy.vercel.app/services?q={search_term_string}",
+            "query-input": "required name=search_term_string"
+          }
         },
         {
           "@type": "Organization",
@@ -85,7 +96,13 @@
           "image": "https://tez-scale-navy.vercel.app/tezscale-logo.png",
           "description": "TezScale is a performance-driven digital marketing, SEO, web development, and branding agency accelerating digital growth for modern businesses.",
           "email": "hello@tezscale.com",
-          "telephone": "+919876543210",
+          "telephone": "+916262778128",
+          "founder": {
+            "@type": "Person",
+            "name": "Shubham Karma",
+            "jobTitle": "Founder & Growth Strategist",
+            "sameAs": "https://tez-scale-navy.vercel.app/team/shubham-karma"
+          },
           "address": {
             "@type": "PostalAddress",
             "addressLocality": "Indore",
@@ -97,6 +114,32 @@
             "https://www.instagram.com/tezscale",
             "https://twitter.com/tezscale",
             "https://www.youtube.com/@tezscale"
+          ],
+          "potentialAction": [
+            {
+              "@type": "CommunicateAction",
+              "name": "Instant WhatsApp Lead & Strategy Chat",
+              "target": {
+                "@type": "EntryPoint",
+                "urlTemplate": "https://wa.me/916262778128?text=Hello%20TezScale,%20I%20am%20interested%20in%20scaling%20my%20business%20digitally.",
+                "actionPlatform": [
+                  "http://schema.org/DesktopWebPlatform",
+                  "http://schema.org/MobileWebPlatform"
+                ]
+              }
+            },
+            {
+              "@type": "ReserveAction",
+              "name": "Book Free 15-Minute Strategy Consultation",
+              "target": {
+                "@type": "EntryPoint",
+                "urlTemplate": "https://tez-scale-navy.vercel.app/#contact",
+                "actionPlatform": [
+                  "http://schema.org/DesktopWebPlatform",
+                  "http://schema.org/MobileWebPlatform"
+                ]
+              }
+            }
           ]
         },
         {
@@ -104,9 +147,21 @@
           "@id": "https://tez-scale-navy.vercel.app/#service",
           "name": "TezScale Digital Growth Agency",
           "url": "https://tez-scale-navy.vercel.app/",
-          "telephone": "+919876543210",
+          "telephone": "+916262778128",
           "priceRange": "$$",
           "image": "https://tez-scale-navy.vercel.app/hero-founder-visual.png",
+          "potentialAction": {
+            "@type": "ReserveAction",
+            "name": "Request Free Website & Growth Audit",
+            "target": {
+              "@type": "EntryPoint",
+              "urlTemplate": "https://tez-scale-navy.vercel.app/contact",
+              "actionPlatform": [
+                "http://schema.org/DesktopWebPlatform",
+                "http://schema.org/MobileWebPlatform"
+              ]
+            }
+          },
           "address": {
             "@type": "PostalAddress",
             "addressLocality": "Indore",

@@ -1,12 +1,36 @@
 User-agent: *
 Allow: /
+Allow: /llms.txt
+Allow: /llms-full.txt
 Disallow: /backoffice
 Disallow: /admin
+
+User-agent: Googlebot
+Allow: /
+Allow: /llms.txt
+Allow: /llms-full.txt
+
+User-agent: Google-Extended
+Allow: /
+Allow: /llms.txt
+Allow: /llms-full.txt
+
+User-agent: GPTBot
+Allow: /
+Allow: /llms.txt
+Allow: /llms-full.txt
+
+User-agent: ClaudeBot
+Allow: /
+Allow: /llms.txt
+Allow: /llms-full.txt
 
 User-agent: Googlebot-Image
 Allow: /
 Allow: /favicon.ico
 Allow: /*.png$
 Allow: /*.svg$
+Allow: /*.jpg$
+Allow: /*.jpeg$
 
 Sitemap: https://tez-scale-navy.vercel.app/sitemap.xml

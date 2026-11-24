@@ -198,7 +198,12 @@ const Footer = ({ onOpenConsultation }) => {
             <div className="pt-2">
               <div className="text-xs font-bold text-white mb-1.5 uppercase tracking-wide">Free Weekly Growth Tips</div>
               <form onSubmit={handleSubscribe} className="relative">
+                <label htmlFor="footer-newsletter-email" className="sr-only">
+                  Email address for weekly growth tips
+                </label>
                 <input
+                  id="footer-newsletter-email"
+                  aria-label="Enter your email address for weekly growth tips"
                   type="email"
                   required
                   value={newsletterEmail}
@@ -208,6 +213,7 @@ const Footer = ({ onOpenConsultation }) => {
                 />
                 <button
                   type="submit"
+                  aria-label="Subscribe to weekly growth tips"
                   className="absolute right-1.5 top-1/2 -translate-y-1/2 w-7 h-7 bg-[#0EA5E9] hover:bg-[#0284C7] text-white rounded-md flex items-center justify-center transition-colors cursor-pointer"
                   title="Subscribe"
                 >

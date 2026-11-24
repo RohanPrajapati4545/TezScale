@@ -136,6 +136,8 @@ const LeadForm = () => {
             <User className="w-4 h-4" />
           </div>
           <input
+            id="lead-form-name"
+            aria-label="Full Name"
             type="text"
             name="name"
             value={formData.name}
@@ -161,12 +163,12 @@ const LeadForm = () => {
           </div>
 
           <div className="relative">
-
-          <div className="relative">
             <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
               <Mail className="w-4 h-4" />
             </div>
             <input
+              id="lead-form-email"
+              aria-label="Business Email"
               type="email"
               name="email"
               value={formData.email}
@@ -185,6 +187,8 @@ const LeadForm = () => {
               <Briefcase className="w-4 h-4" />
             </div>
             <select
+              id="lead-form-business-type"
+              aria-label="Business Type"
               name="businessType"
               value={formData.businessType}
               onChange={handleChange}
@@ -203,6 +207,8 @@ const LeadForm = () => {
               <Layers className="w-4 h-4" />
             </div>
             <select
+              id="lead-form-service-required"
+              aria-label="Service Required"
               name="serviceRequired"
               value={formData.serviceRequired}
               onChange={handleChange}

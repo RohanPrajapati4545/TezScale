@@ -56,6 +56,7 @@ const FloatingSpeedDial = ({ onOpenConsultation }) => {
             </div>
             <button
               type="button"
+              aria-label="Send Inquiry via Email"
               className="w-12 h-12 rounded-full bg-slate-900 hover:bg-[#00A3E0] text-white flex items-center justify-center shadow-lg border border-slate-700 transition-all cursor-pointer"
               title="Send Inquiry"
             >
@@ -70,6 +71,7 @@ const FloatingSpeedDial = ({ onOpenConsultation }) => {
             </div>
             <a
               href="tel:+919876543210"
+              aria-label="Call TezScale directly"
               onClick={(e) => e.stopPropagation()}
               className="w-12 h-12 rounded-full bg-[#00A3E0] hover:bg-[#008bc0] text-white flex items-center justify-center shadow-lg transition-all cursor-pointer"
               title="Call Directly"
@@ -87,6 +89,7 @@ const FloatingSpeedDial = ({ onOpenConsultation }) => {
               href={whatsappUrl}
               target="_blank"
               rel="noreferrer"
+              aria-label="Chat on WhatsApp with TezScale"
               onClick={() => setIsOpen(false)}
               className="w-12 h-12 rounded-full bg-[#25D366] hover:bg-[#20ba59] text-white flex items-center justify-center shadow-lg transition-all cursor-pointer"
               title="Chat on WhatsApp"

@@ -1,0 +1,38 @@
+# TezScale — Accelerating Digital Growth
+
+> TezScale is a premier digital marketing and performance web development agency based in Indore, Madhya Pradesh, India. We engineer lightning-fast websites (0.8s load, 2-day live staging drafts, 5-6 day production launch), dominate Google Maps Top 3 local SEO, and manage high-ROI Meta Ads connected to instant WhatsApp lead routing for Indian clinics, real estate builders, industrial manufacturers, and modern brands.
+
+## Core Capabilities & Services
+
+- [Website Builder & Development](https://tez-scale-navy.vercel.app/services/web-development): High-speed, responsive, mobile-first websites with 2-day staging drafts and 5-6 day production launch.
+- [Digital Marketing & Local SEO](https://tez-scale-navy.vercel.app/services/digital-marketing): Google Maps Top 3 ranking, Google Business Profile optimization, and local organic dominance across Indore and Central India.
+- [Meta Ads Management](https://tez-scale-navy.vercel.app/services/meta-ads): High-ROAS Facebook and Instagram ad campaigns connected to direct encrypted WhatsApp lead dispatch in under 2 minutes.
+- [Graphic Design & Brand Kits](https://tez-scale-navy.vercel.app/services/graphic-design): High-converting ad creatives, logos, visual brand identities, and social media kits.
+- [Social Media Strategy & Reels](https://tez-scale-navy.vercel.app/services/social-media): Viral short-form video production, Instagram reels shooting, editing, and organic audience acquisition.
+- [E-Commerce Enablement](https://tez-scale-navy.vercel.app/services/ecommerce): High-conversion Shopify and custom online stores with 1-step checkout, UPI payment integration, and automated WhatsApp cart recovery.
+
+## Canonical Pages & Architecture
+
+- [Home](https://tez-scale-navy.vercel.app/): Core agency overview, verified client testimonials, proof of work, FAQ knowledge base, and consultation booking.
+- [About Us](https://tez-scale-navy.vercel.app/about): Company mission, 4-step agile delivery roadmap, and leadership team.
+- [Services Hub](https://tez-scale-navy.vercel.app/services): Complete breakdown of all 6 digital engineering services.
+- [Testimonials](https://tez-scale-navy.vercel.app/testimonials): Real client reviews from clinic directors, real estate brokers, and B2B manufacturers.
+- [Contact](https://tez-scale-navy.vercel.app/contact): Direct WhatsApp lead dispatch, free audit request, phone numbers, and Indore office location.
+
+## Leadership & Growth Architects
+
+- [Shubham Karma (Founder & Growth Strategist)](https://tez-scale-navy.vercel.app/team/shubham-karma): Founder at TezScale leading international trade logistics, digital marketing funnels, and client revenue acceleration. Phone/WhatsApp: +91 6262778128, Email: Shubhamvkarma143@gmail.com.
+- [Rohan Prajapati (Lead Full-Stack Web Developer)](https://tez-scale-navy.vercel.app/team/rohan-prajapati): MERN Stack & microservices engineer architecting high-performance digital platforms at TezScale. Phone/WhatsApp: +91 6262778128, Email: rohanprajapati4545@gmail.com.
+- [Rustam Rathore (AI/ML Engineer)](https://tez-scale-navy.vercel.app/team/rustam-rathore): AI/ML specialist with deep expertise in Python, PyTorch, LangChain, and Generative AI pipelines.
+- [Jaydeep Patel (QA Tester)](https://tez-scale-navy.vercel.app/team/jaydeep-patel): Quality assurance and testing specialist ensuring zero bugs across client releases.
+
+## Agent Actions & API Endpoints
+
+- [Submit Lead / Request Free Audit](https://tezscale.onrender.com/api/leads): POST endpoint accepting JSON `{ name: string, whatsapp: string, businessType: string, serviceRequired: string, message: string }`. Delivers leads to WhatsApp in < 2 minutes.
+- [Direct WhatsApp Support](https://wa.me/916262778128): Direct communication channel with TezScale growth consultants.
+- [Direct Email Contact](mailto:hello@tezscale.com): Agency corporate mailbox.
+
+## Extended Documentation & Deep Dive
+
+- [Full Agency Documentation](https://tez-scale-navy.vercel.app/llms-full.txt): Comprehensive plain text knowledge base, FAQ dataset, tech stack, and service breakdowns.
+- [XML Sitemap](https://tez-scale-navy.vercel.app/sitemap.xml): Machine-readable index of all canonical URLs.

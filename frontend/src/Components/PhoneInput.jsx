@@ -92,6 +92,7 @@ const PhoneInput = ({
         }`} />
         <input
           id={id}
+          aria-label="WhatsApp Phone Number"
           type="tel"
           name={name}
           inputMode="numeric"
