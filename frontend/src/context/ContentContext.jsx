@@ -478,6 +478,7 @@ export const defaultSiteContent = {
 // Key for fast offline & instant local persistence
 const STORAGE_KEY = 'tezscale_cached_content_v9';
 export const STORAGE_TEAM_KEY = 'tezscale_custom_team';
+export const STORAGE_TESTIMONIALS_KEY = 'tezscale_custom_testimonials';
 
 const getInitialContent = () => {
   if (typeof window === 'undefined') return defaultSiteContent;
@@ -493,15 +494,29 @@ const getInitialContent = () => {
       }
     } catch (e) { }
 
+    let testimonialsData = defaultSiteContent.testimonials;
+    try {
+      const customTestimonialsRaw = localStorage.getItem(STORAGE_TESTIMONIALS_KEY);
+      if (customTestimonialsRaw) {
+        const parsedCustomTestimonials = JSON.parse(customTestimonialsRaw);
+        if (Array.isArray(parsedCustomTestimonials) && parsedCustomTestimonials.length > 0) {
+          testimonialsData = parsedCustomTestimonials;
+        }
+      }
+    } catch (e) { }
+
     const saved = localStorage.getItem(STORAGE_KEY) || localStorage.getItem('tezscale_cached_content_v8');
     if (saved) {
       const parsed = JSON.parse(saved);
       const effectiveTeam = (parsed.team && Array.isArray(parsed.team) && parsed.team.length > 0)
         ? parsed.team
         : teamData;
-      return { ...defaultSiteContent, ...parsed, team: effectiveTeam };
+      const effectiveTestimonials = (parsed.testimonials && Array.isArray(parsed.testimonials) && parsed.testimonials.length > 0)
+        ? parsed.testimonials
+        : testimonialsData;
+      return { ...defaultSiteContent, ...parsed, team: effectiveTeam, testimonials: effectiveTestimonials };
     }
-    return { ...defaultSiteContent, team: teamData };
+    return { ...defaultSiteContent, team: teamData, testimonials: testimonialsData };
   } catch (e) { }
   return defaultSiteContent;
 };
@@ -524,6 +539,13 @@ export const ContentProvider = ({ children }) => {
           const freshTeam = JSON.parse(e.newValue);
           if (Array.isArray(freshTeam)) {
             setContent(prev => ({ ...prev, team: freshTeam }));
+          }
+        } catch (err) { }
+      } else if (e.key === STORAGE_TESTIMONIALS_KEY && e.newValue) {
+        try {
+          const freshTestimonials = JSON.parse(e.newValue);
+          if (Array.isArray(freshTestimonials)) {
+            setContent(prev => ({ ...prev, testimonials: freshTestimonials }));
           }
         } catch (err) { }
       }
@@ -595,6 +617,11 @@ export const ContentProvider = ({ children }) => {
       if (updatedData.team && Array.isArray(updatedData.team)) {
         try {
           localStorage.setItem(STORAGE_TEAM_KEY, JSON.stringify(updatedData.team));
+        } catch (e) { }
+      }
+      if (updatedData.testimonials && Array.isArray(updatedData.testimonials)) {
+        try {
+          localStorage.setItem(STORAGE_TESTIMONIALS_KEY, JSON.stringify(updatedData.testimonials));
         } catch (e) { }
       }
 

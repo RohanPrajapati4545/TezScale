@@ -330,9 +330,18 @@ const Admin = ({ onLogout }) => {
     whyChooseUs: { ...defaultSiteContent.whyChooseUs, ...(content?.whyChooseUs || {}) },
     testimonialsSection: { ...defaultSiteContent.testimonialsSection, ...(content?.testimonialsSection || {}) },
     testimonials:
-      content?.testimonials && content.testimonials.length > 0
+      (content?.testimonials && content.testimonials.length > 0)
         ? content.testimonials
-        : defaultSiteContent.testimonials,
+        : (() => {
+            try {
+              const raw = localStorage.getItem('tezscale_custom_testimonials');
+              if (raw) {
+                const parsed = JSON.parse(raw);
+                if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+              }
+            } catch (e) {}
+            return defaultSiteContent.testimonials;
+          })(),
     team:
       (content?.team && content.team.length > 0)
         ? content.team
@@ -543,6 +552,9 @@ const Admin = ({ onLogout }) => {
         currentList[reviewModal.index] = reviewModal.data;
       }
       const updated = { ...formData, testimonials: currentList };
+      try {
+        localStorage.setItem('tezscale_custom_testimonials', JSON.stringify(currentList));
+      } catch (e) {}
       setFormData(updated);
       await updateContent(updated);
       setSaveStatus({ show: true, type: 'success', message: 'Client review saved to database!' });
@@ -560,6 +572,9 @@ const Admin = ({ onLogout }) => {
     if (!window.confirm('Are you sure you want to delete this client review?')) return;
     try {
       const updated = (formData.testimonials || []).filter((_, i) => i !== idx);
+      try {
+        localStorage.setItem('tezscale_custom_testimonials', JSON.stringify(updated));
+      } catch (e) {}
       const updatedFormData = { ...formData, testimonials: updated };
       setFormData(updatedFormData);
       await updateContent(updatedFormData);
